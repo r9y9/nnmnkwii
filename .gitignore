@@ -1,4 +1,4 @@
-pysptk/_sptk.c
+./examples
 docs/generated
 
 # Created by https://www.gitignore.io
