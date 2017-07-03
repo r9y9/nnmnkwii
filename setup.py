@@ -5,16 +5,18 @@ from __future__ import with_statement, print_function, absolute_import
 from setuptools import setup, find_packages
 
 setup(
-    name='nanamin',
+    name='nnmnkwii',
     version='0.0.1',
     description='nnmnkwii',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
-    url='https://github.com/r9y9/nanamin',
+    url='https://github.com/r9y9/nnmnkwii',
     license='MIT',
     packages=find_packages(),
     install_requires=[
         'numpy >= 1.8.0',
+        'librosa',
+        'pyworld',
         'six'
     ],
     tests_require=['nose', 'coverage'],

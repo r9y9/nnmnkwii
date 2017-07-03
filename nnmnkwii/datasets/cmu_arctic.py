@@ -3,7 +3,12 @@ from __future__ import with_statement, print_function, absolute_import
 from os.path import join, expanduser, splitext, isdir
 from os import listdir
 
-from nanamin.datasets import DecomposedDataset
+from nnmnkwii.datasets.decomposed import DecomposedDataset
+
+
+def _name_to_dirname(name):
+    assert len(name) == 3
+    return join("cmu_us_{}_arctic".format(name), "wav")
 
 
 class CMUArctic(DecomposedDataset):
@@ -25,7 +30,7 @@ class CMUArctic(DecomposedDataset):
 
     def collect_wav_files(self, speakers):
         speaker_dirs = list(
-            map(lambda x: join(self.DATA_ROOT, self._name_to_dirname(x)),
+            map(lambda x: join(self.DATA_ROOT, _name_to_dirname(x)),
                 speakers))
         cmu_arctic_all_paths = {}
         for (i, d) in enumerate(speaker_dirs):
@@ -35,7 +40,3 @@ class CMUArctic(DecomposedDataset):
             files = list(filter(lambda x: splitext(x)[1] == ".wav", files))
             cmu_arctic_all_paths[speakers[i]] = sorted(files)
         return cmu_arctic_all_paths
-
-    def _name_to_dirname(self, name):
-        assert len(name) == 3
-        return join("cmu_us_{}_arctic".format(name), "wav")

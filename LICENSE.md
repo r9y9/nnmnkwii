@@ -1,4 +1,4 @@
-The nanamin package is licensed under the MIT "Expat" License:
+The nnmnkwii package is licensed under the MIT "Expat" License:
 
 > Copyright (c) 2017: Ryuichi Yamamoto.
 >
