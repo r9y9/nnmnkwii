@@ -1,9 +1,9 @@
 from __future__ import with_statement, print_function, absolute_import
 
-from os.path import join, expanduser, splitext, isdir
-from os import listdir
+from nnmnkwii.datasets import DataSource
 
-from nnmnkwii.datasets.decomposed import DecomposedDataset
+from os.path import join, splitext, isdir
+from os import listdir
 
 
 def _name_to_dirname(name):
@@ -11,32 +11,32 @@ def _name_to_dirname(name):
     return join("cmu_us_{}_arctic".format(name), "wav")
 
 
-class CMUArctic(DecomposedDataset):
-    DATA_ROOT = join(expanduser("~"), "data", "cmu_arctic")
+class CMUArcticWavDataSource(DataSource):
+    def __init__(self, data_root, speakers, labelmap=None, max_files=2):
+        self.data_root = data_root
+        self.speakers = speakers
+        if labelmap is None:
+            labelmap = {}
+            for idx, speaker in enumerate(speakers):
+                labelmap[speaker] = idx
+        self.labelmap = labelmap
+        self.max_files = max_files
 
-    # Note: idx of the list represents
-    speaker_ids = [
-        "awb",
-        "bdl",
-        "clb",
-        "jmk",
-        "ksp",
-        "rms",
-        "slt",
-    ]
-
-    def __init__(self, *args, **kwargs):
-        super(CMUArctic, self).__init__(*args, **kwargs)
-
-    def collect_wav_files(self, speakers):
+    def collect_files(self):
         speaker_dirs = list(
-            map(lambda x: join(self.DATA_ROOT, _name_to_dirname(x)),
-                speakers))
-        cmu_arctic_all_paths = {}
+            map(lambda x: join(self.data_root, _name_to_dirname(x)),
+                self.speakers))
+        paths = []
+        labels = []
         for (i, d) in enumerate(speaker_dirs):
             if not isdir(d):
                 raise RuntimeError("{} doesn't exist.".format(d))
             files = [join(speaker_dirs[i], f) for f in listdir(d)]
             files = list(filter(lambda x: splitext(x)[1] == ".wav", files))
-            cmu_arctic_all_paths[speakers[i]] = sorted(files)
-        return cmu_arctic_all_paths
+            files = sorted(files)
+            files = files[:self.max_files]
+            for f in files[:self.max_files]:
+                paths.append(f)
+                labels.append(self.labelmap[self.speakers[i]])
+
+        return paths, labels
