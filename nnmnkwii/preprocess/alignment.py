@@ -1,7 +1,7 @@
 from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.utils import trim_zeros_frames
-from nnmnkwii.paramgen.gmm import MLStaticParamGen
+from nnmnkwii.baseline.gmm import MLParameterGeneration
 
 from fastdtw import fastdtw
 
@@ -72,11 +72,10 @@ class IterativeDTWAligner(object):
             XY = np.concatenate((X_aligned, Y_aligned),
                                 axis=-1).reshape(-1, X.shape[-1] * 2)
             gmm.fit(XY)
-            paramgen = MLStaticParamGen(gmm)
-
+            paramgen = MLParameterGeneration(gmm, X.shape[-1])
             for idx in range(len(Xc)):
                 x = trim_zeros_frames(Xc[idx])
-                Xc[idx][:len(x)] = np.apply_along_axis(paramgen.transform, 1, x)
+                Xc[idx][:len(x)] = paramgen.transform(x)
 
         # Finally we can get aligned X
         for idx in range(len(X_aligned)):

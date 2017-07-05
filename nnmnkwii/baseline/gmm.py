@@ -9,12 +9,24 @@ import scipy.sparse
 import scipy.sparse.linalg
 
 
-class MLStaticParamGen(object):
-    """Maximum likelihood (ML) parameter generation given static feature
-    vectors
+def split_gmm_means(means):
+    D = means.shape[-1] // 2
+    return means[:, 0:D], means[:, D:]
 
-    based on Gaussian mixture models (GMMs) for joint features of source
-    and target speakers.
+
+def split_gmm_covariances(covariances):
+    D = covariances.shape[-1] // 2
+    covarXX = covariances[:, :D, :D]
+    covarXY = covariances[:, :D, D:]
+    covarYX = covariances[:, D:, :D]
+    covarYY = covariances[:, D:, D:]
+    return covarXX, covarXY, covarYX, covarYY
+
+
+# TODO: this can be refactored to be more flexible
+# e.g. take `swap` and `diff` out of the class
+class MLParameterGenerationBase(object):
+    """Base class for Maximum likelihood Parameter Generation (MLPG)
 
     Notation
     --------
@@ -71,8 +83,9 @@ class MLStaticParamGen(object):
     """
 
     def __init__(self, gmm, swap=False, diff=False):
-        # D is the order of spectral feature for a speaker
-        self.num_mixtures, D = gmm.means_.shape[0], gmm.means_.shape[1] // 2
+        # D: static + delta dim
+        D = gmm.means_.shape[1] // 2
+        self.num_mixtures = gmm.means_.shape[0]
         self.weights = gmm.weights_
 
         # Split source and target parameters from joint GMM
@@ -95,13 +108,6 @@ class MLStaticParamGen(object):
             self.covarYY, self.covarXX = self.covarXX, self.covarYY
             self.covarYX, self.covarXY = self.XY, self.covarYX
 
-        # Compute D eq.(12) in [Toda 2007]
-        self.D = np.zeros(self.num_mixtures * D *
-                          D).reshape(self.num_mixtures, D, D)
-        for m in range(self.num_mixtures):
-            xx_inv_xy = np.linalg.solve(self.covarXX[m], self.covarXY[m])
-            self.D[m] = self.covarYY[m] - np.dot(self.covarYX[m], xx_inv_xy)
-
         # p(x), which is used to compute posterior prob. for a given source
         # spectral feature in mapping stage.
         self.px = GaussianMixture(
@@ -113,14 +119,25 @@ class MLStaticParamGen(object):
             self.px.covariances_, "full")
 
     def transform(self, src):
-        """
-        Mapping source spectral feature x to target spectral feature y
+        if src.ndim == 2:
+            tgt = np.zeros_like(src)
+            for idx, x in enumerate(src):
+                y = self._transform_frame(x)
+                tgt[idx][:len(y)] = y
+            return tgt
+        else:
+            return self._transform_frame(src)
+
+    def _transform_frame(self, src):
+        """Mapping source spectral feature x to target spectral feature y
         so that minimize the mean least squared error.
         More specifically, it returns the value E(p(y|x)].
+
         Parameters
         ----------
         src : array, shape (`order of spectral feature`)
             source speaker's spectral feature that will be transformed
+
         Return
         ------
         converted spectral feature
@@ -137,28 +154,32 @@ class MLStaticParamGen(object):
         posterior = self.px.predict_proba(np.atleast_2d(src))
 
         # Eq.(13) conditinal mean E[p(y|x)]
-        return posterior.dot(E)
+        return posterior.dot(E).flatten()
 
 
-class MLParamGen(MLStaticParamGen):
-    """
-    Generic maximum likelihood parameter generation (MLPG) considering delta
-    features explicitly
+class MLParameterGeneration(MLParameterGenerationBase):
+    """Maximum likelihood parameter generation (MLPG)
 
     Parameters
     ----------
     gmm : scipy.mixture.GMM
         Gaussian Mixture Models of source and target speaker joint features
-    gv : scipy.mixture.GMM (default=None)
-        Gaussian Mixture Models of target speaker's global variance of spectral
-        feature
+
+    static_dim : int
+        Dimention of static feature
 
     swap : bool (default=False)
         True: source -> target
         False target -> source
+
+    diff : bool
+        GMM -> DIFFGMM if True
+
     Attributes
     ----------
     TODO
+
+
     Reference
     ---------
       - [Toda 2007] Voice Conversion Based on Maximum Likelihood Estimation
@@ -166,40 +187,39 @@ class MLParamGen(MLStaticParamGen):
         http://isw3.naist.jp/~tomoki/Tomoki/Journals/IEEE-Nov-2007_MLVC.pdf
     """
 
-    def __init__(self, gmm, T, gv=None, swap=False, diff=False):
-        MLParamGen.__init__(self, gmm, swap, diff)
-
-        self.T = T
-        # shape[1] = d(src) + d(src_delta) + d(tgt) + d(tgt_delta)
-        D = gmm.means_.shape[1] / 4
-
-        # Setup for Trajectory-based mapping
-        self.W = construct_weight_matrix(T, D)
-        assert self.W.shape == (2 * D * T, D * T)
-
-        # Setup for GV post-filtering
-        # It is assumed that GV is modeled as a single mixture GMM
-        if gv != None:
-            self.gv_mean = gv.means_[0]
-            self.gv_covar = gv.covars_[0]
-            self.Pv = np.linalg.inv(self.gv_covar)
+    def __init__(self, gmm, static_dim, swap=False, diff=False):
+        super(MLParameterGeneration, self).__init__(gmm, swap, diff)
+        self.static_dim = static_dim
+        self.T = -1
+        self.D = None
+        self.W = None
 
     def transform(self, src):
-        """
-        Mapping source spectral feature x to target spectral feature y
+        """Mapping source spectral feature x to target spectral feature y
         so that maximize the likelihood of y given x.
+
         Parameters
         ----------
         src : array, shape (`the number of frames`, `the order of spectral feature`)
             a sequence of source speaker's spectral feature that will be
             transformed
-        Return
-        ------
+
+        Returns
+        -------
         a sequence of transformed spectral features
         """
-        T, D = src.shape[0], src.shape[1] / 2
+        T, feature_dim = src.shape[0], src.shape[1]
+
+        if feature_dim == self.static_dim:
+            return super(MLParameterGeneration, self).transform(src)
+        # TODO
+        assert feature_dim == self.static_dim * 2
+
+        # alias
+        D = self.static_dim
 
         if T != self.T:
+            self.T = T
             self.W = construct_weight_matrix(T, D)
             assert self.W.shape == (2 * D * T, D * T)
 
@@ -236,7 +256,7 @@ class MLParamGen(MLStaticParamGen):
         return y.reshape((T, D))
 
 
-def construct_weight_matrix(self, T, D):
+def construct_weight_matrix(T, D):
     # Construct Weight matrix W
     # Eq.(25) ~ (28)
 
