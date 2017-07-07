@@ -15,8 +15,8 @@ setup(
     packages=find_packages(),
     install_requires=[
         'numpy >= 1.8.0',
-        'librosa',
-        'pyworld',
+        'fastdtw',
+        'sklearn',
         'six'
     ],
     tests_require=['nose', 'coverage'],
