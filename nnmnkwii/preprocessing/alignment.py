@@ -8,11 +8,11 @@ from fastdtw import fastdtw
 import numpy as np
 from numpy.linalg import norm
 
-import sklearn.mixture
+from sklearn.mixture import GaussianMixture
 
 
 class DTWAligner(object):
-    def __init__(self, verbose=0, dist=lambda x, y: norm(x - y)):
+    def __init__(self, dist=lambda x, y: norm(x - y), verbose=0):
         self.verbose = verbose
         self.dist = dist
 
@@ -67,12 +67,13 @@ class IterativeDTWAligner(object):
                     print("{}, distance: {}".format(idx, dist))
 
             # Fit
-            gmm = sklearn.mixture.GaussianMixture(
+            gmm = GaussianMixture(
                 n_components=32, covariance_type="full", max_iter=100)
             XY = np.concatenate((X_aligned, Y_aligned),
                                 axis=-1).reshape(-1, X.shape[-1] * 2)
             gmm.fit(XY)
-            paramgen = MLParameterGeneration(gmm, X.shape[-1])
+            windows = [(0, 0, np.array([1.0]))]  # no delta
+            paramgen = MLParameterGeneration(gmm, windows=windows)
             for idx in range(len(Xc)):
                 x = trim_zeros_frames(Xc[idx])
                 Xc[idx][:len(x)] = paramgen.transform(x)
