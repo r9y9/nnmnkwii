@@ -14,21 +14,18 @@ class SilenceRemoval(object):
 
 
 class DeltaAppender(object):
-    def __init__(self, order=1, win=None):
-        self.order = order
-        if win is None:
-            win = np.array([0.5, 0, -0.5], dtype=np.float32)
-        self.win = win
+    def __init__(self, windows):
+        self.windows = windows
 
     def transform(self, X):
         assert X.ndim == 3
         N, T, D = X.shape
-        Y = np.zeros((N, T, D * (self.order + 1)), dtype=X.dtype)
+        Y = np.zeros((N, T, D * len(self.windows)), dtype=X.dtype)
         for idx, x in enumerate(X):
-            features = [trim_zeros_frames(x)]
-            for _ in range(self.order):
-                dynamic_features = dimention_wise_delta(features[-1], self.win)
-                features.append(dynamic_features)
+            x = trim_zeros_frames(x)
+            features = []
+            for _, _, window in self.windows:
+                features.append(dimention_wise_delta(x, window))
             combined_features = np.hstack(features)
             assert combined_features.shape[-1] == Y.shape[-1]
             Y[idx][:len(combined_features)] = combined_features

@@ -4,7 +4,7 @@ import numpy as np
 
 
 def delta(x, win):
-    return np.convolve(x, win, mode="same")
+    return np.correlate(x, win, mode="same")
 
 
 def dimention_wise_delta(x, win):
