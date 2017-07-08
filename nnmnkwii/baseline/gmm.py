@@ -5,7 +5,7 @@ import numpy as np
 from sklearn.mixture import GaussianMixture
 from sklearn.mixture.gaussian_mixture import _compute_precision_cholesky
 
-from nnmnkwii.functions import mlpg
+from nnmnkwii.functions.mlpg import mlpg_numpy
 
 # TODO: this can be refactored to be more flexible
 # e.g. take `swap` and `diff` out of the class
@@ -225,5 +225,4 @@ class MLParameterGeneration(MLParameterGenerationBase):
                 np.diag(self.covarXX[m]) * np.diag(self.covarXY[m])
 
         # Once we have mean and variance over frames, then we can do MLPG
-        return mlpg.MLParameterGeneration(
-            self.static_dim, windows=self.windows).transform(E, D)
+        return mlpg_numpy(E, D, self.windows)

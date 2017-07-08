@@ -73,41 +73,31 @@ def build_poe(b_frames, tau_frames, win_mats, sdw=None):
     return b, prec
 
 
-class MLParameterGeneration(object):
-    def __init__(self, static_dim, windows=None):
-        self.static_dim = static_dim
-        if windows is None:
-            windows = [
-                (0, 0, np.array([1.0], dtype=np.float64)),
-                (1, 1, np.array([-0.5, 0.0, 0.5], dtype=np.float64)),
-            ]
+def mlpg_numpy(mean_frames, variance_frames, windows):
+    """Numpy implementation of MLPG
+    """
+    T, D = mean_frames.shape
+    assert mean_frames.shape == variance_frames.shape
+    static_dim = D // len(windows)
 
-        self.windows = windows
+    num_windows = len(windows)
+    win_mats = build_win_mats(windows, T)
 
-    def transform(self, mean_frames, variance_frames):
-        T, D = mean_frames.shape
-        assert mean_frames.shape == variance_frames.shape
-        assert self.static_dim == D // len(self.windows)
+    # workspaces; those will be updated in the following generation loop
+    means = np.zeros((T, num_windows))
+    precisions = np.zeros((T, num_windows))
+    bs = np.zeros((T, num_windows))
 
-        num_windows = len(self.windows)
-        win_mats = build_win_mats(self.windows, T)
+    # Perform dimention-wise generation
+    y = np.zeros((T, static_dim))
+    for d in range(static_dim):
+        for win_idx in range(num_windows):
+            means[:, win_idx] = mean_frames[:, win_idx * static_dim + d]
+            precisions[:, win_idx] = 1 / \
+                variance_frames[:, win_idx * static_dim + d]
+            bs[:, win_idx] = precisions[:, win_idx] * means[:, win_idx]
 
-        # workspaces; those will be updated in the following generation loop
-        means = np.zeros((T, num_windows))
-        precisions = np.zeros((T, num_windows))
-        bs = np.zeros((T, num_windows))
+        b, P = build_poe(bs, precisions, win_mats)
+        y[:, d] = bla.solveh(P, b)
 
-        # Perform dimention-wise generation
-        y = np.zeros((T, self.static_dim))
-        for d in range(self.static_dim):
-            for win_idx in range(num_windows):
-                means[:, win_idx] = mean_frames[:,
-                                                win_idx * self.static_dim + d]
-                precisions[:, win_idx] = 1 / \
-                    variance_frames[:, win_idx * self.static_dim + d]
-                bs[:, win_idx] = precisions[:, win_idx] * means[:, win_idx]
-
-            b, P = build_poe(bs, precisions, win_mats)
-            y[:, d] = bla.solveh(P, b)
-
-        return y
+    return y
