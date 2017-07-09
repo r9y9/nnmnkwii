@@ -86,7 +86,6 @@ def mlpg_numpy(mean_frames, variance_frames, windows):
     # workspaces; those will be updated in the following generation loop
     means = np.zeros((T, num_windows))
     precisions = np.zeros((T, num_windows))
-    bs = np.zeros((T, num_windows))
 
     # Perform dimention-wise generation
     y = np.zeros((T, static_dim))
@@ -95,8 +94,8 @@ def mlpg_numpy(mean_frames, variance_frames, windows):
             means[:, win_idx] = mean_frames[:, win_idx * static_dim + d]
             precisions[:, win_idx] = 1 / \
                 variance_frames[:, win_idx * static_dim + d]
-            bs[:, win_idx] = precisions[:, win_idx] * means[:, win_idx]
 
+        bs = precisions * means
         b, P = build_poe(bs, precisions, win_mats)
         y[:, d] = bla.solveh(P, b)
 

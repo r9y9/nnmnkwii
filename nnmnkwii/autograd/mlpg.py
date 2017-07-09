@@ -12,9 +12,16 @@ import bandmat as bm
 # Note: this is written against pytorch 0.1.12. This is not compatible with
 # pytorch master.
 class MLPG(Function):
-    """MLPG as autograd function
+    """Maximum likelihood parameter generation (MLPG) as an autograd function.
 
-    f : (T, D) -> (T, static_dim)
+    f : (T, D) -> (T, static_dim).
+
+    Let `d` is the index of static features, `l` is the index of windows,
+    gradients `grad_{d,l}` can be computed by:
+
+    grad_{d,l} = (\sum_{l} W_{l}^{T}P_{l}W_{l})^{-1} W_{l}^{T}P_{l}
+
+    `W_{l}` is a window matrix and `P_{l}` is a precision matrix.
     """
 
     def __init__(self, static_dim, variance_frames, windows):
@@ -47,27 +54,30 @@ class MLPG(Function):
 
         grads = torch.zeros(T, D)
         for d in range(self.static_dim):
+            sdw = max([win_mat.l + win_mat.u for win_mat in win_mats])
+
+            # R: \sum_{l} W_{l}^{T}P_{l}W_{l}
+            R = bm.zeros(sdw, sdw, T)  # overwritten in the loop
             for win_idx, win_mat in enumerate(win_mats):
                 # cast to float64 for bandmat
                 precisions = 1 / \
                     variance_frames[:, win_idx * self.static_dim +
                                     d].numpy().astype(np.float64)
 
-                # R: W^{t}PW where `t` means transpose
-                sdw = win_mat.l + win_mat.u
-                R = bm.zeros(sdw, sdw, T)  # overwritten in the next line
                 bm.dot_mm_plus_equals(win_mat.T, win_mat,
                                       target_bm=R, diag=precisions)
-                # r: W^{t}P
+
+            for win_idx, win_mat in enumerate(win_mats):
+                # r: W_{l}^{T}P_{l}
                 r = bm.dot_mm(win_mat.T, bm.diag(precisions))
 
-                # grad = R^{-1}r
+                # grad_{d, l} = R^{-1r}
                 grad = np.linalg.solve(R.full(), r.full())
                 assert grad.shape == (T, T)
 
                 # Finally we get grad for a particular dimention
-                grads[:, win_idx * self.static_dim + d] = torch.from_numpy(
-                    grad_output[:, d].numpy().T.dot(grad).flatten())
+                grads[:, win_idx * self.static_dim +
+                      d] = torch.from_numpy(grad_output[:, d].numpy().T.dot(grad))
 
         return grads
 
