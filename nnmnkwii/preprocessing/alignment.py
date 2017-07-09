@@ -12,9 +12,10 @@ from sklearn.mixture import GaussianMixture
 
 
 class DTWAligner(object):
-    def __init__(self, dist=lambda x, y: norm(x - y), verbose=0):
+    def __init__(self, dist=lambda x, y: norm(x - y), radius=1, verbose=0):
         self.verbose = verbose
         self.dist = dist
+        self.radius = radius
 
     def transform(self, XY):
         X, Y = XY
@@ -24,7 +25,7 @@ class DTWAligner(object):
         Y_aligned = np.zeros_like(Y)
         for idx, (x, y) in enumerate(zip(X, Y)):
             x, y = trim_zeros_frames(x), trim_zeros_frames(y)
-            dist, path = fastdtw(x, y, dist=self.dist)
+            dist, path = fastdtw(x, y, radius=self.radius, dist=self.dist)
             dist /= (len(x) + len(y))
             pathx = list(map(lambda l: l[0], path))
             pathy = list(map(lambda l: l[1], path))
@@ -37,9 +38,10 @@ class DTWAligner(object):
 
 
 class IterativeDTWAligner(object):
-    def __init__(self, n_iter=3, dist=lambda x, y: norm(x - y), verbose=0):
+    def __init__(self, n_iter=3, dist=lambda x, y: norm(x - y), radius=1, verbose=0):
         self.n_iter = n_iter
         self.dist = dist
+        self.radius = radius
         self.verbose = verbose
 
     def transform(self, XY):
@@ -54,7 +56,7 @@ class IterativeDTWAligner(object):
         for idx in range(self.n_iter):
             for idx, (x, y) in enumerate(zip(Xc, Y)):
                 x, y = trim_zeros_frames(x), trim_zeros_frames(y)
-                dist, path = fastdtw(x, y, dist=self.dist)
+                dist, path = fastdtw(x, y, radius=self.radius, dist=self.dist)
                 dist /= (len(x) + len(y))
                 pathx = list(map(lambda l: l[0], path))
                 pathy = list(map(lambda l: l[1], path))
