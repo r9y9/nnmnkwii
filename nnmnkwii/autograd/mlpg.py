@@ -9,7 +9,7 @@ import numpy as np
 import bandmat as bm
 
 
-# Note: this is written against pytorch 0.1.12. This is not compatible with
+# Note: this is written for pytorch 0.1.12 and may not compatible with
 # pytorch master.
 class MLPG(Function):
     """Maximum likelihood parameter generation (MLPG) as an autograd function.

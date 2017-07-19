@@ -1,7 +1,7 @@
 from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.utils import trim_zeros_frames
-from nnmnkwii.baseline.gmm import MLParameterGeneration
+from nnmnkwii.baseline.gmm import MLPG
 
 from fastdtw import fastdtw
 
@@ -75,7 +75,7 @@ class IterativeDTWAligner(object):
                                 axis=-1).reshape(-1, X.shape[-1] * 2)
             gmm.fit(XY)
             windows = [(0, 0, np.array([1.0]))]  # no delta
-            paramgen = MLParameterGeneration(gmm, windows=windows)
+            paramgen = MLPG(gmm, windows=windows)
             for idx in range(len(Xc)):
                 x = trim_zeros_frames(Xc[idx])
                 Xc[idx][:len(x)] = paramgen.transform(x)

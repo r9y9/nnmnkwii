@@ -11,7 +11,7 @@ from nnmnkwii.functions.mlpg import mlpg_numpy
 # e.g. take `swap` and `diff` out of the class
 
 
-class MLParameterGenerationBase(object):
+class MLPGBase(object):
     """Base class for Maximum likelihood Parameter Generation (MLPG)
 
     Notation
@@ -144,7 +144,7 @@ class MLParameterGenerationBase(object):
         return posterior.dot(E).flatten()
 
 
-class MLParameterGeneration(MLParameterGenerationBase):
+class MLPG(MLPGBase):
     """Maximum likelihood parameter generation (MLPG)
 
     Parameters
@@ -175,7 +175,7 @@ class MLParameterGeneration(MLParameterGenerationBase):
     """
 
     def __init__(self, gmm, windows=None, swap=False, diff=False):
-        super(MLParameterGeneration, self).__init__(gmm, swap, diff)
+        super(MLPG, self).__init__(gmm, swap, diff)
         if windows is None:
             windows = [
                 (0, 0, np.array([1.0])),
@@ -201,7 +201,7 @@ class MLParameterGeneration(MLParameterGenerationBase):
         T, feature_dim = src.shape[0], src.shape[1]
 
         if feature_dim == self.static_dim:
-            return super(MLParameterGeneration, self).transform(src)
+            return super(MLPG, self).transform(src)
 
         # A suboptimum mixture sequence  (eq.37)
         optimum_mix = self.px.predict(src)
