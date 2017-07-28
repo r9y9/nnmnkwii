@@ -1,11 +1,13 @@
 from __future__ import with_statement, print_function, absolute_import
 
+from nnmnkwii import functions as F
+
 from torch.autograd import Function
 import torch
 import numpy as np
 
 
-class ModulationSpectrum(Function):
+class ModSpec(Function):
     """Modulation spectrum computation
 
     f : (T, D) -> (N//2+1, D).
@@ -21,14 +23,8 @@ class ModulationSpectrum(Function):
         assert y.dim() == 2
         self.save_for_backward(y)
 
-        T, D = y.size()
         y_np = y.numpy()
-
-        s_complex = np.fft.rfft(y_np, n=self.n, axis=0,
-                                norm=self.norm)  # DFT against time axis
-        assert s_complex.shape == (self.n // 2 + 1, D)
-        R, I = s_complex.real, s_complex.imag
-        ms = torch.from_numpy(R * R + I * I)
+        ms = torch.from_numpy(F.modspec(y_np, n=self.n, norm=self.norm))
 
         return ms
 
@@ -69,4 +65,4 @@ class ModulationSpectrum(Function):
 
 
 def modspec(y, n=2048, norm=None):
-    return ModulationSpectrum(n=n, norm=norm)(y)
+    return ModSpec(n=n, norm=norm)(y)

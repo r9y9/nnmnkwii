@@ -1,7 +1,9 @@
 from __future__ import with_statement, print_function, absolute_import
 
-from nnmnkwii.functions.mlpg import build_win_mats
-from nnmnkwii.functions.mlpg import mlpg_numpy
+from nnmnkwii import functions as F
+
+# TODO: should this be exported?
+from nnmnkwii.functions._impl.mlpg import build_win_mats
 
 from torch.autograd import Function
 import torch
@@ -41,7 +43,7 @@ class MLPG(Function):
 
         mean_frames_np = mean_frames.numpy()
         variance_frames_np = variance_frames.numpy()
-        y = mlpg_numpy(mean_frames_np, variance_frames_np, self.windows)
+        y = F.mlpg(mean_frames_np, variance_frames_np, self.windows)
         y = torch.from_numpy(y.astype(np.float32))
         return y
 

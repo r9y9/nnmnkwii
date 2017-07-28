@@ -73,7 +73,7 @@ def build_poe(b_frames, tau_frames, win_mats, sdw=None):
     return b, prec
 
 
-def mlpg_numpy(mean_frames, variance_frames, windows):
+def mlpg(mean_frames, variance_frames, windows):
     """Numpy implementation of MLPG
     """
     T, D = mean_frames.shape
