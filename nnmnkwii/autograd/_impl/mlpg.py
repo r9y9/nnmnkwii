@@ -60,18 +60,20 @@ class MLPG(Function):
 
             # R: \sum_{l} W_{l}^{T}P_{l}W_{l}
             R = bm.zeros(sdw, sdw, T)  # overwritten in the loop
+
+            # dtype = np.float64 for bandmat
+            precisions = np.zeros((len(self.windows), T), dtype=np.float64)
+
             for win_idx, win_mat in enumerate(win_mats):
-                # cast to float64 for bandmat
-                precisions = 1 / \
-                    variance_frames[:, win_idx * self.static_dim +
-                                    d].numpy().astype(np.float64)
+                precisions[win_idx] = 1 / \
+                    variance_frames[:, win_idx * self.static_dim + d].numpy()
 
                 bm.dot_mm_plus_equals(win_mat.T, win_mat,
-                                      target_bm=R, diag=precisions)
+                                      target_bm=R, diag=precisions[win_idx])
 
             for win_idx, win_mat in enumerate(win_mats):
                 # r: W_{l}^{T}P_{l}
-                r = bm.dot_mm(win_mat.T, bm.diag(precisions))
+                r = bm.dot_mm(win_mat.T, bm.diag(precisions[win_idx]))
 
                 # grad_{d, l} = R^{-1r}
                 grad = np.linalg.solve(R.full(), r.full())
