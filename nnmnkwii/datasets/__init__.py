@@ -1,3 +1,21 @@
+"""
+Dataset abstractions
+====================
+
+.. autoclass:: DataSource
+    :members:
+
+.. autoclass:: Dataset
+    :members:
+
+.. autoclass:: BatchDataset
+    :members:
+
+.. autoclass:: IncrementalDataset
+    :members:
+
+"""
+
 from __future__ import with_statement, print_function, absolute_import
 
 import numpy as np
@@ -5,9 +23,15 @@ import numpy as np
 
 class DataSource(object):
     def collect_files(self):
+        """Collect data source files
+        """
         raise NotImplementedError
 
     def process_file(self, path):
+        """Process file
+
+        This should be called while processing collected data.
+        """
         raise NotImplementedError
 
 
@@ -23,6 +47,8 @@ class Dataset(object):
 
 
 class BatchDataset(Dataset):
+    """Dataset that loads entire data into memory
+    """
     def __init__(self,
                  data_source,
                  framewise=True,

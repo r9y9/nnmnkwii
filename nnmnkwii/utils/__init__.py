@@ -1,3 +1,13 @@
+"""
+Utilities
+=========
+
+.. autosummary::
+   :toctree: generated/
+
+   trim_zeros_frames
+"""
+
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -22,6 +32,19 @@ def remove_zeros_frames(x):
 
 
 def trim_zeros_frames(x):
+    """Remove trailling zeros frames
+
+    Parameters
+    ----------
+    x : numpy.ndarray, shape: ``(N,T,D)``
+        Input 3d tensor
+
+    Returns
+    -------
+
+    y : Trimmed 3D tensor
+    """
+
     T, D = x.shape
     s = np.sum(x, axis=1)
     T_trimed = np.sum([s > 0])

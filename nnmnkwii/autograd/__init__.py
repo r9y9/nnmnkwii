@@ -1,4 +1,12 @@
-"""Autograd functions operating on torch variables
+"""
+Autograd functions
+==================
+
+.. autosummary::
+    :toctree: generated/
+
+    mlpg
+    modspec
 """
 
 from __future__ import with_statement, print_function, absolute_import

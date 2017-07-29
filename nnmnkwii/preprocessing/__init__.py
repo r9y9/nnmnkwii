@@ -1,9 +1,12 @@
-from __future__ import division, print_function, absolute_import
-
-"""Commonly used preprocessing algorithms
-
-All algotirhms should take inputs as a 3D tensor, and returns processed 3D tensor.
 """
+Preprocessing algorithms
+======================================
+
+All algotirhms should take inputs as a 3D tensor, and returns processed
+3D tensor.
+"""
+
+from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.utils import dimention_wise_delta, trim_zeros_frames
 import numpy as np

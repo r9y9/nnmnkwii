@@ -1,4 +1,12 @@
-"""Functions operating on numpy arrays
+"""
+Functions operating on numpy arrays
+===================================
+
+.. autosummary::
+    :toctree: generated/
+
+    mlpg
+    modspec
 """
 
 from __future__ import with_statement, print_function, absolute_import
