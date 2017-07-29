@@ -15,6 +15,12 @@ def dimention_wise_delta(x, win):
     return y
 
 
+def remove_zeros_frames(x):
+    T, D = x.shape
+    s = np.sum(x, axis=1)
+    return x[s > 0]
+
+
 def trim_zeros_frames(x):
     T, D = x.shape
     s = np.sum(x, axis=1)
