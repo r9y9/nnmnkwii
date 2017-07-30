@@ -25,13 +25,13 @@ def dimention_wise_delta(x, win):
     return y
 
 
-def remove_zeros_frames(x):
+def remove_zeros_frames(x, eps=1e-7):
     T, D = x.shape
     s = np.sum(x, axis=1)
-    return x[s > 0]
+    return x[s > eps]
 
 
-def trim_zeros_frames(x):
+def trim_zeros_frames(x, eps=1e-7):
     """Remove trailling zeros frames
 
     Parameters
@@ -46,8 +46,8 @@ def trim_zeros_frames(x):
     """
 
     T, D = x.shape
-    s = np.sum(x, axis=1)
-    T_trimed = np.sum([s > 0])
+    s = np.sum(np.abs(x), axis=1)
+    T_trimed = np.sum([s > eps])
     assert T_trimed <= T
     return x[:T_trimed]
 
