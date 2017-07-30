@@ -1,0 +1,30 @@
+# https://hub.docker.com/r/library/python/tags/
+box: python
+
+build:
+  steps:
+    - script:
+        name: setup environment
+        code: |
+          wget http://repo.continuum.io/miniconda/Miniconda3-3.8.3-Linux-x86_64.sh -O miniconda.sh;
+          bash miniconda.sh -b -p $HOME/miniconda
+          export PATH="$HOME/miniconda/bin:$PATH"
+          conda config --set always_yes yes --set changeps1 no
+          conda update -q conda
+          conda create -q -n test-environment "python=3.6" numpy cython nose
+          source activate test-environment
+
+    - script:
+        name: pip install pytorch
+        code: |
+          pip install http://download.pytorch.org/whl/cu80/torch-0.1.12.post2-cp36-cp36m-linux_x86_64.whl
+
+    - script:
+        name: pip install
+        code: |
+          pip install -e .
+
+    - script:
+        name: nosetests
+        code: |
+          nosetests  --nocapture -v
