@@ -20,6 +20,91 @@ import re
 # TODO: is this really required?
 from matplotlib import mlab
 
+# TODO: consider two label alignmetn format
+
+
+class HTSLabelFile(object):
+    """Memory representation for HTS-style context labels file
+
+    Attributes:
+        frame_shift_in_ms (int): Frame shift in micro seconds
+        start_times (ndarray): Start times
+        end_times (ndarray): End times
+        contexts (nadarray): Contexts.
+    """
+
+    def __init__(self, frame_shift_in_micro_sec=50000):
+        self.start_times = []
+        self.end_times = []
+        self.contexts = []
+        self.frame_shift_in_micro_sec = frame_shift_in_micro_sec
+
+    def __len__(self):
+        return len(self.start_times)
+
+    def __getitem__(self, idx):
+        return self.start_times[idx], self.end_times[idx], self.contexts[idx]
+
+    def __str__(self):
+        ret = ""
+        for s, e, context in self:
+            ret += "{} {} {}\n".format(s, e, context)
+        return ret
+
+    def load(self, path):
+        with open(path) as f:
+            lines = f.readlines()
+
+        start_times = np.empty(len(lines), dtype=np.int)
+        end_times = np.empty(len(lines), dtype=np.int)
+        contexts = []
+        # TODO: consider comments?
+        for idx, line in enumerate(lines):
+            start_time, end_time, context = line[:-1].split(" ")
+            start_times[idx] = int(start_time)
+            end_times[idx] = int(end_time)
+            contexts.append(context)
+
+        self.start_times = start_times
+        self.end_times = end_times
+        self.contexts = np.array(contexts)
+
+    def silence_label_indices(self, regex=None):
+        if regex is None:
+            regex = re.compile(".*-sil+.*")
+        return np.where(list(map(regex.match, self.contexts)))
+
+    def silence_frame_indices(self, regex=None):
+        if regex is None:
+            regex = re.compile(".*-sil+.*")
+        indices = self.silence_label_indices(regex)
+        if len(indices[0]) == 0:
+            return np.empty(0)
+        s = self.start_times[indices] // self.frame_shift_in_micro_sec
+        e = self.end_times[indices] // self.frame_shift_in_micro_sec
+        return np.unique(np.concatenate(
+            [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int)
+
+    def num_frames(self):
+        return self.end_times[-1] // self.frame_shift_in_ms
+
+
+def load(path, frame_shift_in_micro_sec=50000):
+    """Load HTS-style label file
+
+    Args:
+        path (str): Path of file.
+        frame_shift_in_micro_sec (optional[int]): Frame shift in micro seconds.
+            Default is 50000.
+
+    Returns:
+        labels (HTSLabelFile): Instance of HTSLabelFile.
+    """
+    labels = HTSLabelFile(frame_shift_in_micro_sec)
+    labels.load(path)
+
+    return labels
+
 
 def is_state_alignment_label(file_name):
     with open(file_name) as f:
@@ -238,7 +323,6 @@ def load_labels_with_phone_alignment(file_name,
     # TODO: this is really ugly
     label_feature_matrix = np.empty((100000, dimension))
 
-    ph_count = 0
     label_feature_index = 0
     with open(file_name) as f:
         lines = f.readlines()
@@ -246,7 +330,7 @@ def load_labels_with_phone_alignment(file_name,
     if subphone_features == "coarse_coding":
         cc_features = compute_coarse_coding_features()
 
-    for line in lines:
+    for idx, line in enumerate(lines):
         line = line.strip()
         if len(line) < 1:
             continue
@@ -258,11 +342,10 @@ def load_labels_with_phone_alignment(file_name,
         # to do - support different frame shift - currently hardwired to 5msec
         # currently under beta testing: support different frame shift
         if manual_dur_data is not None:
-            frame_number = manual_dur_data[ph_count]
+            frame_number = manual_dur_data[idx]
         else:
             frame_number = int((end_time - start_time) / 50000)
 
-        ph_count = ph_count + 1
         label_binary_vector = pattern_matching_binary(
             binary_dict, full_label)
 
@@ -371,6 +454,7 @@ def load_labels_with_state_alignment(file_name,
         end_time = int(temp_list[1])
         full_label = temp_list[2]
         # remove state information [k]
+        assert full_label[-1] == "]"
         full_label_length = len(full_label) - 3
         state_index = full_label[full_label_length + 1]
 
