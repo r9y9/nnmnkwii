@@ -17,9 +17,6 @@ from __future__ import division, print_function, absolute_import
 import numpy as np
 import re
 
-# TODO: is this really required?
-from matplotlib import mlab
-
 # TODO: consider two label alignmetn format
 
 
@@ -168,9 +165,10 @@ def compute_coarse_coding_features(num_states=3, npoints=600):
 
     sigma = 0.4
 
-    cc_features[0, :] = mlab.normpdf(x1, mu1, sigma)
-    cc_features[1, :] = mlab.normpdf(x2, mu2, sigma)
-    cc_features[2, :] = mlab.normpdf(x3, mu3, sigma)
+    from scipy.stats import norm
+    cc_features[0, :] = norm(mu1, sigma).pdf(x1)
+    cc_features[1, :] = norm(mu2, sigma).pdf(x2)
+    cc_features[2, :] = norm(mu3, sigma).pdf(x3)
 
     return cc_features
 
