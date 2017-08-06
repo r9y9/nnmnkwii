@@ -3,9 +3,23 @@ HTS IO
 ======
 
 The code here is initally taken from merlin/src/label_normalisation.py and
-refactored to bestateless, functional APIs.
+refactored to be stateless and functional APIs.
 
 https://github.com/CSTR-Edinburgh/merlin
+
+.. autosummary::
+    :toctree: generated/
+
+    load
+    load_question_set
+    linguistic_features
+    durations_features
+
+Classes
+-------
+
+.. autoclass:: HTSLabelFile
+    :members:
 """
 
 # TODO: should define data structure that represents full-context labels?
@@ -48,7 +62,15 @@ class HTSLabelFile(object):
             ret += "{} {} {}\n".format(s, e, context)
         return ret
 
+    def __repr__(self):
+        return str(self)
+
     def load(self, path):
+        """Load labels from file
+
+        Args:
+            path (str): File path
+        """
         with open(path) as f:
             lines = f.readlines()
 
@@ -67,27 +89,87 @@ class HTSLabelFile(object):
         self.contexts = np.array(contexts)
 
     def silence_label_indices(self, regex=None):
+        """Returns silence label indices
+
+        Args:
+            regex (re(optional)): Compiled regex to find silence labels.
+
+        Returns:
+            1darray: Silence label indices
+        """
         if regex is None:
             regex = re.compile(".*-sil+.*")
-        return np.where(list(map(regex.match, self.contexts)))
+        return np.where(list(map(regex.match, self.contexts)))[0]
+
+    def silence_phone_indices(self, regex=None):
+        """Returns phone-level frame indices
+
+        Args:
+            regex (re(optional)): Compiled regex to find silence labels.
+
+        Returns:
+            1darray: Silence label indices
+        """
+        if regex is None:
+            regex = re.compile(".*-sil+.*")
+        state_number = 5  # TODO
+        return np.unique(self.silence_label_indices(regex) // state_number)
 
     def silence_frame_indices(self, regex=None):
+        """Returns silence frame indices
+
+        Similar to :func:`silence_label_indices`, but returns indices in frame-level.
+
+        Args:
+            regex (re(optional)): Compiled regex to find silence labels.
+
+        Returns:
+            1darray: Silence frame indices
+        """
         if regex is None:
             regex = re.compile(".*-sil+.*")
         indices = self.silence_label_indices(regex)
-        if len(indices[0]) == 0:
+        if len(indices) == 0:
             return np.empty(0)
         s = self.start_times[indices] // self.frame_shift_in_micro_sec
         e = self.end_times[indices] // self.frame_shift_in_micro_sec
         return np.unique(np.concatenate(
             [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int)
 
+    def is_state_alignment_label(self):
+        return self.contexts[0][-1] == ']' and self.contexts[0][-3] == '['
+
+    def num_states(self):
+        """Returnes number of states exclusing special begin/end states.
+
+        Returns
+        """
+        if not self.is_state_alignment_label():
+            return 1
+
+        assert len(self) > 0
+        initial_state_num = int(self.contexts[0][-2])
+        largest_state_num = initial_state_num
+        for label in self.contexts[1:]:
+            n = int(label[-2])
+            if n > largest_state_num:
+                largest_state_num = n
+            else:
+                break
+        return largest_state_num - initial_state_num + 1
+
+    def num_phones(self):
+        if self.is_state_alignment_label():
+            return len(self) // self.num_states()
+        else:
+            return len(self)
+
     def num_frames(self):
-        return self.end_times[-1] // self.frame_shift_in_ms
+        return self.end_times[-1] // self.frame_shift_in_micro_sec
 
 
 def load(path, frame_shift_in_micro_sec=50000):
-    """Load HTS-style label file
+    """Load HTS-style label file and preserve it in memory.
 
     Args:
         path (str): Path of file.
@@ -308,7 +390,7 @@ def load_question_set(qs_file_name):
     return binary_dict, continuous_dict
 
 
-def load_labels_with_phone_alignment(file_name,
+def load_labels_with_phone_alignment(hts_labels,
                                      binary_dict,
                                      continuous_dict,
                                      subphone_features=None,
@@ -318,24 +400,18 @@ def load_labels_with_phone_alignment(file_name,
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
 
-    # TODO: this is really ugly
-    label_feature_matrix = np.empty((100000, dimension))
+    assert isinstance(hts_labels, HTSLabelFile)
+    if add_frame_features:
+        label_feature_matrix = np.empty((hts_labels.num_frames(), dimension))
+    else:
+        label_feature_matrix = np.empty((hts_labels.num_phones(), dimension))
 
     label_feature_index = 0
-    with open(file_name) as f:
-        lines = f.readlines()
 
     if subphone_features == "coarse_coding":
         cc_features = compute_coarse_coding_features()
 
-    for idx, line in enumerate(lines):
-        line = line.strip()
-        if len(line) < 1:
-            continue
-        temp_list = re.split('\s+', line)
-        start_time = int(temp_list[0])
-        end_time = int(temp_list[1])
-        full_label = temp_list[2]
+    for idx, (start_time, end_time, full_label) in enumerate(hts_labels):
 
         # to do - support different frame shift - currently hardwired to 5msec
         # currently under beta testing: support different frame shift
@@ -412,7 +488,7 @@ def load_labels_with_phone_alignment(file_name,
     return label_feature_matrix
 
 
-def load_labels_with_state_alignment(file_name,
+def load_labels_with_state_alignment(hts_labels,
                                      binary_dict,
                                      continuous_dict,
                                      subphone_features=None,
@@ -421,36 +497,24 @@ def load_labels_with_state_alignment(file_name,
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
 
+    assert isinstance(hts_labels, HTSLabelFile)
     if add_frame_features:
-        assert dimension == dict_size + frame_feature_size
-    elif subphone_features is not None:
-        assert dimension == dict_size + frame_feature_size
+        label_feature_matrix = np.empty((hts_labels.num_frames(), dimension))
     else:
-        assert dimension == dict_size
+        label_feature_matrix = np.empty((hts_labels.num_phones(), dimension))
 
-    label_feature_matrix = np.empty((100000, dimension))
     label_feature_index = 0
 
     # TODO
     state_number = 5
 
-    with open(file_name) as f:
-        utt_labels = f.readlines()
-
     if subphone_features == "coarse_coding":
         cc_features = compute_coarse_coding_features()
 
+    frame_shift_in_micro_sec = hts_labels.frame_shift_in_micro_sec
     phone_duration = 0
     state_duration_base = 0
-    for current_index, line in enumerate(utt_labels):
-        line = line.strip()
-
-        if len(line) < 1:
-            continue
-        temp_list = re.split('\s+', line)
-        start_time = int(temp_list[0])
-        end_time = int(temp_list[1])
-        full_label = temp_list[2]
+    for current_index, (start_time, end_time, full_label) in enumerate(hts_labels):
         # remove state information [k]
         assert full_label[-1] == "]"
         full_label_length = len(full_label) - 3
@@ -460,7 +524,7 @@ def load_labels_with_state_alignment(file_name,
         state_index_backward = 6 - state_index  # TODO
         full_label = full_label[0:full_label_length]
 
-        frame_number = int((end_time - start_time) / 50000)
+        frame_number = (end_time - start_time) // frame_shift_in_micro_sec
 
         if state_index == 1:
             current_frame_number = 0
@@ -478,10 +542,8 @@ def load_labels_with_state_alignment(file_name,
                 [label_binary_vector, label_continuous_vector], axis=1)
 
             for i in range(state_number - 1):
-                line = utt_labels[current_index + i + 1].strip()
-                temp_list = re.split('\s+', line)
-                phone_duration += int(
-                    (int(temp_list[1]) - int(temp_list[0])) / 50000)
+                s, e, _ = hts_labels[current_index + i + 1]
+                phone_duration += (e - s) // frame_shift_in_micro_sec
 
             if subphone_features == "coarse_coding":
                 cc_feat_matrix = extract_coarse_coding_features_relative(
@@ -492,7 +554,7 @@ def load_labels_with_state_alignment(file_name,
                 (frame_number, dict_size + frame_feature_size))
             for i in range(frame_number):
                 current_block_binary_array[i,
-                                           0:dict_size] = label_vector
+                                           0: dict_size] = label_vector
 
                 if subphone_features == 'full':
                     # Zhizheng's original 9 subphone features:
@@ -576,7 +638,7 @@ def load_labels_with_state_alignment(file_name,
                     assert False
 
             label_feature_matrix[label_feature_index:label_feature_index +
-                                 frame_number, ] = current_block_binary_array
+                                 frame_number] = current_block_binary_array
             label_feature_index = label_feature_index + frame_number
         elif subphone_features == 'state_only' and state_index == state_number:
             current_block_binary_array = np.zeros(
@@ -601,80 +663,69 @@ def load_labels_with_state_alignment(file_name,
     return label_feature_matrix
 
 
-def load_label(file_name, *args, **kwargs):
-    """Load HTS-style full-context label and convert it to a numpy array which
-    represents linguistic features.
+def linguistic_features(hts_labels, *args, **kwargs):
+    """Compute linguistic features from HTS-style full-context labels
 
-    This converts HTS-style full-context label to it's numeric representation
+    This converts HTS-style full-context labels to it's numeric representation
     given feature extraction regexes which should be constructed from
     HTS-style question set. The input full-context must be aligned with
     phone-level or state-level.
 
     Args:
-        file_name (str): Input full-context label path
+        hts_label (HTSLabelFile): Input full-context label file
         binary_dict (dict): Dictionary used to extract binary features
         continuous_dict (dict): Dictionary used to extrract continuous features
         subphone_features (dict): Type of sub-phone features we use.
         add_frame_features (dict): Whether add frame-level features or not.
 
     Returns:
-        features (ndarray): numpy array representation of linguistic features.
+        ndarray: Numpy array representation of linguistic features.
     """
-    if is_state_alignment_label(file_name):
-        return load_labels_with_state_alignment(file_name, *args, **kwargs)
+    if hts_labels.is_state_alignment_label():
+        return load_labels_with_state_alignment(hts_labels, *args, **kwargs)
     else:
-        return load_labels_with_phone_alignment(file_name, *args, **kwargs)
+        return load_labels_with_phone_alignment(hts_labels, *args, **kwargs)
 
 
-def extract_dur_from_state_alignment_labels(file_name,
+def extract_dur_from_state_alignment_labels(hts_labels,
                                             feature_type="numerical",
                                             unit_size="state",
                                             feature_size="phoneme"):
-    # TODO
-    state_number = 5
+    if not feature_type in ["binary", "numerical"]:
+        raise ValueError("Not supported")
+    if not unit_size in ["phoneme", "state"]:
+        raise ValueError("Not supported")
+    if not feature_size in ["phoneme", "frame"]:
+        raise ValueError("Not supported")
+
+    dur_dim = hts_labels.num_states() if unit_size == "state" else 1
+    if feature_size == "phoneme":
+        dur_feature_matrix = np.empty(
+            (hts_labels.num_phones(), dur_dim), dtype=np.int)
+    else:
+        dur_feature_matrix = np.empty(
+            (hts_labels.num_frames(), dur_dim), dtype=np.int)
+
+    current_dur_array = np.zeros((dur_dim, 1))
+    state_number = hts_labels.num_states()
     dur_dim = state_number
 
-    # ugly
-    if feature_type == "binary":
-        dur_feature_matrix = np.empty((100000, 1))
-    elif feature_type == "numerical":
-        if unit_size == "state":
-            dur_feature_matrix = np.empty((100000, dur_dim))
-            current_dur_array = np.zeros((dur_dim, 1))
-        elif unit_size == "phoneme":
-            dur_feature_matrix = np.empty((100000, 1))
-    else:
-        assert False, "TODO"
-
-    with open(file_name) as f:
-        utt_labels = f.readlines()
-
     dur_feature_index = 0
-    for current_index, line in enumerate(utt_labels):
-        line = line.strip()
-
-        if len(line) < 1:
-            continue
-        temp_list = re.split('\s+', line)
-        start_time = int(temp_list[0])
-        end_time = int(temp_list[1])
-
-        full_label = temp_list[2]
+    for current_index, (start_time, end_time, full_label) in enumerate(hts_labels):
         # remove state information [k]
         full_label_length = len(full_label) - 3
         state_index = full_label[full_label_length + 1]
         state_index = int(state_index) - 1
 
-        frame_number = int((end_time - start_time) / 50000)
+        frame_number = (
+            end_time - start_time) // hts_labels.frame_shift_in_micro_sec
 
         if state_index == 1:
             phone_duration = frame_number
 
             for i in range(state_number - 1):
-                line = utt_labels[current_index + i + 1].strip()
-                temp_list = re.split('\s+', line)
-                phone_duration += int(
-                    (int(temp_list[1]) - int(temp_list[0])) / 50000)
+                s, e, _ = hts_labels[current_index + i + 1]
+                phone_duration += (e - s) // hts_labels.frame_shift_in_micro_sec
 
         if feature_type == "binary":
             current_block_array = np.zeros((frame_number, 1))
@@ -684,7 +735,6 @@ def extract_dur_from_state_alignment_labels(file_name,
                 if state_index == state_number:
                     current_block_array[-1] = 1
             else:
-                # TODO
                 assert False
         elif feature_type == "numerical":
             if unit_size == "state":
@@ -697,7 +747,7 @@ def extract_dur_from_state_alignment_labels(file_name,
             elif unit_size == "phoneme":
                 current_block_array = np.array([phone_duration])
             else:
-                assert False, "TODO"
+                assert False
 
         ### writing into dur_feature_matrix ###
         if feature_size == "frame":
@@ -709,71 +759,60 @@ def extract_dur_from_state_alignment_labels(file_name,
                                1, ] = current_block_array
             dur_feature_index = dur_feature_index + 1
         else:
-            # TODO:
             pass
 
-    dur_feature_matrix = dur_feature_matrix[0:dur_feature_index, ]
+    # dur_feature_matrix = dur_feature_matrix[0:dur_feature_index, ]
     return dur_feature_matrix
 
 
-def extract_dur_from_phone_alignment_labels(file_name,
+def extract_dur_from_phone_alignment_labels(hts_labels,
                                             feature_type="numerical",
                                             unit_size="phoneme",
                                             feature_size="phoneme"):
-    if feature_type == "binary":
-        dur_feature_matrix = np.empty((100000, 1))
-    elif feature_type == "numerical":
-        if unit_size == "phoneme":
-            dur_feature_matrix = np.empty((100000, 1))
-        else:
-            assert False
-
-    with open(file_name) as f:
-        utt_labels = f.readlines()
-
+    if not feature_type in ["binary", "numerical"]:
+        raise ValueError("Not supported")
+    if unit_size != "phoneme":
+        raise ValueError("Not supported")
+    if not feature_size in ["phoneme", "frame"]:
+        raise ValueError("Not supported")
+    if feature_size == "phoneme":
+        dur_feature_matrix = np.empty(
+            (hts_labels.num_phones(), 1), dtype=np.int)
+    else:
+        dur_feature_matrix = np.empty(
+            (hts_labels.num_frames(), 1), dtype=np.int)
     dur_feature_index = 0
-    for current_index, line in enumerate(utt_labels):
-        line = line.strip()
-
-        if len(line) < 1:
-            continue
-        temp_list = re.split('\s+', line)
-        start_time = int(temp_list[0])
-        end_time = int(temp_list[1])
-
-        frame_number = int((end_time - start_time) / 50000)
+    for current_index, (start_time, end_time, _) in enumerate(hts_labels):
+        frame_number = (end_time - start_time) / \
+            hts_labels.frame_shift_in_micro_sec
 
         phone_duration = frame_number
 
         if feature_type == "binary":
             current_block_array = np.zeros((frame_number, 1))
-            if unit_size == "phoneme":
-                current_block_array[-1] = 1
-            else:
-                assert False
+            current_block_array[-1] = 1
         elif feature_type == "numerical":
-            if unit_size == "phoneme":
-                current_block_array = np.array([phone_duration])
+            current_block_array = np.array([phone_duration])
         else:
-            assert False, "TODO"
+            assert False
 
         ### writing into dur_feature_matrix ###
         if feature_size == "frame":
             dur_feature_matrix[dur_feature_index:dur_feature_index +
-                               frame_number, ] = current_block_array
+                               frame_number] = current_block_array
             dur_feature_index = dur_feature_index + frame_number
         elif feature_size == "phoneme":
             dur_feature_matrix[dur_feature_index:dur_feature_index +
-                               1, ] = current_block_array
+                               1] = current_block_array
             dur_feature_index = dur_feature_index + 1
         else:
-            assert False, "TODO"
+            assert False
 
-    dur_feature_matrix = dur_feature_matrix[0:dur_feature_index]
+    # dur_feature_matrix = dur_feature_matrix[0:dur_feature_index]
     return dur_feature_matrix
 
 
-def extract_durations(file_name, *args, **kwargs):
+def duration_features(hts_labels, *args, **kwargs):
     """Extract durations from HTS-style full-context label.
 
     The input full-context must be aligned with phone-level or state-level.
@@ -788,7 +827,7 @@ def extract_durations(file_name, *args, **kwargs):
     Returns:
         duration_features (ndarray): numpy array representation of linguistic features.
     """
-    if is_state_alignment_label(file_name):
-        return extract_dur_from_state_alignment_labels(file_name, *args, **kwargs)
+    if hts_labels.is_state_alignment_label():
+        return extract_dur_from_state_alignment_labels(hts_labels, *args, **kwargs)
     else:
-        return extract_dur_from_phone_alignment_labels(file_name, *args, **kwargs)
+        return extract_dur_from_phone_alignment_labels(hts_labels, *args, **kwargs)
