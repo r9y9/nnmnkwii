@@ -1,3 +1,14 @@
+"""
+Alignment
+=========
+
+.. autoclass:: DTWAligner
+    :members:
+
+.. autoclass:: IterativeDTWAligner
+    :members:
+
+"""
 from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.utils import trim_zeros_frames
@@ -12,6 +23,14 @@ from sklearn.mixture import GaussianMixture
 
 
 class DTWAligner(object):
+    """Align feature matcies
+
+    Attributes:
+        dist (function): Distance function
+        radius (int): Radius
+        verbose (int): Default is 0
+    """
+
     def __init__(self, dist=lambda x, y: norm(x - y), radius=1, verbose=0):
         self.verbose = verbose
         self.dist = dist
@@ -38,6 +57,15 @@ class DTWAligner(object):
 
 
 class IterativeDTWAligner(object):
+    """Align feature matcies iteratively using GMM-based feature conversion
+
+    Attributes:
+        n_iter (int): Number of iterations.
+        dist (function): Distance function
+        radius (int): Radius
+        verbose (int): Default is 0
+    """
+
     def __init__(self, n_iter=3, dist=lambda x, y: norm(x - y), radius=1, verbose=0):
         self.n_iter = n_iter
         self.dist = dist
