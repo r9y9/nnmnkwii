@@ -74,9 +74,56 @@ def build_poe(b_frames, tau_frames, win_mats, sdw=None):
 
 
 def mlpg(mean_frames, variance_frames, windows):
-    """Numpy implementation of MLPG
+    """Numpy implementation of MLPG ``f: (T, D) -> (T, static_dim)``.
+
+    Peforms Maximum Likelihood Parameter Generation (MLPG) algorithm
+    to generate static features from static + dynamic features over
+    time frames. The implementation is heavily inspired by [1]_ and
+    using bandmat_ for efficient computation.
+
+    .. _bandmat: https://github.com/MattShannon/bandmat
+
+    .. [1] M. Shannon, supervised by W. Byrne (2014),
+      Probabilistic acoustic modelling for parametric speech synthesis
+      PhD thesis, University of Cambridge, UK
+
+    Args:
+        mean_frames (2darray): The input features (static + delta).
+            In statistical speech synthesis, these are means of gaussian
+            distributions predicted by neural networks or decision trees.
+        variance_frames (2d or 1darray): Variances (static + delta ) of gaussian
+            distributions over time frames (2d) or global variances (1d).
+            If global variances are given, these will get expanded over frames.
+        windows (list): A sequence of ``(l, u, win_coeff)`` triples, where
+            ``l`` and ``u`` are non-negative integers specifying the left
+            and right extents of the window and `win_coeff` is an array
+            specifying the window coefficients.
+
+    Returns:
+        Generated static features over time
+
+    Examples:
+        >>> from nnmnkwii.functions import mlpg
+        >>> windows = [
+            (0, 0, np.array(1.0)),             # static
+            (1, 1, np.array(-1.0, 0, 1.0)),    # delta
+            (1, 1, np.array([1.0, -2.0, 1.0])) # delta of delta
+            ]
+        >>> T, static_dim = 10, 24
+        >>> mean_frames = np.random.rand(T, static_dim * len(windows))
+        >>> variance_frames = np.random.rand(T, static_dim * len(windows))
+        >>> static_features = mlpg(mean_frames, variance_frames, windows)
+        >>> assert static_features.shape == (T, static_dim)
+
+
+    See also:
+        :func:`nnmnkwii.autograd.mlpg`
+
     """
     T, D = mean_frames.shape
+    # expand variances over frames
+    if variance_frames.ndim == 1 and variance_frames.shape[0] == D:
+        variance_frames = np.tile(variance_frames, (T, 1))
     assert mean_frames.shape == variance_frames.shape
     static_dim = D // len(windows)
 
@@ -86,10 +133,10 @@ def mlpg(mean_frames, variance_frames, windows):
     # workspaces; those will be updated in the following generation loop
     means = np.zeros((T, num_windows))
     precisions = np.zeros((T, num_windows))
-
     # Perform dimention-wise generation
     y = np.zeros((T, static_dim))
     for d in range(static_dim):
+
         for win_idx in range(num_windows):
             means[:, win_idx] = mean_frames[:, win_idx * static_dim + d]
             precisions[:, win_idx] = 1 / \

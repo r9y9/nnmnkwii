@@ -29,12 +29,26 @@ def test_mlpg():
     static_dim = 2
     T = 10
 
-    for windows in _get_windows_set():
+    windows_set = _get_windows_set()
+    for windows in windows_set:
         means = np.random.rand(T, static_dim * len(windows))
         variances = np.tile(np.random.rand(static_dim * len(windows)), (T, 1))
 
         generated = F.mlpg(means, variances, windows)
         assert generated.shape == (T, static_dim)
+
+    # Test variances correctly expanded
+    for windows in windows_set:
+        means = np.random.rand(T, static_dim * len(windows))
+        variances = np.random.rand(static_dim * len(windows))
+        variances_frames = np.tile(variances, (T, 1))
+
+        # Explicitly give variances over frame
+        generated1 = F.mlpg(means, variances_frames, windows)
+        # Give global variances. This will get expanded over frames internally
+        generated2 = F.mlpg(means, variances, windows)
+
+        assert np.allclose(generated1, generated2)
 
 
 def test_modspec_reconstruct():
