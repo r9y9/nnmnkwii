@@ -22,7 +22,7 @@ build:
     - script:
         name: pip install
         code: |
-          pip install -e .
+          pip install -e ".[test]"
 
     - script:
         name: nosetests

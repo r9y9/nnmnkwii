@@ -24,7 +24,7 @@ setup(
     tests_require=['nose', 'coverage'],
     extras_require={
         'docs': ['numpydoc', 'sphinx_rtd_theme'],
-        'test': ['nose'],
+        'test': ['nose', 'pysptk', 'pyworld'],
     },
     classifiers=[
         "Operating System :: Microsoft :: Windows",
