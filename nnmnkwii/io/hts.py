@@ -1,17 +1,3 @@
-"""
-HTS IO
-======
-
-.. autosummary::
-    :toctree: generated/
-
-    load
-    load_question_set
-
-.. autoclass:: HTSLabelFile
-    :members:
-"""
-
 # TODO: should define data structure that represents full-context labels?
 # and add a method something likes `asarray`? This design can avoid loading
 # label twice to compute both linguistic and duration features.
@@ -35,7 +21,8 @@ class HTSLabelFile(object):
 
     Examples:
         >>> from nnmnkwii.io import hts
-        >>> labels = hts.load("path_to_labels.lab")
+        >>> from nnmnkwii.util import example_label_file
+        >>> labels = hts.load(example_label_file())
     """
 
     def __init__(self, frame_shift_in_micro_sec=50000):
@@ -176,7 +163,7 @@ class HTSLabelFile(object):
 
 
 def load(path, frame_shift_in_micro_sec=50000):
-    """Load HTS-style label file and preserve it in memory.
+    """Load HTS-style label file
 
     Args:
         path (str): Path of file.
@@ -222,6 +209,8 @@ def wildcards2regex(question, convert_number_pattern=False):
 def load_question_set(qs_file_name):
     """Load HTS-style question and convert it to binary/continuous feature
     extraction regexes.
+
+    This code was taken from Merin.
 
     Args:
         qs_file_name (str): Input HTS-style question file path

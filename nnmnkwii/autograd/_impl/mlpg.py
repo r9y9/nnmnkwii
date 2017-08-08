@@ -14,16 +14,40 @@ import bandmat as bm
 # Note: this is written for pytorch 0.1.12 and may not compatible with
 # pytorch master.
 class MLPG(Function):
-    """Maximum likelihood parameter generation (MLPG) as an autograd function.
+    """MLPG as an autograd function ``f : (T, D) -> (T, static_dim)``.
 
-    f : (T, D) -> (T, static_dim).
+    Let :math:`d` is the index of static features, :math:`l` is the index
+    of windows, gradients :math:`g_{d,l}` can be computed by:
 
-    Let `d` is the index of static features, `l` is the index of windows,
-    gradients `grad_{d,l}` can be computed by:
+    .. math::
 
-    grad_{d,l} = (\sum_{l} W_{l}^{T}P_{l}W_{l})^{-1} W_{l}^{T}P_{l}
+        g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}
 
-    `W_{l}` is a window matrix and `P_{l}` is a precision matrix.
+    where :math:`W_{l}` is a banded window matrix and :math:`P_{d,l}` is a
+    diagonal precision matrix.
+
+    Assuming the variances are diagonals, MLPG can be performed in
+    dimention-by-dimention efficiently.
+
+    Let :math:`o_{d}` be ``T`` dimentional back-propagated gradients, the
+    resulting gradients :math:`g'_{l,d}` to be propagated are
+    computed as follows:
+
+    .. math::
+
+        g'_{d,l} = o_{d}^{T} g_{d,l}
+
+    Attributes:
+        static_dim (int): number of static dimentions
+        variance_frames (torch.FloatTensor): Variances same as in
+            :func:`nnmnkwii.functions.mlpg`.
+        windows (list): same as in :func:`nnmnkwii.functions.mlpg`.
+
+    TODO:
+        CUDA implementation
+
+    See also:
+        :func:`nnmnkwii.functions.mlpg`.
     """
 
     def __init__(self, static_dim, variance_frames, windows):
@@ -58,7 +82,7 @@ class MLPG(Function):
         for d in range(self.static_dim):
             sdw = max([win_mat.l + win_mat.u for win_mat in win_mats])
 
-            # R: \sum_{l} W_{l}^{T}P_{l}W_{l}
+            # R: \sum_{l} W_{l}^{T}P_{d,l}W_{l}
             R = bm.zeros(sdw, sdw, T)  # overwritten in the loop
 
             # dtype = np.float64 for bandmat
@@ -72,7 +96,7 @@ class MLPG(Function):
                                       target_bm=R, diag=precisions[win_idx])
 
             for win_idx, win_mat in enumerate(win_mats):
-                # r: W_{l}^{T}P_{l}
+                # r: W_{l}^{T}P_{d,l}
                 r = bm.dot_mm(win_mat.T, bm.diag(precisions[win_idx]))
 
                 # grad_{d, l} = R^{-1r}
@@ -87,6 +111,25 @@ class MLPG(Function):
 
 
 def mlpg(mean_frames, variance_frames, windows):
+    """User interface for autograd MLPG
+
+    The parameters are almost same as :func: `mlpg.functions.mlpg` expects.
+    The differences are:
+
+    - The function assumes ``mean_frames`` as ``torch.Variable`` instead
+      of ``ndarray``.
+    - The fucntion assumes ``variances_frames`` as ``torch.FloatTensor``　
+      instead of `ndarray`.
+
+    Args:
+        mean_frames (torch.Variable): Means
+        variance_frames (torch.FloatTensor): Variances
+        windows (list): A sequence of window specification
+
+    See also:
+        :func:`nnmnkwii.functions.mlpg`
+
+    """
     T, D = mean_frames.size()
     assert mean_frames.size() == variance_frames.size()
     static_dim = D // len(windows)

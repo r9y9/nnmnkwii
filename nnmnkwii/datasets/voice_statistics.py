@@ -55,6 +55,8 @@ class VoiceStatisticsWavDataSource(DataSource):
         self.max_files_per_dir = max_files_per_dir
 
     def collect_files(self):
+        """Collect voice statistice wav files with labels
+        """
         paths = []
         labels = []
         for speaker in self.speakers:

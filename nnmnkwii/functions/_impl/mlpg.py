@@ -103,18 +103,17 @@ def mlpg(mean_frames, variance_frames, windows):
         Generated static features over time
 
     Examples:
-        >>> from nnmnkwii.functions import mlpg
+        >>> from nnmnkwii import functions as F
         >>> windows = [
-            (0, 0, np.array(1.0)),             # static
-            (1, 1, np.array(-1.0, 0, 1.0)),    # delta
-            (1, 1, np.array([1.0, -2.0, 1.0])) # delta of delta
-            ]
+        ...         (0, 0, np.array([1.0])),            # static
+        ...         (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
+        ...         (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
+        ...     ]
         >>> T, static_dim = 10, 24
         >>> mean_frames = np.random.rand(T, static_dim * len(windows))
         >>> variance_frames = np.random.rand(T, static_dim * len(windows))
-        >>> static_features = mlpg(mean_frames, variance_frames, windows)
+        >>> static_features = F.mlpg(mean_frames, variance_frames, windows)
         >>> assert static_features.shape == (T, static_dim)
-
 
     See also:
         :func:`nnmnkwii.autograd.mlpg`

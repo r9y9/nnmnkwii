@@ -1,19 +1,3 @@
-"""
-Merlin frontend
-===============
-
-The code here is initally taken from merlin/src/label_normalisation.py and
-refactored to be stateless and functional APIs.
-
-https://github.com/CSTR-Edinburgh/merlin
-
-.. autosummary::
-    :toctree: generated/
-
-    linguistic_features
-    duration_features
-
-"""
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -417,7 +401,7 @@ def linguistic_features(hts_labels, *args, **kwargs):
     phone-level or state-level.
 
     Args:
-        hts_label (:obj:`hts.HTSLabelFile`): Input full-context label file
+        hts_label (hts.HTSLabelFile): Input full-context label file
         binary_dict (dict): Dictionary used to extract binary features
         continuous_dict (dict): Dictionary used to extrract continuous features
         subphone_features (dict): Type of sub-phone features we use.

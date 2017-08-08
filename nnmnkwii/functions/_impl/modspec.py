@@ -10,3 +10,11 @@ def modspec(y, n=4096, norm=None):
     assert s_complex.shape[0] == n // 2 + 1
     R, I = s_complex.real, s_complex.imag
     return R * R + I * I
+
+
+def modphase(y, n=4096, norm=None):
+    T, D = y.shape
+
+    # DFT against time axis
+    s_complex = np.fft.rfft(y, n=n, axis=0, norm=norm)
+    return np.exp(1.j * np.angle(s_complex))

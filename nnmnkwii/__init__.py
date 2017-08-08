@@ -1,7 +1,6 @@
 # coding: utf-8
 
-"""Data abstractions, preprocessing and autograd functions for machine learning
-on speech designed for interactive prototyping.
+"""Library to build speech synthesis systems designed for prototyping.
 
 https://github.com/r9y9/nnmnkwii
 """

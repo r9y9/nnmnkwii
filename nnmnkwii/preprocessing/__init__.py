@@ -1,14 +1,3 @@
-"""
-Preprocessing
-=============
-
-.. autoclass:: DeltaAppender
-    :members:
-
-.. automodule:: nnmnkwii.preprocessing.alignment
-.. automodule:: nnmnkwii.preprocessing.f0
-"""
-
 from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.util import dimention_wise_delta, trim_zeros_frames

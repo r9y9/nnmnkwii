@@ -1,6 +1,6 @@
 """
-Visualization utilities
-=======================
+Display
+=======
 
 .. note:
     comming soon

@@ -1,10 +1,3 @@
-"""
-GMM voice conversion
-====================
-
-.. autoclass:: MLPG
-    :members:
-"""
 import numpy as np
 from sklearn.mixture import GaussianMixture
 from sklearn.mixture.gaussian_mixture import _compute_precision_cholesky

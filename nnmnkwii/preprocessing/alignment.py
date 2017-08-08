@@ -1,14 +1,3 @@
-"""
-Alignment
-=========
-
-.. autoclass:: DTWAligner
-    :members:
-
-.. autoclass:: IterativeDTWAligner
-    :members:
-
-"""
 from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.util import trim_zeros_frames

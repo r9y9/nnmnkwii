@@ -1,16 +1,3 @@
-"""
-F0
-==
-
-F0-specific pre-processing algithrms.
-
-.. autosummary::
-   :toctree: generated/
-
-   interp1d
-
-"""
-
 from __future__ import with_statement, print_function, absolute_import
 
 import numpy as np

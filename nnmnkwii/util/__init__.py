@@ -1,30 +1,3 @@
-"""
-Utilities
-=========
-
-Utils
------
-
-.. autosummary::
-   :toctree: generated/
-
-   apply_delta_windows
-   trim_zeros_frames
-   remove_zeros_frames
-   adjast_frame_length
-
-
-Files
------
-
-.. autosummary::
-   :toctree: generated/
-
-   example_label_file
-   example_audio_file
-   example_linguistic_acoustic_pairs_file
-"""
-
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
@@ -64,10 +37,10 @@ def apply_delta_windows(x, windows):
     Examples:
         >>> from nnmnkwii.util import apply_delta_windows
         >>> windows = [
-        ...    (0, 0, np.array(1.0)),             # static
-        ...    (1, 1, np.array(-1.0, 0, 1.0)),    # delta
-        ...    (1, 1, np.array([1.0, -2.0, 1.0])) # delta of delta
-        ...    ]
+        ...         (0, 0, np.array([1.0])),            # static
+        ...         (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
+        ...         (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
+        ...     ]
         >>> T, static_dim = 10, 24
         >>> x = np.random.rand(T, static_dim)
         >>> y = apply_delta_windows(x, windows)
