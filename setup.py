@@ -19,12 +19,12 @@ setup(
         'bandmat',
         'fastdtw',
         'sklearn',
-        'six'
+        'pysptk'
     ],
     tests_require=['nose', 'coverage'],
     extras_require={
         'docs': ['numpydoc', 'sphinx_rtd_theme'],
-        'test': ['nose', 'pysptk', 'pyworld'],
+        'test': ['nose', 'pyworld'],
     },
     classifiers=[
         "Operating System :: Microsoft :: Windows",
