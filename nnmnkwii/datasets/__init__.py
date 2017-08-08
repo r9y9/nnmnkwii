@@ -93,14 +93,16 @@ class Dataset(DatasetMixIn):
         N = len(self)
         X = np.zeros((N, T, D), dtype=np.float32)
 
+        lengths = np.zeros(N, dtype=np.int)
         for idx, paths in enumerate(collected_files):
             x = self.data_source.collect_features(*paths)
             if len(x) > max_num_frames:
                 raise RuntimeError("""
 Num frames {} exceeded: {}. Try larger value for max_num_frames.""".format(
                     len(x), max_num_frames))
-                # TODO: segmentation algorithm
+                # TODO: segmentation algorithm?
             X[idx][:len(x), :] = x
+            lengths[idx] = len(x)
         return X
 
 
