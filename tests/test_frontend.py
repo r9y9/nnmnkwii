@@ -1,3 +1,5 @@
+from __future__ import division, print_function, absolute_import
+
 from nnmnkwii.io import hts
 from nnmnkwii.frontend import merlin as fe
 

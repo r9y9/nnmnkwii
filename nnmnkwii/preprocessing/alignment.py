@@ -11,7 +11,7 @@ Alignment
 """
 from __future__ import division, print_function, absolute_import
 
-from nnmnkwii.utils import trim_zeros_frames
+from nnmnkwii.util import trim_zeros_frames
 from nnmnkwii.baseline.gmm import MLPG
 
 from fastdtw import fastdtw

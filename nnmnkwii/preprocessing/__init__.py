@@ -11,7 +11,7 @@ Preprocessing
 
 from __future__ import division, print_function, absolute_import
 
-from nnmnkwii.utils import dimention_wise_delta, trim_zeros_frames
+from nnmnkwii.util import dimention_wise_delta, trim_zeros_frames
 import numpy as np
 
 
