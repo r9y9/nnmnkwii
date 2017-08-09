@@ -9,8 +9,10 @@ def merlin_post_filter(mgc, alpha,
                        coef=1.4, weight=None):
     """Post-filter used in Merlin.
 
-    This is a :obj:`pysptk` translation of Merlin's post filter written with
+    This is a :obj:`pysptk` translation of `Merlin's post filter`_ written with
     SPTK CLI tools.
+
+    .. _Merlin's post filter: https://goo.gl/jK5Hdd
 
     Args:
         mgc (2darray): mel-generalized cepstrum
@@ -31,7 +33,8 @@ def merlin_post_filter(mgc, alpha,
         >>> mgc_filtered = merlin_post_filter(mgc, 0.58)
         >>> assert mgc.shape == mgc_filtered.shape
 
-    .. todo: Reference paper.
+    TODO:
+        Reference paper.
 
     """
     _, D = mgc.shape
