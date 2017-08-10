@@ -1,6 +1,6 @@
 from __future__ import with_statement, print_function, absolute_import
 
-from nnmnkwii.datasets import DataSource
+from nnmnkwii.datasets import FileDataSource
 
 from os.path import join, splitext, isdir
 from os import listdir
@@ -11,7 +11,7 @@ def _name_to_dirname(name):
     return join("cmu_us_{}_arctic".format(name), "wav")
 
 
-class CMUArcticWavDataSource(DataSource):
+class CMUArcticWavDataSource(FileDataSource):
     def __init__(self, data_root, speakers, labelmap=None, max_files=2):
         self.data_root = data_root
         self.speakers = speakers
@@ -21,6 +21,7 @@ class CMUArcticWavDataSource(DataSource):
                 labelmap[speaker] = idx
         self.labelmap = labelmap
         self.max_files = max_files
+        self.labels = None
 
     def collect_files(self):
         speaker_dirs = list(
@@ -39,4 +40,5 @@ class CMUArcticWavDataSource(DataSource):
                 paths.append(f)
                 labels.append(self.labelmap[self.speakers[i]])
 
-        return paths, labels
+        self.labels = labels
+        return paths

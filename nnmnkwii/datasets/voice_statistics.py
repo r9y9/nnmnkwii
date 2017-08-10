@@ -1,6 +1,6 @@
 from __future__ import with_statement, print_function, absolute_import
 
-from nnmnkwii.datasets import DataSource
+from nnmnkwii.datasets import FileDataSource
 
 from os.path import join, splitext
 from os import listdir
@@ -13,7 +13,7 @@ def _get_dir(speaker, emotion):
     return "{}_{}".format(speaker, emotion)
 
 
-class VoiceStatisticsWavDataSource(DataSource):
+class VoiceStatisticsWavDataSource(FileDataSource):
     """Voice-statistics data source
 
     You can get the dataset from `voice-statistics`_.
@@ -52,10 +52,11 @@ class VoiceStatisticsWavDataSource(DataSource):
             for idx, speaker in enumerate(speakers):
                 labelmap[speaker] = idx
         self.labelmap = labelmap
+        self.labels = None
         self.max_files_per_dir = max_files_per_dir
 
     def collect_files(self):
-        """Collect voice statistice wav files with labels
+        """Collect voice statistice wav files
         """
         paths = []
         labels = []
@@ -75,4 +76,5 @@ class VoiceStatisticsWavDataSource(DataSource):
                 paths.append(f)
                 labels.append(self.labelmap[speaker])
 
-        return paths, labels
+        self.labels = labels
+        return paths
