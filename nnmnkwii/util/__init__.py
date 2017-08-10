@@ -1,20 +1,30 @@
 from __future__ import division, print_function, absolute_import
 
 import numpy as np
-
+from sklearn.utils.extmath import _incremental_mean_and_var
+from sklearn.preprocessing.data import _handle_zeros_in_scale
 
 from .files import *
 
 
-def delta(x, win):
-    return np.correlate(x, win, mode="same")
+def _delta(x, window):
+    return np.correlate(x, window, mode="same")
 
 
-def dimention_wise_delta(x, win):
+def delta(x, window):
+    """Returns delta features given a static features and a window.
+
+    Args:
+        x (ndarray): Input static features (``T x D``)
+        window (tuple): A window. See :func:`nnmnkwii.functions.mlpg`.
+
+    Returns:
+        (ndarray): Delta features (``T x D``).
+    """
     T, D = x.shape
     y = np.zeros_like(x)
     for d in range(D):
-        y[:, d] = delta(x[:, d], win)
+        y[:, d] = _delta(x[:, d], window)
     return y
 
 
@@ -50,8 +60,7 @@ def apply_delta_windows(x, windows):
     assert len(windows) > 0
     combined_features = np.empty((T, D * len(windows)), dtype=x.dtype)
     for idx, (_, _, window) in enumerate(windows):
-        combined_features[:, D * idx:D * idx +
-                          D] = dimention_wise_delta(x, window)
+        combined_features[:, D * idx:D * idx +D] = delta(x, window)
     return combined_features
 
 
@@ -69,6 +78,7 @@ def trim_zeros_frames(x, eps=1e-7):
 
     T, D = x.shape
     s = np.sum(np.abs(x), axis=1)
+    s[s < eps] = 0.
     return x[:len(np.trim_zeros(s))]
 
 
@@ -85,6 +95,7 @@ def remove_zeros_frames(x, eps=1e-7):
     """
     T, D = x.shape
     s = np.sum(np.abs(x), axis=1)
+    s[s < eps] = 0.
     return x[s > eps]
 
 
@@ -132,3 +143,61 @@ def adjast_frame_length(x, y, pad=True, ensure_even=False):
             y = y[:T]
 
     return x, y
+
+
+def meanvar(dataset, lengths=None):
+    """Mean/variance computation given a iterable dataset
+
+    Dataset can have variable length samples. In that cases, you need to
+    explicitly specify lengths for all the samples.
+    """
+    mean_, var_ = 0., 0.
+    last_sample_count = 0
+    for idx, x in enumerate(dataset):
+        if lengths is not None:
+            x = x[:lengths[idx]]
+        mean_, var_, _ = _incremental_mean_and_var(
+            x, mean_, var_, last_sample_count)
+        last_sample_count += len(x)
+    return mean_, var_
+
+
+def meanstd(dataset, lengths=None):
+    """Mean/std-deviation computation given a iterable dataset
+    """
+    m, v = meanvar(dataset, lengths)
+    return m, _handle_zeros_in_scale(np.sqrt(v))
+
+
+def scale(x, data_mean, data_std):
+    """Mean/variance scaling
+    """
+    return (x - data_mean) / _handle_zeros_in_scale(data_std, copy=False)
+
+
+def minmax(dataset, lengths=None):
+    """Min/max computation given a iterable dataset
+    """
+    max_ = -np.inf
+    min_ = np.inf
+
+    for idx, x in enumerate(dataset):
+        if lengths is not None:
+            x = x[:lengths[idx]]
+        min_ = np.minimum(min_, np.min(x, axis=(0,)))
+        max_ = np.maximum(max_, np.max(x, axis=(0,)))
+
+    return min_, max_
+
+
+def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
+    """Min/max scaling for given a single data.
+
+    TODO:
+        min'/scale instead of min/max?
+    """
+    data_range = data_max - data_min
+    scale = (feature_range[1] - feature_range[0]) / \
+        _handle_zeros_in_scale(data_range, copy=False)
+    min_ = feature_range[0] - data_min * scale
+    return x * scale + min_
