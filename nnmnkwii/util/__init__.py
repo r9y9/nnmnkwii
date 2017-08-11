@@ -151,6 +151,8 @@ def meanvar(dataset, lengths=None):
     Dataset can have variable length samples. In that cases, you need to
     explicitly specify lengths for all the samples.
     """
+    dtype = dataset[0].dtype
+
     mean_, var_ = 0., 0.
     last_sample_count = 0
     for idx, x in enumerate(dataset):
@@ -159,7 +161,7 @@ def meanvar(dataset, lengths=None):
         mean_, var_, _ = _incremental_mean_and_var(
             x, mean_, var_, last_sample_count)
         last_sample_count += len(x)
-    return mean_, var_
+    return mean_.astype(dtype), var_.astype(dtype)
 
 
 def meanstd(dataset, lengths=None):
@@ -167,12 +169,6 @@ def meanstd(dataset, lengths=None):
     """
     m, v = meanvar(dataset, lengths)
     return m, _handle_zeros_in_scale(np.sqrt(v))
-
-
-def scale(x, data_mean, data_std):
-    """Mean/variance scaling
-    """
-    return (x - data_mean) / _handle_zeros_in_scale(data_std, copy=False)
 
 
 def minmax(dataset, lengths=None):
@@ -189,6 +185,10 @@ def minmax(dataset, lengths=None):
 
     return min_, max_
 
+def scale(x, data_mean, data_std):
+    """Mean/variance scaling
+    """
+    return (x - data_mean) / _handle_zeros_in_scale(data_std, copy=False)
 
 def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
     """Min/max scaling for given a single data.
