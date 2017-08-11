@@ -21,6 +21,18 @@ def _get_small_datasets(padded=False):
     return X, Y
 
 
+def test_slice():
+    X, _ = _get_small_datasets(padded=False)
+    x = X[:2]
+    assert isinstance(x, list)
+    assert len(x) == 2
+
+    X, _ = _get_small_datasets(padded=True)
+    x = X[:2]
+    assert isinstance(x, np.ndarray)
+    assert len(x.shape) == 3 and x.shape[0] == 2
+
+
 def test_variable_length_sequence_wise_iteration():
     X, Y = _get_small_datasets(padded=False)
     for idx, (x, y) in enumerate(zip(X, Y)):

@@ -4,6 +4,7 @@ import numpy as np
 
 from collections import OrderedDict
 
+
 class FileDataSource(object):
     """File data source interface.
 
@@ -72,14 +73,13 @@ class FileSourceDataset(DatasetMixIn):
         self.collected_files = collected_files
 
     def __getitem__(self, idx):
+        if isinstance(idx, slice):
+            current, stop, step = idx.indices(len(self))
+            return [self[i] for i in range(current, stop, step)]
         return self.file_data_source.collect_features(*self.collected_files[idx])
 
     def __len__(self):
         return len(self.collected_files)
-
-    def _get_feature_dim(self, *args, **kwargs):
-        x = self.file_data_source.collect_features(*args, **kwargs)
-        return x.shape[-1]
 
     def asarray(self, padded_length, dtype=np.float32):
         """Convert dataset to numpy array.
@@ -93,8 +93,7 @@ class FileSourceDataset(DatasetMixIn):
         collected_files = self.collected_files
         T = padded_length
 
-        # Multiple files are collected
-        D = self._get_feature_dim(*collected_files[0])
+        D = self[0].shape[-1]
         N = len(self)
         X = np.zeros((N, T, D), dtype=dtype)
 
@@ -110,12 +109,13 @@ Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
             lengths[idx] = len(x)
         return X
 
+
 class PaddedFileSourceDataset(FileSourceDataset):
     def __init__(self, data_source, padded_length):
         super(PaddedFileSourceDataset, self).__init__(data_source)
         self.padded_length = padded_length
 
-    def __getitem__(self, idx):
+    def _getitem_one_sample(self, idx):
         x = super(PaddedFileSourceDataset, self).__getitem__(idx)
         if len(x) > self.padded_length:
             raise RuntimeError("""
@@ -124,13 +124,24 @@ Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
         return np.pad(x, [(0, self.padded_length - len(x)), (0, 0)],
                       mode="constant", constant_values=0)
 
+    def __getitem__(self, idx):
+        if isinstance(idx, slice):
+            current, stop, step = idx.indices(len(self))
+            xs = [self._getitem_one_sample(i)
+                  for i in range(current, stop, step)]
+            return np.array(xs)
+        else:
+            return self._getitem_one_sample(idx)
+
     def asarray(self):
         return super(PaddedFileSourceDataset, self).asarray(self.padded_length)
+
 
 class MemoryCacheDataset(DatasetMixIn):
     """This is not particulary useful, unless you are indexing with same indices
     multiple times; that's unlikely while we are iterating dataset.
     """
+
     def __init__(self, dataset, cache_size=100):
         self.dataset = dataset
         self.cached_utterances = OrderedDict()
@@ -141,12 +152,13 @@ class MemoryCacheDataset(DatasetMixIn):
             # Load data from file
             self.cached_utterances[utt_idx] = self.dataset[utt_idx]
         if len(self.cached_utterances) > self.cache_size:
-            del self.cached_utterances[list(self.cached_utterances.keys())[0]]
+            self.cached_utterances.popitem(last=False)
 
         return self.cached_utterances[utt_idx]
 
     def __len__(self):
         return len(self.dataset)
+
 
 class MemoryCacheFramewiseDataset(MemoryCacheDataset):
     def __init__(self, dataset, lengths, cache_size=100):
@@ -162,7 +174,8 @@ class MemoryCacheFramewiseDataset(MemoryCacheDataset):
         # 0-origin
         utt_idx = np.argmax(self.cumsum_lengths > frame_idx) - 1
         frames = super(MemoryCacheFramewiseDataset, self).__getitem__(utt_idx)
-        frame_idx_in_focused_utterance = frame_idx - self.cumsum_lengths[utt_idx]
+        frame_idx_in_focused_utterance = frame_idx - \
+            self.cumsum_lengths[utt_idx]
         return frames[frame_idx_in_focused_utterance]
 
     def __len__(self):
