@@ -27,7 +27,7 @@ def merlin_post_filter(mgc, alpha,
         2darray: Post-filtered mel-generalized cepstrum.
 
     Examples:
-        >>> from nnmnkwii.baseline.post_filters import merlin_post_filter
+        >>> from nnmnkwii.postfilters import merlin_post_filter
         >>> import numpy as np
         >>> mgc = np.random.rand(100, 60)
         >>> mgc_filtered = merlin_post_filter(mgc, 0.58)

@@ -50,9 +50,6 @@ class FileSourceDataset(DatasetMixIn):
     Helper to load data from files into array.　This implements __getitem__ and
     __len__ and acts like an array, but it reads data from file on demand.
 
-    TODO:
-        Support slice indices
-
     Attributes:
         file_data_source (FileDataSource): Data source to specify 1) what files
             to be loaded and 2) how to collect features from them.

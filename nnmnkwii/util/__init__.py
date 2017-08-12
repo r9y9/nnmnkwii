@@ -60,7 +60,7 @@ def apply_delta_windows(x, windows):
     assert len(windows) > 0
     combined_features = np.empty((T, D * len(windows)), dtype=x.dtype)
     for idx, (_, _, window) in enumerate(windows):
-        combined_features[:, D * idx:D * idx +D] = delta(x, window)
+        combined_features[:, D * idx:D * idx + D] = delta(x, window)
     return combined_features
 
 
@@ -185,10 +185,12 @@ def minmax(dataset, lengths=None):
 
     return min_, max_
 
+
 def scale(x, data_mean, data_std):
     """Mean/variance scaling
     """
     return (x - data_mean) / _handle_zeros_in_scale(data_std, copy=False)
+
 
 def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
     """Min/max scaling for given a single data.

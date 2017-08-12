@@ -11,7 +11,10 @@ import re
 
 
 class HTSLabelFile(object):
-    """Memory representation for HTS-style context labels file
+    """Memory representation for HTS-style context labels file.
+
+    Indexing is supported. It returns tuple of
+    (``start_time``, ``end_time``, ``label``).
 
     Attributes:
         frame_shift_in_ms (int): Frame shift in micro seconds
@@ -23,6 +26,10 @@ class HTSLabelFile(object):
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_label_file
         >>> labels = hts.load(example_label_file())
+        >>> print(labels[0])
+        (0, 50000, 'x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&x-x#x-x$x-x!x-x;x-x|x\
+/C:1+1+2/D:0_0/E:x+x@x+x&x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/\
+J:13+9-2[2]')
     """
 
     def __init__(self, frame_shift_in_micro_sec=50000):
@@ -49,7 +56,8 @@ class HTSLabelFile(object):
     def set_durations(self, durations):
         """Set start/end times from duration features
 
-        TODO: this should be refactored
+        TODO:
+            this should be refactored
         """
         # Unwrap state-axis
         end_times = np.cumsum(
