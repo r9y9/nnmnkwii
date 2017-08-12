@@ -393,7 +393,7 @@ def load_labels_with_state_alignment(hts_labels,
 
 
 def linguistic_features(hts_labels, *args, **kwargs):
-    """Compute linguistic features from HTS-style full-context labels
+    """Linguistic features from HTS-style full-context labels.
 
     This converts HTS-style full-context labels to it's numeric representation
     given feature extraction regexes which should be constructed from
@@ -409,6 +409,16 @@ def linguistic_features(hts_labels, *args, **kwargs):
 
     Returns:
         ndarray: Numpy array representation of linguistic features.
+
+    Examples:
+        >>> from nnmnkwii.frontend import merlin as fe
+        >>> from nnmnkwii.io import hts
+        >>> from nnmnkwii.util import example_label_file, example_question_file
+        >>> labels = hts.load(example_label_file())
+        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
+        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict)
+        >>> features.shape
+        (40, 416)
     """
     if hts_labels.is_state_alignment_label():
         return load_labels_with_state_alignment(hts_labels, *args, **kwargs)
@@ -542,19 +552,28 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
 
 
 def duration_features(hts_labels, *args, **kwargs):
-    """Extract durations from HTS-style full-context label.
+    """Duration features from HTS-style full-context labels.
 
     The input full-context must be aligned with phone-level or state-level.
 
 
     Args:
-        file_name (str): Input full-context label path
+        hts_labels (hts.HTSLabelFile): HTS label file.
         feature_type (str): ``numerical`` or ``binary``
         unit_size (str): ``phoneme`` or ``state``
         feature_size (str): ``frame`` or ``phoneme``
 
     Returns:
         duration_features (ndarray): numpy array representation of linguistic features.
+
+    Examples:
+        >>> from nnmnkwii.frontend import merlin as fe
+        >>> from nnmnkwii.io import hts
+        >>> from nnmnkwii.util import example_label_file
+        >>> labels = hts.load(example_label_file())
+        >>> features = fe.duration_features(labels)
+        >>> features.shape
+        (40, 5)
     """
     if hts_labels.is_state_alignment_label():
         return extract_dur_from_state_alignment_labels(hts_labels, *args, **kwargs)
