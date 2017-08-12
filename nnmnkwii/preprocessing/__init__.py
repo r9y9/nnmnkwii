@@ -23,11 +23,14 @@ class UtteranceWiseTransformer(object):
         raise NotImplementedError
 
 class DeltaAppender(UtteranceWiseTransformer):
-    """Append delta features
+    """Append delta features.
 
+    Given a ``N x T x D`` array, features of multiple utterances,
+    transform features into static + delta features for each utterance.
 
     Attributes:
-        windows (list): A sequence of windows.
+        windows (list): A sequence of windows. See
+          :func:`nnmnkwii.functions.mlpg` for what window means.
     """
 
     def __init__(self, windows):

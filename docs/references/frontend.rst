@@ -1,10 +1,10 @@
 Frontend
 ========
 
-The module doesn't mean to cover language-dependent text processing frontend.
-The module provides utilities to convert structural representation that has rich
+Utilities to convert structural representation that has rich
 linguistic contexts (e.g, HTS-style full-context label) to its numerical
-form.
+form. Note that the module doesn't mean to cover language-dependent text
+processing frontend.
 
 Merlin frontend
 ---------------

@@ -23,6 +23,13 @@ def interp1d(f0, kind="slinear"):
         1d array (``T``, ) or 2d (``T`` x 1) array: Interpolated continuous f0
         trajectory.
 
+    Examples:
+        >>> from nnmnkwii.preprocessing.f0 import interp1d
+        >>> import numpy as np
+        >>> f0 = np.random.rand(100)
+        >>> continuous_f0 = interp1d(f0, kind="slinear")
+        >>> assert f0.shape == continuous_f0.shape
+
     .. [1] Yu, Kai, and Steve Young. "Continuous F0 modeling for HMM based
         statistical parametric speech synthesis." IEEE Transactions on Audio,
         Speech, and Language Processing 19.5 (2011): 1071-1079.

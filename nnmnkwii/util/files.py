@@ -10,6 +10,22 @@ from os.path import join
 
 
 def example_label_file():
+    """Get path of example HTS-style full-context lable file.
+
+    Corresponding audio file can be accessed by
+    :func:`example_audio_file`.
+
+    Returns:
+        str: Path of the example label file.
+
+    See also:
+        :func:`example_audio_file`
+
+    Examples:
+        >>> from nnmnkwii.util import example_label_file
+        >>> from nnmnkwii.io import hts
+        >>> labels = hts.load(example_label_file())
+    """
     name = "arctic_a0009"
     label_path = pkg_resources.resource_filename(
         __name__, '_example_data/{}_state.lab'.format(name))
@@ -17,10 +33,42 @@ def example_label_file():
 
 
 def example_audio_file():
+    """Get path of audio file.
+
+    Returns:
+        str: Path of the example audio file.
+
+    See also:
+        :func:`example_label_file`
+
+    Examples:
+        >>> from nnmnkwii.util import example_audio_file
+        >>> from scipy.io import wavfile
+        >>> fs, x = wavfile.read(example_audio_file())
+    """
     name = "arctic_a0009"
     wav_path = pkg_resources.resource_filename(
         __name__, '_example_data/{}.wav'.format(name))
     return wav_path
+
+
+def example_question_file():
+    """Get path of example question file.
+
+    The question file was taken from Merlin_.
+
+    .. _Merlin: https://github.com/CSTR-Edinburgh/merlin
+
+    Returns:
+        str: Path of the example audio file.
+
+    Examples:
+        >>> from nnmnkwii.util import example_question_file
+        >>> from nnmnkwii.io import hts
+        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
+    """
+    return pkg_resources.resource_filename(
+        __name__, '_example_data/questions-radio_dnn_416.hed')
 
 
 class BinaryFileDataSource(FileDataSource):
@@ -66,6 +114,23 @@ class ExampleSLTArcticFileDataSource(BinaryFileDataSource):
 
 
 def example_file_data_sources_for_duration_model():
+    """Get file data sources for duration model training
+
+    Returns:
+        tuple: Tuple of :obj:`FileDataSource`s for example data.
+
+    Examples:
+        >>> from nnmnkwii.util import example_file_data_sources_for_duration_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_duration_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> for x, y in zip(X, Y):
+        ...     print(x.shape, y.shape)
+        ...
+        (35, 416) (35, 5)
+        (40, 416) (40, 5)
+        (39, 416) (39, 5)
+    """
     X = ExampleSLTArcticFileDataSource("X_duration")
     Y = ExampleSLTArcticFileDataSource("Y_duration")
 
@@ -73,6 +138,23 @@ def example_file_data_sources_for_duration_model():
 
 
 def example_file_data_sources_for_acoustic_model():
+    """Get file data sources for acoustic model training
+
+    Returns:
+        tuple: Tuple of :obj:`FileDataSource`s for example data.
+
+    Examples:
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> for x, y in zip(X, Y):
+        ...     print(x.shape, y.shape)
+        ...
+        (578, 425) (578, 187)
+        (675, 425) (675, 187)
+        (606, 425) (606, 187)
+    """
     X = ExampleSLTArcticFileDataSource("X_acoustic")
     Y = ExampleSLTArcticFileDataSource("Y_acoustic")
 

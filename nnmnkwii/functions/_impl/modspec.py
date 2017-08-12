@@ -23,6 +23,14 @@ def modspec(y, n=4096, norm=None):
 
     See also:
         :func:`nnmnkwii.autograd.modspec`
+
+    Examples:
+        >>> import numpy as np
+        >>> from nnmnkwii import functions as F
+        >>> generated = np.random.rand(10, 2)
+        >>> ms = F.modspec(generated, n=16)
+        >>> ms.shape
+        (9, 2)
     """
     T, D = y.shape
     # DFT against time axis

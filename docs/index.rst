@@ -3,41 +3,37 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-nnmnkwii
-========
+:github_url: https://github.com/r9y9/nnmnkwii
 
-.. automodule:: nnmnkwii
+nnmnkwii documentation
+======================
 
+Library to build speech synthesis systems designed for prototyping.
 
-Getting started
----------------
+https://github.com/r9y9/nnmnkwii
+
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
+   :caption: Getting started
 
    installation
-
-Design Documentation
---------------------
+   examples
 
 .. toctree::
-   :maxdepth: 2
+   :glob:
+   :maxdepth: 1
+   :caption: Design documentation
 
    design
    details
 
-API
----
-
 .. toctree::
-    :maxdepth: 2
+    :glob:
+    :maxdepth: 1
+    :caption: Package references
 
-    datasets
-    functions
-    autograd
-    preprocessing
-    utils
-    display
+    references/*
 
 Indices and tables
 ==================

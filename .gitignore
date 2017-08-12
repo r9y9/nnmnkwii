@@ -1,5 +1,5 @@
-./examples
-docs/generated
+examples
+docs/references/generated
 
 # Created by https://www.gitignore.io
 

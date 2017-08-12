@@ -3,19 +3,19 @@ Installation
 
 The latest release is availabe on pypi. Assuming you have already ``numpy`` installed, you can install nnmnkwii by:
 
-.. code::
+.. code:: shell
 
     pip install nnmnkwii
 
 If yout want the latest development version, run:
 
-.. code::
+.. code:: shell
 
    pip install git+https://github.com/r9y9/nnmnkwii
 
 or:
 
-.. code::
+.. code:: shell
 
    git clone https://github.com/r9y9/nnmnkwii
    cd nnmnkwii

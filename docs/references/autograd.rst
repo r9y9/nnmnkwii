@@ -3,7 +3,7 @@ Autograd
 
 .. automodule:: nnmnkwii.autograd
 
-This module provides differenciable functions for PyTorch. This may be extended
+Differenciable functions for PyTorch. This may be extended
 to support other autograd frameworks.
 
 Currently all functions doesn't have CUDA implementation, but should be

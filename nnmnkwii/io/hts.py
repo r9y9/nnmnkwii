@@ -180,6 +180,11 @@ def load(path, frame_shift_in_micro_sec=50000):
 
     Returns:
         labels (HTSLabelFile): Instance of HTSLabelFile.
+
+    Examples:
+        >>> from nnmnkwii.io import hts
+        >>> from nnmnkwii.util import example_label_file
+        >>> labels = hts.load(example_label_file())
     """
     labels = HTSLabelFile(frame_shift_in_micro_sec)
     labels.load(path)
@@ -226,6 +231,11 @@ def load_question_set(qs_file_name):
     Returns:
         (binary_dict, continuous_dict): Binary/continuous feature extraction
         regexes.
+
+    Examples:
+        >>> from nnmnkwii.io import hts
+        >>> from nnmnkwii.util import example_question_file
+        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
     """
     with open(qs_file_name) as f:
         lines = f.readlines()

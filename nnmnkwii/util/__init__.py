@@ -15,11 +15,19 @@ def delta(x, window):
     """Returns delta features given a static features and a window.
 
     Args:
-        x (ndarray): Input static features (``T x D``)
-        window (tuple): A window. See :func:`nnmnkwii.functions.mlpg`.
+        x (numpy.ndarray): Input static features, of shape (``T x D``).
+        window (numpy.ndarray): Window coefficients.
 
     Returns:
-        (ndarray): Delta features (``T x D``).
+        (ndarray): Delta features, shape　(``T x D``).
+
+    Examples:
+        >>> from nnmnkwii.util import delta
+        >>> T, static_dim = 10, 24
+        >>> x = np.random.rand(T, static_dim)
+        >>> window = np.array([-0.5, 0.0, 0.5]) # window for delta feature
+        >>> y = delta(x, window)
+        >>> assert x.shape == y.shape
     """
     T, D = x.shape
     y = np.zeros_like(x)
@@ -32,17 +40,17 @@ def apply_delta_windows(x, windows):
     """Apply delta windows and combine them.
 
     This function computes delta features given delta windows, and then
-    returns combined features (e.g., static + delta + deltadelta).
-    Note that if you want to keep static features, you need to supply
+    returns combined features (e.g., static + delta + delta-delta).
+    Note that if you want to keep static features, you need to give
     static window as well as delta windows.
 
     Args:
-        x (2darray): Input static features (shape:  ``T x D``).
+        x (numpy.ndarray): `Input static features, of shape (``T x D``).
         y (list): List of windows. See :func:`nnmnkwii.functions.mlpg` for what
             the delta window means.
 
     Returns:
-        2darray: static + delta features (``T x (D * len(windows)``).
+        numpy.ndarray: static + delta features (``T x (D * len(windows)``).
 
     Examples:
         >>> from nnmnkwii.util import apply_delta_windows
@@ -64,16 +72,23 @@ def apply_delta_windows(x, windows):
     return combined_features
 
 
-def trim_zeros_frames(x, eps=1e-7):
-    """Remove trailling zeros frames
+def trim_zeros_frames(x, eps=1e-14):
+    """Remove trailling zeros frames.
 
     Similar to :func:`numpy.trim_zeros`, trimming trailing zeros features.
 
     Args:
-        x (ndarray): Feature matrix, shape (``T`` x ``D``)
+        x (numpy.ndarray): Feature matrix, shape (``T x D``)
+        eps (float): Values smaller than ``eps`` considered as zeros.
 
     Returns:
-        ndarray: Trimmed 2d feature matrix, shape (``T'`` x ``D``)
+        numpy.ndarray: Trimmed 2d feature matrix, shape (``T' x D``)
+
+    Examples:
+        >>> import numpy as np
+        >>> from nnmnkwii.util import trim_zeros_frames
+        >>> x = np.random.rand(100,10)
+        >>> y = trim_zeros_frames(x)
     """
 
     T, D = x.shape
@@ -82,16 +97,23 @@ def trim_zeros_frames(x, eps=1e-7):
     return x[:len(np.trim_zeros(s))]
 
 
-def remove_zeros_frames(x, eps=1e-7):
-    """Remove zeros frames
+def remove_zeros_frames(x, eps=1e-14):
+    """Remove zeros frames.
 
     Given a feature matrix, remove all zeros frames as well as trailing ones.
 
     Args:
-        x (2darray): 2d feature matrix shape (``T`` ,``D``)
+        x (numpy.ndarray): 2d feature matrix, shape (``T x D``)
+        eps (float): Values smaller than ``eps`` considered as zeros.
 
     Returns:
-        2darray: Zeros-removed 2d feature matrix
+        numpy.ndarray: Zeros-removed 2d feature matrix, shape (``T' x D``).
+
+    Examples:
+        >>> import numpy as np
+        >>> from nnmnkwii.util import remove_zeros_frames
+        >>> x = np.random.rand(100,10)
+        >>> y = remove_zeros_frames(x)
     """
     T, D = x.shape
     s = np.sum(np.abs(x), axis=1)
@@ -100,20 +122,28 @@ def remove_zeros_frames(x, eps=1e-7):
 
 
 def adjast_frame_length(x, y, pad=True, ensure_even=False):
-    """Adjast frame lenght given two feature matrices.
+    """Adjast frame lengths given two feature matrices.
 
     This ensures that two feature matrices have same number of frames, by
     padding zeros to the end or removing last frames.
 
     Args:
-        x (ndarray): Input 2d feature matrix
-        y (ndarray): Input 2d feature matrix
+        x (ndarray): Input 2d feature matrix, shape (``T^1 x D``).
+        y (ndarray): Input 2d feature matrix, shape (``T^2 x D``).
         pad (bool) : If True, pads zeros to the end, otherwise removes last few
             frames to ensure same frame lengths.
         ensure_even (bool) : If True, ensure number of frames to be even number.
 
     Returns:
-        Tuple: Pair of adjasted feature matrices
+        Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).
+
+    Examples:
+        >>> from nnmnkwii.util import adjast_frame_length
+        >>> import numpy as np
+        >>> x = np.zeros((10, 1))
+        >>> y = np.zeros((11, 1))
+        >>> x, y = adjast_frame_length(x, y)
+        >>> assert len(x) == len(y)
     """
     Tx, Dx = x.shape
     Ty, Dy = y.shape
@@ -150,6 +180,25 @@ def meanvar(dataset, lengths=None):
 
     Dataset can have variable length samples. In that cases, you need to
     explicitly specify lengths for all the samples.
+
+    Args:
+        dataset (nnmnkwii.datasets.Dataset): Dataset
+        lengths: (list): Frame lengths for each dataset sample.
+
+    Returns:
+        tuple: Mean and variance for each dimention.
+
+    See also:
+        :func:`nnmnkwii.util.meanstd`, :func:`nnmnkwii.util.scale`
+
+    Examples:
+        >>> from nnmnkwii.util import meanvar
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> lengths = [len(y) for y in Y]
+        >>> data_mean, data_var = meanvar(Y, lengths)
     """
     dtype = dataset[0].dtype
 
@@ -166,6 +215,28 @@ def meanvar(dataset, lengths=None):
 
 def meanstd(dataset, lengths=None):
     """Mean/std-deviation computation given a iterable dataset
+
+    Dataset can have variable length samples. In that cases, you need to
+    explicitly specify lengths for all the samples.
+
+    Args:
+        dataset (nnmnkwii.datasets.Dataset): Dataset
+        lengths: (list): Frame lengths for each dataset sample.
+
+    Returns:
+        tuple: Mean and variance for each dimention.
+
+    See also:
+        :func:`nnmnkwii.util.meanvar`, :func:`nnmnkwii.util.scale`
+
+    Examples:
+        >>> from nnmnkwii.util import meanstd
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> lengths = [len(y) for y in Y]
+        >>> data_mean, data_std = meanstd(Y, lengths)
     """
     m, v = meanvar(dataset, lengths)
     return m, _handle_zeros_in_scale(np.sqrt(v))
@@ -173,6 +244,25 @@ def meanstd(dataset, lengths=None):
 
 def minmax(dataset, lengths=None):
     """Min/max computation given a iterable dataset
+
+    Dataset can have variable length samples. In that cases, you need to
+    explicitly specify lengths for all the samples.
+
+    Args:
+        dataset (nnmnkwii.datasets.Dataset): Dataset
+        lengths: (list): Frame lengths for each dataset sample.
+
+    See also:
+        :func:`nnmnkwii.util.minmax_scale`
+
+    Examples:
+        >>> from nnmnkwii.util import minmax
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> lengths = [len(x) for x in X]
+        >>> data_min, data_max = minmax(X, lengths)
     """
     max_ = -np.inf
     min_ = np.inf
@@ -187,13 +277,53 @@ def minmax(dataset, lengths=None):
 
 
 def scale(x, data_mean, data_std):
-    """Mean/variance scaling
+    """Mean/variance scaling.
+
+    Given mean and variances, apply mean-variance normalization to data.
+
+    Args:
+        x (array): Input data
+        data_mean (array): Means for each feature dimention.
+        data_std (array): Standard deviation for each feature dimention.
+
+    Returns:
+        array: Scaled data.
+
+    Examples:
+        >>> from nnmnkwii.util import meanstd, scale
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> lengths = [len(y) for y in Y]
+        >>> data_mean, data_std = meanstd(Y, lengths)
+        >>> scaled_y = scale(Y[0], data_mean, data_std)
     """
     return (x - data_mean) / _handle_zeros_in_scale(data_std, copy=False)
 
 
 def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
     """Min/max scaling for given a single data.
+
+    Given data min, max and feature range, apply min/max normalization to data.
+
+    Args:
+        x (array): Input data
+        data_min (array): Data min for each feature dimention.
+        data_sax (array): Data max for each feature dimention.
+
+    Returns:
+        array: Scaled data.
+
+    Examples:
+        >>> from nnmnkwii.util import minmax, minmax_scale
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> lengths = [len(x) for x in X]
+        >>> data_min, data_max = minmax(X, lengths)
+        >>> scaled_x = minmax_scale(X[0], data_min, data_max, feature_range=(0.01, 0.99))
 
     TODO:
         min'/scale instead of min/max?

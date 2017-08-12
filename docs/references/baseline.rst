@@ -1,8 +1,8 @@
 Baseline
 ========
 
-The module provides fairly generic and popular baseline algorithms that can be
-used as a building block for other algorithm.
+Generic baseline algorithms that can be used as a building block of other
+algorithm.
 
 GMM voice conversion
 --------------------

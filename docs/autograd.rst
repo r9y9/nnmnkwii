@@ -1,1 +1,0 @@
-.. automodule:: nnmnkwii.autograd

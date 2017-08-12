@@ -42,12 +42,16 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.doctest',
-    #     'sphinx.ext.intersphinx',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.mathjax',
+    'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinx.ext.napoleon',
     'numpydoc',
     'matplotlib.sphinxext.plot_directive',
+    'nbsphinx',
+    # 'IPython.sphinxext.ipython_console_highlighting',
 ]
 
 if ON_RTD:
@@ -56,6 +60,10 @@ if ON_RTD:
 
 autosummary_generate = True
 numpydoc_show_class_members = False
+
+doctest_global_setup = """
+import numpy as np
+"""
 
 # Most of plotting settings are copy and pasted from librosa
 # https://github.com/bmcfee/librosa
@@ -151,13 +159,13 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -171,12 +179,18 @@ html_theme = 'sphinx_rtd_theme'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'collapse_navigation': False,
+    'display_version': True,
+    'logo_only': True,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+html_logo = os.path.join(html_static_path[0], 'img/logo.png')
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -252,4 +266,9 @@ texinfo_documents = [
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-# intersphinx_mapping = {'https://docs.python.org/': None}
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'pysptk': ('https://pysptk.readthedocs.io/en/latest/', None),
+    'pytorch': ('http://pytorch.org/docs/master/', None),
+}
