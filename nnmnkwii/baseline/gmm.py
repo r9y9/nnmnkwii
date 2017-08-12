@@ -84,14 +84,18 @@ class MLPGBase(object):
 
 
 class MLPG(MLPGBase):
-    """Maximum likelihood Parameter Generation (MLPG) for GMM voice conversion.
+    """Maximum likelihood Parameter Generation (MLPG) for GMM-basd voice
+    conversion [1]_.
 
     Notes:
-        Source speaker's feature: ``X = {x_t}, 0 <= t < T``
-        Target speaker's feature: ``Y = {y_t}, 0 <= t < T``
+        - Source speaker's feature: ``X = {x_t}, 0 <= t < T``
+        - Target speaker's feature: ``Y = {y_t}, 0 <= t < T``
+
         where T is the number of time frames.
 
     See papar [1]_ for details.
+
+    The code was adapted from https://gist.github.com/r9y9/88bda659c97f46f42525.
 
     Args:
         gmm (sklearn.mixture.GaussianMixture): Gaussian Mixture Models of
@@ -126,6 +130,28 @@ class MLPG(MLPGBase):
         px (sklearn.mixture.GaussianMixture): Gaussian Mixture Models of source
             speaker's features
 
+    Examples:
+        >>> from sklearn.mixture import GaussianMixture
+        >>> from nnmnkwii.baseline.gmm import MLPG
+        >>> import numpy as np
+        >>> static_dim, T = 24, 10
+        >>> windows = [
+        ...     (0, 0, np.array([1.0])),
+        ...     (1, 1, np.array([-0.5, 0.0, 0.5])),
+        ...     (1, 1, np.array([1.0, -2.0, 1.0])),
+        ... ]
+        >>> src = np.random.rand(T, static_dim * len(windows))
+        >>> tgt = np.random.rand(T, static_dim * len(windows))
+        >>> XY = np.concatenate((src, tgt), axis=-1) # pseudo parallel data
+        >>> gmm = GaussianMixture(n_components=4)
+        >>> _ = gmm.fit(XY)
+        >>> paramgen = MLPG(gmm, windows=windows)
+        >>> generated = paramgen.transform(src)
+        >>> assert generated.shape == (T, static_dim)
+
+    See also:
+        :class:`nnmnkwii.preprocessing.alignment.IterativeDTWAligner`.
+
     .. [1] [Toda 2007] Voice Conversion Based on Maximum Likelihood Estimation
       of Spectral Parameter Trajectory.
     """
@@ -141,8 +167,8 @@ class MLPG(MLPGBase):
         self.static_dim = gmm.means_.shape[-1] // 2 // len(windows)
 
     def transform(self, src):
-        """Mapping source spectral feature x to target spectral feature y
-        so that maximize the likelihood of y given x.
+        """Mapping source feature x to target feature y so that maximize the
+        likelihood of y given x.
 
         Args:
             src (array): shape (`the number of frames`, `the order of spectral
@@ -150,7 +176,7 @@ class MLPG(MLPGBase):
                 will be transformed.
 
         Returns:
-            array: a sequence of transformed spectral features
+            array: a sequence of transformed features
         """
         T, feature_dim = src.shape[0], src.shape[1]
 
