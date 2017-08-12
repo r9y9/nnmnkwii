@@ -22,41 +22,85 @@ class FileDataSource(object):
         raise NotImplementedError
 
     def collect_features(self, *args):
-        """Collect features given a file path.
+        """Collect features given path(s).
 
         Args:
             args: File path or tuple of file paths
 
         Returns:
-            2darray: ``T`` x ``D`` features represented by 2d array.
+            2darray: ``T x D`` features represented by 2d array.
         """
         raise NotImplementedError
 
 
-class DatasetMixIn(object):
-    """Dataset represents a fixed-sized set of features.
+class Dataset(object):
+    """Dataset represents a fixed-sized set of features composed of multiple
+    utterances.
     """
 
     def __getitem__(self, idx):
+        """Get access to the dataset.
+
+        Args:
+            idx : index
+
+        Returns:
+            features
+        """
         raise NotImplementedError
 
     def __len__(self):
+        """Length of the dataset
+
+        Returns:
+            int: length of dataset. Can be number of utterances or number of
+            total frames depends on implementation.
+        """
         raise NotImplementedError
 
 
-class FileSourceDataset(DatasetMixIn):
+class FileSourceDataset(Dataset):
     """FileSourceDataset
 
-    Helper to load data from files into array.　This implements __getitem__ and
-    __len__ and acts like an array, but it reads data from file on demand.
+    Most basic dataset implementation. It supports utterance-wise iteration and
+    has utility (:obj:`asarray` method) to convert dataset to an three
+    dimentional :obj:`numpy.ndarray`.
+
+    Speech features have typically different number of time resolusion,
+    so we cannot simply represent dataset as an
+    array. To address the issue, the dataset class represents set
+    of features as ``N x T^max x D`` array by padding zeros where ``N`` is the
+    number of utterances, ``T^max`` is maximum number of frame lenghs and ``D``
+    is the dimention of features, respectively.
+
+    While this dataset loads features on-demand while indexing, if you are
+    dealing with relatively small dataset, it might be useful to convert it to
+    an array, and then do whatever with numpy/scipy functionalities.
 
     Attributes:
-        file_data_source (FileDataSource): Data source to specify 1) what files
-            to be loaded and 2) how to collect features from them.
+        file_data_source (FileDataSource): Data source to specify 1) where to
+            find data to be loaded and 2) how to collect features from them.
         collected_files (ndarray): Collected files are stored.
 
     Args:
         file_data_source (FileDataSource): File data source.
+
+    Examples:
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> for (x, y) in zip(X, Y):
+        ...     print(x.shape, y.shape)
+        ...
+        (578, 425) (578, 187)
+        (675, 425) (675, 187)
+        (606, 425) (606, 187)
+        >>> X.asarray(1000).shape
+        (3, 1000, 425)
+        >>> Y.asarray(1000).shape
+        (3, 1000, 187)
+
     """
 
     def __init__(self,
@@ -80,12 +124,13 @@ class FileSourceDataset(DatasetMixIn):
 
     def asarray(self, padded_length, dtype=np.float32):
         """Convert dataset to numpy array.
+
         This try to load entire dataset into a single 3d numpy array.
 
         Args:
-            max_num_frames (int): Number of maximum time frames to be expected.
+            padded_length (int): Number of maximum time frames to be expected.
         Returns:
-            3d-array: ``N`` x ``T`` x ``D`` array
+            3d-array: ``N x T^max x D`` array
         """
         collected_files = self.collected_files
         T = padded_length
@@ -108,8 +153,46 @@ Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
 
 
 class PaddedFileSourceDataset(FileSourceDataset):
-    def __init__(self, data_source, padded_length):
-        super(PaddedFileSourceDataset, self).__init__(data_source)
+    """PaddedFileSourceDataset
+
+    Basic dataset with padding. Very similar to :obj:`FileSourceDataset`,
+    it supports utterance-wise iteration and has
+    utility (:obj:`asarray` method) to convert dataset to an three
+    dimentional :obj:`numpy.ndarray`.
+
+    The difference between :obj:`FileSourceDataset` is that this returns
+    padded features as ``T^max x D``array at ``__getitem__``, while
+    :obj:`FileSourceDataset` returns not-padded ``T x D`` array.
+
+    Args:
+        file_data_source (FileDataSource): File data source.
+        padded_length (int): Padded length.
+
+    Attributes:
+        file_data_source (FileDataSource)
+        padded_length (int)
+
+    Examples:
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import PaddedFileSourceDataset
+        >>> X.asarray(1000).shape
+        (3, 1000, 425)
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = PaddedFileSourceDataset(X, 1000), PaddedFileSourceDataset(Y, 1000)
+        >>> for (x, y) in zip(X, Y):
+        ...     print(x.shape, y.shape)
+        ...
+        (1000, 425) (1000, 187)
+        (1000, 425) (1000, 187)
+        (1000, 425) (1000, 187)
+        >>> X.asarray().shape
+        (3, 1000, 425)
+        >>> Y.asarray().shape
+        (3, 1000, 187)
+    """
+
+    def __init__(self, file_data_source, padded_length):
+        super(PaddedFileSourceDataset, self).__init__(file_data_source)
         self.padded_length = padded_length
 
     def _getitem_one_sample(self, idx):
@@ -134,12 +217,42 @@ Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
         return super(PaddedFileSourceDataset, self).asarray(self.padded_length)
 
 
-class MemoryCacheDataset(DatasetMixIn):
-    """This is not particulary useful, unless you are indexing with same indices
-    multiple times; that's unlikely while we are iterating dataset.
+class MemoryCacheDataset(Dataset):
+    """MemoryCacheDataset
+
+    A thin dataset wrapper class that has simple cache functionality. It supports
+    utterance-wise iteration.
+
+    Args:
+        dataset (Dataset): Dataset implementation to wrap.
+        cache_size (int): Cache size (utterance unit).
+
+    Attributes:
+        dataset (Dataset): Dataset
+        cached_utterances (OrderedDict): Loaded utterances. Keys are utterance
+          indices and values are numpy arrays.
+        cache_size (int): Cache size.
+
+    Examples:
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> from nnmnkwii.datasets import MemoryCacheDataset
+        >>> X, Y = MemoryCacheDataset(X), MemoryCacheDataset(Y)
+        >>> X.cached_utterances
+        OrderedDict()
+        >>> for (x, y) in zip(X, Y):
+        ...     print(x.shape, y.shape)
+        ...
+        (578, 425) (578, 187)
+        (675, 425) (675, 187)
+        (606, 425) (606, 187)
+        >>> len(X.cached_utterances)
+        3
     """
 
-    def __init__(self, dataset, cache_size=100):
+    def __init__(self, dataset, cache_size=777):
         self.dataset = dataset
         self.cached_utterances = OrderedDict()
         self.cache_size = cache_size
@@ -158,7 +271,47 @@ class MemoryCacheDataset(DatasetMixIn):
 
 
 class MemoryCacheFramewiseDataset(MemoryCacheDataset):
-    def __init__(self, dataset, lengths, cache_size=100):
+    """MemoryCacheFramewiseDataset
+
+    A Thin dataset wrapper class that has simple cache functionality. It supports
+    frame-wise iteration. Different from other utterance-wise datasets, you will
+    need to explicitly give number of time frames for each utterance at
+    construction, since the class has to know the size of dataset to implement
+    ``__len__``.
+
+    Note:
+        If you are doing random access to the dataset, please be careful that you
+        give sufficient large number of cache size, to avoid many file re-loading.
+
+    Args:
+        dataset (Dataset): Dataset implementation to wrap.
+        lengths (list): Frame lengths for each utterance.
+        cache_size (int): Cache size (utterance unit).
+
+    Attributes:
+        dataset (Dataset): Dataset
+        cached_utterances (OrderedDict): Loaded utterances.
+        cache_size (int): Cache size.
+
+    Examples
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> from nnmnkwii.datasets import MemoryCacheFramewiseDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> len(X)
+        3
+        >>> lengths = [len(x) for x in X] # collect frame lengths
+        >>> X = MemoryCacheFramewiseDataset(X, lengths)
+        >>> Y = MemoryCacheFramewiseDataset(Y, lengths)
+        >>> len(X)
+        1859
+        >>> x[0].shape
+        (425,)
+        >>> y[0].shape
+        (187,)
+    """
+    def __init__(self, dataset, lengths, cache_size=777):
         super(MemoryCacheFramewiseDataset, self).__init__(dataset, cache_size)
         self.lengths = lengths
         self.cumsum_lengths = np.hstack((0, np.cumsum(lengths)))
