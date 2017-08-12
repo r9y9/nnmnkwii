@@ -8,11 +8,11 @@ import numpy as np
 
 
 class ModSpec(Function):
-    """Modulation spectrum computation
+    """Modulation spectrum computation ``f : (T, D) -> (N//2+1, D)``.
 
-    f : (T, D) -> (N//2+1, D).
-
-    where `N` is the DFT length.
+    Attributes:
+        n (int): DFT length.
+        norm (bool): Normalize DFT output or not. See :obj:`numpy.fft.fft`.
     """
 
     def __init__(self, n=2048, norm=None):
@@ -65,4 +65,15 @@ class ModSpec(Function):
 
 
 def modspec(y, n=2048, norm=None):
+    """Moduration spectrum computation.
+
+    Args:
+        y (torch.autograd.Variable): Parameter trajectory.
+        n (int): DFT length.
+        norm (bool): Normalize DFT output or not. See :obj:`numpy.fft.fft`.
+
+    See also:
+        :func:`nnmnkwii.functions.modspec`
+
+    """
     return ModSpec(n=n, norm=norm)(y)

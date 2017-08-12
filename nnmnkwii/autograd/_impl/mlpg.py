@@ -111,18 +111,18 @@ class MLPG(Function):
 
 
 def mlpg(mean_frames, variance_frames, windows):
-    """User interface for autograd MLPG
+    """Maximum Liklihood Paramter Generation (MLPG).
 
-    The parameters are almost same as :func: `mlpg.functions.mlpg` expects.
+    The parameters are almost same as :func:`nnmnkwii.functions.mlpg` expects.
     The differences are:
 
-    - The function assumes ``mean_frames`` as ``torch.Variable`` instead
-      of ``ndarray``.
-    - The fucntion assumes ``variances_frames`` as ``torch.FloatTensor``　
-      instead of `ndarray`.
+    - The function assumes ``mean_frames`` as :obj:`torch.autograd.Variable`
+      instead of :obj:`numpy.ndarray`.
+    - The fucntion assumes ``variances_frames`` as :obj:`torch.FloatTensor`　
+      instead of :obj:`numpy.ndarray`.
 
     Args:
-        mean_frames (torch.Variable): Means
+        mean_frames (torch.autograd.Variable): Means
         variance_frames (torch.FloatTensor): Variances
         windows (list): A sequence of window specification
 
