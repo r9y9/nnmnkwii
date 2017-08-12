@@ -74,11 +74,13 @@ def build_poe(b_frames, tau_frames, win_mats, sdw=None):
 
 
 def mlpg(mean_frames, variance_frames, windows):
-    """Numpy implementation of MLPG ``f: (T, D) -> (T, static_dim)``.
+    """Maximum Parameter Likelihood Generation (MLPG)
 
-    Peforms Maximum Likelihood Parameter Generation (MLPG) algorithm
+    Function ``f: (T, D) -> (T, static_dim)``.
+
+    It peforms Maximum Likelihood Parameter Generation (MLPG) algorithm
     to generate static features from static + dynamic features over
-    time frames. The implementation is heavily inspired by [1]_ and
+    time frames. The implementation was heavily inspired by [1]_ and
     using bandmat_ for efficient computation.
 
     .. _bandmat: https://github.com/MattShannon/bandmat
