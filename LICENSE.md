@@ -21,7 +21,7 @@ The nnmnkwii package is licensed under the MIT "Expat" License:
 > TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 > SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-Part of code/data was adapted from other open source projects, which
+Part of code/data was adapted from open source projects, which
 has thier own license.
 
 - [Merlin](https://goo.gl/Jfw8xZ).
