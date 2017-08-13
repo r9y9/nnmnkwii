@@ -1,76 +1,61 @@
 General design documentation
 ============================
 
-.. warning::
-    This is currently written in Japanese. English version will come soon.
-
 .. note::
     Design issue tracker https://github.com/r9y9/nnmnkwii/issues/8
 
 The underlying design philosophy
 --------------------------------
 
-- Getting better experience on rich REPL (i.e, IPython, Jupyter) boosts productivity.
+- Getting better experience on rich REPL (i.e, IPython, Jupyter) boosts research productivity.
 
 Background
 ----------
 
--  統計的音声合成（以下、音声合成）、統計的声質変換（以下、声質変換）はテキスト分析、音声分析/合成、機械学習等、いくつもの要素技術からなる複合技術であり、論文の追試（結果の再現）、新しいアイデアをプロトタイピングするといった行為は、大きな労力を要する。後の研究の生産性の向上のために、音声合成における要素技術を、再利用しやすい形で提供することには価値があると考える。
--  HMM音声合成では、HTSが広く使われている。HTKにパッチを適用することで使用する。HMMベースの音響モデルを構築するための仕組みがコマンドラインツール群として提供されており、それらを組みわせて柔軟にシステムが作れるように設計されている。しかし、HMMベースの音声合成に着目して設計されているため、近年の主流であるDNN音声合成には基本的には対応していない [1]_
--  `Merin <http://ssw9.net/papers/ssw9_PS2-13_Wu.pdf>`_ は、DNNベースの音声合成システムを作るためのツールキットである。近年のDNNベースの音声合成システムの成功を受けて、HTSに代わるDNNベースのstate-of-the-artなシステムを再現可能な形で提供するために作られている。Melinの主なエントリーポイントは、run_merlin.pyというコマンドラインスクリプトであり、ユーザは設定ファイルを切り替えることで、どのような音響モデルを使用するかなどを切り替える。しかし、run_merlin.pyがすべてのインタフェースとなっており、構成要素を再利用するといったことが難しい。また、音響モデルを設定ファイルで切り替えるという設計がゆえに、Merlinのソースコードを改変せずに音響モデルを自在に変えることも難しい。同様に、Theano or kerasに依存した構造になっているため、他のDeep learningフレームワークとは、ソースコードを改変せずには使用できず、柔軟性に欠けていると言える。
+- Statistical speech synthesis system typically involves many area of research; roughly speaking, text processsing, speech analysis / synthesis, machine learning, etc. Sometimes it's hard to prototype new ideas since it usually requires many deep knowledges among these areas. I think it's worth to create common reusable software for ease of future research.
+- In HMM speech synthesis, HTS have been widely used. They provide various command line tools to allow users to create their own HMM-based statistical speech synthesis systems. However, it doesn't meet the requirements nowadays, since it's been known that DNN-based speech synthesis system can outperform HMM-based ones.
+- Merlin, which is an open source DNN-based speech synthesis toolkit, is an successor of HTS. Merlin was created to satisfy needs for DNN-based speech synthesis. One of their purpose is to help research reproducibility. From their reports, lots of research uses the toolkit to do research. That's great. However, from my perspective, it lacks flexibility. From their design, the main entry point for users is run_merlin.py, which does *everything* for you. We use Merlin to provide configuration file to the run_merlin.py. The problem of the design is that we cannot simply use our own implementation without modifying the Merlin's source code. Similarly, Merln are built on top of Theano and keras as computational backend, we cannot simply use other computational backends (PyTorch, tensorflow, etc).
 
-このような背景から、近年のDNNベースの音声合成の研究に役に立つ、ユーザが自由に構成要素を利用できる（i.e., 言語特徴量の計算だけ、パラメータ生成だけ、ポストフィルタだけ等）、ユーザが好きな自動微分ライブラリを使える（PyTorch, etc）、Modularで柔軟なライブラリがほしいと思いました。
+From the background described above, I think I need a new flexible and modular library. This is why I started to create the library.
 
 Goal
 ----
 
-対話環境での試行錯誤が研究の生産性の向上に重要であると信じ、対話環境での利用を前提とした、音声合成、声質変換のためのライブラリを構築する。主なゴールは、
+In my philosophy, I believe getting better experience on rich REPL (IPython, Jupyter) boosts productivity. From this in mind, my goal is to create a modular and reusable library forcused on
 
 - Easy and fast prototyping
 
-とする。コードはMITライセンスで公開し、研究の再現性の保証にも役立つことも狙う。
+The libray is MIT-licensed. I hope this will help you.
 
 So what do we provide?
 ----------------------
 
-HMM音声合成からのDNN音声合成の発展、End-to-end音声合成、Wavenetのようなボコーダレスの音声合成の発展など、音声合成の枠組みは多岐に渡る。すべてを網羅する機能を提供することは困難であり、ライブラリを複雑かつメンテナンスを難しいものにしてしまう。したがって、提供する機能を（少なくとも最初は）最も汎用的な部分に留めることが重要であると考える。
-また、扱うデータ量は大きくなっており、大規模データも視野に入れる必要がある。
+Please correct me if I'm saying wrong things about speech synthesis. Recently there's been many progress on speech synthesis research. Besides the success of typical DNN-based speech synthesis, end-to-end speech synthesis (e.g., Char2wav), vocoder-less speech synthesis (e.g., Wavenets) have been investigated. To design software, we cannot practically cover all the techniques. If we want to do this, I think it complicates the software overly. In my option, it's important to focus on generic algorithms, that can be used as building blocks.
 
-DNNを用いた機械学習においては、tensorflow, keras, cntk, pytorch, theano,
-caffe, mxnet,
-chainer等に代表されるように、CUDAを活用した多次元配列上の数値演算、自動微分をサポートしたフレームワークが必須になってきている。音声、画像、言語など、データを多次元配列として表現できる場合は多くあり、ドメインを問わず多くの分野で使われている。
-本ライブラリは、そういった汎用的な自動微分フレームワークと併せて使用されることを想定し、
+From the success of deep learning, many computational backends (e.g., tensorflow, PyTorch, etc) have been created to help research.
+I think we should provide a library which bridges generic computational backends and speech data. Hence, in this library, we provide
 
--  大規模データを想定したデータセットの構築、データアクセスの抽象化 :obj:`nnmnkwii.datasets`
--  音声に特化した汎用的な関数 :obj:`nnmnkwii.autograd`, :obj:`nnmnkwii.functions`
--  前処理/後処理アルゴリズム :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.util`, :obj:`nnmnkwii.postfilters`
+- Dataset and data iteration abstractions, considering arbitrary large datasets. :obj:`nnmnkwii.datasets`
+- Generic functions for speech synthesis. :obj:`nnmnkwii.autograd`, :obj:`nnmnkwii.functions`
+- Pre-processsing, post-processsing and utilities. :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.util`, :obj:`nnmnkwii.postfilters`
 
-に注目し、機能を提供すればよいと考える。また、可視化が重要であるという信念のもと、言語特徴量、音響特徴量の可視化ツール (:obj:`nnmnkwii.display`) も提供する（予定）。
+As I believe visualization is important to understand what happens, I will provide visualization package (:obj:`nnmnkwii.display`) in the near future.
+
 
 Design decisions
 ----------------
 
-ソフトウェアの設計方針として、以下が挙げられる。
+1. We provide our library as python packages that can be used in REPL. Command line tools, which would be useful for batch processing, are not included. Users are expected to create their own command line tools if necessary.
+2. We use in-memory IO as possible, except for loading dataset from files.
+3. We don't provide duration/acoustic models, opposite to Merin. Users are expected to implement their own ones.
+4. We don't provide linguistic feature extraction frontend, except for utilities to convert structural linguistic information (e.g., HTS full-context labels ) to its numeric forms.
+5. We don't provide speech analysis/synthesis backend. Users are expected use another packages for this purpose. e.g., :obj:`pysptk`, :obj:`pyworld` and :obj:`librosa`.
 
-1. 対話環境で使えるPythonパッケージとして提供する。コマンドラインツールは、必要であればユーザが作ればよいと考え、本ライブラリでは提供しないこととする。
-2. 対話環境での使用を前提とするため、基本的にIOはin-memoryととる
-3. 音響モデルの提供は、ライブラリの範囲外とする。もっともユーザが自分で考えて設定したい部分と考えられるためである。Merlinとは異なり、音響モデルを提供するのではなく、音響モデルを構築するための要素を提供する。
-4. 言語特徴量の抽出 (i.e. frontend)
-   は、基本的にHTSやMerlinと同様にライブラリの範囲外とする。
-5. 音響特徴量の抽出は、ライブラリの範囲外とする。 ``pysptk``,
-   ``pyworld``, ``librosa`` など別パッケージを使用すればよい。
-
-HTSのデモスクリプトのように、音声合成システム全体が複雑になってしまうのは、避けられない問題であると考える。本ライブラリでは、構成要素がシンプルで小さく、要素同士が疎結合であることを目指し、理解しやすい、再利用しやすいソフトウェアを目指す。
+We will try to keep the library to be modular, easy to understand and reusable.
 
 Development guidelines
 ----------------------
 
-開発においては、以下を指針とする
-
--  **Do not reinvent the wheel**: 車輪の再発明は可能な限り避ける
--  **Fully unit tested**:
-   バグのないソフトウェアはない。テストによって、可能な限りバグを少なくする、再発を避ける。
--  **Documentation**: ドキュメントを書くのは大変だが、大事である
-
-.. [1]
-   DNN音声合成を行うデモスクリプトは存在するが、あくまでデモスクリプトであり、ライブラリとしての機能にあるわけではない。
+-  **Do not reinvent the wheel**: Avoid reinventing the wheel as possible.
+-  **Fully unit tested**: There's no software that has no bugs.
+-  **Documentation**: Well documented software will help users to get stared.

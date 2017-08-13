@@ -17,6 +17,7 @@ https://github.com/r9y9/nnmnkwii
   :caption: Notes
 
   design
+  design_jp
 
 .. toctree::
    :maxdepth: 1
