@@ -311,6 +311,7 @@ class MemoryCacheFramewiseDataset(MemoryCacheDataset):
         >>> y[0].shape
         (187,)
     """
+
     def __init__(self, dataset, lengths, cache_size=777):
         super(MemoryCacheFramewiseDataset, self).__init__(dataset, cache_size)
         self.lengths = lengths

@@ -12,19 +12,19 @@ utterances, supporting iteration and indexing.
 Interface
 ----------
 
-To build dataset and to represent variety of features (linguistic, duration,
+To build dataset and represent variety of features (linguistic, duration,
 acoustic, etc) in an unified way, we define couple of interfaces.
 
 1. :obj:`FileDataSource`
 2. :obj:`Dataset`
 
 The former is an abstraction of file data sources, where we find the data and
-how to process them. Any FileDataSource must implements:
+how to process them. Any FileDataSource must implement:
 
 - ``collect_files``: specifies where to find source files (wav, lab, cmp, bin, etc.).
 - ``collect_features``: specifies how to collect features (just load from file, or do some feature extraction logic, etc).
 
-The later is an abstraction of dataset. Any dataset must implements
+The later is an abstraction of dataset. Any dataset must implement
 :obj:`Dataset` interface:
 
 - ``__getitem__``: returns features (typically, two dimentional :obj:`numpy.ndarray`)
