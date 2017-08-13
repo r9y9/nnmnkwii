@@ -12,21 +12,19 @@ Library to build speech synthesis systems designed for prototyping.
 
 https://github.com/r9y9/nnmnkwii
 
+.. toctree::
+  :maxdepth: 1
+  :caption: Notes
+
+  design
 
 .. toctree::
    :maxdepth: 1
-   :caption: Getting started
+   :caption: Tutorials
 
-   installation
-   examples
-
-.. toctree::
-   :glob:
-   :maxdepth: 1
-   :caption: Design documentation
-
-   design
-   details
+   nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).ipynb
+   nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).ipynb
+   nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).ipynb
 
 .. toctree::
     :glob:
@@ -34,6 +32,9 @@ https://github.com/r9y9/nnmnkwii
     :caption: Package references
 
     references/*
+
+
+.. only:: html
 
 Indices and tables
 ==================

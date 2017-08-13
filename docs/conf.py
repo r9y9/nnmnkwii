@@ -51,7 +51,7 @@ extensions = [
     'numpydoc',
     'matplotlib.sphinxext.plot_directive',
     'nbsphinx',
-    # 'IPython.sphinxext.ipython_console_highlighting',
+    'IPython.sphinxext.ipython_console_highlighting',
 ]
 
 if ON_RTD:

@@ -22,3 +22,6 @@ or:
    python setup.py develop # or install
 
 This should resolve the package dependencies and install ``nnmnkwii`` property.
+
+At the moment, :obj:`nnmnkwii.autograd` package depends on PyTorch. If you need
+autograd features, please install PyTorch as well. Running tests also requires PyTorch.
