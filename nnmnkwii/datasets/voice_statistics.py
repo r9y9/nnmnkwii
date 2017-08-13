@@ -13,7 +13,7 @@ def _get_dir(speaker, emotion):
     return "{}_{}".format(speaker, emotion)
 
 
-class VoiceStatisticsWavDataSource(FileDataSource):
+class VoiceStatisticsWavFileDataSource(FileDataSource):
     """Voice-statistics data source
 
     You can get the dataset from `voice-statistics`_.

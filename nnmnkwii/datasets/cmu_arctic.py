@@ -11,7 +11,7 @@ def _name_to_dirname(name):
     return join("cmu_us_{}_arctic".format(name), "wav")
 
 
-class CMUArcticWavDataSource(FileDataSource):
+class CMUArcticWavFileDataSource(FileDataSource):
     def __init__(self, data_root, speakers, labelmap=None, max_files=2):
         self.data_root = data_root
         self.speakers = speakers
