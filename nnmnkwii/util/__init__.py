@@ -72,7 +72,7 @@ def apply_delta_windows(x, windows):
     return combined_features
 
 
-def trim_zeros_frames(x, eps=1e-14):
+def trim_zeros_frames(x, eps=1e-7):
     """Remove trailling zeros frames.
 
     Similar to :func:`numpy.trim_zeros`, trimming trailing zeros features.
@@ -97,7 +97,7 @@ def trim_zeros_frames(x, eps=1e-14):
     return x[:len(np.trim_zeros(s))]
 
 
-def remove_zeros_frames(x, eps=1e-14):
+def remove_zeros_frames(x, eps=1e-7):
     """Remove zeros frames.
 
     Given a feature matrix, remove all zeros frames as well as trailing ones.

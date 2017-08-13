@@ -161,7 +161,7 @@ class PaddedFileSourceDataset(FileSourceDataset):
     dimentional :obj:`numpy.ndarray`.
 
     The difference between :obj:`FileSourceDataset` is that this returns
-    padded features as ``T^max x D``array at ``__getitem__``, while
+    padded features as ``T^max x D`` array at ``__getitem__``, while
     :obj:`FileSourceDataset` returns not-padded ``T x D`` array.
 
     Args:
@@ -273,7 +273,7 @@ class MemoryCacheDataset(Dataset):
 class MemoryCacheFramewiseDataset(MemoryCacheDataset):
     """MemoryCacheFramewiseDataset
 
-    A Thin dataset wrapper class that has simple cache functionality. It supports
+    A thin dataset wrapper class that has simple cache functionality. It supports
     frame-wise iteration. Different from other utterance-wise datasets, you will
     need to explicitly give number of time frames for each utterance at
     construction, since the class has to know the size of dataset to implement
