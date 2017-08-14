@@ -1,7 +1,7 @@
 # nnmnkwii
 
 [![PyPI](https://img.shields.io/pypi/v/nnmnkwii.svg)](https://pypi.python.org/pypi/nnmnkwii)
-[![wercker status](https://app.wercker.com/status/95168587f096665567ecd2033a43d20a/s/master "wercker status")](https://app.wercker.com/project/byKey/95168587f096665567ecd2033a43d20a)
+[![Build Status](https://travis-ci.org/r9y9/nnmnkwii.svg?branch=master)](https://travis-ci.org/r9y9/nnmnkwii)
 
 Library to build speech synthesis systems designed for easy and fast prototyping.
 
