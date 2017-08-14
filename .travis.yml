@@ -23,11 +23,12 @@ before_install:
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   # Useful for debugging any issues with conda
-  - conda config --add channels pypi soumith
+  - conda config --add channels pypi
   - conda info -a
-  - deps='pip numpy scipy cython nose coverage six pytorch'
+  - deps='pip numpy scipy cython nose coverage six'
   - conda create -q -n test-environment "python=$TRAVIS_PYTHON_VERSION" $deps
   - source activate test-environment
+  - conda install pytorch -c soumith
   - pip install --upgrade cython coveralls
 
 install:
