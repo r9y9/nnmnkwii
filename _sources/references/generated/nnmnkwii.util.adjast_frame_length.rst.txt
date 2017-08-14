@@ -1,0 +1,6 @@
+nnmnkwii\.util\.adjast\_frame\_length
+=====================================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: adjast_frame_length

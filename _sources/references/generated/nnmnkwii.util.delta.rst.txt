@@ -1,0 +1,6 @@
+nnmnkwii\.util\.delta
+=====================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: delta

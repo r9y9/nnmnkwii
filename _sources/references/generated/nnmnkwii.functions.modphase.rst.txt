@@ -1,0 +1,6 @@
+nnmnkwii\.functions\.modphase
+=============================
+
+.. currentmodule:: nnmnkwii.functions
+
+.. autofunction:: modphase
