@@ -321,13 +321,22 @@ class MemoryCacheFramewiseDataset(MemoryCacheDataset):
         assert hasattr(self, "cached_utterances")
         assert hasattr(self, "cache_size")
 
-    def __getitem__(self, frame_idx):
+    def _getitem_one_sample(self, frame_idx):
         # 0-origin
         utt_idx = np.argmax(self.cumsum_lengths > frame_idx) - 1
         frames = super(MemoryCacheFramewiseDataset, self).__getitem__(utt_idx)
         frame_idx_in_focused_utterance = frame_idx - \
             self.cumsum_lengths[utt_idx]
         return frames[frame_idx_in_focused_utterance]
+
+    def __getitem__(self, frame_idx):
+        if isinstance(frame_idx, slice):
+            current, stop, step = frame_idx.indices(len(self))
+            xs = [self._getitem_one_sample(i)
+                  for i in range(current, stop, step)]
+            return np.array(xs)
+        else:
+            return self._getitem_one_sample(frame_idx)
 
     def __len__(self):
         return self.n_frames

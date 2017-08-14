@@ -84,6 +84,10 @@ def test_frame_wise_iteration():
     assert len(X.cached_utterances) == num_utterances
     assert len(Y.cached_utterances) == num_utterances
 
+    # Should support slice indexing
+    for idx, (x, y) in enumerate(zip(X[:2], Y[:2])):
+        pass
+
 
 def test_sequence_wise_torch_data_loader():
     import torch
