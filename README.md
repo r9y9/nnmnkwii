@@ -6,7 +6,7 @@ Library to build speech synthesis systems designed for easy and fast prototyping
 
 ## Documentation
 
-- TODO
+See https://r9y9.github.io/nnmnkwii/ for reference manual and tutorials.
 
 ## Installation
 
@@ -14,7 +14,7 @@ The latest release is availabe on pypi. Assuming you have already ``numpy`` inst
 
     pip install nnmnkwii
 
-If yout want the latest development version, run:
+If you want the latest development version, run:
 
     pip install git+https://github.com/r9y9/nnmnkwii
 
