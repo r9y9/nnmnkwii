@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 setup(
     name='nnmnkwii',
     version='0.0.1',
-    description='nnmnkwii',
+    description='Library to build speech synthesis systems designed for easy and fast prototyping.',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
     url='https://github.com/r9y9/nnmnkwii',
@@ -19,7 +19,7 @@ setup(
         'bandmat',
         'fastdtw',
         'sklearn',
-        'pysptk'
+        'pysptk >= 0.1.7'
     ],
     tests_require=['nose', 'coverage'],
     extras_require={
