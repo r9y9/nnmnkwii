@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='nnmnkwii',
-    version='0.0.1',
+    version='0.0.2-dev',
     description='Library to build speech synthesis systems designed for easy and fast prototyping.',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
