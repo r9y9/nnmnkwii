@@ -1,5 +1,5 @@
 設計ドキュメント (Japanese)
-=========================
+======================================
 
 .. note::
     Design issue tracker https://github.com/r9y9/nnmnkwii/issues/8
