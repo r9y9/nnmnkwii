@@ -2,8 +2,6 @@ language: python
 
 python:
   - "2.7"
-  - "3.4"
-  - "3.5"
   - "3.6"
 
 notifications:
@@ -32,7 +30,7 @@ before_install:
   - pip install --upgrade cython coveralls
 
 install:
-  - pip install -e .
+  - pip install -e ".[test]"
 
 script:
   - nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/

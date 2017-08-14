@@ -1,3 +1,4 @@
+# coding: utf-8
 from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.util import delta, trim_zeros_frames
@@ -21,6 +22,7 @@ class UtteranceWiseTransformer(object):
 
     def get_shape(self, X):
         raise NotImplementedError
+
 
 class DeltaAppender(UtteranceWiseTransformer):
     """Append delta features.
