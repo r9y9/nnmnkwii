@@ -16,6 +16,13 @@ import bandmat as bm
 class MLPG(Function):
     """MLPG as an autograd function ``f : (T, D) -> (T, static_dim)``.
 
+    This is meant to be used for Minimum Geneartion Error (MGE) training for
+    speech synthesis and voice conversion. See [1]_ for details.
+
+    .. [1] Wu, Zhizheng, and Simon King. "Minimum trajectory error training
+      for deep neural networks, combined with stacked bottleneck features."
+      INTERSPEECH. 2015.
+
     Let :math:`d` is the index of static features, :math:`l` is the index
     of windows, gradients :math:`g_{d,l}` can be computed by:
 

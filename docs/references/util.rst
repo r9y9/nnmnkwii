@@ -31,7 +31,7 @@ Files
 -----
 
 Part of files were taken from `CMU ARCTIC dataset`_.
-Example quetsion files was taken from Merlin_.
+Example quetsion file was taken from Merlin_.
 
 .. _CMU ARCTIC dataset: http://www.festvox.org/cmu_arctic/
 .. _Merlin: https://github.com/CSTR-Edinburgh/merlin

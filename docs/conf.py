@@ -271,4 +271,5 @@ intersphinx_mapping = {
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
     'pysptk': ('https://pysptk.readthedocs.io/en/latest/', None),
     'pytorch': ('http://pytorch.org/docs/master/', None),
+    'librosa': ('http://librosa.github.io/librosa/', None),
 }

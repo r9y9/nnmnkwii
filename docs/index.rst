@@ -10,7 +10,11 @@ nnmnkwii documentation
 
 Library to build speech synthesis systems designed for easy and fast prototyping.
 
-https://github.com/r9y9/nnmnkwii
+Github: https://github.com/r9y9/nnmnkwii
+
+You can find tutorial notebooks in the document. Full code is available at `nnmnkwii_gallery`_.
+
+.. _nnmnkwii_gallery: https://github.com/r9y9/nnmnkwii_gallery
 
 .. toctree::
   :maxdepth: 1
@@ -18,6 +22,7 @@ https://github.com/r9y9/nnmnkwii
 
   design
   design_jp
+  nnmnkwii_gallery/notebooks/00-Quick start guide.ipynb
 
 .. toctree::
    :maxdepth: 1
