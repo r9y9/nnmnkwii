@@ -5,10 +5,12 @@ import numpy as np
 
 import bandmat as bm
 import bandmat.linalg as bla
-
+from scipy.linalg import solve_banded
 
 # https://github.com/MattShannon/bandmat/blob/master/example_spg.py
 # Copied from the above link. Thanks to Matt shannon!
+
+
 def build_win_mats(windows, frames):
     """Builds a window matrix of a given size for each window in a collection.
 
@@ -195,7 +197,7 @@ def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
             r = bm.dot_mm(win_mat.T, bm.diag(precisions[win_idx]))
 
             # grad_{d, l} = R^{-1r}
-            grad = np.linalg.solve(R.full(), r.full())
+            grad = solve_banded((R.l, R.u), R.data, r.full())
             assert grad.shape == (T, T)
 
             # Finally we get grad for a particular dimention
