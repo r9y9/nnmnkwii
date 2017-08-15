@@ -8,6 +8,8 @@
 
 Library to build speech synthesis systems designed for easy and fast prototyping.
 
+Supported python versions: 2.7 and 3.6.
+
 ## Documentation
 
 - [**STABLE**][docs-stable-url] &mdash; **most recently tagged version of the documentation.**
