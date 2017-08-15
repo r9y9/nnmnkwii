@@ -1,3 +1,4 @@
+# coding: utf-8
 from __future__ import with_statement, print_function, absolute_import
 
 import numpy as np
@@ -148,3 +149,56 @@ def mlpg(mean_frames, variance_frames, windows):
         y[:, d] = bla.solveh(P, b)
 
     return y
+
+
+def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
+    """MLPG gradient computation
+
+    Parameters are almost same as :func:`nnmnkwii.functions.mlpg`. See the
+    function docmenent for what the parameters mean.
+
+    Args:
+        mean_frames (numpy.ndarray): Means.
+        variance_frames (numpy.ndarray): Variances.
+        windows (list): Windows.
+        grad_output: Backpropagated output gradient, shape (``T x static_dim``)
+
+    Returns:
+        numpy.ndarray: Gradients to be back propagated, shape: (``T x D``)
+
+    See also:
+        :func:`nnmnkwii.autograd.mlpg`, :class:`nnmnkwii.autograd.MLPG`
+    """
+    T, D = mean_frames.shape
+    win_mats = build_win_mats(windows, T)
+    static_dim = D // len(windows)
+
+    grads = np.zeros((T, D), dtype=np.float32)
+    for d in range(static_dim):
+        sdw = max([win_mat.l + win_mat.u for win_mat in win_mats])
+
+        # R: \sum_{l} W_{l}^{T}P_{d,l}W_{l}
+        R = bm.zeros(sdw, sdw, T)  # overwritten in the loop
+
+        # dtype = np.float64 for bandmat
+        precisions = np.zeros((len(windows), T), dtype=np.float64)
+
+        for win_idx, win_mat in enumerate(win_mats):
+            precisions[win_idx] = 1 / \
+                variance_frames[:, win_idx * static_dim + d]
+
+            bm.dot_mm_plus_equals(win_mat.T, win_mat,
+                                  target_bm=R, diag=precisions[win_idx])
+
+        for win_idx, win_mat in enumerate(win_mats):
+            # r: W_{l}^{T}P_{d,l}
+            r = bm.dot_mm(win_mat.T, bm.diag(precisions[win_idx]))
+
+            # grad_{d, l} = R^{-1r}
+            grad = np.linalg.solve(R.full(), r.full())
+            assert grad.shape == (T, T)
+
+            # Finally we get grad for a particular dimention
+            grads[:, win_idx * static_dim + d] = grad_output[:, d].T.dot(grad)
+
+    return grads
