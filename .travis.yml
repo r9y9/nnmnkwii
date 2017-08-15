@@ -17,17 +17,16 @@ before_install:
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
-  - pip install coveralls
   - conda config --set always_yes yes --set changeps1 no
   - conda update -q conda
   # Useful for debugging any issues with conda
   - conda config --add channels pypi
   - conda info -a
-  - deps='pip numpy scipy cython nose coverage six'
+  - deps='pip numpy scipy cython nose'
   - conda create -q -n test-environment "python=$TRAVIS_PYTHON_VERSION" $deps
   - source activate test-environment
   - conda install pytorch -c soumith
-  - pip install --upgrade cython coveralls
+  - pip install codecov
 
 install:
   - pip install -e ".[test]"
@@ -36,4 +35,4 @@ script:
   - nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/
 
 after_success:
-  - coveralls
+  - codecov
