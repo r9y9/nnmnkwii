@@ -259,7 +259,7 @@ def load_question_set(qs_file_name):
     """Load HTS-style question and convert it to binary/continuous feature
     extraction regexes.
 
-    This code was taken from Merin.
+    This code was taken from Merlin.
 
     Args:
         qs_file_name (str): Input HTS-style question file path
