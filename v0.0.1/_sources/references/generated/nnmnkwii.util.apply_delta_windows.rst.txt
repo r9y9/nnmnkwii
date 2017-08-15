@@ -1,0 +1,6 @@
+nnmnkwii\.util\.apply\_delta\_windows
+=====================================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: apply_delta_windows
