@@ -47,14 +47,14 @@ def test_mlpg_gradcheck():
         variances = torch.ones(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
 
-        assert gradcheck(MLPG(static_dim, variances, windows),
+        assert gradcheck(MLPG(variances, windows),
                          inputs, eps=1e-3, atol=1e-3)
 
         # Rand variances case
         variances = torch.rand(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
 
-        assert gradcheck(MLPG(static_dim, variances, windows),
+        assert gradcheck(MLPG(variances, windows),
                          inputs, eps=1e-3, atol=1e-3)
 
 
