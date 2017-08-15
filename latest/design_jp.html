@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>設計ドキュメント (Japanese) &mdash; nnmnkwii 0.0.1 documentation</title>
+  <title>設計ドキュメント (Japanese) &mdash; nnmnkwii 0.0.2.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.1 documentation" href="index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.2.dev0 documentation" href="index.html"/>
         <link rel="next" title="A quick start guide" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html"/>
         <link rel="prev" title="General design documentation" href="design.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.1
+                0.0.2.dev0
               </div>
             
           
@@ -415,15 +415,15 @@
 <div class="section" id="the-underlying-design-philosophy">
 <h2>The underlying design philosophy<a class="headerlink" href="#the-underlying-design-philosophy" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Getting better experience on rich REPL (i.e, IPython, Jupyter) boosts productivity.</li>
+<li>Getting better experience on rich REPL (i.e, IPython, Jupyter) boosts research productivity.</li>
 </ul>
 </div>
 <div class="section" id="background">
 <h2>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>統計的音声合成は、テキスト分析、音声分析/合成、機械学習等、いくつもの要素技術からなる複合技術であり、論文の追試（結果の再現）、新しいアイデアをプロトタイピングするといった行為は、大きな労力を要する。後の研究の生産性の向上のために、音声合成における要素技術を、再利用しやすい形で提供することには価値があると考える。</li>
-<li>HMM音声合成では、HTSが広く使われている。HTKにパッチを適用することで使用する。HMMベースの音響モデルを構築するための仕組みがコマンドラインツール群として提供されており、それらを組みわせて柔軟にシステムが作れるように設計されている。しかし、HMMベースの音声合成に着目して設計されているため、近年の主流であるDNN音声合成には基本的には対応していない <a class="footnote-reference" href="#id2" id="id1">[1]</a></li>
-<li><a class="reference external" href="http://ssw9.net/papers/ssw9_PS2-13_Wu.pdf">Merin</a> は、DNNベースの音声合成システムを作るためのツールキットである。近年のDNNベースの音声合成システムの成功を受けて、HTSに代わるDNNベースのstate-of-the-artなシステムを再現可能な形で提供するために作られている。Melinの主なエントリーポイントは、run_merlin.pyというコマンドラインスクリプトであり、ユーザは設定ファイルを切り替えることで、どのような音響モデルを使用するかなどを切り替える。しかし、run_merlin.pyがすべてのインタフェースとなっており、構成要素を再利用するといったことが難しい。また、音響モデルを設定ファイルで切り替えるという設計がゆえに、Merlinのソースコードを改変せずに音響モデルを自在に変えることも難しい。同様に、Theano or kerasに依存した構造になっているため、他のDeep learningフレームワークとは、ソースコードを改変せずには使用できず、柔軟性に欠けていると言える。</li>
+<li>HMM音声合成では、 <a class="reference external" href="http://hts.sp.nitech.ac.jp/">HTS</a> が広く使われている。HTKにパッチを適用することで使用する。HMMベースの音響モデルを構築するための仕組みがコマンドラインツール群として提供されており、それらを組みわせて柔軟にシステムが作れるように設計されている。しかし、HMMベースの音声合成に着目して設計されているため、近年の主流であるDNN音声合成には基本的には対応していない <a class="footnote-reference" href="#id2" id="id1">[1]</a></li>
+<li><a class="reference external" href="https://github.com/CSTR-Edinburgh/merlin">Merlin</a> は、DNNベースの音声合成システムを作るためのツールキットである。近年のDNNベースの音声合成システムの成功を受けて、HTSに代わるDNNベースのstate-of-the-artなシステムを再現可能な形で提供するために作られている。Merlinの主なエントリーポイントは、run_merlin.pyというコマンドラインスクリプトであり、ユーザは設定ファイルを切り替えることで、どのような音響モデルを使用するかなどを切り替える。しかし、run_merlin.pyがすべてのインタフェースとなっており、構成要素を再利用するといったことが難しい。また、音響モデルを設定ファイルで切り替えるという設計がゆえに、Merlinのソースコードを改変せずに音響モデルを自在に変えることも難しい。同様に、Theano or kerasに依存した構造になっているため、他のDeep learningフレームワークとは、ソースコードを改変せずには使用できず、柔軟性に欠けていると言える。</li>
 </ul>
 <p>このような背景から、近年のDNNベースの音声合成の研究に役に立つ、ユーザが自由に構成要素を利用できる（i.e., 言語特徴量の計算だけ、パラメータ生成だけ、ポストフィルタだけ等）、ユーザが好きな自動微分ライブラリを使える（PyTorch, etc）、Modularで柔軟なライブラリがほしいと思いました。</p>
 </div>
@@ -437,7 +437,7 @@
 </div>
 <div class="section" id="so-what-do-we-provide">
 <h2>So what do we provide?<a class="headerlink" href="#so-what-do-we-provide" title="Permalink to this headline">¶</a></h2>
-<p>HMM音声合成からのDNN音声合成の発展、End-to-end音声合成、Wavenetのようなボコーダレスの音声合成の発展など、音声合成の枠組みは多岐に渡る。すべてを網羅する機能を提供することは困難であり、ライブラリを複雑かつメンテナンスを難しいものにしてしまう。したがって、提供する機能を（少なくとも最初は）最も汎用的な部分に留めることが重要であると考える。
+<p>HMM音声合成からのDNN音声合成の発展、End-to-end音声合成 (e.g., <a class="reference external" href="http://www.josesotelo.com/speechsynthesis/">Char2Wav</a>) 、ボコーダレスの音声合成の発展(e.g., <a class="reference external" href="https://deepmind.com/blog/wavenet-generative-model-raw-audio/">WaveNet</a>)など、音声合成の枠組みは多岐に渡る。すべてを網羅する機能を提供することは困難であり、ライブラリを複雑かつメンテナンスを難しいものにしてしまう。したがって、提供する機能を（少なくとも最初は）最も汎用的な部分に留めることが重要であると考える。
 また、扱うデータ量は大きくなっており、大規模データも視野に入れる必要がある。</p>
 <p>DNNを用いた機械学習においては、tensorflow, keras, cntk, pytorch, theano,
 caffe, mxnet,
@@ -526,7 +526,7 @@ chainer等に代表されるように、CUDAを活用した多次元配列上の
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.1',
+            VERSION:'0.0.2.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

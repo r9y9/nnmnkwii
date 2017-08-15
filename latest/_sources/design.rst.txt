@@ -24,7 +24,7 @@ From the background described above, I think I need a new flexible and modular l
 Goal
 ----
 
-In my philosophy, I believe getting better experience on rich REPL (IPython, Jupyter) boosts productivity. From this in mind, my goal is to create a modular and reusable library focused on
+In my philosophy, I believe getting better experience on rich REPL (IPython, Jupyter) boosts research productivity. From this in mind, my goal is to create a modular and reusable library focused on
 
 - Easy and fast prototyping
 
@@ -53,7 +53,7 @@ Design decisions
 
 1. We provide our library as python packages that can be used in REPL. Command line tools, which would be useful for batch processing, are not included. Users are expected to create their own command line tools if necessary.
 2. We use in-memory IO as possible, except for loading dataset from files.
-3. We don't provide duration/acoustic models, opposite to Merin. Users are expected to implement their own ones. For generic models may go in :obj:`nnmnkwii.baseline` module, but it's not meant to cover all the models.
+3. We don't provide duration/acoustic models, opposite to Merlin. Users are expected to implement their own ones. For generic models may go in :obj:`nnmnkwii.baseline` module, but it's not meant to cover all the models.
 4. We don't provide linguistic feature extraction frontend, except for utilities to convert structural linguistic information (e.g., HTS full-context labels ) to its numeric forms.
 5. We don't provide speech analysis/synthesis backend. Users are expected to use another packages for this purpose. e.g., :obj:`pysptk`, :obj:`pyworld` and :obj:`librosa`.
 
