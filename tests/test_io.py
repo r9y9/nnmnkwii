@@ -27,3 +27,8 @@ def test_phone_alignment_label():
     input_state_label = join(DATA_DIR, "label_phone_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
     assert not labels.is_state_alignment_label()
+
+def test_label_without_times():
+    input_phone_label = join(DATA_DIR, "hts-nit-atr503", "phrase01.lab")
+    labels = hts.load(input_phone_label)
+    assert not labels.is_state_alignment_label()

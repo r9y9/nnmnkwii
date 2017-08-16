@@ -1,5 +1,6 @@
 ## Test data
 
-Some data was taken from Merlin or genearted from their demo scripts.
+Some data was taken from:
 
-https://github.com/CSTR-Edinburgh/merlin
+- [Merlin](https://github.com/CSTR-Edinburgh/merlin) and genearted from their demo scripts.
+- [HTS](hts.sp.nitech.ac.jp) demo.

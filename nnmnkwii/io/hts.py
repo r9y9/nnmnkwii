@@ -119,9 +119,20 @@ J:13+9-2[2]')
         contexts = []
         # TODO: consider comments?
         for idx, line in enumerate(lines):
-            start_time, end_time, context = line[:-1].split(" ")
-            start_times[idx] = int(start_time)
-            end_times[idx] = int(end_time)
+            cols = line[:-1].split(" ")
+            if len(cols) == 3:
+                start_time, end_time, context = cols
+                start_time = int(start_time)
+                end_time = int(end_time)
+            elif len(cols) == 1:
+                start_time = 0
+                end_time = 0
+                context = cols[0]
+            else:
+                raise RuntimeError("Not supported for now")
+
+            start_times[idx] = start_time
+            end_times[idx] = end_time
             contexts.append(context)
 
         self.start_times = start_times
