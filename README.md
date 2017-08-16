@@ -1,4 +1,4 @@
-# nnmnkwii
+# nnmnkwii (nanami)
 
 [![][docs-stable-img]][docs-stable-url]
 [![][docs-latest-img]][docs-latest-url]
