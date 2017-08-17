@@ -126,7 +126,7 @@ def pattern_matching_binary(binary_dict, label):
     lab_binary_vector = np.zeros((1, dict_size), dtype=np.int)
 
     for i in range(dict_size):
-        current_question_list = binary_dict[str(i)]
+        current_question_list = binary_dict[i]
         binary_flag = 0
         for iq in range(len(current_question_list)):
             current_compiled = current_question_list[iq]
@@ -148,7 +148,7 @@ def pattern_matching_continous_position(continuous_dict, label):
 
         continuous_value = -1.0
 
-        current_compiled = continuous_dict[str(i)]
+        current_compiled = continuous_dict[i]
 
         ms = current_compiled.search(label)
         if ms is not None:
