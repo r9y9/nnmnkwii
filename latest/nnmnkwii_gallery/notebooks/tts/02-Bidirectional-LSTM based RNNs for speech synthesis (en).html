@@ -1026,7 +1026,8 @@ functionality for any large dataset.</p>
 <div class="section" id="Combine-datasets-and-normalization.">
 <h3>Combine datasets and normalization.<a class="headerlink" href="#Combine-datasets-and-normalization." title="Permalink to this headline">¶</a></h3>
 <p>In this demo we use PyTorch to build DNNs. <code class="docutils literal"><span class="pre">PyTorchDataset</span></code> is just a
-glue Dataset wrapper, which combines our dataset and normalization.</p>
+glue Dataset wrapper, which combines our dataset and normalization. Note
+that since our dataset is zero-padded, we need its lengths.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none"><div class="highlight"><pre>
 <span></span>In [15]:

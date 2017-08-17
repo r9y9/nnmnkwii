@@ -505,7 +505,7 @@
    "source": [
     "### Combine datasets and normalization.\n",
     "\n",
-    "In this demo we use PyTorch to build DNNs. `PyTorchDataset` is just a glue Dataset wrapper, which combines our dataset and normalization."
+    "In this demo we use PyTorch to build DNNs. `PyTorchDataset` is just a glue Dataset wrapper, which combines our dataset and normalization. Note that since our dataset is zero-padded, we need its lengths."
    ]
   },
   {
