@@ -125,8 +125,8 @@ J:13+9-2[2]')
                 start_time = int(start_time)
                 end_time = int(end_time)
             elif len(cols) == 1:
-                start_time = 0
-                end_time = 0
+                start_time = -1
+                end_time = -1
                 context = cols[0]
             else:
                 raise RuntimeError("Not supported for now")
@@ -249,15 +249,18 @@ def wildcards2regex(question, convert_number_pattern=False):
     """
 
     # handle HTK wildcards (and lack of them) at ends of label:
+    prefix = ""
+    postfix = ""
     if '*' in question:
         if not question.startswith('*'):
-            question = '\A' + question
+            prefix = "\A"
         if not question.endswith('*'):
-            question = question + '\Z'
+            postfix = "\Z"
     question = question.strip('*')
     question = re.escape(question)
     # convert remaining HTK wildcards * and ? to equivalent regex:
     question = question.replace('\\*', '.*')
+    question = prefix + question + postfix
 
     if convert_number_pattern:
         question = question.replace('\\(\\\\d\\+\\)', '(\d+)')
@@ -290,38 +293,41 @@ def load_question_set(qs_file_name):
     continuous_qs_index = 0
     binary_dict = {}
     continuous_dict = {}
+    # I guess `LL` means Left-left, but it doesn't seem to be docmented anywhere
     LL = re.compile(re.escape('LL-'))
 
     for line in lines:
         line = line.replace('\n', '')
+        temp_list = line.split()
+        if len(line) <= 0:
+            continue
+        temp_list = line.split('{')
+        temp_line = temp_list[1]
+        temp_list = temp_line.split('}')
+        temp_line = temp_list[0]
+        temp_line = temp_line.strip()
+        question_list = temp_line.split(',')
 
-        if len(line) > 5:
-            temp_list = line.split('{')
-            temp_line = temp_list[1]
-            temp_list = temp_line.split('}')
-            temp_line = temp_list[0]
-            temp_line = temp_line.strip()
-            question_list = temp_line.split(',')
+        temp_list = line.split(' ')
+        question_key = temp_list[1]
+        if temp_list[0] == 'CQS':
+            assert len(question_list) == 1
+            processed_question = wildcards2regex(
+                question_list[0], convert_number_pattern=True)
+            continuous_dict[continuous_qs_index] = re.compile(
+                processed_question)  # save pre-compiled regular expression
+            continuous_qs_index = continuous_qs_index + 1
+        elif temp_list[0] == 'QS':
+            re_list = []
+            # import ipdb; ipdb.set_trace()
+            for temp_question in question_list:
+                processed_question = wildcards2regex(temp_question)
+                if LL.search(question_key) and processed_question[0] != '^':
+                    processed_question = '^' + processed_question
+                re_list.append(re.compile(processed_question))
 
-            temp_list = line.split(' ')
-            question_key = temp_list[1]
-            if temp_list[0] == 'CQS':
-                assert len(question_list) == 1
-                processed_question = wildcards2regex(
-                    question_list[0], convert_number_pattern=True)
-                continuous_dict[str(continuous_qs_index)] = re.compile(
-                    processed_question)  # save pre-compiled regular expression
-                continuous_qs_index = continuous_qs_index + 1
-            elif temp_list[0] == 'QS':
-                re_list = []
-                for temp_question in question_list:
-                    processed_question = wildcards2regex(temp_question)
-                    if LL.search(question_key):
-                        processed_question = '^' + processed_question
-                    re_list.append(re.compile(processed_question))
-
-                binary_dict[str(binary_qs_index)] = re_list
-                binary_qs_index = binary_qs_index + 1
-            else:
-                raise RuntimeError("Not supported question format")
+            binary_dict[binary_qs_index] = re_list
+            binary_qs_index = binary_qs_index + 1
+        else:
+            raise RuntimeError("Not supported question format")
     return binary_dict, continuous_dict

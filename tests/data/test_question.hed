@@ -1,0 +1,6 @@
+QS "LL-Phone_Muon1"     {sil^,pau^}
+QS "LL-Phone_Muon2"     {sil^*,pau^*}
+QS "L-Phone_Muon1"      {*^sil-*,*^pau-*}
+QS "C-Phone_sil"        {*-sil+*}
+QS "R-Phone_o"          {*+o=*}
+QS "RR-Phone_o"         {*=o/A:*}
