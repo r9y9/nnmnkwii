@@ -10,5 +10,6 @@ speech synthesis.
     :toctree: generated/
 
     mlpg
+    mlpg_grad
     modspec
     modphase

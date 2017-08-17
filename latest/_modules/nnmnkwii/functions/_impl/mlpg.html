@@ -253,6 +253,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/functions.html">Functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
 </ul>
@@ -372,16 +373,19 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.functions._impl.mlpg</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">bandmat</span> <span class="k">as</span> <span class="nn">bm</span>
 <span class="kn">import</span> <span class="nn">bandmat.linalg</span> <span class="k">as</span> <span class="nn">bla</span>
-
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="k">import</span> <span class="n">solve_banded</span>
 
 <span class="c1"># https://github.com/MattShannon/bandmat/blob/master/example_spg.py</span>
 <span class="c1"># Copied from the above link. Thanks to Matt shannon!</span>
+
+
 <span class="k">def</span> <span class="nf">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">frames</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Builds a window matrix of a given size for each window in a collection.</span>
 
@@ -522,6 +526,59 @@
         <span class="n">y</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">bla</span><span class="o">.</span><span class="n">solveh</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="mlpg_grad"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.functions.mlpg_grad.html#nnmnkwii.functions.mlpg_grad">[docs]</a><span class="k">def</span> <span class="nf">mlpg_grad</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;MLPG gradient computation</span>
+
+<span class="sd">    Parameters are almost same as :func:`nnmnkwii.functions.mlpg`. See the</span>
+<span class="sd">    function docmenent for what the parameters mean.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mean_frames (numpy.ndarray): Means.</span>
+<span class="sd">        variance_frames (numpy.ndarray): Variances.</span>
+<span class="sd">        windows (list): Windows.</span>
+<span class="sd">        grad_output: Backpropagated output gradient, shape (``T x static_dim``)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Gradients to be back propagated, shape: (``T x D``)</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.autograd.mlpg`, :class:`nnmnkwii.autograd.MLPG`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">win_mats</span> <span class="o">=</span> <span class="n">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">static_dim</span> <span class="o">=</span> <span class="n">D</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span>
+
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">D</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">static_dim</span><span class="p">):</span>
+        <span class="n">sdw</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">win_mat</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">win_mat</span><span class="o">.</span><span class="n">u</span> <span class="k">for</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="n">win_mats</span><span class="p">])</span>
+
+        <span class="c1"># R: \sum_{l} W_{l}^{T}P_{d,l}W_{l}</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sdw</span><span class="p">,</span> <span class="n">sdw</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>  <span class="c1"># overwritten in the loop</span>
+
+        <span class="c1"># dtype = np.float64 for bandmat</span>
+        <span class="n">precisions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">),</span> <span class="n">T</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
+            <span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> \
+                <span class="n">variance_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
+
+            <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span>
+                                  <span class="n">target_bm</span><span class="o">=</span><span class="n">R</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
+            <span class="c1"># r: W_{l}^{T}P_{d,l}</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">bm</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">]))</span>
+
+            <span class="c1"># grad_{d, l} = R^{-1r}</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="n">solve_banded</span><span class="p">((</span><span class="n">R</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="n">R</span><span class="o">.</span><span class="n">u</span><span class="p">),</span> <span class="n">R</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">full</span><span class="p">())</span>
+            <span class="k">assert</span> <span class="n">grad</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+            <span class="c1"># Finally we get grad for a particular dimention</span>
+            <span class="n">grads</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad_output</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">grads</span></div>
 </pre></div>
 
            </div>
