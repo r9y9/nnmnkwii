@@ -11,6 +11,8 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
+    "Source code: https://github.com/r9y9/nnmnkwii_gallery\n",
+    "\n",
     "In this guide, I will try to show basic usages of the library. I'd recommend that readers try this notebook locally to understatnd what the notebook does. Advanced usages can be found at the tutorials section in the documentation.\n",
     "\n",
     "To run the notebook, in addition to nnmnkwii and its dependencies, you will need the following packages:\n",

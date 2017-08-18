@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.2.dev0 documentation</title>
+  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.3.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.2.dev0 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.2.dev0
+                0.0.3.dev0
               </div>
             
           
@@ -500,8 +500,8 @@
                 <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
                 <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                <span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
-                <span class="n">end_time</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="n">end_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
                 <span class="n">context</span> <span class="o">=</span> <span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not supported for now&quot;</span><span class="p">)</span>
@@ -624,15 +624,18 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># handle HTK wildcards (and lack of them) at ends of label:</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">question</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">question</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">):</span>
-            <span class="n">question</span> <span class="o">=</span> <span class="s1">&#39;\A&#39;</span> <span class="o">+</span> <span class="n">question</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;\A&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">question</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">):</span>
-            <span class="n">question</span> <span class="o">=</span> <span class="n">question</span> <span class="o">+</span> <span class="s1">&#39;\Z&#39;</span>
+            <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;\Z&quot;</span>
     <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
     <span class="n">question</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
     <span class="c1"># convert remaining HTK wildcards * and ? to equivalent regex:</span>
     <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">question</span> <span class="o">+</span> <span class="n">postfix</span>
 
     <span class="k">if</span> <span class="n">convert_number_pattern</span><span class="p">:</span>
         <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(</span><span class="se">\\\\</span><span class="s1">d</span><span class="se">\\</span><span class="s1">+</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;(\d+)&#39;</span><span class="p">)</span>
@@ -665,40 +668,43 @@
     <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">binary_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">continuous_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># I guess `LL` means Left-left, but it doesn&#39;t seem to be docmented anywhere</span>
     <span class="n">LL</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="s1">&#39;LL-&#39;</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
         <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span>
+        <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span>
+        <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">question_list</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
-            <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span>
-            <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="n">temp_list</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span>
-            <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">question_list</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">question_key</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;CQS&#39;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">question_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">processed_question</span> <span class="o">=</span> <span class="n">wildcards2regex</span><span class="p">(</span>
+                <span class="n">question_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">convert_number_pattern</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">continuous_dict</span><span class="p">[</span><span class="n">continuous_qs_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+                <span class="n">processed_question</span><span class="p">)</span>  <span class="c1"># save pre-compiled regular expression</span>
+            <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="n">continuous_qs_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;QS&#39;</span><span class="p">:</span>
+            <span class="n">re_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># import ipdb; ipdb.set_trace()</span>
+            <span class="k">for</span> <span class="n">temp_question</span> <span class="ow">in</span> <span class="n">question_list</span><span class="p">:</span>
+                <span class="n">processed_question</span> <span class="o">=</span> <span class="n">wildcards2regex</span><span class="p">(</span><span class="n">temp_question</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">LL</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">question_key</span><span class="p">)</span> <span class="ow">and</span> <span class="n">processed_question</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                    <span class="n">processed_question</span> <span class="o">=</span> <span class="s1">&#39;^&#39;</span> <span class="o">+</span> <span class="n">processed_question</span>
+                <span class="n">re_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">processed_question</span><span class="p">))</span>
 
-            <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
-            <span class="n">question_key</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-            <span class="k">if</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;CQS&#39;</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">question_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
-                <span class="n">processed_question</span> <span class="o">=</span> <span class="n">wildcards2regex</span><span class="p">(</span>
-                    <span class="n">question_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">convert_number_pattern</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-                <span class="n">continuous_dict</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">continuous_qs_index</span><span class="p">)]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
-                    <span class="n">processed_question</span><span class="p">)</span>  <span class="c1"># save pre-compiled regular expression</span>
-                <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="n">continuous_qs_index</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="k">elif</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;QS&#39;</span><span class="p">:</span>
-                <span class="n">re_list</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">temp_question</span> <span class="ow">in</span> <span class="n">question_list</span><span class="p">:</span>
-                    <span class="n">processed_question</span> <span class="o">=</span> <span class="n">wildcards2regex</span><span class="p">(</span><span class="n">temp_question</span><span class="p">)</span>
-                    <span class="k">if</span> <span class="n">LL</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">question_key</span><span class="p">):</span>
-                        <span class="n">processed_question</span> <span class="o">=</span> <span class="s1">&#39;^&#39;</span> <span class="o">+</span> <span class="n">processed_question</span>
-                    <span class="n">re_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">processed_question</span><span class="p">))</span>
-
-                <span class="n">binary_dict</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">binary_qs_index</span><span class="p">)]</span> <span class="o">=</span> <span class="n">re_list</span>
-                <span class="n">binary_qs_index</span> <span class="o">=</span> <span class="n">binary_qs_index</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not supported question format&quot;</span><span class="p">)</span>
+            <span class="n">binary_dict</span><span class="p">[</span><span class="n">binary_qs_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">re_list</span>
+            <span class="n">binary_qs_index</span> <span class="o">=</span> <span class="n">binary_qs_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not supported question format&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span></div>
 </pre></div>
 
@@ -736,7 +742,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.2.dev0',
+            VERSION:'0.0.3.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
