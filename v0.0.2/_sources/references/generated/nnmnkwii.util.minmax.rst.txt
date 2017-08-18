@@ -1,0 +1,6 @@
+nnmnkwii\.util\.minmax
+======================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: minmax

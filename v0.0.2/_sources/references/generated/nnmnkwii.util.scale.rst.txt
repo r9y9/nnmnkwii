@@ -1,0 +1,6 @@
+nnmnkwii\.util\.scale
+=====================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: scale
