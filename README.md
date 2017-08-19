@@ -36,7 +36,7 @@ This should resolve the package dependencies and install ``nnmnkwii`` property.
 At the moment, `nnmnkwii.autograd` package depends on [PyTorch](http://pytorch.org/).
 If you need autograd features, please install PyTorch as well.
 
-## Acknowledgement
+## Acknowledgements
 
 The library is inspired by the following open source projects:
 

@@ -25,4 +25,4 @@ Part of code/data was adapted from open source projects, which
 has thier own license.
 
 - [Merlin](https://goo.gl/Jfw8xZ).
-- [CMU ARCTIC datase](https://goo.gl/bAmFru).
+- [CMU ARCTIC database](https://goo.gl/bAmFru).
