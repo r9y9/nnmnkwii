@@ -6,9 +6,6 @@ Autograd
 Differenciable functions for PyTorch. This may be extended
 to support other autograd frameworks.
 
-Currently all functions doesn't have CUDA implementation, but should be
-addressed later.
-
 Functional interface
 --------------------
 
@@ -16,12 +13,16 @@ Functional interface
     :toctree: generated/
 
     mlpg
+    unit_variance_mlpg
     modspec
 
 Function classes
 ----------------
 
 .. autoclass:: MLPG
+    :members:
+
+.. autoclass:: UnitVarianceMLPG
     :members:
 
 .. autoclass:: ModSpec

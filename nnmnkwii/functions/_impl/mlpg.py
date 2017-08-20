@@ -6,32 +6,47 @@ import numpy as np
 import bandmat as bm
 import bandmat.linalg as bla
 from scipy.linalg import solve_banded
+from nnmnkwii.util.linalg import cholesky_inv_banded
+from ._mlpg import full_window_mat as _full_window_mat
 
 # https://github.com/MattShannon/bandmat/blob/master/example_spg.py
 # Copied from the above link. Thanks to Matt shannon!
 
 
-def build_win_mats(windows, frames):
+def build_win_mats(windows, T):
     """Builds a window matrix of a given size for each window in a collection.
 
-    `windows` specifies the collection of windows as a sequence of
-    `(l, u, win_coeff)` triples, where `l` and `u` are non-negative integers
-    specifying the left and right extents of the window and `win_coeff` is an
-    array specifying the window coefficients.
-    The returned value is a list of window matrices, one for each of the
-    windows specified in `windows`.
-    Each window matrix is a `frames` by `frames` Toeplitz matrix with lower
-    bandwidth `l` and upper bandwidth `u`.
-    The non-zero coefficients in each row of this Toeplitz matrix are given by
-    `win_coeff`.
-    The returned window matrices are stored as BandMats, i.e. using a banded
-    representation.
+    Args:
+        windows(list): specifies the collection of windows as a sequence of
+        ``(l, u, win_coeff)`` triples, where ``l`` and ``u`` are non-negative
+        integers pecifying the left and right extents of the window and
+        ``win_coeff`` is an array specifying the window coefficients.
+        T (int): Number of frames.
+
+    Returns:
+        list: The returned value is a list of window matrices, one for each of
+        the windows specified in ``windows``. Each window matrix is a
+        ``T`` by ``T`` Toeplitz matrix with lower bandwidth ``l`` and upper
+        bandwidth ``u``. The non-zero coefficients in each row of this Toeplitz
+        matrix are given by ``win_coeff``.
+        The returned window matrices are stored as BandMats, i.e. using a
+        banded representation.
+
+    Examples:
+        >>> from nnmnkwii import functions as F
+        >>> import numpy as np
+        >>> windows = [
+        ...     (0, 0, np.array([1.0])),            # static
+        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
+        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
+        ... ]
+        >>> win_mats = F.build_win_mats(windows, 3)
     """
     win_mats = []
     for l, u, win_coeff in windows:
         assert l >= 0 and u >= 0
         assert len(win_coeff) == l + u + 1
-        win_coeffs = np.tile(np.reshape(win_coeff, (l + u + 1, 1)), frames)
+        win_coeffs = np.tile(np.reshape(win_coeff, (l + u + 1, 1)), T)
         win_mat = bm.band_c_bm(u, l, win_coeffs).T
         win_mats.append(win_mat)
 
@@ -83,7 +98,33 @@ def mlpg(mean_frames, variance_frames, windows):
 
     It peforms Maximum Likelihood Parameter Generation (MLPG) algorithm
     to generate static features from static + dynamic features over
-    time frames. The implementation was heavily inspired by [1]_ and
+    time frames dimension-by-dimension.
+
+    Let :math:`\mu` (``T x 1``) is the input mean sequence of a particular
+    dimension and :math:`y` (``T x 1``) is the static
+    feature sequence we want to compute, the formula of MLPG is written as:
+
+    .. math::
+
+        y = A^{-1} b
+
+    where
+
+    .. math::
+
+        A = \sum_{l} W_{l}^{T}P_{l}W_{l}
+
+    ,
+
+    .. math::
+
+        b = P\mu
+
+    :math:`W_{l}` is the ``l``-th window matrix (``T x T``) and :math:`P`
+    (``T x T``) is the precision matrix which is given by the inverse of
+    variance matrix.
+
+    The implementation was heavily inspired by [1]_ and
     using bandmat_ for efficient computation.
 
     .. _bandmat: https://github.com/MattShannon/bandmat
@@ -124,6 +165,7 @@ def mlpg(mean_frames, variance_frames, windows):
         :func:`nnmnkwii.autograd.mlpg`
 
     """
+    dtype = mean_frames.dtype
     T, D = mean_frames.shape
     # expand variances over frames
     if variance_frames.ndim == 1 and variance_frames.shape[0] == D:
@@ -137,8 +179,8 @@ def mlpg(mean_frames, variance_frames, windows):
     # workspaces; those will be updated in the following generation loop
     means = np.zeros((T, num_windows))
     precisions = np.zeros((T, num_windows))
-    # Perform dimention-wise generation
-    y = np.zeros((T, static_dim))
+    # Perform dimension-wise generation
+    y = np.zeros((T, static_dim), dtype=dtype)
     for d in range(static_dim):
 
         for win_idx in range(num_windows):
@@ -156,8 +198,30 @@ def mlpg(mean_frames, variance_frames, windows):
 def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
     """MLPG gradient computation
 
-    Parameters are almost same as :func:`nnmnkwii.functions.mlpg`. See the
-    function docmenent for what the parameters mean.
+    Parameters are same as :func:`nnmnkwii.functions.mlpg` except for
+    ``grad_output``. See the function docmenent for what the parameters mean.
+
+    Let :math:`d` is the index of static features, :math:`l` is the index
+    of windows, gradients :math:`g_{d,l}` can be computed by:
+
+    .. math::
+
+        g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}
+
+    where :math:`W_{l}` is a banded window matrix and :math:`P_{d,l}` is a
+    diagonal precision matrix.
+
+    Assuming the variances are diagonals, MLPG can be performed in
+    dimention-by-dimention efficiently.
+
+    Let :math:`o_{d}` be ``T`` dimentional back-propagated gradients, the
+    resulting gradients :math:`g'_{l,d}` to be propagated are
+    computed as follows:
+
+    .. math::
+
+        g'_{d,l} = o_{d}^{T} g_{d,l}
+
 
     Args:
         mean_frames (numpy.ndarray): Means.
@@ -200,7 +264,118 @@ def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
             grad = solve_banded((R.l, R.u), R.data, r.full())
             assert grad.shape == (T, T)
 
-            # Finally we get grad for a particular dimention
+            # Finally we get grad for a particular dimension
             grads[:, win_idx * static_dim + d] = grad_output[:, d].T.dot(grad)
 
     return grads
+
+
+def full_window_mat(win_mats, T):
+    """Given banded window matrices, compute cocatenated full window matrix.
+
+    Args:
+        win_mats (list): List of windows matrices given by :func:`build_win_mats`.
+        T (int): Number of frames.
+
+    Returns:
+        numpy.ndarray: Cocatenated windows matrix (``T*num_windows x T``).
+    """
+    return _full_window_mat(win_mats, T)
+
+
+def unit_variance_mlpg_matrix(windows, T):
+    """Compute MLPG matrix assuming input is normalized to have unit-variances.
+
+    Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),
+    :math:`W` is a window matrix ``(T x num_windows*T)``, assuming input is
+    normalized to have unit-variances, MLPG can be written as follows:
+
+    .. math::
+
+        y = R \mu
+
+    where
+
+    .. math::
+
+        R = (W^{T} W)^{-1} W^{T}
+
+    Here we call :math:`R` as the MLPG matrix.
+
+    Args:
+        windows: (list): List of windows.
+        T (int): Number of frames.
+
+    Returns:
+        numpy.ndarray: MLPG matrix (``T x nun_windows*T``).
+
+    See also:
+        :func:`nnmnkwii.autograd.UnitVarianceMLPG`,
+        :func:`nnmnkwii.functions.mlpg`.
+
+    Examples:
+        >>> from nnmnkwii import functions as F
+        >>> import numpy as np
+        >>> windows = [
+        ...     (0, 0, np.array([1.0])),            # static
+        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
+        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
+        ... ]
+        >>> F.unit_variance_mlpg_matrix(windows, 3)
+        array([[  2.73835920e-01,   1.95121951e-01,   9.20177384e-02,
+                  9.75609756e-02,  -9.09090909e-02,  -9.75609756e-02,
+                 -3.52549889e-01,  -2.43902439e-02,   1.10864745e-02],
+               [  1.95121951e-01,   3.41463415e-01,   1.95121951e-01,
+                  1.70731707e-01,  -5.55111512e-17,  -1.70731707e-01,
+                 -4.87804878e-02,  -2.92682927e-01,  -4.87804878e-02],
+               [  9.20177384e-02,   1.95121951e-01,   2.73835920e-01,
+                  9.75609756e-02,   9.09090909e-02,  -9.75609756e-02,
+                  1.10864745e-02,  -2.43902439e-02,  -3.52549889e-01]])
+    """
+    win_mats = build_win_mats(windows, T)
+    sdw = np.max([win_mat.l + win_mat.u for win_mat in win_mats])
+
+    P = bm.zeros(sdw, sdw, T)
+    for win_index, win_mat in enumerate(win_mats):
+        bm.dot_mm_plus_equals(win_mat.T, win_mat, target_bm=P)
+    chol_bm = bla.cholesky(P, lower=True)
+    Pinv = cholesky_inv_banded(chol_bm.full(), width=chol_bm.l + chol_bm.u + 1)
+
+    cocatenated_window = full_window_mat(win_mats, T)
+    return Pinv.dot(cocatenated_window.T).astype(np.float32)
+
+
+def reshape_means(means, static_dim):
+    """Reshape means (``T x D``) to (``T*num_windows x static_dim``).
+
+    Args:
+        means (numpy.ndarray): Means
+        num_windows (int): Number of windows.
+
+    Returns:
+        numpy.ndarray: Reshaped means (``T*num_windows x static_dim``).
+        No-op if already reshaped.
+
+    TODO:
+        Better name?
+
+    Examples:
+        >>> from nnmnkwii import functions as F
+        >>> import numpy as np
+        >>> T, static_dim = 2, 2
+        >>> windows = [
+        ...     (0, 0, np.array([1.0])),            # static
+        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
+        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
+        ... ]
+        >>> means = np.random.rand(T, static_dim * len(windows))
+        >>> reshaped_means = F.reshape_means(means, static_dim)
+        >>> assert reshaped_means.shape == (T*len(windows), static_dim)
+    """
+    T, D = means.shape
+    if D == static_dim:
+        # already reshaped case
+        return means
+    means = means.reshape(
+        T, -1, static_dim).transpose(1, 0, 2).reshape(-1, static_dim)
+    return means

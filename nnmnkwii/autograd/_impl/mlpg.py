@@ -9,46 +9,37 @@ import numpy as np
 
 
 class MLPG(Function):
-    """MLPG as an autograd function ``f : (T, D) -> (T, static_dim)``.
+    """Generic MLPG as an autograd function.
+
+    ``f : (T, D) -> (T, static_dim)``.
 
     This is meant to be used for Minimum Geneartion Error (MGE) training for
-    speech synthesis and voice conversion. See [1]_ for details.
+    speech synthesis and voice conversion. See [1]_ and [2]_ for details.
+
+    It relies on :func:`nnmnkwii.functions.mlpg` and
+    :func:`nnmnkwii.functions.mlpg_grad` for forward and backward computation,
+    respectively.
 
     .. [1] Wu, Zhizheng, and Simon King. "Minimum trajectory error training
       for deep neural networks, combined with stacked bottleneck features."
       INTERSPEECH. 2015.
-
-    Let :math:`d` is the index of static features, :math:`l` is the index
-    of windows, gradients :math:`g_{d,l}` can be computed by:
-
-    .. math::
-
-        g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}
-
-    where :math:`W_{l}` is a banded window matrix and :math:`P_{d,l}` is a
-    diagonal precision matrix.
-
-    Assuming the variances are diagonals, MLPG can be performed in
-    dimention-by-dimention efficiently.
-
-    Let :math:`o_{d}` be ``T`` dimentional back-propagated gradients, the
-    resulting gradients :math:`g'_{l,d}` to be propagated are
-    computed as follows:
-
-    .. math::
-
-        g'_{d,l} = o_{d}^{T} g_{d,l}
+    .. [2] Xie, Feng-Long, et al. "Sequence error (SE) minimization training of
+       neural network for voice conversion." Fifteenth Annual Conference of the
+       International Speech Communication Association. 2014.
 
     Attributes:
         variance_frames (torch.FloatTensor): Variances same as in
             :func:`nnmnkwii.functions.mlpg`.
         windows (list): same as in :func:`nnmnkwii.functions.mlpg`.
 
-    TODO:
-        CUDA implementation
+    Warnings:
+        The function is generic but cannot run on CUDA. For faster
+        differenciable MLPG, see :obj:`UnitVarianceMLPG`.
 
     See also:
-        :func:`nnmnkwii.functions.mlpg`, :func:`nnmnkwii.functions.mlpg_grad`.
+        :func:`nnmnkwii.autograd.mlpg`,
+        :func:`nnmnkwii.functions.mlpg`,
+        :func:`nnmnkwii.functions.mlpg_grad`.
     """
 
     def __init__(self, variance_frames, windows):
@@ -86,6 +77,61 @@ class MLPG(Function):
         return torch.from_numpy(grads_numpy).clone()
 
 
+class UnitVarianceMLPG(Function):
+    """Special case of MLPG assuming data is normalized to have unit variance.
+
+    ``f : (T*num_windows, static_dim) -> (T, static_dim)``.
+
+    The funtion is theoretically a special case of :obj:`MLPG`. The function
+    assumes input data is noramlized to have unit variance for each dimention.
+    The property of the unit-variance greatly simplifies the backward
+    computation of MLPG.
+
+    Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),
+    :math:`W` is a window matrix ``(T x num_windows*T)``, MLPG can be written
+    as follows:
+
+    .. math::
+
+        y = R \mu
+
+    where
+
+    .. math::
+
+        R = (W^{T} W)^{-1} W^{T}
+
+    Note that we offen represent static + dynamic features as
+    (``T x static_dim*num_windows``) matirx, but the function assumes input has
+    shape of (``num_windows*T x static_dim``).
+
+    To avoid dupulicate computations in forward and backward, the function
+    takes ``R`` at construction time. The matrix ``R`` can be computed by
+    :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.
+
+    Args:
+        R: Unit-variance MLPG matrix of shape (``T x num_windows*T``). This
+          should be created with
+          :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.
+
+
+    Attributes:
+        R: Unit-variance MLPG matrix (``T x num_windows*T``).
+
+    See also:
+        :func:`nnmnkwii.autograd.unit_variance_mlpg`.
+    """
+    def __init__(self, R):
+        super(UnitVarianceMLPG, self).__init__()
+        self.R = R
+
+    def forward(self, means):
+        return torch.mm(self.R, means)
+
+    def backward(self, grad_output):
+        return torch.mm(self.R.transpose(0,1), grad_output)
+
+
 def mlpg(mean_frames, variance_frames, windows):
     """Maximum Liklihood Paramter Generation (MLPG).
 
@@ -103,9 +149,28 @@ def mlpg(mean_frames, variance_frames, windows):
         windows (list): A sequence of window specification
 
     See also:
-        :func:`nnmnkwii.functions.mlpg`
+        :obj:`nnmnkwii.autograd.MLPG`, :func:`nnmnkwii.functions.mlpg`
 
     """
     T, D = mean_frames.size()
+    if variance_frames.dim() == 1 and variance_frames.shape[0] == D:
+        variance_frames = variance_frames.expand(T, D)
     assert mean_frames.size() == variance_frames.size()
     return MLPG(variance_frames, windows)(mean_frames)
+
+def unit_variance_mlpg(R, means):
+    """Special case of MLPG assuming data is normalized to have unit variance.
+
+    Args:
+        means (torch.autograd.Variable): Means, of shape
+          (``T*num_windows x static_dim``). See
+          :func:`nnmnkwii.functions.reshape_means` to reshape means from
+          (``T x D``) to (``T*num_windows x static_dim``).
+        R (torch.FloatTensor): MLPG matrix.
+
+    See also:
+        :obj:`nnmnkwii.autograd.UnitVarianceMLPG`,
+        :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`,
+        :func:`reshape_means`.
+    """
+    return UnitVarianceMLPG(R)(means)

@@ -44,3 +44,15 @@ Example quetsion file was taken from Merlin_.
    example_question_file
    example_file_data_sources_for_duration_model
    example_file_data_sources_for_acoustic_model
+
+
+Linear algebra
+--------------
+
+.. automodule:: nnmnkwii.util.linalg
+
+.. autosummary::
+  :toctree: generated/
+
+  cholesky_inv
+  cholesky_inv_banded
