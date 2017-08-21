@@ -12,10 +12,8 @@ def full_window_mat(win_mats, int T):
     mat_full = np.zeros((T * len(win_mats), T))
 
     cdef long size
-    cdef long i
+    cdef long i, j, u, l, row
     cdef long win_index
-    cdef unsigned long row
-    cdef unsigned long j
     cdef long transposed
 
     for win_index, win_mat in enumerate(win_mats):
