@@ -222,6 +222,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -253,10 +254,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#mlpg">MLPG</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#modulation-spectrum">Modulation spectrum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">IO</a><ul>
@@ -306,6 +316,11 @@
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -411,8 +426,6 @@
 <span id="autograd"></span><h1>Autograd<a class="headerlink" href="#module-nnmnkwii.autograd" title="Permalink to this headline">¶</a></h1>
 <p>Differenciable functions for PyTorch. This may be extended
 to support other autograd frameworks.</p>
-<p>Currently all functions doesn’t have CUDA implementation, but should be
-addressed later.</p>
 <div class="section" id="functional-interface">
 <h2>Functional interface<a class="headerlink" href="#functional-interface" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
@@ -421,10 +434,13 @@ addressed later.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg" title="nnmnkwii.autograd.mlpg"><code class="xref py py-obj docutils literal"><span class="pre">mlpg</span></code></a>(mean_frames,&nbsp;variance_frames,&nbsp;windows)</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg" title="nnmnkwii.autograd.mlpg"><code class="xref py py-obj docutils literal"><span class="pre">mlpg</span></code></a>(means,&nbsp;variances,&nbsp;windows)</td>
 <td>Maximum Liklihood Paramter Generation (MLPG).</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.autograd.modspec.html#nnmnkwii.autograd.modspec" title="nnmnkwii.autograd.modspec"><code class="xref py py-obj docutils literal"><span class="pre">modspec</span></code></a>(y[,&nbsp;n,&nbsp;norm])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.autograd.unit_variance_mlpg.html#nnmnkwii.autograd.unit_variance_mlpg" title="nnmnkwii.autograd.unit_variance_mlpg"><code class="xref py py-obj docutils literal"><span class="pre">unit_variance_mlpg</span></code></a>(R,&nbsp;means)</td>
+<td>Special case of MLPG assuming data is normalized to have unit variance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.autograd.modspec.html#nnmnkwii.autograd.modspec" title="nnmnkwii.autograd.modspec"><code class="xref py py-obj docutils literal"><span class="pre">modspec</span></code></a>(y[,&nbsp;n,&nbsp;norm])</td>
 <td>Moduration spectrum computation.</td>
 </tr>
 </tbody>
@@ -434,10 +450,14 @@ addressed later.</p>
 <h2>Function classes<a class="headerlink" href="#function-classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nnmnkwii.autograd.MLPG">
-<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">MLPG</code><span class="sig-paren">(</span><em>variance_frames</em>, <em>windows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG" title="Permalink to this definition">¶</a></dt>
-<dd><p>MLPG as an autograd function <code class="docutils literal"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>.</p>
+<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">MLPG</code><span class="sig-paren">(</span><em>variances</em>, <em>windows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generic MLPG as an autograd function.</p>
+<p><code class="docutils literal"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>.</p>
 <p>This is meant to be used for Minimum Geneartion Error (MGE) training for
-speech synthesis and voice conversion. See <a class="reference internal" href="#r1" id="id1">[R1]</a> for details.</p>
+speech synthesis and voice conversion. See <a class="reference internal" href="#r1" id="id1">[R1]</a> and <a class="reference internal" href="#r2" id="id2">[R2]</a> for details.</p>
+<p>It relies on <a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a> and
+<a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html#nnmnkwii.functions.mlpg_grad" title="nnmnkwii.functions.mlpg_grad"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg_grad()</span></code></a> for forward and backward computation,
+respectively.</p>
 <table class="docutils citation" frame="void" id="r1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
@@ -446,22 +466,17 @@ for deep neural networks, combined with stacked bottleneck features.”
 INTERSPEECH. 2015.</td></tr>
 </tbody>
 </table>
-<p>Let <span class="math">\(d\)</span> is the index of static features, <span class="math">\(l\)</span> is the index
-of windows, gradients <span class="math">\(g_{d,l}\)</span> can be computed by:</p>
-<div class="math">
-\[g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}\]</div>
-<p>where <span class="math">\(W_{l}\)</span> is a banded window matrix and <span class="math">\(P_{d,l}\)</span> is a
-diagonal precision matrix.</p>
-<p>Assuming the variances are diagonals, MLPG can be performed in
-dimention-by-dimention efficiently.</p>
-<p>Let <span class="math">\(o_{d}\)</span> be <code class="docutils literal"><span class="pre">T</span></code> dimentional back-propagated gradients, the
-resulting gradients <span class="math">\(g'_{l,d}\)</span> to be propagated are
-computed as follows:</p>
-<div class="math">
-\[g'_{d,l} = o_{d}^{T} g_{d,l}\]</div>
+<table class="docutils citation" frame="void" id="r2" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[R2]</a></td><td>Xie, Feng-Long, et al. “Sequence error (SE) minimization training of
+neural network for voice conversion.” Fifteenth Annual Conference of the
+International Speech Communication Association. 2014.</td></tr>
+</tbody>
+</table>
 <dl class="attribute">
-<dt id="nnmnkwii.autograd.MLPG.variance_frames">
-<code class="descname">variance_frames</code><a class="headerlink" href="#nnmnkwii.autograd.MLPG.variance_frames" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.autograd.MLPG.variances">
+<code class="descname">variances</code><a class="headerlink" href="#nnmnkwii.autograd.MLPG.variances" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>torch.FloatTensor</em> – Variances same as in
 <a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a>.</p>
 </dd></dl>
@@ -472,13 +487,59 @@ computed as follows:</p>
 <dd><p><em>list</em> – same as in <a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a>.</p>
 </dd></dl>
 
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">CUDA implementation</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The function is generic but cannot run on CUDA. For faster
+differenciable MLPG, see <a class="reference internal" href="#nnmnkwii.autograd.UnitVarianceMLPG" title="nnmnkwii.autograd.UnitVarianceMLPG"><code class="xref py py-obj docutils literal"><span class="pre">UnitVarianceMLPG</span></code></a>.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a>, <a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html#nnmnkwii.functions.mlpg_grad" title="nnmnkwii.functions.mlpg_grad"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg_grad()</span></code></a>.</p>
+<p class="last"><a class="reference internal" href="generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg" title="nnmnkwii.autograd.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.autograd.mlpg()</span></code></a>,
+<a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a>,
+<a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html#nnmnkwii.functions.mlpg_grad" title="nnmnkwii.functions.mlpg_grad"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg_grad()</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.autograd.UnitVarianceMLPG">
+<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">UnitVarianceMLPG</code><span class="sig-paren">(</span><em>R</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG" title="Permalink to this definition">¶</a></dt>
+<dd><p>Special case of MLPG assuming data is normalized to have unit variance.</p>
+<p><code class="docutils literal"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T</span> <span class="pre">x</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>. or
+<code class="docutils literal"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T*num_windows,</span> <span class="pre">static_dim)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>.</p>
+<p>The funtion is theoretically a special case of <a class="reference internal" href="#nnmnkwii.autograd.MLPG" title="nnmnkwii.autograd.MLPG"><code class="xref py py-obj docutils literal"><span class="pre">MLPG</span></code></a>. The function
+assumes input data is noramlized to have unit variance for each dimention.
+The property of the unit-variance greatly simplifies the backward
+computation of MLPG.</p>
+<p>Let <span class="math">\(\mu\)</span> is the input mean sequence (<code class="docutils literal"><span class="pre">num_windows*T</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>),
+<span class="math">\(W\)</span> is a window matrix <code class="docutils literal"><span class="pre">(T</span> <span class="pre">x</span> <span class="pre">num_windows*T)</span></code>, MLPG can be written
+as follows:</p>
+<div class="math">
+\[y = R \mu\]</div>
+<p>where</p>
+<div class="math">
+\[R = (W^{T} W)^{-1} W^{T}\]</div>
+<p>To avoid dupulicate computations in forward and backward, the function
+takes <code class="docutils literal"><span class="pre">R</span></code> at construction time. The matrix <code class="docutils literal"><span class="pre">R</span></code> can be computed by
+<a class="reference internal" href="generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html#nnmnkwii.functions.unit_variance_mlpg_matrix" title="nnmnkwii.functions.unit_variance_mlpg_matrix"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.unit_variance_mlpg_matrix()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>R</strong> – Unit-variance MLPG matrix of shape (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">num_windows*T</span></code>). This
+should be created with
+<a class="reference internal" href="generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html#nnmnkwii.functions.unit_variance_mlpg_matrix" title="nnmnkwii.functions.unit_variance_mlpg_matrix"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.unit_variance_mlpg_matrix()</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.autograd.UnitVarianceMLPG.R">
+<code class="descname">R</code><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG.R" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unit-variance MLPG matrix (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">num_windows*T</span></code>).</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="generated/nnmnkwii.autograd.unit_variance_mlpg.html#nnmnkwii.autograd.unit_variance_mlpg" title="nnmnkwii.autograd.unit_variance_mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.autograd.unit_variance_mlpg()</span></code></a>.</p>
 </div>
 </dd></dl>
 

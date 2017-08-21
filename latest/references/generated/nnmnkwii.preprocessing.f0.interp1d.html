@@ -223,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -254,8 +255,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../functions.html">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
 </ul>
@@ -307,6 +311,11 @@
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -419,7 +428,7 @@
 <p>This function generates continuous f0 from discontinuous f0 trajecoty
 based on <code class="xref py py-func docutils literal"><span class="pre">scipy.interpolate.interp1d()</span></code>. This is meat to be used for
 continuous f0 modeling in statistical speech synthesis
-(e.g., see <a class="reference internal" href="#r7" id="id1">[R7]</a>, <a class="reference internal" href="#r8" id="id2">[R8]</a>).</p>
+(e.g., see <a class="reference internal" href="#r8" id="id1">[R8]</a>, <a class="reference internal" href="#r9" id="id2">[R9]</a>).</p>
 <p>If <code class="docutils literal"><span class="pre">kind</span></code> = <code class="docutils literal"><span class="pre">'slinear'</span></code>, then this does same thing as Merlin does.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -449,18 +458,18 @@ trajectory.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">f0</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">continuous_f0</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
-<table class="docutils citation" frame="void" id="r7" rules="none">
+<table class="docutils citation" frame="void" id="r8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R7]</a></td><td>Yu, Kai, and Steve Young. “Continuous F0 modeling for HMM based
+<tr><td class="label"><a class="fn-backref" href="#id1">[R8]</a></td><td>Yu, Kai, and Steve Young. “Continuous F0 modeling for HMM based
 statistical parametric speech synthesis.” IEEE Transactions on Audio,
 Speech, and Language Processing 19.5 (2011): 1071-1079.</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r8" rules="none">
+<table class="docutils citation" frame="void" id="r9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[R8]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
+<tr><td class="label"><a class="fn-backref" href="#id2">[R9]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
 the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></tr>
 </tbody>
 </table>

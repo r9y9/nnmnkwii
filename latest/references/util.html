@@ -222,6 +222,7 @@
 <li class="toctree-l1"><a class="reference internal" href="autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -253,10 +254,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#mlpg">MLPG</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html#modulation-spectrum">Modulation spectrum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">IO</a><ul>
@@ -306,6 +316,11 @@
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -485,6 +500,23 @@ Example quetsion file was taken from <a class="reference external" href="https:/
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html#nnmnkwii.util.example_file_data_sources_for_acoustic_model" title="nnmnkwii.util.example_file_data_sources_for_acoustic_model"><code class="xref py py-obj docutils literal"><span class="pre">example_file_data_sources_for_acoustic_model</span></code></a>()</td>
 <td>Get file data sources for acoustic model training</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-nnmnkwii.util.linalg">
+<span id="linear-algebra"></span><h2>Linear algebra<a class="headerlink" href="#module-nnmnkwii.util.linalg" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv.html#nnmnkwii.util.linalg.cholesky_inv" title="nnmnkwii.util.linalg.cholesky_inv"><code class="xref py py-obj docutils literal"><span class="pre">cholesky_inv</span></code></a>(L[,&nbsp;lower])</td>
+<td>Compute inverse matrix of real symmetric positive definite matrix using choleskey factorization.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv_banded.html#nnmnkwii.util.linalg.cholesky_inv_banded" title="nnmnkwii.util.linalg.cholesky_inv_banded"><code class="xref py py-obj docutils literal"><span class="pre">cholesky_inv_banded</span></code></a>(L[,&nbsp;width])</td>
+<td></td>
 </tr>
 </tbody>
 </table>

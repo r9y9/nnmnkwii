@@ -38,7 +38,7 @@
     <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../index.html"/>
         <link rel="up" title="Autograd" href="../autograd.html"/>
         <link rel="next" title="Baseline" href="../baseline.html"/>
-        <link rel="prev" title="nnmnkwii.autograd.mlpg" href="nnmnkwii.autograd.mlpg.html"/> 
+        <link rel="prev" title="nnmnkwii.autograd.unit_variance_mlpg" href="nnmnkwii.autograd.unit_variance_mlpg.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -223,6 +223,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../autograd.html">Autograd</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -254,8 +255,11 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../functions.html">Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
 </ul>
@@ -307,6 +311,11 @@
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -421,7 +430,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>y</strong> (<a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.2.0+cd5275e ))"><em>torch.autograd.Variable</em></a>) – Parameter trajectory.</li>
+<li><strong>y</strong> (<a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.2.0+5c43fcd ))"><em>torch.autograd.Variable</em></a>) – Parameter trajectory.</li>
 <li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – DFT length.</li>
 <li><strong>norm</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Normalize DFT output or not. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.13)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.fft.fft</span></code></a>.</li>
 </ul>
@@ -450,7 +459,7 @@
         <a href="../baseline.html" class="btn btn-neutral float-right" title="Baseline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nnmnkwii.autograd.mlpg.html" class="btn btn-neutral" title="nnmnkwii.autograd.mlpg" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nnmnkwii.autograd.unit_variance_mlpg.html" class="btn btn-neutral" title="nnmnkwii.autograd.unit_variance_mlpg" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

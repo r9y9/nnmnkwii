@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../index.html"/>
         <link rel="up" title="Autograd" href="../autograd.html"/>
-        <link rel="next" title="nnmnkwii.autograd.modspec" href="nnmnkwii.autograd.modspec.html"/>
+        <link rel="next" title="nnmnkwii.autograd.unit_variance_mlpg" href="nnmnkwii.autograd.unit_variance_mlpg.html"/>
         <link rel="prev" title="Autograd" href="../autograd.html"/> 
 
   
@@ -223,6 +223,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../autograd.html">Autograd</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -254,10 +255,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../functions.html#mlpg">MLPG</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../functions.html#modulation-spectrum">Modulation spectrum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../io.html">IO</a><ul>
@@ -307,6 +317,11 @@
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -414,12 +429,12 @@
 <h1>nnmnkwii.autograd.mlpg<a class="headerlink" href="#nnmnkwii-autograd-mlpg" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="nnmnkwii.autograd.mlpg">
-<code class="descclassname">nnmnkwii.autograd.</code><code class="descname">mlpg</code><span class="sig-paren">(</span><em>mean_frames</em>, <em>variance_frames</em>, <em>windows</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/autograd/_impl/mlpg.html#mlpg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.mlpg" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nnmnkwii.autograd.</code><code class="descname">mlpg</code><span class="sig-paren">(</span><em>means</em>, <em>variances</em>, <em>windows</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/autograd/_impl/mlpg.html#mlpg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.mlpg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maximum Liklihood Paramter Generation (MLPG).</p>
 <p>The parameters are almost same as <a class="reference internal" href="nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a> expects.
 The differences are:</p>
 <ul class="simple">
-<li>The function assumes <code class="docutils literal"><span class="pre">mean_frames</span></code> as <a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.2.0+cd5275e ))"><code class="xref py py-obj docutils literal"><span class="pre">torch.autograd.Variable</span></code></a>
+<li>The function assumes <code class="docutils literal"><span class="pre">means</span></code> as <a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.2.0+5c43fcd ))"><code class="xref py py-obj docutils literal"><span class="pre">torch.autograd.Variable</span></code></a>
 instead of <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.ndarray</span></code></a>.</li>
 <li>The fucntion assumes <code class="docutils literal"><span class="pre">variances_frames</span></code> as <code class="xref py py-obj docutils literal"><span class="pre">torch.FloatTensor</span></code>
 instead of <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.ndarray</span></code></a>.</li>
@@ -429,8 +444,8 @@ instead of <a class="reference external" href="https://docs.scipy.org/doc/numpy/
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>mean_frames</strong> (<a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.2.0+cd5275e ))"><em>torch.autograd.Variable</em></a>) – Means</li>
-<li><strong>variance_frames</strong> (<em>torch.FloatTensor</em>) – Variances</li>
+<li><strong>means</strong> (<a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.2.0+5c43fcd ))"><em>torch.autograd.Variable</em></a>) – Means</li>
+<li><strong>variances</strong> (<em>torch.FloatTensor</em>) – Variances</li>
 <li><strong>windows</strong> (<em>list</em>) – A sequence of window specification</li>
 </ul>
 </td>
@@ -439,7 +454,7 @@ instead of <a class="reference external" href="https://docs.scipy.org/doc/numpy/
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a></p>
+<p class="last"><a class="reference internal" href="../autograd.html#nnmnkwii.autograd.MLPG" title="nnmnkwii.autograd.MLPG"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.autograd.MLPG</span></code></a>, <a class="reference internal" href="nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -455,7 +470,7 @@ instead of <a class="reference external" href="https://docs.scipy.org/doc/numpy/
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nnmnkwii.autograd.modspec.html" class="btn btn-neutral float-right" title="nnmnkwii.autograd.modspec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nnmnkwii.autograd.unit_variance_mlpg.html" class="btn btn-neutral float-right" title="nnmnkwii.autograd.unit_variance_mlpg" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../autograd.html" class="btn btn-neutral" title="Autograd" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

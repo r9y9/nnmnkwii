@@ -37,7 +37,7 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../index.html"/>
         <link rel="up" title="Functions" href="../functions.html"/>
-        <link rel="next" title="nnmnkwii.functions.modspec" href="nnmnkwii.functions.modspec.html"/>
+        <link rel="next" title="nnmnkwii.functions.unit_variance_mlpg_matrix" href="nnmnkwii.functions.unit_variance_mlpg_matrix.html"/>
         <link rel="prev" title="nnmnkwii.functions.mlpg" href="nnmnkwii.functions.mlpg.html"/> 
 
   
@@ -223,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -254,10 +255,19 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../functions.html">Functions</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../functions.html#mlpg">MLPG</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../functions.html#modulation-spectrum">Modulation spectrum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../io.html">IO</a><ul>
@@ -307,6 +317,11 @@
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -416,8 +431,21 @@
 <dt id="nnmnkwii.functions.mlpg_grad">
 <code class="descclassname">nnmnkwii.functions.</code><code class="descname">mlpg_grad</code><span class="sig-paren">(</span><em>mean_frames</em>, <em>variance_frames</em>, <em>windows</em>, <em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/functions/_impl/mlpg.html#mlpg_grad"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.functions.mlpg_grad" title="Permalink to this definition">¶</a></dt>
 <dd><p>MLPG gradient computation</p>
-<p>Parameters are almost same as <a class="reference internal" href="nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a>. See the
-function docmenent for what the parameters mean.</p>
+<p>Parameters are same as <a class="reference internal" href="nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg" title="nnmnkwii.functions.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code></a> except for
+<code class="docutils literal"><span class="pre">grad_output</span></code>. See the function docmenent for what the parameters mean.</p>
+<p>Let <span class="math">\(d\)</span> is the index of static features, <span class="math">\(l\)</span> is the index
+of windows, gradients <span class="math">\(g_{d,l}\)</span> can be computed by:</p>
+<div class="math">
+\[g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}\]</div>
+<p>where <span class="math">\(W_{l}\)</span> is a banded window matrix and <span class="math">\(P_{d,l}\)</span> is a
+diagonal precision matrix.</p>
+<p>Assuming the variances are diagonals, MLPG can be performed in
+dimention-by-dimention efficiently.</p>
+<p>Let <span class="math">\(o_{d}\)</span> be <code class="docutils literal"><span class="pre">T</span></code> dimentional back-propagated gradients, the
+resulting gradients <span class="math">\(g'_{l,d}\)</span> to be propagated are
+computed as follows:</p>
+<div class="math">
+\[g'_{d,l} = o_{d}^{T} g_{d,l}\]</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -456,7 +484,7 @@ function docmenent for what the parameters mean.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nnmnkwii.functions.modspec.html" class="btn btn-neutral float-right" title="nnmnkwii.functions.modspec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nnmnkwii.functions.unit_variance_mlpg_matrix.html" class="btn btn-neutral float-right" title="nnmnkwii.functions.unit_variance_mlpg_matrix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="nnmnkwii.functions.mlpg.html" class="btn btn-neutral" title="nnmnkwii.functions.mlpg" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -221,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="references/autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="references/autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -252,10 +253,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references/functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/functions.html#mlpg">MLPG</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="references/functions.html#modulation-spectrum">Modulation spectrum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references/io.html">IO</a><ul>
@@ -305,6 +315,11 @@
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -375,6 +390,7 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
@@ -388,6 +404,7 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
@@ -402,6 +419,14 @@
       <li><a href="references/generated/nnmnkwii.util.apply_delta_windows.html#nnmnkwii.util.apply_delta_windows">apply_delta_windows() (in module nnmnkwii.util)</a>
 </li>
       <li><a href="references/datasets.html#nnmnkwii.datasets.FileSourceDataset.asarray">asarray() (nnmnkwii.datasets.FileSourceDataset method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.functions.build_win_mats.html#nnmnkwii.functions.build_win_mats">build_win_mats() (in module nnmnkwii.functions)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -421,12 +446,16 @@
         <li><a href="references/datasets.html#nnmnkwii.datasets.MemoryCacheFramewiseDataset.cached_utterances">(nnmnkwii.datasets.MemoryCacheFramewiseDataset attribute)</a>
 </li>
       </ul></li>
-      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_features">collect_features() (nnmnkwii.datasets.FileDataSource method)</a>
+      <li><a href="references/generated/nnmnkwii.util.linalg.cholesky_inv.html#nnmnkwii.util.linalg.cholesky_inv">cholesky_inv() (in module nnmnkwii.util.linalg)</a>
 </li>
-      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_files">collect_files() (nnmnkwii.datasets.FileDataSource method)</a>
+      <li><a href="references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html#nnmnkwii.util.linalg.cholesky_inv_banded">cholesky_inv_banded() (in module nnmnkwii.util.linalg)</a>
+</li>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_features">collect_features() (nnmnkwii.datasets.FileDataSource method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_files">collect_files() (nnmnkwii.datasets.FileDataSource method)</a>
+</li>
       <li><a href="references/datasets.html#nnmnkwii.datasets.FileSourceDataset.collected_files">collected_files (nnmnkwii.datasets.FileSourceDataset attribute)</a>
 </li>
       <li><a href="references/io.html#nnmnkwii.io.hts.HTSLabelFile.contexts">contexts (nnmnkwii.io.hts.HTSLabelFile attribute)</a>
@@ -635,6 +664,8 @@
 </li>
       <li><a href="references/util.html#module-nnmnkwii.util">nnmnkwii.util (module)</a>
 </li>
+      <li><a href="references/util.html#module-nnmnkwii.util.linalg">nnmnkwii.util.linalg (module)</a>
+</li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.ModSpec.norm">norm (nnmnkwii.autograd.ModSpec attribute)</a>
 </li>
       <li><a href="references/baseline.html#nnmnkwii.baseline.gmm.MLPG.num_mixtures">num_mixtures (nnmnkwii.baseline.gmm.MLPG attribute)</a>
@@ -661,6 +692,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG.R">R (nnmnkwii.autograd.UnitVarianceMLPG attribute)</a>
+</li>
       <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.DTWAligner.radius">radius (nnmnkwii.preprocessing.alignment.DTWAligner attribute)</a>
 
       <ul>
@@ -670,6 +703,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/generated/nnmnkwii.util.remove_zeros_frames.html#nnmnkwii.util.remove_zeros_frames">remove_zeros_frames() (in module nnmnkwii.util)</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.functions.reshape_means.html#nnmnkwii.functions.reshape_means">reshape_means() (in module nnmnkwii.functions)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -710,10 +745,24 @@
   </ul></td>
 </tr></table>
 
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.autograd.unit_variance_mlpg.html#nnmnkwii.autograd.unit_variance_mlpg">unit_variance_mlpg() (in module nnmnkwii.autograd)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html#nnmnkwii.functions.unit_variance_mlpg_matrix">unit_variance_mlpg_matrix() (in module nnmnkwii.functions)</a>
+</li>
+      <li><a href="references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG">UnitVarianceMLPG (class in nnmnkwii.autograd)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG.variance_frames">variance_frames (nnmnkwii.autograd.MLPG attribute)</a>
+      <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG.variances">variances (nnmnkwii.autograd.MLPG attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>

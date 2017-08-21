@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.0.3.dev0 documentation</title>
+  <title>nnmnkwii.util.linalg &mdash; nnmnkwii 0.0.3.dev0 documentation</title>
   
 
   
@@ -372,7 +372,7 @@
         
           <li><a href="../util.html">nnmnkwii.util</a> &raquo;</li>
         
-      <li>nnmnkwii.util.files</li>
+      <li>nnmnkwii.util.linalg</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -389,169 +389,50 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for nnmnkwii.util.files</h1><div class="highlight"><pre>
+  <h1>Source code for nnmnkwii.util.linalg</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">import</span> <span class="nn">pkg_resources</span>
-
-<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
-
+<span class="kn">from</span> <span class="nn">._linalg</span> <span class="k">import</span> <span class="n">dpotri_full_L</span><span class="p">,</span> <span class="n">dpotri_full_U</span>
+<span class="kn">from</span> <span class="nn">._linalg</span> <span class="k">import</span> <span class="n">cholesky_inv_banded</span> <span class="k">as</span> <span class="n">_cholesky_inv_banded</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
 
 
-<div class="viewcode-block" id="example_label_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_label_file.html#nnmnkwii.util.example_label_file">[docs]</a><span class="k">def</span> <span class="nf">example_label_file</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get path of example HTS-style full-context lable file.</span>
+<div class="viewcode-block" id="cholesky_inv"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html#nnmnkwii.util.linalg.cholesky_inv">[docs]</a><span class="k">def</span> <span class="nf">cholesky_inv</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute inverse matrix of real symmetric positive definite matrix</span>
+<span class="sd">    using choleskey factorization.</span>
 
-<span class="sd">    Corresponding audio file can be accessed by</span>
-<span class="sd">    :func:`example_audio_file`.</span>
+<span class="sd">    The function internally uses LAPACK&#39;s ``dportri``.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        str: Path of the example label file.</span>
-
-<span class="sd">    See also:</span>
-<span class="sd">        :func:`example_audio_file`</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
-<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;arctic_a0009&quot;</span>
-    <span class="n">label_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">_state.lab&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">label_path</span></div>
-
-
-<div class="viewcode-block" id="example_audio_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_audio_file.html#nnmnkwii.util.example_audio_file">[docs]</a><span class="k">def</span> <span class="nf">example_audio_file</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get path of audio file.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        L (numpy.ndarray[dtype=float64]): Lower or upper triangle matrix given</span>
+<span class="sd">          by choleskey factorization.</span>
+<span class="sd">        lower: Set ``True` if you give lower triangle matrix, ``False``</span>
+<span class="sd">          otherwise.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: Path of the example audio file.</span>
-
-<span class="sd">    See also:</span>
-<span class="sd">        :func:`example_label_file`</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_audio_file</span>
-<span class="sd">        &gt;&gt;&gt; from scipy.io import wavfile</span>
-<span class="sd">        &gt;&gt;&gt; fs, x = wavfile.read(example_audio_file())</span>
+<span class="sd">        numpy.ndarrray: Inverse matrix (full storage).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;arctic_a0009&quot;</span>
-    <span class="n">wav_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">.wav&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wav_path</span></div>
+    <span class="n">N1</span><span class="p">,</span> <span class="n">N2</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">assert</span> <span class="n">N1</span> <span class="o">==</span> <span class="n">N2</span>
+    <span class="k">assert</span> <span class="n">L</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">N1</span>
+
+    <span class="c1"># transpose for array order difference (probably)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Inplace operations</span>
+    <span class="k">if</span> <span class="n">lower</span><span class="p">:</span>
+        <span class="n">dpotri_full_L</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dpotri_full_U</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">B</span></div>
 
 
-<div class="viewcode-block" id="example_question_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_question_file.html#nnmnkwii.util.example_question_file">[docs]</a><span class="k">def</span> <span class="nf">example_question_file</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get path of example question file.</span>
-
-<span class="sd">    The question file was taken from Merlin_.</span>
-
-<span class="sd">    .. _Merlin: https://github.com/CSTR-Edinburgh/merlin</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        str: Path of the example audio file.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_question_file</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
-<span class="sd">        &gt;&gt;&gt; binary_dict, continuous_dict = hts.load_question_set(example_question_file())</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/questions-radio_dnn_416.hed&#39;</span><span class="p">)</span></div>
-
-
-<span class="k">class</span> <span class="nc">BinaryFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
-
-    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;*.npz&quot;</span><span class="p">)))</span>
-
-    <span class="k">def</span> <span class="nf">collect_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
-
-
-<span class="k">class</span> <span class="nc">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="n">BinaryFileDataSource</span><span class="p">):</span>
-    <span class="n">SLT_DEMO_DATA_ROOT</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/slt_arctic_demo_data&#39;</span><span class="p">)</span>
-
-    <span class="n">mgc_dim</span> <span class="o">=</span> <span class="mi">75</span>
-    <span class="n">lf0_dim</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">vuv_dim</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">bap_dim</span> <span class="o">=</span> <span class="mi">3</span>
-
-    <span class="n">fs</span> <span class="o">=</span> <span class="mi">16000</span>
-    <span class="n">frame_period</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">hop_length</span> <span class="o">=</span> <span class="mi">80</span>
-    <span class="n">fftlen</span> <span class="o">=</span> <span class="mi">1024</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.41</span>
-
-    <span class="n">mgc_start_idx</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">lf0_start_idx</span> <span class="o">=</span> <span class="mi">75</span>
-    <span class="n">vuv_start_idx</span> <span class="o">=</span> <span class="mi">78</span>
-    <span class="n">bap_start_idx</span> <span class="o">=</span> <span class="mi">79</span>
-
-    <span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>
-        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])),</span>
-        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])),</span>
-    <span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleSLTArcticFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SLT_DEMO_DATA_ROOT</span><span class="p">,</span> <span class="n">directory</span><span class="p">))</span>
-
-
-<div class="viewcode-block" id="example_file_data_sources_for_duration_model"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html#nnmnkwii.util.example_file_data_sources_for_duration_model">[docs]</a><span class="k">def</span> <span class="nf">example_file_data_sources_for_duration_model</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get file data sources for duration model training</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple: Tuple of :obj:`FileDataSource`s for example data.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_duration_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = example_file_data_sources_for_duration_model()</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = FileSourceDataset(X), FileSourceDataset(Y)</span>
-<span class="sd">        &gt;&gt;&gt; for x, y in zip(X, Y):</span>
-<span class="sd">        ...     print(x.shape, y.shape)</span>
-<span class="sd">        ...</span>
-<span class="sd">        (35, 416) (35, 5)</span>
-<span class="sd">        (40, 416) (40, 5)</span>
-<span class="sd">        (39, 416) (39, 5)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;X_duration&quot;</span><span class="p">)</span>
-    <span class="n">Y</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;Y_duration&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span></div>
-
-
-<div class="viewcode-block" id="example_file_data_sources_for_acoustic_model"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html#nnmnkwii.util.example_file_data_sources_for_acoustic_model">[docs]</a><span class="k">def</span> <span class="nf">example_file_data_sources_for_acoustic_model</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get file data sources for acoustic model training</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple: Tuple of :obj:`FileDataSource`s for example data.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = example_file_data_sources_for_acoustic_model()</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = FileSourceDataset(X), FileSourceDataset(Y)</span>
-<span class="sd">        &gt;&gt;&gt; for x, y in zip(X, Y):</span>
-<span class="sd">        ...     print(x.shape, y.shape)</span>
-<span class="sd">        ...</span>
-<span class="sd">        (578, 425) (578, 187)</span>
-<span class="sd">        (675, 425) (675, 187)</span>
-<span class="sd">        (606, 425) (606, 187)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;X_acoustic&quot;</span><span class="p">)</span>
-    <span class="n">Y</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;Y_acoustic&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span></div>
+<div class="viewcode-block" id="cholesky_inv_banded"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html#nnmnkwii.util.linalg.cholesky_inv_banded">[docs]</a><span class="k">def</span> <span class="nf">cholesky_inv_banded</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="c1"># TODO</span>
+    <span class="k">return</span> <span class="n">_cholesky_inv_banded</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

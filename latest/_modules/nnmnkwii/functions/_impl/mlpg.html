@@ -221,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -252,10 +253,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/functions.html#mlpg">MLPG</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/functions.html#modulation-spectrum">Modulation spectrum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/io.html">IO</a><ul>
@@ -305,6 +315,11 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
 </ul>
@@ -381,36 +396,51 @@
 <span class="kn">import</span> <span class="nn">bandmat</span> <span class="k">as</span> <span class="nn">bm</span>
 <span class="kn">import</span> <span class="nn">bandmat.linalg</span> <span class="k">as</span> <span class="nn">bla</span>
 <span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="k">import</span> <span class="n">solve_banded</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.util.linalg</span> <span class="k">import</span> <span class="n">cholesky_inv_banded</span>
+<span class="kn">from</span> <span class="nn">._mlpg</span> <span class="k">import</span> <span class="n">full_window_mat</span> <span class="k">as</span> <span class="n">_full_window_mat</span>
 
 <span class="c1"># https://github.com/MattShannon/bandmat/blob/master/example_spg.py</span>
 <span class="c1"># Copied from the above link. Thanks to Matt shannon!</span>
 
 
-<span class="k">def</span> <span class="nf">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">frames</span><span class="p">):</span>
+<div class="viewcode-block" id="build_win_mats"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.functions.build_win_mats.html#nnmnkwii.functions.build_win_mats">[docs]</a><span class="k">def</span> <span class="nf">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Builds a window matrix of a given size for each window in a collection.</span>
 
-<span class="sd">    `windows` specifies the collection of windows as a sequence of</span>
-<span class="sd">    `(l, u, win_coeff)` triples, where `l` and `u` are non-negative integers</span>
-<span class="sd">    specifying the left and right extents of the window and `win_coeff` is an</span>
-<span class="sd">    array specifying the window coefficients.</span>
-<span class="sd">    The returned value is a list of window matrices, one for each of the</span>
-<span class="sd">    windows specified in `windows`.</span>
-<span class="sd">    Each window matrix is a `frames` by `frames` Toeplitz matrix with lower</span>
-<span class="sd">    bandwidth `l` and upper bandwidth `u`.</span>
-<span class="sd">    The non-zero coefficients in each row of this Toeplitz matrix are given by</span>
-<span class="sd">    `win_coeff`.</span>
-<span class="sd">    The returned window matrices are stored as BandMats, i.e. using a banded</span>
-<span class="sd">    representation.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        windows(list): specifies the collection of windows as a sequence of</span>
+<span class="sd">        ``(l, u, win_coeff)`` triples, where ``l`` and ``u`` are non-negative</span>
+<span class="sd">        integers pecifying the left and right extents of the window and</span>
+<span class="sd">        ``win_coeff`` is an array specifying the window coefficients.</span>
+<span class="sd">        T (int): Number of frames.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The returned value is a list of window matrices, one for each of</span>
+<span class="sd">        the windows specified in ``windows``. Each window matrix is a</span>
+<span class="sd">        ``T`` by ``T`` Toeplitz matrix with lower bandwidth ``l`` and upper</span>
+<span class="sd">        bandwidth ``u``. The non-zero coefficients in each row of this Toeplitz</span>
+<span class="sd">        matrix are given by ``win_coeff``.</span>
+<span class="sd">        The returned window matrices are stored as BandMats, i.e. using a</span>
+<span class="sd">        banded representation.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; windows = [</span>
+<span class="sd">        ...     (0, 0, np.array([1.0])),            # static</span>
+<span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
+<span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
+<span class="sd">        ... ]</span>
+<span class="sd">        &gt;&gt;&gt; win_mats = F.build_win_mats(windows, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">win_mats</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">win_coeff</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">u</span> <span class="o">&gt;=</span> <span class="mi">0</span>
         <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">)</span> <span class="o">==</span> <span class="n">l</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">win_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">,</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">frames</span><span class="p">)</span>
+        <span class="n">win_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">,</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">T</span><span class="p">)</span>
         <span class="n">win_mat</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">band_c_bm</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">win_coeffs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
         <span class="n">win_mats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">win_mat</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">win_mats</span>
+    <span class="k">return</span> <span class="n">win_mats</span></div>
 
 
 <span class="k">def</span> <span class="nf">build_poe</span><span class="p">(</span><span class="n">b_frames</span><span class="p">,</span> <span class="n">tau_frames</span><span class="p">,</span> <span class="n">win_mats</span><span class="p">,</span> <span class="n">sdw</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -458,7 +488,33 @@
 
 <span class="sd">    It peforms Maximum Likelihood Parameter Generation (MLPG) algorithm</span>
 <span class="sd">    to generate static features from static + dynamic features over</span>
-<span class="sd">    time frames. The implementation was heavily inspired by [1]_ and</span>
+<span class="sd">    time frames dimension-by-dimension.</span>
+
+<span class="sd">    Let :math:`\mu` (``T x 1``) is the input mean sequence of a particular</span>
+<span class="sd">    dimension and :math:`y` (``T x 1``) is the static</span>
+<span class="sd">    feature sequence we want to compute, the formula of MLPG is written as:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        y = A^{-1} b</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        A = \sum_{l} W_{l}^{T}P_{l}W_{l}</span>
+
+<span class="sd">    ,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        b = P\mu</span>
+
+<span class="sd">    :math:`W_{l}` is the ``l``-th window matrix (``T x T``) and :math:`P`</span>
+<span class="sd">    (``T x T``) is the precision matrix which is given by the inverse of</span>
+<span class="sd">    variance matrix.</span>
+
+<span class="sd">    The implementation was heavily inspired by [1]_ and</span>
 <span class="sd">    using bandmat_ for efficient computation.</span>
 
 <span class="sd">    .. _bandmat: https://github.com/MattShannon/bandmat</span>
@@ -499,6 +555,7 @@
 <span class="sd">        :func:`nnmnkwii.autograd.mlpg`</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">dtype</span>
     <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">shape</span>
     <span class="c1"># expand variances over frames</span>
     <span class="k">if</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">D</span><span class="p">:</span>
@@ -512,8 +569,8 @@
     <span class="c1"># workspaces; those will be updated in the following generation loop</span>
     <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">num_windows</span><span class="p">))</span>
     <span class="n">precisions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">num_windows</span><span class="p">))</span>
-    <span class="c1"># Perform dimention-wise generation</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">))</span>
+    <span class="c1"># Perform dimension-wise generation</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">static_dim</span><span class="p">):</span>
 
         <span class="k">for</span> <span class="n">win_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_windows</span><span class="p">):</span>
@@ -531,8 +588,30 @@
 <div class="viewcode-block" id="mlpg_grad"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.functions.mlpg_grad.html#nnmnkwii.functions.mlpg_grad">[docs]</a><span class="k">def</span> <span class="nf">mlpg_grad</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;MLPG gradient computation</span>
 
-<span class="sd">    Parameters are almost same as :func:`nnmnkwii.functions.mlpg`. See the</span>
-<span class="sd">    function docmenent for what the parameters mean.</span>
+<span class="sd">    Parameters are same as :func:`nnmnkwii.functions.mlpg` except for</span>
+<span class="sd">    ``grad_output``. See the function docmenent for what the parameters mean.</span>
+
+<span class="sd">    Let :math:`d` is the index of static features, :math:`l` is the index</span>
+<span class="sd">    of windows, gradients :math:`g_{d,l}` can be computed by:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}</span>
+
+<span class="sd">    where :math:`W_{l}` is a banded window matrix and :math:`P_{d,l}` is a</span>
+<span class="sd">    diagonal precision matrix.</span>
+
+<span class="sd">    Assuming the variances are diagonals, MLPG can be performed in</span>
+<span class="sd">    dimention-by-dimention efficiently.</span>
+
+<span class="sd">    Let :math:`o_{d}` be ``T`` dimentional back-propagated gradients, the</span>
+<span class="sd">    resulting gradients :math:`g&#39;_{l,d}` to be propagated are</span>
+<span class="sd">    computed as follows:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        g&#39;_{d,l} = o_{d}^{T} g_{d,l}</span>
+
 
 <span class="sd">    Args:</span>
 <span class="sd">        mean_frames (numpy.ndarray): Means.</span>
@@ -575,10 +654,121 @@
             <span class="n">grad</span> <span class="o">=</span> <span class="n">solve_banded</span><span class="p">((</span><span class="n">R</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="n">R</span><span class="o">.</span><span class="n">u</span><span class="p">),</span> <span class="n">R</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">full</span><span class="p">())</span>
             <span class="k">assert</span> <span class="n">grad</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
 
-            <span class="c1"># Finally we get grad for a particular dimention</span>
+            <span class="c1"># Finally we get grad for a particular dimension</span>
             <span class="n">grads</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad_output</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">grads</span></div>
+
+
+<span class="k">def</span> <span class="nf">full_window_mat</span><span class="p">(</span><span class="n">win_mats</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given banded window matrices, compute cocatenated full window matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        win_mats (list): List of windows matrices given by :func:`build_win_mats`.</span>
+<span class="sd">        T (int): Number of frames.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Cocatenated windows matrix (``T*num_windows x T``).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_full_window_mat</span><span class="p">(</span><span class="n">win_mats</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="unit_variance_mlpg_matrix"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html#nnmnkwii.functions.unit_variance_mlpg_matrix">[docs]</a><span class="k">def</span> <span class="nf">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute MLPG matrix assuming input is normalized to have unit-variances.</span>
+
+<span class="sd">    Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),</span>
+<span class="sd">    :math:`W` is a window matrix ``(T x num_windows*T)``, assuming input is</span>
+<span class="sd">    normalized to have unit-variances, MLPG can be written as follows:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        y = R \mu</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        R = (W^{T} W)^{-1} W^{T}</span>
+
+<span class="sd">    Here we call :math:`R` as the MLPG matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        windows: (list): List of windows.</span>
+<span class="sd">        T (int): Number of frames.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: MLPG matrix (``T x nun_windows*T``).</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.autograd.UnitVarianceMLPG`,</span>
+<span class="sd">        :func:`nnmnkwii.functions.mlpg`.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; windows = [</span>
+<span class="sd">        ...     (0, 0, np.array([1.0])),            # static</span>
+<span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
+<span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
+<span class="sd">        ... ]</span>
+<span class="sd">        &gt;&gt;&gt; F.unit_variance_mlpg_matrix(windows, 3)</span>
+<span class="sd">        array([[  2.73835920e-01,   1.95121951e-01,   9.20177384e-02,</span>
+<span class="sd">                  9.75609756e-02,  -9.09090909e-02,  -9.75609756e-02,</span>
+<span class="sd">                 -3.52549889e-01,  -2.43902439e-02,   1.10864745e-02],</span>
+<span class="sd">               [  1.95121951e-01,   3.41463415e-01,   1.95121951e-01,</span>
+<span class="sd">                  1.70731707e-01,  -5.55111512e-17,  -1.70731707e-01,</span>
+<span class="sd">                 -4.87804878e-02,  -2.92682927e-01,  -4.87804878e-02],</span>
+<span class="sd">               [  9.20177384e-02,   1.95121951e-01,   2.73835920e-01,</span>
+<span class="sd">                  9.75609756e-02,   9.09090909e-02,  -9.75609756e-02,</span>
+<span class="sd">                  1.10864745e-02,  -2.43902439e-02,  -3.52549889e-01]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">win_mats</span> <span class="o">=</span> <span class="n">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">sdw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">win_mat</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">win_mat</span><span class="o">.</span><span class="n">u</span> <span class="k">for</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="n">win_mats</span><span class="p">])</span>
+
+    <span class="n">P</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sdw</span><span class="p">,</span> <span class="n">sdw</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">win_index</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
+        <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span> <span class="n">target_bm</span><span class="o">=</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">chol_bm</span> <span class="o">=</span> <span class="n">bla</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Pinv</span> <span class="o">=</span> <span class="n">cholesky_inv_banded</span><span class="p">(</span><span class="n">chol_bm</span><span class="o">.</span><span class="n">full</span><span class="p">(),</span> <span class="n">width</span><span class="o">=</span><span class="n">chol_bm</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">chol_bm</span><span class="o">.</span><span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">cocatenated_window</span> <span class="o">=</span> <span class="n">full_window_mat</span><span class="p">(</span><span class="n">win_mats</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Pinv</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cocatenated_window</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="reshape_means"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.functions.reshape_means.html#nnmnkwii.functions.reshape_means">[docs]</a><span class="k">def</span> <span class="nf">reshape_means</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reshape means (``T x D``) to (``T*num_windows x static_dim``).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        means (numpy.ndarray): Means</span>
+<span class="sd">        num_windows (int): Number of windows.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Reshaped means (``T*num_windows x static_dim``).</span>
+<span class="sd">        No-op if already reshaped.</span>
+
+<span class="sd">    TODO:</span>
+<span class="sd">        Better name?</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; T, static_dim = 2, 2</span>
+<span class="sd">        &gt;&gt;&gt; windows = [</span>
+<span class="sd">        ...     (0, 0, np.array([1.0])),            # static</span>
+<span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
+<span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
+<span class="sd">        ... ]</span>
+<span class="sd">        &gt;&gt;&gt; means = np.random.rand(T, static_dim * len(windows))</span>
+<span class="sd">        &gt;&gt;&gt; reshaped_means = F.reshape_means(means, static_dim)</span>
+<span class="sd">        &gt;&gt;&gt; assert reshaped_means.shape == (T*len(windows), static_dim)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">D</span> <span class="o">==</span> <span class="n">static_dim</span><span class="p">:</span>
+        <span class="c1"># already reshaped case</span>
+        <span class="k">return</span> <span class="n">means</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">means</span></div>
 </pre></div>
 
            </div>
