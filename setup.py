@@ -2,7 +2,49 @@
 
 from __future__ import with_statement, print_function, absolute_import
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, Extension
+from distutils.version import LooseVersion
+from os.path import join
+import numpy as np
+
+min_cython_ver = '0.21.0'
+try:
+    import Cython
+    ver = Cython.__version__
+    _CYTHON_INSTALLED = ver >= LooseVersion(min_cython_ver)
+except ImportError:
+    _CYTHON_INSTALLED = False
+
+try:
+    if not _CYTHON_INSTALLED:
+        raise ImportError('No supported version of Cython installed.')
+    from Cython.Distutils import build_ext
+    cython = True
+except ImportError:
+    cython = False
+
+if cython:
+    ext = '.pyx'
+    cmdclass = {'build_ext': build_ext}
+else:
+    raise RuntimeError("Builds without cython may be supported in future.")
+
+ext_modules = [
+    Extension(
+        name="nnmnkwii.util._linalg",
+        sources=[join("nnmnkwii", "util", "_linalg" + ext)],
+        include_dirs=[np.get_include()],
+        language="c",
+        extra_compile_args=["-std=c99"],
+    ),
+    Extension(
+        name="nnmnkwii.functions._impl._mlpg",
+        sources=[join("nnmnkwii", "functions", "_impl", "_mlpg" + ext)],
+        include_dirs=[np.get_include()],
+        language="c",
+        extra_compile_args=["-std=c99"]
+    ),
+]
 
 setup(
     name='nnmnkwii',
@@ -13,9 +55,12 @@ setup(
     url='https://github.com/r9y9/nnmnkwii',
     license='MIT',
     packages=find_packages(),
+    ext_modules=ext_modules,
+    cmdclass=cmdclass,
     install_requires=[
         'numpy >= 1.8.0',
         'scipy',
+        'cython >= ' + min_cython_ver,
         'bandmat',
         'fastdtw',
         'sklearn',

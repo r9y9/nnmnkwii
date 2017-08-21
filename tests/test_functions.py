@@ -39,17 +39,61 @@ def test_mlpg():
 
     # Test variances correctly expanded
     for windows in windows_set:
+        for dtype in [np.float32, np.float64]:
+            means = np.random.rand(T, static_dim * len(windows)).astype(dtype)
+            variances = np.random.rand(static_dim * len(windows)).astype(dtype)
+            variances_frames = np.tile(variances, (T, 1))
+
+            # Explicitly give variances over frame
+            generated1 = F.mlpg(means, variances_frames, windows)
+            # Give global variances. This will get expanded over frames internally
+            generated2 = F.mlpg(means, variances, windows)
+
+            assert generated1.dtype == dtype
+            assert np.allclose(generated1, generated2)
+
+def test_mlpg_window_full():
+    static_dim = 2
+    T = 10
+
+    def full_window_mat_native(win_mats, T):
+        cocatenated_window = np.zeros((T*len(windows),T))
+        for win_index, win_mat in enumerate(win_mats):
+            win = win_mat.full()
+            b = win_index*T
+            cocatenated_window[b:b+T,:] = win
+        return cocatenated_window
+
+    for windows in _get_windows_set():
+        win_mats = F.build_win_mats(windows, T)
+        fullwin = F.full_window_mat(win_mats, T)
+        assert fullwin.shape == (T*len(windows), T)
+        assert np.allclose(full_window_mat_native(win_mats, T), fullwin)
+
+def test_unit_variance_mlpg():
+    static_dim = 2
+    T = 10
+
+    for windows in _get_windows_set():
         means = np.random.rand(T, static_dim * len(windows))
-        variances = np.random.rand(static_dim * len(windows))
-        variances_frames = np.tile(variances, (T, 1))
+        variances = np.ones(static_dim * len(windows))
+        y = F.mlpg(means, variances, windows)
 
-        # Explicitly give variances over frame
-        generated1 = F.mlpg(means, variances_frames, windows)
-        # Give global variances. This will get expanded over frames internally
-        generated2 = F.mlpg(means, variances, windows)
+        R = F.unit_variance_mlpg_matrix(windows, T)
+        y_hat = R.dot(F.reshape_means(means, static_dim))
+        assert np.allclose(y_hat, y)
 
-        assert np.allclose(generated1, generated2)
+def test_reshape_means():
+    static_dim = 2
+    T = 10
 
+    for windows in _get_windows_set():
+        means = np.random.rand(T, static_dim * len(windows))
+        reshaped_means = F.reshape_means(means, static_dim)
+        assert reshaped_means.shape == (T*len(windows), static_dim)
+        reshaped_means2 = F.reshape_means(reshaped_means, static_dim)
+        # Test if call on reshaped means doesn't change anything
+        assert np.allclose(reshaped_means, reshaped_means2)
 
 def test_modspec_reconstruct():
     static_dim = 2
