@@ -75,9 +75,10 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
         R = R.cuda()
     for _ in range(batch_size):
         if use_cuda:
-            reshaped_means = reshaped_means.cpu()
-            reshaped_means = reshaped_means.cuda()
-        y_hat = AF.unit_variance_mlpg(R, reshaped_means)
+            means = means.cpu()
+            means = means.cuda()
+
+        y_hat = AF.unit_variance_mlpg(R, means)
         L = criterion(y_hat, y)
         assert np.allclose(y_hat.cpu().data.numpy(), y.cpu().data.numpy(),
                            atol=1e-5)
