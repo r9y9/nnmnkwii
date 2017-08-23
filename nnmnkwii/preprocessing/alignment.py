@@ -12,12 +12,29 @@ from sklearn.mixture import GaussianMixture
 
 
 class DTWAligner(object):
-    """Align feature matcies
+    """Align feature matcies using fastdtw_.
+
+    .. _fastdtw: https://github.com/slaypni/fastdtw
 
     Attributes:
-        dist (function): Distance function
-        radius (int): Radius
-        verbose (int): Default is 0
+        dist (function): Distance function. Default is :func:`numpy.linalg.norm`.
+        radius (int): Radius parameter in fastdtw_.
+        verbose (int): Verbose flag. Default is 0.
+
+    Examples:
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import PaddedFileSourceDataset
+        >>> from nnmnkwii.preprocessing.alignment import DTWAligner
+        >>> _, X = example_file_data_sources_for_acoustic_model()
+        >>> X = PaddedFileSourceDataset(X, 1000).asarray()
+        >>> X.shape
+        (3, 1000, 187)
+        >>> Y = X.copy()
+        >>> X_aligned, Y_aligned = DTWAligner().transform((X, Y))
+        >>> X_aligned.shape
+        (3, 1000, 187)
+        >>> Y_aligned.shape
+        (3, 1000, 187)
     """
 
     def __init__(self, dist=lambda x, y: norm(x - y), radius=1, verbose=0):
@@ -46,19 +63,41 @@ class DTWAligner(object):
 
 
 class IterativeDTWAligner(object):
-    """Align feature matcies iteratively using GMM-based feature conversion
+    """Align feature matcies iteratively using GMM-based feature conversion.
+
+    .. _fastdtw: https://github.com/slaypni/fastdtw
 
     Attributes:
         n_iter (int): Number of iterations.
         dist (function): Distance function
-        radius (int): Radius
-        verbose (int): Default is 0
+        radius (int): Radius parameter in fastdtw_.
+        verbose (int): Verbose flag. Default is 0.
+        max_iter_gmm (int): Maximum iteration to train GMM.
+        n_components_gmm (int): Number of mixture components in GMM.
+
+    Examples:
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import PaddedFileSourceDataset
+        >>> from nnmnkwii.preprocessing.alignment import IterativeDTWAligner
+        >>> _, X = example_file_data_sources_for_acoustic_model()
+        >>> X = PaddedFileSourceDataset(X, 1000).asarray()
+        >>> X.shape
+        (3, 1000, 187)
+        >>> Y = X.copy()
+        >>> X_aligned, Y_aligned = IterativeDTWAligner(n_iter=1).transform((X, Y))
+        >>> X_aligned.shape
+        (3, 1000, 187)
+        >>> Y_aligned.shape
+        (3, 1000, 187)
     """
 
-    def __init__(self, n_iter=3, dist=lambda x, y: norm(x - y), radius=1, verbose=0):
+    def __init__(self, n_iter=3, dist=lambda x, y: norm(x - y),
+                 radius=1, max_iter_gmm=100, n_components_gmm=16, verbose=0):
         self.n_iter = n_iter
         self.dist = dist
         self.radius = radius
+        self.max_iter_gmm = max_iter_gmm
+        self.n_components_gmm = n_components_gmm
         self.verbose = verbose
 
     def transform(self, XY):
@@ -87,7 +126,8 @@ class IterativeDTWAligner(object):
 
             # Fit
             gmm = GaussianMixture(
-                n_components=32, covariance_type="full", max_iter=100)
+                n_components=self.n_components_gmm,
+                covariance_type="full", max_iter=self.max_iter_gmm)
             XY = np.concatenate((X_aligned, Y_aligned),
                                 axis=-1).reshape(-1, X.shape[-1] * 2)
             gmm.fit(XY)

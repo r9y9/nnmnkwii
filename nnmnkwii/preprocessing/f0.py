@@ -26,7 +26,11 @@ def interp1d(f0, kind="slinear"):
     Examples:
         >>> from nnmnkwii.preprocessing.f0 import interp1d
         >>> import numpy as np
-        >>> f0 = np.random.rand(100)
+        >>> from nnmnkwii.util import example_audio_file
+        >>> from scipy.io import wavfile
+        >>> import pyworld
+        >>> fs, x = wavfile.read(example_audio_file())
+        >>> f0, timeaxis = pyworld.dio(x.astype(np.float64), fs, frame_period=5)
         >>> continuous_f0 = interp1d(f0, kind="slinear")
         >>> assert f0.shape == continuous_f0.shape
 
