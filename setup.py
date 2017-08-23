@@ -69,7 +69,7 @@ setup(
     tests_require=['nose', 'coverage'],
     extras_require={
         'docs': ['numpydoc', 'sphinx_rtd_theme'],
-        'test': ['nose', 'pyworld'],
+        'test': ['nose', 'pyworld', 'librosa'],
     },
     classifiers=[
         "Operating System :: Microsoft :: Windows",
