@@ -3,29 +3,19 @@ Utilities
 
 .. automodule:: nnmnkwii.util
 
-Utterance-wise operations
--------------------------
+Function utilities
+------------------
+
+Most of the feature transformation in :obj:`nnmnkwii.preprocessing` module is 2d functions
+``f: (T, D) -> (T, D')``. The following utilities can be used for
+extending 2d functions to 3d by applying 2d function to each 2d slice.
 
 .. autosummary::
    :toctree: generated/
 
-   delta
-   apply_delta_windows
-   trim_zeros_frames
-   remove_zeros_frames
-   adjast_frame_length
-   scale
-   minmax_scale
+   apply_each2d_padded
+   apply_each2d_trim
 
-Dataset-wise operations
------------------------
-
-.. autosummary::
-   :toctree: generated/
-
-   meanvar
-   meanstd
-   minmax
 
 Files
 -----

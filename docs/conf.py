@@ -49,7 +49,6 @@ extensions = [
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
     'numpydoc',
-    'matplotlib.sphinxext.plot_directive',
     'nbsphinx',
     'IPython.sphinxext.ipython_console_highlighting',
 ]
@@ -94,7 +93,6 @@ plot_pre_code = """
 import seaborn
 seaborn.set(style='ticks')
 import numpy as np
-import pysptk
 np.random.seed(123)
 np.set_printoptions(precision=3, linewidth=64, edgeitems=2, threshold=200)
 """
