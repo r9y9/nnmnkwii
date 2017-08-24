@@ -94,3 +94,12 @@ def test_phone_alignment_label():
                                subphone_features=None)
     assert not labels.is_state_alignment_label()
     assert np.all(np.isfinite(x))
+
+    for subphone_features in ["coarse_coding", "minimal_phoneme"]:
+        x = fe.linguistic_features(labels, binary_dict, continuous_dict,
+                               add_frame_features=True,
+                               subphone_features=subphone_features)
+        assert np.all(np.isfinite(x))
+
+    x = fe.duration_features(labels)
+    assert np.all(np.isfinite(x))
