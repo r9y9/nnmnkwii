@@ -7,7 +7,7 @@ import bandmat as bm
 import bandmat.linalg as bla
 from scipy.linalg import solve_banded
 from nnmnkwii.util.linalg import cholesky_inv_banded
-from ._mlpg import full_window_mat as _full_window_mat
+from .mlpg_helper import full_window_mat as _full_window_mat
 
 # https://github.com/MattShannon/bandmat/blob/master/example_spg.py
 # Copied from the above link. Thanks to Matt shannon!
@@ -355,9 +355,6 @@ def reshape_means(means, static_dim):
     Returns:
         numpy.ndarray: Reshaped means (``T*num_windows x static_dim``).
         No-op if already reshaped.
-
-    TODO:
-        Better name?
 
     Examples:
         >>> from nnmnkwii import functions as F
