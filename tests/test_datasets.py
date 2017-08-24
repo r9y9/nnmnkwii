@@ -12,7 +12,7 @@ from os.path import join, dirname
 DATA_DIR = join(dirname(__file__), "data")
 
 
-def _get_small_datasets(padded=False, duration=False):
+def _get_small_datasets(padded=False, duration=False, padded_length=1000):
     if duration:
         X, Y = example_file_data_sources_for_duration_model()
     else:
@@ -25,6 +25,16 @@ def _get_small_datasets(padded=False, duration=False):
         Y = FileSourceDataset(Y)
     return X, Y
 
+def test_asarray():
+    X, Y = _get_small_datasets(padded=True, duration=True)
+    lengths = [len(x) for x in X]
+    X, Y = _get_small_datasets(padded=True, duration=True, padded_length=np.max(lengths))
+    X_array = np.asarray(X)
+    assert X_array.ndim == 3
+    assert np.allclose(X_array, X.asarray())
+
+    X, Y = _get_small_datasets(padded=False, duration=True)
+    assert np.allclose(X_array, X.asarray(padded_length=np.max(lengths)))
 
 def test_duration_sources():
     X, Y = _get_small_datasets(padded=False, duration=True)
