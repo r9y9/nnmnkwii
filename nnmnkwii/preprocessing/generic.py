@@ -18,14 +18,6 @@ def _apply_delta_window(x, window):
 
     Returns:
         (ndarray): Delta features, shape　(``T x D``).
-
-    Examples:
-        >>> from nnmnkwii.util import delta
-        >>> T, static_dim = 10, 24
-        >>> x = np.random.rand(T, static_dim)
-        >>> window = np.array([-0.5, 0.0, 0.5]) # window for delta feature
-        >>> y = delta(x, window)
-        >>> assert x.shape == y.shape
     """
     T, D = x.shape
     y = np.zeros_like(x)
@@ -51,7 +43,7 @@ def delta_features(x, windows):
         numpy.ndarray: static + delta features (``T x (D * len(windows)``).
 
     Examples:
-        >>> from nnmnkwii.util import apply_delta_windows
+        >>> from nnmnkwii.preprocessing import delta_features
         >>> windows = [
         ...         (0, 0, np.array([1.0])),            # static
         ...         (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
@@ -59,7 +51,7 @@ def delta_features(x, windows):
         ...     ]
         >>> T, static_dim = 10, 24
         >>> x = np.random.rand(T, static_dim)
-        >>> y = apply_delta_windows(x, windows)
+        >>> y = delta_features(x, windows)
         >>> assert y.shape == (T, static_dim * len(windows))
     """
     T, D = x.shape
@@ -69,8 +61,6 @@ def delta_features(x, windows):
         combined_features[:, D * idx:D * idx + D] = _apply_delta_window(x, window)
     return combined_features
 
-# Remove this 0.1.0
-apply_delta_windows = delta_features
 
 def trim_zeros_frames(x, eps=1e-7):
     """Remove trailling zeros frames.
@@ -86,7 +76,7 @@ def trim_zeros_frames(x, eps=1e-7):
 
     Examples:
         >>> import numpy as np
-        >>> from nnmnkwii.util import trim_zeros_frames
+        >>> from nnmnkwii.preprocessing import trim_zeros_frames
         >>> x = np.random.rand(100,10)
         >>> y = trim_zeros_frames(x)
     """
@@ -111,7 +101,7 @@ def remove_zeros_frames(x, eps=1e-7):
 
     Examples:
         >>> import numpy as np
-        >>> from nnmnkwii.util import remove_zeros_frames
+        >>> from nnmnkwii.preprocessing import remove_zeros_frames
         >>> x = np.random.rand(100,10)
         >>> y = remove_zeros_frames(x)
     """
@@ -138,7 +128,7 @@ def adjast_frame_length(x, y, pad=True, ensure_even=False):
         Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).
 
     Examples:
-        >>> from nnmnkwii.util import adjast_frame_length
+        >>> from nnmnkwii.preprocessing import adjast_frame_length
         >>> import numpy as np
         >>> x = np.zeros((10, 1))
         >>> y = np.zeros((11, 1))
@@ -189,10 +179,10 @@ def meanvar(dataset, lengths=None):
         tuple: Mean and variance for each dimention.
 
     See also:
-        :func:`nnmnkwii.util.meanstd`, :func:`nnmnkwii.util.scale`
+        :func:`nnmnkwii.preprocessing.meanstd`, :func:`nnmnkwii.preprocessing.scale`
 
     Examples:
-        >>> from nnmnkwii.util import meanvar
+        >>> from nnmnkwii.preprocessing import meanvar
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
         >>> from nnmnkwii.datasets import FileSourceDataset
         >>> X, Y = example_file_data_sources_for_acoustic_model()
@@ -227,10 +217,10 @@ def meanstd(dataset, lengths=None):
         tuple: Mean and variance for each dimention.
 
     See also:
-        :func:`nnmnkwii.util.meanvar`, :func:`nnmnkwii.util.scale`
+        :func:`nnmnkwii.preprocessing.meanvar`, :func:`nnmnkwii.preprocessing.scale`
 
     Examples:
-        >>> from nnmnkwii.util import meanstd
+        >>> from nnmnkwii.preprocessing import meanstd
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
         >>> from nnmnkwii.datasets import FileSourceDataset
         >>> X, Y = example_file_data_sources_for_acoustic_model()
@@ -253,10 +243,10 @@ def minmax(dataset, lengths=None):
         lengths: (list): Frame lengths for each dataset sample.
 
     See also:
-        :func:`nnmnkwii.util.minmax_scale`
+        :func:`nnmnkwii.preprocessing.minmax_scale`
 
     Examples:
-        >>> from nnmnkwii.util import minmax
+        >>> from nnmnkwii.preprocessing import minmax
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
         >>> from nnmnkwii.datasets import FileSourceDataset
         >>> X, Y = example_file_data_sources_for_acoustic_model()
@@ -290,7 +280,7 @@ def scale(x, data_mean, data_std):
         array: Scaled data.
 
     Examples:
-        >>> from nnmnkwii.util import meanstd, scale
+        >>> from nnmnkwii.preprocessing import meanstd, scale
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
         >>> from nnmnkwii.datasets import FileSourceDataset
         >>> X, Y = example_file_data_sources_for_acoustic_model()
@@ -316,7 +306,7 @@ def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
         array: Scaled data.
 
     Examples:
-        >>> from nnmnkwii.util import minmax, minmax_scale
+        >>> from nnmnkwii.preprocessing import minmax, minmax_scale
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
         >>> from nnmnkwii.datasets import FileSourceDataset
         >>> X, Y = example_file_data_sources_for_acoustic_model()

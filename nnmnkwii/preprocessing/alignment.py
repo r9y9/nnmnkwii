@@ -24,7 +24,7 @@ class DTWAligner(object):
     Examples:
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
         >>> from nnmnkwii.datasets import PaddedFileSourceDataset
-        >>> from nnmnkwii.preprocessing.alignment import DTWAligner
+        >>> from nnmnkwii.preprocessing import DTWAligner
         >>> _, X = example_file_data_sources_for_acoustic_model()
         >>> X = PaddedFileSourceDataset(X, 1000).asarray()
         >>> X.shape
@@ -78,7 +78,7 @@ class IterativeDTWAligner(object):
     Examples:
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
         >>> from nnmnkwii.datasets import PaddedFileSourceDataset
-        >>> from nnmnkwii.preprocessing.alignment import IterativeDTWAligner
+        >>> from nnmnkwii.preprocessing import IterativeDTWAligner
         >>> _, X = example_file_data_sources_for_acoustic_model()
         >>> X = PaddedFileSourceDataset(X, 1000).asarray()
         >>> X.shape

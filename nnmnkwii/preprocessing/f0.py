@@ -24,7 +24,7 @@ def interp1d(f0, kind="slinear"):
         trajectory.
 
     Examples:
-        >>> from nnmnkwii.preprocessing.f0 import interp1d
+        >>> from nnmnkwii.preprocessing import interp1d
         >>> import numpy as np
         >>> from nnmnkwii.util import example_audio_file
         >>> from scipy.io import wavfile

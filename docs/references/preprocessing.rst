@@ -1,8 +1,7 @@
 Pre-processing
 ==============
 
-Pre-processing algorithms. Mostly, it consists of feature transformation,
-feature alignment and feature normalization.
+Feature transformation, feature alignment and feature normalization.
 
 .. automodule:: nnmnkwii.preprocessing
 
