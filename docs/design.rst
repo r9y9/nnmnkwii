@@ -42,8 +42,8 @@ From the success of deep learning, many computational backends (e.g., tensorflow
 I think we should provide a library which bridges generic computational backends and speech data. Hence, in this library, we provide
 
 - Dataset and data iteration abstractions, considering arbitrary large datasets. :obj:`nnmnkwii.datasets`
-- Generic functions for speech synthesis. :obj:`nnmnkwii.autograd`, :obj:`nnmnkwii.functions`
-- Pre-processsing, post-processsing and utilities. :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.util`, :obj:`nnmnkwii.postfilters`
+- Generic functions for speech synthesis. :obj:`nnmnkwii.autograd`
+- Pre-processsing, parameter generation and post-processsing utilities. :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.paramgen`, :obj:`nnmnkwii.postfilters`
 
 As I believe visualization is important to understand what happens, I plan to provide visualization package (:obj:`nnmnkwii.display`) in the near future.
 

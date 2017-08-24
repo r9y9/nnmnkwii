@@ -115,10 +115,10 @@ class ExampleSLTArcticFileDataSource(BinaryFileDataSource):
 
 
 def example_file_data_sources_for_duration_model():
-    """Get file data sources for duration model training
+    """Get file data sources for duration model training.
 
     Returns:
-        tuple: Tuple of :obj:`FileDataSource`s for example data.
+        tuple: Tuple of :obj:`FileDataSource` s for example data.
 
     Examples:
         >>> from nnmnkwii.util import example_file_data_sources_for_duration_model
@@ -142,7 +142,7 @@ def example_file_data_sources_for_acoustic_model():
     """Get file data sources for acoustic model training
 
     Returns:
-        tuple: Tuple of :obj:`FileDataSource`s for example data.
+        tuple: Tuple of :obj:`FileDataSource` s for example data.
 
     Examples:
         >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model

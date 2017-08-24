@@ -2,6 +2,7 @@ from __future__ import with_statement, print_function, absolute_import
 
 import numpy as np
 
+# TODO: this may be removed in future.
 
 def modspec(y, n=4096, norm=None):
     """Modulation spectrum computation

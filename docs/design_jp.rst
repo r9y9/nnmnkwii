@@ -45,8 +45,8 @@ chainer等に代表されるように、CUDAを活用した多次元配列上の
 本ライブラリは、そういった汎用的な自動微分フレームワークと併せて使用されることを想定し、
 
 -  大規模データを想定したデータセットの構築、データアクセスの抽象化 :obj:`nnmnkwii.datasets`
--  音声に特化した汎用的な関数 :obj:`nnmnkwii.autograd`, :obj:`nnmnkwii.functions`
--  前処理/後処理アルゴリズム :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.util`, :obj:`nnmnkwii.postfilters`
+-  音声に特化した汎用的な関数 :obj:`nnmnkwii.autograd`
+-  パラメータ生成、前処理/後処理アルゴリズム :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.paramgen`, :obj:`nnmnkwii.postfilters`
 
 に注目し、機能を提供すればよいと考える。また、可視化が重要であるという信念のもと、言語特徴量、音響特徴量の可視化ツール (:obj:`nnmnkwii.display`) も提供する（予定）。
 

@@ -3,6 +3,7 @@ from __future__ import division, print_function, absolute_import
 import pysptk
 import numpy as np
 
+__all__ = ['merlin_post_filter']
 
 def merlin_post_filter(mgc, alpha,
                        minimum_phase_order=511, fftlen=1024,

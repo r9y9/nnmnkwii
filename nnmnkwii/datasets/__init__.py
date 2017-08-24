@@ -122,7 +122,7 @@ class FileSourceDataset(Dataset):
     def __len__(self):
         return len(self.collected_files)
 
-    def asarray(self, padded_length, dtype=np.float32):
+    def asarray(self, padded_length, dtype=np.float32, lengths=None):
         """Convert dataset to numpy array.
 
         This try to load entire dataset into a single 3d numpy array.
@@ -139,7 +139,10 @@ class FileSourceDataset(Dataset):
         N = len(self)
         X = np.zeros((N, T, D), dtype=dtype)
 
-        lengths = np.zeros(N, dtype=np.int)
+        if lengths is not None:
+            assert len(lengths) == N
+        else:
+            lengths = np.zeros(N, dtype=np.int)
         for idx, paths in enumerate(collected_files):
             x = self.file_data_source.collect_features(*paths)
             if len(x) > T:
@@ -213,8 +216,9 @@ Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
         else:
             return self._getitem_one_sample(idx)
 
-    def asarray(self):
-        return super(PaddedFileSourceDataset, self).asarray(self.padded_length)
+    def asarray(self, dtype=np.float32, lengths=None):
+        return super(PaddedFileSourceDataset, self).asarray(
+            self.padded_length, dtype=dtype, lengths=lengths)
 
 
 class MemoryCacheDataset(Dataset):

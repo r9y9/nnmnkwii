@@ -38,8 +38,8 @@ ext_modules = [
         extra_compile_args=["-std=c99"],
     ),
     Extension(
-        name="nnmnkwii.functions._impl._mlpg",
-        sources=[join("nnmnkwii", "functions", "_impl", "_mlpg" + ext)],
+        name="nnmnkwii.paramgen.mlpg_helper",
+        sources=[join("nnmnkwii", "paramgen", "mlpg_helper" + ext)],
         include_dirs=[np.get_include()],
         language="c",
         extra_compile_args=["-std=c99"]
@@ -69,7 +69,7 @@ setup(
     tests_require=['nose', 'coverage'],
     extras_require={
         'docs': ['numpydoc', 'sphinx_rtd_theme'],
-        'test': ['nose', 'pyworld'],
+        'test': ['nose', 'pyworld', 'librosa'],
     },
     classifiers=[
         "Operating System :: Microsoft :: Windows",

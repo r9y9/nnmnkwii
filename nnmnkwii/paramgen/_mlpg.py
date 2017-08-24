@@ -7,7 +7,7 @@ import bandmat as bm
 import bandmat.linalg as bla
 from scipy.linalg import solve_banded
 from nnmnkwii.util.linalg import cholesky_inv_banded
-from ._mlpg import full_window_mat as _full_window_mat
+from .mlpg_helper import full_window_mat as _full_window_mat
 
 # https://github.com/MattShannon/bandmat/blob/master/example_spg.py
 # Copied from the above link. Thanks to Matt shannon!
@@ -317,20 +317,20 @@ def unit_variance_mlpg_matrix(windows, T):
         >>> from nnmnkwii import functions as F
         >>> import numpy as np
         >>> windows = [
-        ...     (0, 0, np.array([1.0])),            # static
-        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
-        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
-        ... ]
+        ...         (0, 0, np.array([1.0])),
+        ...         (1, 1, np.array([-0.5, 0.0, 0.5])),
+        ...         (1, 1, np.array([1.0, -2.0, 1.0])),
+        ...     ]
         >>> F.unit_variance_mlpg_matrix(windows, 3)
-        array([[  2.73835920e-01,   1.95121951e-01,   9.20177384e-02,
-                  9.75609756e-02,  -9.09090909e-02,  -9.75609756e-02,
-                 -3.52549889e-01,  -2.43902439e-02,   1.10864745e-02],
-               [  1.95121951e-01,   3.41463415e-01,   1.95121951e-01,
-                  1.70731707e-01,  -5.55111512e-17,  -1.70731707e-01,
-                 -4.87804878e-02,  -2.92682927e-01,  -4.87804878e-02],
-               [  9.20177384e-02,   1.95121951e-01,   2.73835920e-01,
-                  9.75609756e-02,   9.09090909e-02,  -9.75609756e-02,
-                  1.10864745e-02,  -2.43902439e-02,  -3.52549889e-01]])
+        array([[  2.73835927e-01,   1.95121944e-01,   9.20177400e-02,
+                  9.75609720e-02,  -9.09090936e-02,  -9.75609720e-02,
+                 -3.52549881e-01,  -2.43902430e-02,   1.10864742e-02],
+               [  1.95121944e-01,   3.41463417e-01,   1.95121944e-01,
+                  1.70731708e-01,  -5.55111512e-17,  -1.70731708e-01,
+                 -4.87804860e-02,  -2.92682916e-01,  -4.87804860e-02],
+               [  9.20177400e-02,   1.95121944e-01,   2.73835927e-01,
+                  9.75609720e-02,   9.09090936e-02,  -9.75609720e-02,
+                  1.10864742e-02,  -2.43902430e-02,  -3.52549881e-01]], dtype=float32)
     """
     win_mats = build_win_mats(windows, T)
     sdw = np.max([win_mat.l + win_mat.u for win_mat in win_mats])
@@ -355,9 +355,6 @@ def reshape_means(means, static_dim):
     Returns:
         numpy.ndarray: Reshaped means (``T*num_windows x static_dim``).
         No-op if already reshaped.
-
-    TODO:
-        Better name?
 
     Examples:
         >>> from nnmnkwii import functions as F
