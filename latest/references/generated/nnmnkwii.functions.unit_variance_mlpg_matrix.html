@@ -35,10 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../index.html"/>
-        <link rel="up" title="Functions" href="../functions.html"/>
-        <link rel="next" title="nnmnkwii.functions.reshape_means" href="nnmnkwii.functions.reshape_means.html"/>
-        <link rel="prev" title="nnmnkwii.functions.mlpg_grad" href="nnmnkwii.functions.mlpg_grad.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../index.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -219,7 +216,7 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Package references</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
@@ -254,22 +251,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../functions.html">Functions</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../functions.html#mlpg">MLPG</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../functions.html#modulation-spectrum">Modulation spectrum</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../functions.html">Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io.html">IO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
@@ -282,33 +264,50 @@
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../postfilters.html">Post-filters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#module-nnmnkwii.preprocessing.alignment">Alignment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#module-nnmnkwii.preprocessing.f0">F0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modphase.html">nnmnkwii.preprocessing.modphase</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#f0">F0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../util.html">Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../util.html#utterance-wise-operations">Utterance-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.delta.html">nnmnkwii.util.delta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_delta_windows.html">nnmnkwii.util.apply_delta_windows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.trim_zeros_frames.html">nnmnkwii.util.trim_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.remove_zeros_frames.html">nnmnkwii.util.remove_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.adjast_frame_length.html">nnmnkwii.util.adjast_frame_length</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.scale.html">nnmnkwii.util.scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.minmax_scale.html">nnmnkwii.util.minmax_scale</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../util.html#dataset-wise-operations">Dataset-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.meanvar.html">nnmnkwii.util.meanvar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.meanstd.html">nnmnkwii.util.meanstd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.minmax.html">nnmnkwii.util.minmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../util.html#files">Files</a><ul>
@@ -370,8 +369,6 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../functions.html">Functions</a> &raquo;</li>
-        
       <li>nnmnkwii.functions.unit_variance_mlpg_matrix</li>
     
     
@@ -429,7 +426,7 @@
 <h1>nnmnkwii.functions.unit_variance_mlpg_matrix<a class="headerlink" href="#nnmnkwii-functions-unit-variance-mlpg-matrix" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="nnmnkwii.functions.unit_variance_mlpg_matrix">
-<code class="descclassname">nnmnkwii.functions.</code><code class="descname">unit_variance_mlpg_matrix</code><span class="sig-paren">(</span><em>windows</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/functions/_impl/mlpg.html#unit_variance_mlpg_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.functions.unit_variance_mlpg_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nnmnkwii.functions.</code><code class="descname">unit_variance_mlpg_matrix</code><span class="sig-paren">(</span><em>windows</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/paramgen/_mlpg.html#unit_variance_mlpg_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.functions.unit_variance_mlpg_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute MLPG matrix assuming input is normalized to have unit-variances.</p>
 <p>Let <span class="math">\(\mu\)</span> is the input mean sequence (<code class="docutils literal"><span class="pre">num_windows*T</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>),
 <span class="math">\(W\)</span> is a window matrix <code class="docutils literal"><span class="pre">(T</span> <span class="pre">x</span> <span class="pre">num_windows*T)</span></code>, assuming input is
@@ -467,20 +464,20 @@ normalized to have unit-variances, MLPG can be written as follows:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>            <span class="c1"># static</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])),</span> <span class="c1"># delta</span>
-<span class="gp">... </span>    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])),</span> <span class="c1"># delta-delta</span>
-<span class="gp">... </span><span class="p">]</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])),</span>
+<span class="gp">... </span>        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])),</span>
+<span class="gp">... </span>    <span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">F</span><span class="o">.</span><span class="n">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="go">array([[  2.73835920e-01,   1.95121951e-01,   9.20177384e-02,</span>
-<span class="go">          9.75609756e-02,  -9.09090909e-02,  -9.75609756e-02,</span>
-<span class="go">         -3.52549889e-01,  -2.43902439e-02,   1.10864745e-02],</span>
-<span class="go">       [  1.95121951e-01,   3.41463415e-01,   1.95121951e-01,</span>
-<span class="go">          1.70731707e-01,  -5.55111512e-17,  -1.70731707e-01,</span>
-<span class="go">         -4.87804878e-02,  -2.92682927e-01,  -4.87804878e-02],</span>
-<span class="go">       [  9.20177384e-02,   1.95121951e-01,   2.73835920e-01,</span>
-<span class="go">          9.75609756e-02,   9.09090909e-02,  -9.75609756e-02,</span>
-<span class="go">          1.10864745e-02,  -2.43902439e-02,  -3.52549889e-01]])</span>
+<span class="go">array([[  2.73835927e-01,   1.95121944e-01,   9.20177400e-02,</span>
+<span class="go">          9.75609720e-02,  -9.09090936e-02,  -9.75609720e-02,</span>
+<span class="go">         -3.52549881e-01,  -2.43902430e-02,   1.10864742e-02],</span>
+<span class="go">       [  1.95121944e-01,   3.41463417e-01,   1.95121944e-01,</span>
+<span class="go">          1.70731708e-01,  -5.55111512e-17,  -1.70731708e-01,</span>
+<span class="go">         -4.87804860e-02,  -2.92682916e-01,  -4.87804860e-02],</span>
+<span class="go">       [  9.20177400e-02,   1.95121944e-01,   2.73835927e-01,</span>
+<span class="go">          9.75609720e-02,   9.09090936e-02,  -9.75609720e-02,</span>
+<span class="go">          1.10864742e-02,  -2.43902430e-02,  -3.52549881e-01]], dtype=float32)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -494,15 +491,6 @@ normalized to have unit-variances, MLPG can be written as follows:</p>
            </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="nnmnkwii.functions.reshape_means.html" class="btn btn-neutral float-right" title="nnmnkwii.functions.reshape_means" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="nnmnkwii.functions.mlpg_grad.html" class="btn btn-neutral" title="nnmnkwii.functions.mlpg_grad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

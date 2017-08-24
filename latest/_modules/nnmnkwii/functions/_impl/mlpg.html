@@ -252,22 +252,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../references/functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/functions.html#mlpg">MLPG</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/functions.html#modulation-spectrum">Modulation spectrum</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references/functions.html">Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/io.html">IO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
@@ -280,33 +265,48 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/postfilters.html">Post-filters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#module-nnmnkwii.preprocessing.alignment">Alignment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#module-nnmnkwii.preprocessing.f0">F0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#f0">F0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/util.html">Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#utterance-wise-operations">Utterance-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.delta.html">nnmnkwii.util.delta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.apply_delta_windows.html">nnmnkwii.util.apply_delta_windows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.trim_zeros_frames.html">nnmnkwii.util.trim_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.remove_zeros_frames.html">nnmnkwii.util.remove_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.adjast_frame_length.html">nnmnkwii.util.adjast_frame_length</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.scale.html">nnmnkwii.util.scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.minmax_scale.html">nnmnkwii.util.minmax_scale</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#dataset-wise-operations">Dataset-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.meanvar.html">nnmnkwii.util.meanvar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.meanstd.html">nnmnkwii.util.meanstd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.minmax.html">nnmnkwii.util.minmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#files">Files</a><ul>
@@ -707,20 +707,20 @@
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; windows = [</span>
-<span class="sd">        ...     (0, 0, np.array([1.0])),            # static</span>
-<span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
-<span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
-<span class="sd">        ... ]</span>
+<span class="sd">        ...         (0, 0, np.array([1.0])),</span>
+<span class="sd">        ...         (1, 1, np.array([-0.5, 0.0, 0.5])),</span>
+<span class="sd">        ...         (1, 1, np.array([1.0, -2.0, 1.0])),</span>
+<span class="sd">        ...     ]</span>
 <span class="sd">        &gt;&gt;&gt; F.unit_variance_mlpg_matrix(windows, 3)</span>
-<span class="sd">        array([[  2.73835920e-01,   1.95121951e-01,   9.20177384e-02,</span>
-<span class="sd">                  9.75609756e-02,  -9.09090909e-02,  -9.75609756e-02,</span>
-<span class="sd">                 -3.52549889e-01,  -2.43902439e-02,   1.10864745e-02],</span>
-<span class="sd">               [  1.95121951e-01,   3.41463415e-01,   1.95121951e-01,</span>
-<span class="sd">                  1.70731707e-01,  -5.55111512e-17,  -1.70731707e-01,</span>
-<span class="sd">                 -4.87804878e-02,  -2.92682927e-01,  -4.87804878e-02],</span>
-<span class="sd">               [  9.20177384e-02,   1.95121951e-01,   2.73835920e-01,</span>
-<span class="sd">                  9.75609756e-02,   9.09090909e-02,  -9.75609756e-02,</span>
-<span class="sd">                  1.10864745e-02,  -2.43902439e-02,  -3.52549889e-01]])</span>
+<span class="sd">        array([[  2.73835927e-01,   1.95121944e-01,   9.20177400e-02,</span>
+<span class="sd">                  9.75609720e-02,  -9.09090936e-02,  -9.75609720e-02,</span>
+<span class="sd">                 -3.52549881e-01,  -2.43902430e-02,   1.10864742e-02],</span>
+<span class="sd">               [  1.95121944e-01,   3.41463417e-01,   1.95121944e-01,</span>
+<span class="sd">                  1.70731708e-01,  -5.55111512e-17,  -1.70731708e-01,</span>
+<span class="sd">                 -4.87804860e-02,  -2.92682916e-01,  -4.87804860e-02],</span>
+<span class="sd">               [  9.20177400e-02,   1.95121944e-01,   2.73835927e-01,</span>
+<span class="sd">                  9.75609720e-02,   9.09090936e-02,  -9.75609720e-02,</span>
+<span class="sd">                  1.10864742e-02,  -2.43902430e-02,  -3.52549881e-01]], dtype=float32)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">win_mats</span> <span class="o">=</span> <span class="n">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
     <span class="n">sdw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">win_mat</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">win_mat</span><span class="o">.</span><span class="n">u</span> <span class="k">for</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="n">win_mats</span><span class="p">])</span>

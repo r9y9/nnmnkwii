@@ -1,0 +1,6 @@
+nnmnkwii\.preprocessing\.modphase
+=================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: modphase

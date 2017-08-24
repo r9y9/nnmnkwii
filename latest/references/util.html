@@ -36,7 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../index.html"/>
-        <link rel="next" title="nnmnkwii.util.delta" href="generated/nnmnkwii.util.delta.html"/>
+        <link rel="next" title="nnmnkwii.util.apply_each2d_padded" href="generated/nnmnkwii.util.apply_each2d_padded.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.f0.interp1d" href="generated/nnmnkwii.preprocessing.f0.interp1d.html"/> 
 
   
@@ -253,22 +253,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#mlpg">MLPG</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.build_win_mats.html">nnmnkwii.functions.build_win_mats</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.unit_variance_mlpg_matrix.html">nnmnkwii.functions.unit_variance_mlpg_matrix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.reshape_means.html">nnmnkwii.functions.reshape_means</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="functions.html#modulation-spectrum">Modulation spectrum</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="io.html">IO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
@@ -281,33 +266,48 @@
 <li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="postfilters.html">Post-filters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-nnmnkwii.preprocessing.alignment">Alignment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#module-nnmnkwii.preprocessing.f0">F0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#f0">F0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#utterance-wise-operations">Utterance-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.delta.html">nnmnkwii.util.delta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.apply_delta_windows.html">nnmnkwii.util.apply_delta_windows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.trim_zeros_frames.html">nnmnkwii.util.trim_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.remove_zeros_frames.html">nnmnkwii.util.remove_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.adjast_frame_length.html">nnmnkwii.util.adjast_frame_length</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.scale.html">nnmnkwii.util.scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.minmax_scale.html">nnmnkwii.util.minmax_scale</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#dataset-wise-operations">Dataset-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.meanvar.html">nnmnkwii.util.meanvar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.meanstd.html">nnmnkwii.util.meanstd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.minmax.html">nnmnkwii.util.minmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#files">Files</a><ul>
@@ -424,54 +424,22 @@
 </style>
 <div class="section" id="module-nnmnkwii.util">
 <span id="utilities"></span><h1>Utilities<a class="headerlink" href="#module-nnmnkwii.util" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="utterance-wise-operations">
-<h2>Utterance-wise operations<a class="headerlink" href="#utterance-wise-operations" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="function-utilities">
+<h2>Function utilities<a class="headerlink" href="#function-utilities" title="Permalink to this headline">¶</a></h2>
+<p>Most of the feature transformation in <a class="reference internal" href="preprocessing.html#module-nnmnkwii.preprocessing" title="nnmnkwii.preprocessing"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.preprocessing</span></code></a> module is 2d functions
+<code class="docutils literal"><span class="pre">f:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">D')</span></code>. The following utilities can be used for
+extending 2d functions to 3d by applying 2d function to each 2d slice.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.delta.html#nnmnkwii.util.delta" title="nnmnkwii.util.delta"><code class="xref py py-obj docutils literal"><span class="pre">delta</span></code></a>(x,&nbsp;window)</td>
-<td>Returns delta features given a static features and a window.</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_padded.html#nnmnkwii.util.apply_each2d_padded" title="nnmnkwii.util.apply_each2d_padded"><code class="xref py py-obj docutils literal"><span class="pre">apply_each2d_padded</span></code></a>(func2d,&nbsp;X,&nbsp;lengths,&nbsp;…)</td>
+<td>Apply function for each padded 2d slice.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.apply_delta_windows.html#nnmnkwii.util.apply_delta_windows" title="nnmnkwii.util.apply_delta_windows"><code class="xref py py-obj docutils literal"><span class="pre">apply_delta_windows</span></code></a>(x,&nbsp;windows)</td>
-<td>Apply delta windows and combine them.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.trim_zeros_frames.html#nnmnkwii.util.trim_zeros_frames" title="nnmnkwii.util.trim_zeros_frames"><code class="xref py py-obj docutils literal"><span class="pre">trim_zeros_frames</span></code></a>(x[,&nbsp;eps])</td>
-<td>Remove trailling zeros frames.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.remove_zeros_frames.html#nnmnkwii.util.remove_zeros_frames" title="nnmnkwii.util.remove_zeros_frames"><code class="xref py py-obj docutils literal"><span class="pre">remove_zeros_frames</span></code></a>(x[,&nbsp;eps])</td>
-<td>Remove zeros frames.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.adjast_frame_length.html#nnmnkwii.util.adjast_frame_length" title="nnmnkwii.util.adjast_frame_length"><code class="xref py py-obj docutils literal"><span class="pre">adjast_frame_length</span></code></a>(x,&nbsp;y[,&nbsp;pad,&nbsp;ensure_even])</td>
-<td>Adjast frame lengths given two feature matrices.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.scale.html#nnmnkwii.util.scale" title="nnmnkwii.util.scale"><code class="xref py py-obj docutils literal"><span class="pre">scale</span></code></a>(x,&nbsp;data_mean,&nbsp;data_std)</td>
-<td>Mean/variance scaling.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.minmax_scale.html#nnmnkwii.util.minmax_scale" title="nnmnkwii.util.minmax_scale"><code class="xref py py-obj docutils literal"><span class="pre">minmax_scale</span></code></a>(x,&nbsp;data_min,&nbsp;data_max[,&nbsp;…])</td>
-<td>Min/max scaling for given a single data.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="section" id="dataset-wise-operations">
-<h2>Dataset-wise operations<a class="headerlink" href="#dataset-wise-operations" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.meanvar.html#nnmnkwii.util.meanvar" title="nnmnkwii.util.meanvar"><code class="xref py py-obj docutils literal"><span class="pre">meanvar</span></code></a>(dataset[,&nbsp;lengths])</td>
-<td>Mean/variance computation given a iterable dataset</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.meanstd.html#nnmnkwii.util.meanstd" title="nnmnkwii.util.meanstd"><code class="xref py py-obj docutils literal"><span class="pre">meanstd</span></code></a>(dataset[,&nbsp;lengths])</td>
-<td>Mean/std-deviation computation given a iterable dataset</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.minmax.html#nnmnkwii.util.minmax" title="nnmnkwii.util.minmax"><code class="xref py py-obj docutils literal"><span class="pre">minmax</span></code></a>(dataset[,&nbsp;lengths])</td>
-<td>Min/max computation given a iterable dataset</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_trim.html#nnmnkwii.util.apply_each2d_trim" title="nnmnkwii.util.apply_each2d_trim"><code class="xref py py-obj docutils literal"><span class="pre">apply_each2d_trim</span></code></a>(func2d,&nbsp;X,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>Apply function for each trimmed 2d slice.</td>
 </tr>
 </tbody>
 </table>
@@ -496,7 +464,7 @@ Example quetsion file was taken from <a class="reference external" href="https:/
 <td>Get path of example question file.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html#nnmnkwii.util.example_file_data_sources_for_duration_model" title="nnmnkwii.util.example_file_data_sources_for_duration_model"><code class="xref py py-obj docutils literal"><span class="pre">example_file_data_sources_for_duration_model</span></code></a>()</td>
-<td>Get file data sources for duration model training</td>
+<td>Get file data sources for duration model training.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html#nnmnkwii.util.example_file_data_sources_for_acoustic_model" title="nnmnkwii.util.example_file_data_sources_for_acoustic_model"><code class="xref py py-obj docutils literal"><span class="pre">example_file_data_sources_for_acoustic_model</span></code></a>()</td>
 <td>Get file data sources for acoustic model training</td>
@@ -533,7 +501,7 @@ Example quetsion file was taken from <a class="reference external" href="https:/
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="generated/nnmnkwii.util.delta.html" class="btn btn-neutral float-right" title="nnmnkwii.util.delta" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="generated/nnmnkwii.util.apply_each2d_padded.html" class="btn btn-neutral float-right" title="nnmnkwii.util.apply_each2d_padded" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="generated/nnmnkwii.preprocessing.f0.interp1d.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.f0.interp1d" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
