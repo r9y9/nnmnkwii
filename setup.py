@@ -48,7 +48,7 @@ ext_modules = [
 
 setup(
     name='nnmnkwii',
-    version='0.0.3-dev',
+    version='0.0.3',
     description='Library to build speech synthesis systems designed for easy and fast prototyping.',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
