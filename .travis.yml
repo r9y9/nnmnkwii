@@ -26,13 +26,14 @@ before_install:
   - conda create -q -n test-environment "python=$TRAVIS_PYTHON_VERSION" $deps
   - source activate test-environment
   - conda install pytorch -c soumith
-  - pip install codecov
+  - pip install codecov flake8
 
 install:
   - pip install -e ".[test]"
 
 script:
   - nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/
+  - flake8
 
 after_success:
   - codecov

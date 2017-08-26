@@ -33,13 +33,13 @@ class VoiceStatisticsWavFileDataSource(FileDataSource):
     def __init__(self, data_root, speakers, labelmap=None, max_files_per_dir=2,
                  emotions=["normal"]):
         for speaker in speakers:
-            if not speaker in _speakers:
+            if speaker not in _speakers:
                 raise RuntimeError(
                     "Unknown speaker '{}'. It should be one of {}".format(
                         speaker, _speakers))
 
         for emotion in emotions:
-            if not emotion in _emotions:
+            if emotion not in _emotions:
                 raise RuntimeError(
                     "Unknown emotion '{}'. It should be one of {}".format(
                         emotion, _emotions))

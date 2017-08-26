@@ -117,7 +117,8 @@ class FileSourceDataset(Dataset):
         if isinstance(idx, slice):
             current, stop, step = idx.indices(len(self))
             return [self[i] for i in range(current, stop, step)]
-        return self.file_data_source.collect_features(*self.collected_files[idx])
+        return self.file_data_source.collect_features(
+            *self.collected_files[idx])
 
     def __len__(self):
         return len(self.collected_files)
