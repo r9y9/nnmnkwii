@@ -1,0 +1,6 @@
+nnmnkwii\.util\.trim\_zeros\_frames
+===================================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: trim_zeros_frames
