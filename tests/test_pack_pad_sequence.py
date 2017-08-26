@@ -18,6 +18,7 @@ from os.path import join, dirname
 
 DATA_DIR = join(dirname(__file__), "data")
 
+
 def _get_small_datasets(padded=False, duration=False):
     if duration:
         X, Y = example_file_data_sources_for_duration_model()
@@ -31,6 +32,7 @@ def _get_small_datasets(padded=False, duration=False):
         Y = FileSourceDataset(Y)
     return X, Y
 
+
 class PyTorchDataset(data_utils.Dataset):
     def __init__(self, X, Y, lengths):
         self.X = X
@@ -41,27 +43,29 @@ class PyTorchDataset(data_utils.Dataset):
         x = torch.from_numpy(self.X[idx])
         y = torch.from_numpy(self.Y[idx])
         l = torch.from_numpy(self.lengths[idx])
-        return x,y,l
+        return x, y, l
 
     def __len__(self):
         return len(self.X)
+
 
 class MyRNN(nn.Module):
     def __init__(self, D_in, H, D_out, num_layers=1, bidirectional=True):
         super(MyRNN, self).__init__()
         self.hidden_dim = H
         self.num_layers = num_layers
-        self.num_direction =  2 if bidirectional else 1
+        self.num_direction = 2 if bidirectional else 1
         self.lstm = nn.LSTM(D_in, H, num_layers, bidirectional=bidirectional,
                             batch_first=True)
-        self.hidden2out = nn.Linear(self.num_direction*self.hidden_dim, D_out)
+        self.hidden2out = nn.Linear(
+            self.num_direction * self.hidden_dim, D_out)
 
     def init_hidden(self, batch_size):
         h, c = (Variable(torch.zeros(self.num_layers * self.num_direction,
                                      batch_size, self.hidden_dim)),
                 Variable(torch.zeros(self.num_layers * self.num_direction,
                                      batch_size, self.hidden_dim)))
-        return h,c
+        return h, c
 
     def forward(self, sequence, lengths, h, c):
         sequence = nn.utils.rnn.pack_padded_sequence(sequence, lengths,
@@ -72,12 +76,13 @@ class MyRNN(nn.Module):
         output = self.hidden2out(output)
         return output
 
+
 def test_pack_sequnce():
     """Test minibatch RNN training using pack_pad_sequence.
     """
 
     X, Y = _get_small_datasets(padded=False)
-    lengths = np.array([len(x) for x in X], dtype=np.int)[:,None]
+    lengths = np.array([len(x) for x in X], dtype=np.int)[:, None]
 
     # We need padded dataset
     X, Y = _get_small_datasets(padded=True)

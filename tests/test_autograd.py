@@ -69,6 +69,7 @@ def test_functional_mlpg():
 
         nn.MSELoss()(y_hat.view(-1, static_dim), y).backward()
 
+
 def test_unit_variance_mlpg_gradcheck():
     static_dim = 2
     T = 10
@@ -80,7 +81,8 @@ def test_unit_variance_mlpg_gradcheck():
                          requires_grad=True)
 
         # Input for UnitVarianceMLPG
-        reshaped_means = F.reshape_means(means.data.clone().numpy(), static_dim)
+        reshaped_means = F.reshape_means(
+            means.data.clone().numpy(), static_dim)
         reshaped_means = Variable(torch.from_numpy(reshaped_means),
                                   requires_grad=True)
 
@@ -99,7 +101,7 @@ def test_unit_variance_mlpg_gradcheck():
 
         # Make sure UnitVarianceMLPG and MLPG can get same result
         # if we use unit variances
-        for y in [y1,y2]:
+        for y in [y1, y2]:
             assert np.allclose(y.data.numpy(), y_hat.data.numpy())
 
         # Grad check
@@ -110,6 +112,7 @@ def test_unit_variance_mlpg_gradcheck():
         inputs = (means,)
         assert gradcheck(UnitVarianceMLPG(R),
                          inputs, eps=1e-3, atol=1e-3)
+
 
 def test_minibatch_unit_variance_mlpg_gradcheck():
     static_dim = 2
@@ -129,7 +132,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
             batch_size, reshaped_means.shape[0], reshaped_means.shape[1])
 
         # Target
-        y = F.mlpg(means.numpy(), np.ones(static_dim*len(windows)), windows)
+        y = F.mlpg(means.numpy(), np.ones(static_dim * len(windows)), windows)
         y = Variable(torch.from_numpy(y), requires_grad=False)
         y_expanded = y.expand(batch_size, y.size(0), y.size(1))
 
@@ -218,6 +221,7 @@ def test_mlpg_variance_expand():
         y = AF.mlpg(means, variances, windows)
         y_hat = AF.mlpg(means, variances_expanded, windows)
         assert np.allclose(y.data.numpy(), y_hat.data.numpy())
+
 
 def test_modspec_gradcheck():
     static_dim = 12

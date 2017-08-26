@@ -118,6 +118,7 @@ class UnitVarianceMLPG(Function):
     See also:
         :func:`nnmnkwii.autograd.unit_variance_mlpg`.
     """
+
     def __init__(self, R):
         super(UnitVarianceMLPG, self).__init__()
         self.R = R
@@ -205,6 +206,7 @@ def mlpg(means, variances, windows):
         variances = variances.expand(T, D)
     assert means.size() == variances.size()
     return MLPG(variances, windows)(means)
+
 
 def unit_variance_mlpg(R, means):
     """Special case of MLPG assuming data is normalized to have unit variance.

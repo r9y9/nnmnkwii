@@ -8,6 +8,7 @@ import numpy as np
 import scipy.linalg
 import bandmat as bm
 
+
 def _get_windows_set():
     windows_set = [
         # Static
@@ -59,6 +60,7 @@ def _get_banded_test_mat(win_mats, T):
     for win_index, win_mat in enumerate(win_mats):
         bm.dot_mm_plus_equals(win_mat.T, win_mat, target_bm=P)
     return P
+
 
 def test_linalg_choleskey_inv():
     for windows in _get_windows_set():

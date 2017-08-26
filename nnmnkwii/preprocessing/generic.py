@@ -5,6 +5,7 @@ import numpy as np
 from sklearn.utils.extmath import _incremental_mean_and_var
 from sklearn.preprocessing.data import _handle_zeros_in_scale
 
+
 def _delta(x, window):
     return np.correlate(x, window, mode="same")
 
@@ -58,7 +59,8 @@ def delta_features(x, windows):
     assert len(windows) > 0
     combined_features = np.empty((T, D * len(windows)), dtype=x.dtype)
     for idx, (_, _, window) in enumerate(windows):
-        combined_features[:, D * idx:D * idx + D] = _apply_delta_window(x, window)
+        combined_features[:, D * idx:D * idx +
+                          D] = _apply_delta_window(x, window)
     return combined_features
 
 

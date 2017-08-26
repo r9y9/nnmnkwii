@@ -1,5 +1,5 @@
 # Part of code here is adapted from Merlin. Their license follows:
-################################################################################
+##########################################################################
 #           The Neural Network (NN) based Speech Synthesis System
 #                https://github.com/CSTR-Edinburgh/merlin
 #
@@ -36,7 +36,7 @@
 #  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
 #  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 #  THIS SOFTWARE.
-################################################################################
+##########################################################################
 
 from __future__ import division, print_function, absolute_import
 
@@ -293,7 +293,8 @@ def load_question_set(qs_file_name):
     continuous_qs_index = 0
     binary_dict = {}
     continuous_dict = {}
-    # I guess `LL` means Left-left, but it doesn't seem to be docmented anywhere
+    # I guess `LL` means Left-left, but it doesn't seem to be docmented
+    # anywhere
     LL = re.compile(re.escape('LL-'))
 
     for line in lines:

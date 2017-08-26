@@ -5,6 +5,7 @@ import numpy as np
 
 __all__ = ['merlin_post_filter']
 
+
 def merlin_post_filter(mgc, alpha,
                        minimum_phase_order=511, fftlen=1024,
                        coef=1.4, weight=None):

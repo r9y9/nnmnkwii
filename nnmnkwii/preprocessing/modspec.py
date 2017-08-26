@@ -4,6 +4,7 @@ import numpy as np
 
 # TODO: this may be removed in future.
 
+
 def modspec(y, n=4096, norm=None):
     """Modulation spectrum computation
 

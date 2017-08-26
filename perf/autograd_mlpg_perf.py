@@ -9,6 +9,7 @@ import numpy as np
 import time
 import sys
 
+
 def _get_windows_set():
     windows_set = [
         # Static
@@ -29,9 +30,11 @@ def _get_windows_set():
     ]
     return windows_set
 
+
 OKGREEN = '\033[92m'
 FAIL = '\033[91m'
 ENDC = '\033[0m'
+
 
 def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
     if use_cuda and not torch.cuda.is_available():
@@ -60,7 +63,7 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
         y_hat = AF.mlpg(means, torch.from_numpy(variances), windows)
         L = criterion(y_hat, y)
         assert np.allclose(y_hat.data.numpy(), y.data.numpy())
-        L.backward() # slow!
+        L.backward()  # slow!
     elapsed_mlpg = time.time() - since
 
     # Case 2: UnitVarianceMLPG
@@ -85,9 +88,11 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
         L.backward()
     elapsed_unit_variance_mlpg = time.time() - since
 
-    ratio = elapsed_mlpg/elapsed_unit_variance_mlpg
+    ratio = elapsed_mlpg / elapsed_unit_variance_mlpg
 
-    print("MLPG vs UnitVarianceMLPG (static_dim, T, batch_size, use_cuda) = ({}):".format((static_dim, T, batch_size, use_cuda)))
+    print(
+        "MLPG vs UnitVarianceMLPG (static_dim, T, batch_size, use_cuda) = ({}):".format(
+            (static_dim, T, batch_size, use_cuda)))
     if ratio > 1:
         s = "faster"
         sys.stdout.write(OKGREEN)
@@ -98,6 +103,7 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
         ratio, s, elapsed_mlpg, elapsed_unit_variance_mlpg))
 
     print(ENDC)
+
 
 if __name__ == "__main__":
     for use_cuda in [False, True]:

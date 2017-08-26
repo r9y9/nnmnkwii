@@ -1,5 +1,5 @@
 # Part of code here is adapted from Merlin. Their license follows:
-################################################################################
+##########################################################################
 #           The Neural Network (NN) based Speech Synthesis System
 #                https://github.com/CSTR-Edinburgh/merlin
 #
@@ -36,7 +36,7 @@
 #  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
 #  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 #  THIS SOFTWARE.
-################################################################################
+##########################################################################
 
 from __future__ import division, print_function, absolute_import
 
@@ -212,7 +212,7 @@ def load_labels_with_phone_alignment(hts_labels,
 
                 if subphone_features == 'minimal_phoneme':
                     # features which distinguish frame position in phoneme
-                      # fraction through phone forwards
+                    # fraction through phone forwards
                     current_block_binary_array[i, dict_size] = float(
                         i + 1) / float(frame_number)
                     # fraction through phone backwards
@@ -283,7 +283,8 @@ def load_labels_with_state_alignment(hts_labels,
     frame_shift_in_micro_sec = hts_labels.frame_shift_in_micro_sec
     phone_duration = 0
     state_duration_base = 0
-    for current_index, (start_time, end_time, full_label) in enumerate(hts_labels):
+    for current_index, (start_time, end_time,
+                        full_label) in enumerate(hts_labels):
         # remove state information [k]
         assert full_label[-1] == "]"
         full_label_length = len(full_label) - 3
@@ -470,11 +471,11 @@ def extract_dur_from_state_alignment_labels(hts_labels,
                                             feature_type="numerical",
                                             unit_size="state",
                                             feature_size="phoneme"):
-    if not feature_type in ["binary", "numerical"]:
+    if feature_type not in ["binary", "numerical"]:
         raise ValueError("Not supported")
-    if not unit_size in ["phoneme", "state"]:
+    if unit_size not in ["phoneme", "state"]:
         raise ValueError("Not supported")
-    if not feature_size in ["phoneme", "frame"]:
+    if feature_size not in ["phoneme", "frame"]:
         raise ValueError("Not supported")
 
     dur_dim = hts_labels.num_states() if unit_size == "state" else 1
@@ -490,7 +491,8 @@ def extract_dur_from_state_alignment_labels(hts_labels,
     dur_dim = state_number
 
     dur_feature_index = 0
-    for current_index, (start_time, end_time, full_label) in enumerate(hts_labels):
+    for current_index, (start_time, end_time,
+                        full_label) in enumerate(hts_labels):
         # remove state information [k]
         full_label_length = len(full_label) - 3
         state_index = full_label[full_label_length + 1]
@@ -504,7 +506,8 @@ def extract_dur_from_state_alignment_labels(hts_labels,
 
             for i in range(state_number - 1):
                 s, e, _ = hts_labels[current_index + i + 1]
-                phone_duration += (e - s) // hts_labels.frame_shift_in_micro_sec
+                phone_duration += (e -
+                                   s) // hts_labels.frame_shift_in_micro_sec
 
         if feature_type == "binary":
             current_block_array = np.zeros((frame_number, 1))
@@ -528,7 +531,7 @@ def extract_dur_from_state_alignment_labels(hts_labels,
             else:
                 assert False
 
-        ### writing into dur_feature_matrix ###
+        # writing into dur_feature_matrix
         if feature_size == "frame":
             dur_feature_matrix[dur_feature_index:dur_feature_index +
                                frame_number, ] = current_block_array
@@ -548,11 +551,11 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
                                             feature_type="numerical",
                                             unit_size="phoneme",
                                             feature_size="phoneme"):
-    if not feature_type in ["binary", "numerical"]:
+    if feature_type not in ["binary", "numerical"]:
         raise ValueError("Not supported")
     if unit_size != "phoneme":
         raise ValueError("Not supported")
-    if not feature_size in ["phoneme", "frame"]:
+    if feature_size not in ["phoneme", "frame"]:
         raise ValueError("Not supported")
     if feature_size == "phoneme":
         dur_feature_matrix = np.empty(
@@ -575,7 +578,7 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
         else:
             assert False
 
-        ### writing into dur_feature_matrix ###
+        # writing into dur_feature_matrix
         if feature_size == "frame":
             dur_feature_matrix[dur_feature_index:dur_feature_index +
                                frame_number] = current_block_array
@@ -616,6 +619,8 @@ def duration_features(hts_labels, *args, **kwargs):
         (40, 5)
     """
     if hts_labels.is_state_alignment_label():
-        return extract_dur_from_state_alignment_labels(hts_labels, *args, **kwargs)
+        return extract_dur_from_state_alignment_labels(
+            hts_labels, *args, **kwargs)
     else:
-        return extract_dur_from_phone_alignment_labels(hts_labels, *args, **kwargs)
+        return extract_dur_from_phone_alignment_labels(
+            hts_labels, *args, **kwargs)

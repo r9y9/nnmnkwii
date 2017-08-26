@@ -12,6 +12,7 @@ import pyworld
 import librosa
 import pysptk
 
+
 def _get_windows_set():
     windows_set = [
         # Static
@@ -34,8 +35,8 @@ def _get_windows_set():
 
 
 def test_interp1d():
-    f0 = np.random.rand(100,1).astype(np.float32)
-    f0[len(f0)//2] = 0
+    f0 = np.random.rand(100, 1).astype(np.float32)
+    f0[len(f0) // 2] = 0
     assert not np.all(f0 != 0)
     if0 = interp1d(f0)
     assert np.all(if0 != 0)
@@ -103,6 +104,7 @@ def _get_mcep(x, fs, frame_period=5, order=24):
     spectrogram = trim_zeros_frames(spectrogram)
     mc = pysptk.sp2mc(spectrogram, order=order, alpha=alpha)
     return mc
+
 
 def test_dtw_aligner():
     x, fs = librosa.load(example_audio_file(), sr=None)
