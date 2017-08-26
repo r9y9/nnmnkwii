@@ -39,6 +39,12 @@ You can find tutorial notebooks in the document. Full code is available at `nnmn
 
     references/*
 
+.. toctree::
+    :maxdepth: 1
+    :caption: Meta information
+
+    changelog
+
 
 .. only:: html
 
