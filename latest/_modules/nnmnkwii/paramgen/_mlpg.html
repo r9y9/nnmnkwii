@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.3.dev0 documentation</title>
+  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.3.dev0
+                0.0.3
               </div>
             
           
@@ -325,6 +325,15 @@
 </ul>
 </li>
 </ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
+</ul>
+</li>
+</ul>
 
             
           
@@ -403,7 +412,7 @@
 <span class="c1"># Copied from the above link. Thanks to Matt shannon!</span>
 
 
-<div class="viewcode-block" id="build_win_mats"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html#nnmnkwii.functions.build_win_mats">[docs]</a><span class="k">def</span> <span class="nf">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+<div class="viewcode-block" id="build_win_mats"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html#nnmnkwii.paramgen.build_win_mats">[docs]</a><span class="k">def</span> <span class="nf">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Builds a window matrix of a given size for each window in a collection.</span>
 
 <span class="sd">    Args:</span>
@@ -481,7 +490,7 @@
     <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">prec</span>
 
 
-<div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.functions.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
+<div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Maximum Parameter Likelihood Generation (MLPG)</span>
 
 <span class="sd">    Function ``f: (T, D) -&gt; (T, static_dim)``.</span>
@@ -585,7 +594,7 @@
     <span class="k">return</span> <span class="n">y</span></div>
 
 
-<div class="viewcode-block" id="mlpg_grad"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html#nnmnkwii.functions.mlpg_grad">[docs]</a><span class="k">def</span> <span class="nf">mlpg_grad</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+<div class="viewcode-block" id="mlpg_grad"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html#nnmnkwii.paramgen.mlpg_grad">[docs]</a><span class="k">def</span> <span class="nf">mlpg_grad</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;MLPG gradient computation</span>
 
 <span class="sd">    Parameters are same as :func:`nnmnkwii.functions.mlpg` except for</span>
@@ -673,7 +682,7 @@
     <span class="k">return</span> <span class="n">_full_window_mat</span><span class="p">(</span><span class="n">win_mats</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="unit_variance_mlpg_matrix"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.functions.unit_variance_mlpg_matrix">[docs]</a><span class="k">def</span> <span class="nf">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+<div class="viewcode-block" id="unit_variance_mlpg_matrix"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.paramgen.unit_variance_mlpg_matrix">[docs]</a><span class="k">def</span> <span class="nf">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compute MLPG matrix assuming input is normalized to have unit-variances.</span>
 
 <span class="sd">    Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),</span>
@@ -735,7 +744,7 @@
     <span class="k">return</span> <span class="n">Pinv</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cocatenated_window</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="reshape_means"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html#nnmnkwii.functions.reshape_means">[docs]</a><span class="k">def</span> <span class="nf">reshape_means</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">):</span>
+<div class="viewcode-block" id="reshape_means"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html#nnmnkwii.paramgen.reshape_means">[docs]</a><span class="k">def</span> <span class="nf">reshape_means</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Reshape means (``T x D``) to (``T*num_windows x static_dim``).</span>
 
 <span class="sd">    Args:</span>
@@ -802,7 +811,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.3.dev0',
+            VERSION:'0.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.alignment &mdash; nnmnkwii 0.0.3.dev0 documentation</title>
+  <title>nnmnkwii.preprocessing.alignment &mdash; nnmnkwii 0.0.3 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../../index.html"/>
-        <link rel="up" title="nnmnkwii.preprocessing" href="../preprocessing.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.3.dev0
+                0.0.3
               </div>
             
           
@@ -325,6 +325,15 @@
 </ul>
 </li>
 </ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
+</ul>
+</li>
+</ul>
 
             
           
@@ -370,8 +379,6 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../preprocessing.html">nnmnkwii.preprocessing</a> &raquo;</li>
-        
       <li>nnmnkwii.preprocessing.alignment</li>
     
     
@@ -392,7 +399,7 @@
   <h1>Source code for nnmnkwii.preprocessing.alignment</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">trim_zeros_frames</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">trim_zeros_frames</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.baseline.gmm</span> <span class="k">import</span> <span class="n">MLPG</span>
 
 <span class="kn">from</span> <span class="nn">fastdtw</span> <span class="k">import</span> <span class="n">fastdtw</span>
@@ -416,7 +423,7 @@
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import PaddedFileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import DTWAligner</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import DTWAligner</span>
 <span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_acoustic_model()</span>
 <span class="sd">        &gt;&gt;&gt; X = PaddedFileSourceDataset(X, 1000).asarray()</span>
 <span class="sd">        &gt;&gt;&gt; X.shape</span>
@@ -470,7 +477,7 @@
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import PaddedFileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import IterativeDTWAligner</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import IterativeDTWAligner</span>
 <span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_acoustic_model()</span>
 <span class="sd">        &gt;&gt;&gt; X = PaddedFileSourceDataset(X, 1000).asarray()</span>
 <span class="sd">        &gt;&gt;&gt; X.shape</span>
@@ -571,7 +578,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.3.dev0',
+            VERSION:'0.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

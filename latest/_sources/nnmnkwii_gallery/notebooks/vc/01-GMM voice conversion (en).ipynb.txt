@@ -85,8 +85,8 @@
     "from nnmnkwii.datasets import PaddedFileSourceDataset\n",
     "from nnmnkwii.datasets.cmu_arctic import CMUArcticWavFileDataSource\n",
     "from nnmnkwii.preprocessing.alignment import DTWAligner\n",
-    "from nnmnkwii.preprocessing import DeltaAppender\n",
-    "from nnmnkwii.util import trim_zeros_frames, remove_zeros_frames\n",
+    "from nnmnkwii.preprocessing import trim_zeros_frames, remove_zeros_frames, delta_features\n",
+    "from nnmnkwii.util import apply_each2d_trim\n",
     "from nnmnkwii.metrics import melcd\n",
     "from nnmnkwii.baseline.gmm import MLPG\n",
     "\n",
@@ -394,8 +394,8 @@
    "source": [
     "static_dim = X_aligned.shape[-1]\n",
     "if use_delta:\n",
-    "    X_aligned = DeltaAppender(windows).transform(X_aligned)\n",
-    "    Y_aligned = DeltaAppender(windows).transform(Y_aligned)"
+    "    X_aligned = apply_each2d_trim(delta_features, X_aligned, windows)\n",
+    "    Y_aligned = apply_each2d_trim(delta_features, Y_aligned, windows)"
    ]
   },
   {
@@ -678,8 +678,7 @@
     "    mc = pysptk.sp2mc(spectrogram, order=order, alpha=alpha)\n",
     "    c0, mc = mc[:, 0], mc[:, 1:]\n",
     "    if use_delta:\n",
-    "        mc = DeltaAppender(windows=windows).transform(\n",
-    "            mc[None, :, :]).reshape(-1, static_dim * len(windows))\n",
+    "        mc = delta_features(mc, windows)\n",
     "    mc = paramgen.transform(mc)\n",
     "    if disable_mlpg and mc.shape[-1] != static_dim:\n",
     "        mc = mc[:,:static_dim]\n",

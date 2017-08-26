@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Bidirectional-LSTM based RNNs for text-to-speech synthesis (en) &mdash; nnmnkwii 0.0.3.dev0 documentation</title>
+  <title>Bidirectional-LSTM based RNNs for text-to-speech synthesis (en) &mdash; nnmnkwii 0.0.3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3.dev0 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../index.html"/>
         <link rel="next" title="GMM-based voice conversion (en)" href="../vc/01-GMM voice conversion (en).html"/>
         <link rel="prev" title="DNN text-to-speech synthesis (en)" href="01-DNN-based statistical speech synthesis (en).html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.3.dev0
+                0.0.3
               </div>
             
           
@@ -323,6 +323,15 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
 </ul>
 </li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
 </ul>
 </li>
 </ul>
@@ -645,9 +654,9 @@ slt_arctic_full_data already downloaded
 
 <span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span><span class="p">,</span> <span class="n">FileSourceDataset</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">PaddedFileSourceDataset</span><span class="p">,</span> <span class="n">MemoryCacheDataset</span>
-<span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">trim_zeros_frames</span><span class="p">,</span> <span class="n">remove_zeros_frames</span>
-<span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">minmax</span><span class="p">,</span> <span class="n">meanvar</span><span class="p">,</span> <span class="n">minmax_scale</span><span class="p">,</span> <span class="n">scale</span>
-<span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="kn">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="kn">import</span> <span class="n">trim_zeros_frames</span><span class="p">,</span> <span class="n">remove_zeros_frames</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="kn">import</span> <span class="n">minmax</span><span class="p">,</span> <span class="n">meanvar</span><span class="p">,</span> <span class="n">minmax_scale</span><span class="p">,</span> <span class="n">scale</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="kn">import</span> <span class="n">paramgen</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="kn">import</span> <span class="n">hts</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.frontend</span> <span class="kn">import</span> <span class="n">merlin</span> <span class="k">as</span> <span class="n">fe</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.postfilters</span> <span class="kn">import</span> <span class="n">merlin_post_filter</span>
@@ -1451,11 +1460,11 @@ need to give initial hidden states explicitly.</p>
     <span class="c1"># Perform MLPG</span>
     <span class="n">ty</span> <span class="o">=</span> <span class="s2">&quot;acoustic&quot;</span>
     <span class="n">mgc_variances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">Y_var</span><span class="p">[</span><span class="n">ty</span><span class="p">][:</span><span class="n">lf0_start_idx</span><span class="p">],</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">mgc</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="n">mgc_variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)</span>
+    <span class="n">mgc</span> <span class="o">=</span> <span class="n">paramgen</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="n">mgc_variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)</span>
     <span class="n">lf0_variances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">Y_var</span><span class="p">[</span><span class="n">ty</span><span class="p">][</span><span class="n">lf0_start_idx</span><span class="p">:</span><span class="n">vuv_start_idx</span><span class="p">],</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">lf0</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">lf0</span><span class="p">,</span> <span class="n">lf0_variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)</span>
+    <span class="n">lf0</span> <span class="o">=</span> <span class="n">paramgen</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">lf0</span><span class="p">,</span> <span class="n">lf0_variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)</span>
     <span class="n">bap_variances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">Y_var</span><span class="p">[</span><span class="n">ty</span><span class="p">][</span><span class="n">bap_start_idx</span><span class="p">:],</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-    <span class="n">bap</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">bap</span><span class="p">,</span> <span class="n">bap_variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)</span>
+    <span class="n">bap</span> <span class="o">=</span> <span class="n">paramgen</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">bap</span><span class="p">,</span> <span class="n">bap_variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">mgc</span><span class="p">,</span> <span class="n">lf0</span><span class="p">,</span> <span class="n">vuv</span><span class="p">,</span> <span class="n">bap</span>
 
@@ -1469,7 +1478,7 @@ need to give initial hidden states explicitly.</p>
         <span class="n">mgc</span> <span class="o">=</span> <span class="n">merlin_post_filter</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
 
     <span class="n">spectrogram</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">mc2sp</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="n">fftlen</span><span class="o">=</span><span class="n">fftlen</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
-    <span class="n">aperiodicity</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">decode_aperiodicity</span><span class="p">(</span><span class="n">bap</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">fftlen</span><span class="p">)</span>
+    <span class="n">aperiodicity</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">decode_aperiodicity</span><span class="p">(</span><span class="n">bap</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">fs</span><span class="p">,</span> <span class="n">fftlen</span><span class="p">)</span>
     <span class="n">f0</span> <span class="o">=</span> <span class="n">lf0</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     <span class="n">f0</span><span class="p">[</span><span class="n">vuv</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">f0</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">f0</span><span class="p">)]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">f0</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">f0</span><span class="p">)])</span>
@@ -1898,7 +1907,7 @@ Merlin (slt_arctic_full, generated with default configurations)
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.3.dev0',
+            VERSION:'0.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
