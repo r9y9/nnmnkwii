@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; nnmnkwii 0.0.2 documentation</title>
+  <title>Index &mdash; nnmnkwii 0.0.3 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.2 documentation" href="index.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -221,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="references/autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="references/autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -251,13 +252,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="references/functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="references/functions.html">Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="references/io.html">IO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
@@ -270,33 +265,48 @@
 <li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="references/postfilters.html">Post-filters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references/preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="references/preprocessing.html#module-nnmnkwii.preprocessing.alignment">Alignment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="references/preprocessing.html#module-nnmnkwii.preprocessing.f0">F0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="references/preprocessing.html#f0">F0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="references/preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references/util.html">Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="references/util.html#utterance-wise-operations">Utterance-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.delta.html">nnmnkwii.util.delta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.apply_delta_windows.html">nnmnkwii.util.apply_delta_windows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.trim_zeros_frames.html">nnmnkwii.util.trim_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.remove_zeros_frames.html">nnmnkwii.util.remove_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.adjast_frame_length.html">nnmnkwii.util.adjast_frame_length</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.scale.html">nnmnkwii.util.scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.minmax_scale.html">nnmnkwii.util.minmax_scale</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="references/util.html#dataset-wise-operations">Dataset-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.meanvar.html">nnmnkwii.util.meanvar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.meanstd.html">nnmnkwii.util.meanstd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.minmax.html">nnmnkwii.util.minmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="references/util.html#files">Files</a><ul>
@@ -307,6 +317,20 @@
 <li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
 </ul>
 </li>
 </ul>
@@ -375,6 +399,7 @@
 
 <div class="genindex-jumpbox">
  <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
@@ -388,6 +413,7 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
@@ -395,13 +421,23 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/generated/nnmnkwii.util.adjast_frame_length.html#nnmnkwii.util.adjast_frame_length">adjast_frame_length() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.adjast_frame_length.html#nnmnkwii.preprocessing.adjast_frame_length">adjast_frame_length() (in module nnmnkwii.preprocessing)</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.util.apply_each2d_padded.html#nnmnkwii.util.apply_each2d_padded">apply_each2d_padded() (in module nnmnkwii.util)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/generated/nnmnkwii.util.apply_delta_windows.html#nnmnkwii.util.apply_delta_windows">apply_delta_windows() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.util.apply_each2d_trim.html#nnmnkwii.util.apply_each2d_trim">apply_each2d_trim() (in module nnmnkwii.util)</a>
 </li>
       <li><a href="references/datasets.html#nnmnkwii.datasets.FileSourceDataset.asarray">asarray() (nnmnkwii.datasets.FileSourceDataset method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.paramgen.build_win_mats.html#nnmnkwii.paramgen.build_win_mats">build_win_mats() (in module nnmnkwii.paramgen)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -421,12 +457,16 @@
         <li><a href="references/datasets.html#nnmnkwii.datasets.MemoryCacheFramewiseDataset.cached_utterances">(nnmnkwii.datasets.MemoryCacheFramewiseDataset attribute)</a>
 </li>
       </ul></li>
-      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_features">collect_features() (nnmnkwii.datasets.FileDataSource method)</a>
+      <li><a href="references/generated/nnmnkwii.util.linalg.cholesky_inv.html#nnmnkwii.util.linalg.cholesky_inv">cholesky_inv() (in module nnmnkwii.util.linalg)</a>
 </li>
-      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_files">collect_files() (nnmnkwii.datasets.FileDataSource method)</a>
+      <li><a href="references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html#nnmnkwii.util.linalg.cholesky_inv_banded">cholesky_inv_banded() (in module nnmnkwii.util.linalg)</a>
+</li>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_features">collect_features() (nnmnkwii.datasets.FileDataSource method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_files">collect_files() (nnmnkwii.datasets.FileDataSource method)</a>
+</li>
       <li><a href="references/datasets.html#nnmnkwii.datasets.FileSourceDataset.collected_files">collected_files (nnmnkwii.datasets.FileSourceDataset attribute)</a>
 </li>
       <li><a href="references/io.html#nnmnkwii.io.hts.HTSLabelFile.contexts">contexts (nnmnkwii.io.hts.HTSLabelFile attribute)</a>
@@ -455,11 +495,9 @@
         <li><a href="references/datasets.html#nnmnkwii.datasets.MemoryCacheFramewiseDataset.dataset">(nnmnkwii.datasets.MemoryCacheFramewiseDataset attribute)</a>
 </li>
       </ul></li>
-      <li><a href="references/generated/nnmnkwii.util.delta.html#nnmnkwii.util.delta">delta() (in module nnmnkwii.util)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.DeltaAppender">DeltaAppender (class in nnmnkwii.preprocessing)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.delta_features.html#nnmnkwii.preprocessing.delta_features">delta_features() (in module nnmnkwii.preprocessing)</a>
 </li>
       <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.DTWAligner.dist">dist (nnmnkwii.preprocessing.alignment.DTWAligner attribute)</a>
 
@@ -555,9 +593,11 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/generated/nnmnkwii.util.meanstd.html#nnmnkwii.util.meanstd">meanstd() (in module nnmnkwii.util)</a>
+      <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner.max_iter_gmm">max_iter_gmm (nnmnkwii.preprocessing.alignment.IterativeDTWAligner attribute)</a>
 </li>
-      <li><a href="references/generated/nnmnkwii.util.meanvar.html#nnmnkwii.util.meanvar">meanvar() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.meanstd.html#nnmnkwii.preprocessing.meanstd">meanstd() (in module nnmnkwii.preprocessing)</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.preprocessing.meanvar.html#nnmnkwii.preprocessing.meanvar">meanvar() (in module nnmnkwii.preprocessing)</a>
 </li>
       <li><a href="references/generated/nnmnkwii.metrics.melcd.html#nnmnkwii.metrics.melcd">melcd() (in module nnmnkwii.metrics)</a>
 </li>
@@ -567,12 +607,12 @@
 </li>
       <li><a href="references/generated/nnmnkwii.postfilters.merlin_post_filter.html#nnmnkwii.postfilters.merlin_post_filter">merlin_post_filter() (in module nnmnkwii.postfilters)</a>
 </li>
-      <li><a href="references/generated/nnmnkwii.util.minmax.html#nnmnkwii.util.minmax">minmax() (in module nnmnkwii.util)</a>
-</li>
-      <li><a href="references/generated/nnmnkwii.util.minmax_scale.html#nnmnkwii.util.minmax_scale">minmax_scale() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.minmax.html#nnmnkwii.preprocessing.minmax">minmax() (in module nnmnkwii.preprocessing)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.preprocessing.minmax_scale.html#nnmnkwii.preprocessing.minmax_scale">minmax_scale() (in module nnmnkwii.preprocessing)</a>
+</li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG">MLPG (class in nnmnkwii.autograd)</a>
 
       <ul>
@@ -582,21 +622,15 @@
       <li><a href="references/generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg">mlpg() (in module nnmnkwii.autograd)</a>
 
       <ul>
-        <li><a href="references/generated/nnmnkwii.functions.mlpg.html#nnmnkwii.functions.mlpg">(in module nnmnkwii.functions)</a>
+        <li><a href="references/generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg">(in module nnmnkwii.paramgen)</a>
 </li>
       </ul></li>
-      <li><a href="references/generated/nnmnkwii.functions.mlpg_grad.html#nnmnkwii.functions.mlpg_grad">mlpg_grad() (in module nnmnkwii.functions)</a>
-</li>
-      <li><a href="references/generated/nnmnkwii.functions.modphase.html#nnmnkwii.functions.modphase">modphase() (in module nnmnkwii.functions)</a>
+      <li><a href="references/generated/nnmnkwii.paramgen.mlpg_grad.html#nnmnkwii.paramgen.mlpg_grad">mlpg_grad() (in module nnmnkwii.paramgen)</a>
 </li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.ModSpec">ModSpec (class in nnmnkwii.autograd)</a>
 </li>
       <li><a href="references/generated/nnmnkwii.autograd.modspec.html#nnmnkwii.autograd.modspec">modspec() (in module nnmnkwii.autograd)</a>
-
-      <ul>
-        <li><a href="references/generated/nnmnkwii.functions.modspec.html#nnmnkwii.functions.modspec">(in module nnmnkwii.functions)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -604,6 +638,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/autograd.html#nnmnkwii.autograd.ModSpec.n">n (nnmnkwii.autograd.ModSpec attribute)</a>
+</li>
+      <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner.n_components_gmm">n_components_gmm (nnmnkwii.preprocessing.alignment.IterativeDTWAligner attribute)</a>
 </li>
       <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner.n_iter">n_iter (nnmnkwii.preprocessing.alignment.IterativeDTWAligner attribute)</a>
 </li>
@@ -617,13 +653,13 @@
 </li>
       <li><a href="references/frontend.html#module-nnmnkwii.frontend.merlin">nnmnkwii.frontend.merlin (module)</a>
 </li>
-      <li><a href="references/functions.html#module-nnmnkwii.functions">nnmnkwii.functions (module)</a>
-</li>
       <li><a href="references/io.html#module-nnmnkwii.io.hts">nnmnkwii.io.hts (module)</a>
+</li>
+      <li><a href="references/metrics.html#module-nnmnkwii.metrics">nnmnkwii.metrics (module)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/metrics.html#module-nnmnkwii.metrics">nnmnkwii.metrics (module)</a>
+      <li><a href="references/paramgen.html#module-nnmnkwii.paramgen">nnmnkwii.paramgen (module)</a>
 </li>
       <li><a href="references/postfilters.html#module-nnmnkwii.postfilters">nnmnkwii.postfilters (module)</a>
 </li>
@@ -634,6 +670,8 @@
       <li><a href="references/preprocessing.html#module-nnmnkwii.preprocessing.f0">nnmnkwii.preprocessing.f0 (module)</a>
 </li>
       <li><a href="references/util.html#module-nnmnkwii.util">nnmnkwii.util (module)</a>
+</li>
+      <li><a href="references/util.html#module-nnmnkwii.util.linalg">nnmnkwii.util.linalg (module)</a>
 </li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.ModSpec.norm">norm (nnmnkwii.autograd.ModSpec attribute)</a>
 </li>
@@ -661,6 +699,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG.R">R (nnmnkwii.autograd.UnitVarianceMLPG attribute)</a>
+</li>
       <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.DTWAligner.radius">radius (nnmnkwii.preprocessing.alignment.DTWAligner attribute)</a>
 
       <ul>
@@ -669,7 +709,9 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/generated/nnmnkwii.util.remove_zeros_frames.html#nnmnkwii.util.remove_zeros_frames">remove_zeros_frames() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html#nnmnkwii.preprocessing.remove_zeros_frames">remove_zeros_frames() (in module nnmnkwii.preprocessing)</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.paramgen.reshape_means.html#nnmnkwii.paramgen.reshape_means">reshape_means() (in module nnmnkwii.paramgen)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -677,7 +719,7 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/generated/nnmnkwii.util.scale.html#nnmnkwii.util.scale">scale() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.scale.html#nnmnkwii.preprocessing.scale">scale() (in module nnmnkwii.preprocessing)</a>
 </li>
       <li><a href="references/io.html#nnmnkwii.io.hts.HTSLabelFile.set_durations">set_durations() (nnmnkwii.io.hts.HTSLabelFile method)</a>
 </li>
@@ -705,7 +747,21 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/baseline.html#nnmnkwii.baseline.gmm.MLPG.transform">transform() (nnmnkwii.baseline.gmm.MLPG method)</a>
 </li>
-      <li><a href="references/generated/nnmnkwii.util.trim_zeros_frames.html#nnmnkwii.util.trim_zeros_frames">trim_zeros_frames() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html#nnmnkwii.preprocessing.trim_zeros_frames">trim_zeros_frames() (in module nnmnkwii.preprocessing)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.autograd.unit_variance_mlpg.html#nnmnkwii.autograd.unit_variance_mlpg">unit_variance_mlpg() (in module nnmnkwii.autograd)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.paramgen.unit_variance_mlpg_matrix">unit_variance_mlpg_matrix() (in module nnmnkwii.paramgen)</a>
+</li>
+      <li><a href="references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG">UnitVarianceMLPG (class in nnmnkwii.autograd)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -713,7 +769,7 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG.variance_frames">variance_frames (nnmnkwii.autograd.MLPG attribute)</a>
+      <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG.variances">variances (nnmnkwii.autograd.MLPG attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -734,11 +790,7 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG.windows">windows (nnmnkwii.autograd.MLPG attribute)</a>
-
-      <ul>
-        <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.DeltaAppender.windows">(nnmnkwii.preprocessing.DeltaAppender attribute)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -778,7 +830,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.2',
+            VERSION:'0.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

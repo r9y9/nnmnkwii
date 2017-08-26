@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.alignment &mdash; nnmnkwii 0.0.2 documentation</title>
+  <title>nnmnkwii.preprocessing.alignment &mdash; nnmnkwii 0.0.3 documentation</title>
   
 
   
@@ -35,8 +35,8 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.2 documentation" href="../../../index.html"/>
-        <link rel="up" title="nnmnkwii.preprocessing" href="../preprocessing.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -221,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../references/autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -251,13 +252,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/functions.html">Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/io.html">IO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
@@ -270,33 +265,48 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/postfilters.html">Post-filters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#module-nnmnkwii.preprocessing.alignment">Alignment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#module-nnmnkwii.preprocessing.f0">F0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#f0">F0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/util.html">Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#utterance-wise-operations">Utterance-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.delta.html">nnmnkwii.util.delta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_delta_windows.html">nnmnkwii.util.apply_delta_windows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.trim_zeros_frames.html">nnmnkwii.util.trim_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.remove_zeros_frames.html">nnmnkwii.util.remove_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.adjast_frame_length.html">nnmnkwii.util.adjast_frame_length</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.scale.html">nnmnkwii.util.scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.minmax_scale.html">nnmnkwii.util.minmax_scale</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#dataset-wise-operations">Dataset-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.meanvar.html">nnmnkwii.util.meanvar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.meanstd.html">nnmnkwii.util.meanstd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.minmax.html">nnmnkwii.util.minmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#files">Files</a><ul>
@@ -307,6 +317,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
 </ul>
 </li>
 </ul>
@@ -355,8 +379,6 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../preprocessing.html">nnmnkwii.preprocessing</a> &raquo;</li>
-        
       <li>nnmnkwii.preprocessing.alignment</li>
     
     
@@ -377,7 +399,7 @@
   <h1>Source code for nnmnkwii.preprocessing.alignment</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">trim_zeros_frames</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">trim_zeros_frames</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.baseline.gmm</span> <span class="k">import</span> <span class="n">MLPG</span>
 
 <span class="kn">from</span> <span class="nn">fastdtw</span> <span class="k">import</span> <span class="n">fastdtw</span>
@@ -389,12 +411,29 @@
 
 
 <div class="viewcode-block" id="DTWAligner"><a class="viewcode-back" href="../../../references/preprocessing.html#nnmnkwii.preprocessing.alignment.DTWAligner">[docs]</a><span class="k">class</span> <span class="nc">DTWAligner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Align feature matcies</span>
+    <span class="sd">&quot;&quot;&quot;Align feature matcies using fastdtw_.</span>
+
+<span class="sd">    .. _fastdtw: https://github.com/slaypni/fastdtw</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        dist (function): Distance function</span>
-<span class="sd">        radius (int): Radius</span>
-<span class="sd">        verbose (int): Default is 0</span>
+<span class="sd">        dist (function): Distance function. Default is :func:`numpy.linalg.norm`.</span>
+<span class="sd">        radius (int): Radius parameter in fastdtw_.</span>
+<span class="sd">        verbose (int): Verbose flag. Default is 0.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import PaddedFileSourceDataset</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import DTWAligner</span>
+<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_acoustic_model()</span>
+<span class="sd">        &gt;&gt;&gt; X = PaddedFileSourceDataset(X, 1000).asarray()</span>
+<span class="sd">        &gt;&gt;&gt; X.shape</span>
+<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        &gt;&gt;&gt; Y = X.copy()</span>
+<span class="sd">        &gt;&gt;&gt; X_aligned, Y_aligned = DTWAligner().transform((X, Y))</span>
+<span class="sd">        &gt;&gt;&gt; X_aligned.shape</span>
+<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        &gt;&gt;&gt; Y_aligned.shape</span>
+<span class="sd">        (3, 1000, 187)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -423,19 +462,41 @@
 
 
 <div class="viewcode-block" id="IterativeDTWAligner"><a class="viewcode-back" href="../../../references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner">[docs]</a><span class="k">class</span> <span class="nc">IterativeDTWAligner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Align feature matcies iteratively using GMM-based feature conversion</span>
+    <span class="sd">&quot;&quot;&quot;Align feature matcies iteratively using GMM-based feature conversion.</span>
+
+<span class="sd">    .. _fastdtw: https://github.com/slaypni/fastdtw</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        n_iter (int): Number of iterations.</span>
 <span class="sd">        dist (function): Distance function</span>
-<span class="sd">        radius (int): Radius</span>
-<span class="sd">        verbose (int): Default is 0</span>
+<span class="sd">        radius (int): Radius parameter in fastdtw_.</span>
+<span class="sd">        verbose (int): Verbose flag. Default is 0.</span>
+<span class="sd">        max_iter_gmm (int): Maximum iteration to train GMM.</span>
+<span class="sd">        n_components_gmm (int): Number of mixture components in GMM.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import PaddedFileSourceDataset</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import IterativeDTWAligner</span>
+<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_acoustic_model()</span>
+<span class="sd">        &gt;&gt;&gt; X = PaddedFileSourceDataset(X, 1000).asarray()</span>
+<span class="sd">        &gt;&gt;&gt; X.shape</span>
+<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        &gt;&gt;&gt; Y = X.copy()</span>
+<span class="sd">        &gt;&gt;&gt; X_aligned, Y_aligned = IterativeDTWAligner(n_iter=1).transform((X, Y))</span>
+<span class="sd">        &gt;&gt;&gt; X_aligned.shape</span>
+<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        &gt;&gt;&gt; Y_aligned.shape</span>
+<span class="sd">        (3, 1000, 187)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span>
+                 <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iter_gmm</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_components_gmm</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter_gmm</span> <span class="o">=</span> <span class="n">max_iter_gmm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components_gmm</span> <span class="o">=</span> <span class="n">n_components_gmm</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
 
     <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">XY</span><span class="p">):</span>
@@ -464,7 +525,8 @@
 
             <span class="c1"># Fit</span>
             <span class="n">gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span>
-                <span class="n">n_components</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">covariance_type</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+                <span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_gmm</span><span class="p">,</span>
+                <span class="n">covariance_type</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter_gmm</span><span class="p">)</span>
             <span class="n">XY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span><span class="p">),</span>
                                 <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
             <span class="n">gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">XY</span><span class="p">)</span>
@@ -516,7 +578,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

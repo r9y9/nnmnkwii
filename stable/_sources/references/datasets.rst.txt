@@ -55,7 +55,8 @@ some dataset implementation that can be used for typical situations.
     iteration, multiprocessing, etc). Users are expected to use dataset with other
     iterator implementation. For PyTorch users, we can use `PyTorch DataLoader`_ for
     mini-batch iteration and multiprocessing. Our dataset interface is `exactly`
-    same as PyTorch's one, so we can use PyTorch DataLoader seamlessly.
+    same as PyTorch's one, so we can use PyTorch DataLoader seamlessly. See
+    tutorials how we can use it practically.
 
 .. _PyTorch DataLoader: http://pytorch.org/docs/master/data.html?highlight=dataloader#torch.utils.data.DataLoader
 

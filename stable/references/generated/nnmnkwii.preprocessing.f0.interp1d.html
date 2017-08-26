@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.f0.interp1d &mdash; nnmnkwii 0.0.2 documentation</title>
+  <title>nnmnkwii.preprocessing.f0.interp1d &mdash; nnmnkwii 0.0.3 documentation</title>
   
 
   
@@ -35,10 +35,10 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.2 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="Utilities" href="../util.html"/>
-        <link rel="prev" title="Pre-processing" href="../preprocessing.html"/> 
+        <link rel="prev" title="nnmnkwii.preprocessing.minmax" href="nnmnkwii.preprocessing.minmax.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -223,6 +223,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -253,13 +254,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../functions.html">Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../io.html">IO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
@@ -272,33 +267,48 @@
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../postfilters.html">Post-filters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#module-nnmnkwii.preprocessing.alignment">Alignment</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../preprocessing.html#module-nnmnkwii.preprocessing.f0">F0</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="../preprocessing.html#f0">F0</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.f0.interp1d</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../util.html">Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../util.html#utterance-wise-operations">Utterance-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.delta.html">nnmnkwii.util.delta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_delta_windows.html">nnmnkwii.util.apply_delta_windows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.trim_zeros_frames.html">nnmnkwii.util.trim_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.remove_zeros_frames.html">nnmnkwii.util.remove_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.adjast_frame_length.html">nnmnkwii.util.adjast_frame_length</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.scale.html">nnmnkwii.util.scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.minmax_scale.html">nnmnkwii.util.minmax_scale</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../util.html#dataset-wise-operations">Dataset-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.meanvar.html">nnmnkwii.util.meanvar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.meanstd.html">nnmnkwii.util.meanstd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.minmax.html">nnmnkwii.util.minmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../util.html#files">Files</a><ul>
@@ -309,6 +319,20 @@
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
 </ul>
 </li>
 </ul>
@@ -419,7 +443,7 @@
 <p>This function generates continuous f0 from discontinuous f0 trajecoty
 based on <code class="xref py py-func docutils literal"><span class="pre">scipy.interpolate.interp1d()</span></code>. This is meat to be used for
 continuous f0 modeling in statistical speech synthesis
-(e.g., see <a class="reference internal" href="#r7" id="id1">[R7]</a>, <a class="reference internal" href="#r8" id="id2">[R8]</a>).</p>
+(e.g., see <a class="reference internal" href="#r5" id="id1">[R5]</a>, <a class="reference internal" href="#r6" id="id2">[R6]</a>).</p>
 <p>If <code class="docutils literal"><span class="pre">kind</span></code> = <code class="docutils literal"><span class="pre">'slinear'</span></code>, then this does same thing as Merlin does.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -442,25 +466,29 @@ trajectory.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing.f0</span> <span class="k">import</span> <span class="n">interp1d</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">interp1d</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">f0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_audio_file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="k">import</span> <span class="n">wavfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pyworld</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fs</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">example_audio_file</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f0</span><span class="p">,</span> <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">dio</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">),</span> <span class="n">fs</span><span class="p">,</span> <span class="n">frame_period</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">continuous_f0</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">f0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;slinear&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">f0</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">continuous_f0</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
-<table class="docutils citation" frame="void" id="r7" rules="none">
+<table class="docutils citation" frame="void" id="r5" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R7]</a></td><td>Yu, Kai, and Steve Young. “Continuous F0 modeling for HMM based
+<tr><td class="label"><a class="fn-backref" href="#id1">[R5]</a></td><td>Yu, Kai, and Steve Young. “Continuous F0 modeling for HMM based
 statistical parametric speech synthesis.” IEEE Transactions on Audio,
 Speech, and Language Processing 19.5 (2011): 1071-1079.</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r8" rules="none">
+<table class="docutils citation" frame="void" id="r6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[R8]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
+<tr><td class="label"><a class="fn-backref" href="#id2">[R6]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
 the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></tr>
 </tbody>
 </table>
@@ -481,7 +509,7 @@ the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></t
         <a href="../util.html" class="btn btn-neutral float-right" title="Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../preprocessing.html" class="btn btn-neutral" title="Pre-processing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nnmnkwii.preprocessing.minmax.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.minmax" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -512,7 +540,7 @@ the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></t
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

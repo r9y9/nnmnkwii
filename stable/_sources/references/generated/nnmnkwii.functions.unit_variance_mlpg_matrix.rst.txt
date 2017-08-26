@@ -1,0 +1,6 @@
+nnmnkwii\.functions\.unit\_variance\_mlpg\_matrix
+=================================================
+
+.. currentmodule:: nnmnkwii.functions
+
+.. autofunction:: unit_variance_mlpg_matrix

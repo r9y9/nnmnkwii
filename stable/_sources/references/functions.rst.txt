@@ -1,15 +1,14 @@
 Functions
 =========
 
-Numpy implementation of functions which can be used in statistical
-speech synthesis.
+.. warning::
 
-.. automodule:: nnmnkwii.functions
+    Parameter generation functionalities were moved to :obj:`nnmnkwii.paramgen`.
 
-.. autosummary::
-    :toctree: generated/
+To maintain compatibility for previous versions, the module provides the following aliases.
 
-    mlpg
-    mlpg_grad
-    modspec
-    modphase
+.. code-block:: python
+
+    from nnmnkwii.preprocessing import *
+    from nnmnkwii.paramgen import *
+    from nnmnkwii.postfilters import *

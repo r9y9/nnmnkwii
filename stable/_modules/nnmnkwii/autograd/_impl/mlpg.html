@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.0.2 documentation</title>
+  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.0.3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.2 documentation" href="../../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.2
+                0.0.3
               </div>
             
           
@@ -221,6 +221,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
 </ul>
 </li>
@@ -251,13 +252,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../references/functions.html">Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg.html">nnmnkwii.functions.mlpg</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.mlpg_grad.html">nnmnkwii.functions.mlpg_grad</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modspec.html">nnmnkwii.functions.modspec</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.functions.modphase.html">nnmnkwii.functions.modphase</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references/functions.html">Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/io.html">IO</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
@@ -270,33 +265,48 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/postfilters.html">Post-filters</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#module-nnmnkwii.preprocessing.alignment">Alignment</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#module-nnmnkwii.preprocessing.f0">F0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#f0">F0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/util.html">Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#utterance-wise-operations">Utterance-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.delta.html">nnmnkwii.util.delta</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.apply_delta_windows.html">nnmnkwii.util.apply_delta_windows</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.trim_zeros_frames.html">nnmnkwii.util.trim_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.remove_zeros_frames.html">nnmnkwii.util.remove_zeros_frames</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.adjast_frame_length.html">nnmnkwii.util.adjast_frame_length</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.scale.html">nnmnkwii.util.scale</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.minmax_scale.html">nnmnkwii.util.minmax_scale</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#dataset-wise-operations">Dataset-wise operations</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.meanvar.html">nnmnkwii.util.meanvar</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.meanstd.html">nnmnkwii.util.meanstd</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.minmax.html">nnmnkwii.util.minmax</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#files">Files</a><ul>
@@ -307,6 +317,20 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
 </ul>
 </li>
 </ul>
@@ -384,106 +408,219 @@
 
 
 <div class="viewcode-block" id="MLPG"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.MLPG">[docs]</a><span class="k">class</span> <span class="nc">MLPG</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;MLPG as an autograd function ``f : (T, D) -&gt; (T, static_dim)``.</span>
+    <span class="sd">&quot;&quot;&quot;Generic MLPG as an autograd function.</span>
+
+<span class="sd">    ``f : (T, D) -&gt; (T, static_dim)``.</span>
 
 <span class="sd">    This is meant to be used for Minimum Geneartion Error (MGE) training for</span>
-<span class="sd">    speech synthesis and voice conversion. See [1]_ for details.</span>
+<span class="sd">    speech synthesis and voice conversion. See [1]_ and [2]_ for details.</span>
+
+<span class="sd">    It relies on :func:`nnmnkwii.functions.mlpg` and</span>
+<span class="sd">    :func:`nnmnkwii.functions.mlpg_grad` for forward and backward computation,</span>
+<span class="sd">    respectively.</span>
 
 <span class="sd">    .. [1] Wu, Zhizheng, and Simon King. &quot;Minimum trajectory error training</span>
 <span class="sd">      for deep neural networks, combined with stacked bottleneck features.&quot;</span>
 <span class="sd">      INTERSPEECH. 2015.</span>
-
-<span class="sd">    Let :math:`d` is the index of static features, :math:`l` is the index</span>
-<span class="sd">    of windows, gradients :math:`g_{d,l}` can be computed by:</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}</span>
-
-<span class="sd">    where :math:`W_{l}` is a banded window matrix and :math:`P_{d,l}` is a</span>
-<span class="sd">    diagonal precision matrix.</span>
-
-<span class="sd">    Assuming the variances are diagonals, MLPG can be performed in</span>
-<span class="sd">    dimention-by-dimention efficiently.</span>
-
-<span class="sd">    Let :math:`o_{d}` be ``T`` dimentional back-propagated gradients, the</span>
-<span class="sd">    resulting gradients :math:`g&#39;_{l,d}` to be propagated are</span>
-<span class="sd">    computed as follows:</span>
-
-<span class="sd">    .. math::</span>
-
-<span class="sd">        g&#39;_{d,l} = o_{d}^{T} g_{d,l}</span>
+<span class="sd">    .. [2] Xie, Feng-Long, et al. &quot;Sequence error (SE) minimization training of</span>
+<span class="sd">       neural network for voice conversion.&quot; Fifteenth Annual Conference of the</span>
+<span class="sd">       International Speech Communication Association. 2014.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        variance_frames (torch.FloatTensor): Variances same as in</span>
+<span class="sd">        variances (torch.FloatTensor): Variances same as in</span>
 <span class="sd">            :func:`nnmnkwii.functions.mlpg`.</span>
 <span class="sd">        windows (list): same as in :func:`nnmnkwii.functions.mlpg`.</span>
 
-<span class="sd">    TODO:</span>
-<span class="sd">        CUDA implementation</span>
+<span class="sd">    Warnings:</span>
+<span class="sd">        The function is generic but cannot run on CUDA. For faster</span>
+<span class="sd">        differenciable MLPG, see :obj:`UnitVarianceMLPG`.</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        :func:`nnmnkwii.functions.mlpg`, :func:`nnmnkwii.functions.mlpg_grad`.</span>
+<span class="sd">        :func:`nnmnkwii.autograd.mlpg`,</span>
+<span class="sd">        :func:`nnmnkwii.functions.mlpg`,</span>
+<span class="sd">        :func:`nnmnkwii.functions.mlpg_grad`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MLPG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">windows</span> <span class="o">=</span> <span class="n">windows</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">variance_frames</span> <span class="o">=</span> <span class="n">variance_frames</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">variances</span> <span class="o">=</span> <span class="n">variances</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mean_frames</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># we cannot do MLPG on minibatch</span>
-        <span class="n">variance_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variance_frames</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">means</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># we cannot do MLPG on minibatch</span>
+        <span class="n">variances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variances</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
 
-        <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-        <span class="k">assert</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">variances</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 
-        <span class="n">mean_frames_np</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">variance_frames_np</span> <span class="o">=</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">mean_frames_np</span><span class="p">,</span> <span class="n">variance_frames_np</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
+        <span class="n">means_np</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">variances_np</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">means_np</span><span class="p">,</span> <span class="n">variances_np</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">y</span>
 
     <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
-        <span class="n">mean_frames</span><span class="p">,</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_tensors</span>
-        <span class="n">variance_frames</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variance_frames</span>
+        <span class="n">means</span><span class="p">,</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_tensors</span>
+        <span class="n">variances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variances</span>
 
-        <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+        <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 
         <span class="n">grad_output_numpy</span> <span class="o">=</span> <span class="n">grad_output</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">mean_frames_numpy</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">variance_frames_numpy</span> <span class="o">=</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">means_numpy</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">variances_numpy</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">grads_numpy</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg_grad</span><span class="p">(</span>
-            <span class="n">mean_frames_numpy</span><span class="p">,</span> <span class="n">variance_frames_numpy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">,</span>
+            <span class="n">means_numpy</span><span class="p">,</span> <span class="n">variances_numpy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">,</span>
             <span class="n">grad_output_numpy</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grads_numpy</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
+<div class="viewcode-block" id="UnitVarianceMLPG"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG">[docs]</a><span class="k">class</span> <span class="nc">UnitVarianceMLPG</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Special case of MLPG assuming data is normalized to have unit variance.</span>
+
+<span class="sd">    ``f : (T x D) -&gt; (T, static_dim)``. or</span>
+<span class="sd">    ``f : (T*num_windows, static_dim) -&gt; (T, static_dim)``.</span>
+
+<span class="sd">    The funtion is theoretically a special case of :obj:`MLPG`. The function</span>
+<span class="sd">    assumes input data is noramlized to have unit variance for each dimention.</span>
+<span class="sd">    The property of the unit-variance greatly simplifies the backward</span>
+<span class="sd">    computation of MLPG.</span>
+
+<span class="sd">    Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),</span>
+<span class="sd">    :math:`W` is a window matrix ``(T x num_windows*T)``, MLPG can be written</span>
+<span class="sd">    as follows:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        y = R \mu</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        R = (W^{T} W)^{-1} W^{T}</span>
+
+<span class="sd">    To avoid dupulicate computations in forward and backward, the function</span>
+<span class="sd">    takes ``R`` at construction time. The matrix ``R`` can be computed by</span>
+<span class="sd">    :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        R: Unit-variance MLPG matrix of shape (``T x num_windows*T``). This</span>
+<span class="sd">          should be created with</span>
+<span class="sd">          :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.</span>
+
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        R: Unit-variance MLPG matrix (``T x num_windows*T``).</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.autograd.unit_variance_mlpg`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">UnitVarianceMLPG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">R</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">num_windows</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
+        <span class="c1"># TODO: remove this</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span>
+
+        <span class="c1"># Add batch axis if necessary</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">T_</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T_</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">B</span><span class="p">,</span> <span class="n">T_</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1"># Check if means has proper shape</span>
+        <span class="n">reshaped</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">T</span> <span class="o">==</span> <span class="n">T_</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">reshaped</span><span class="p">:</span>
+            <span class="n">static_dim</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_windows</span>
+            <span class="n">reshaped_means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+                <span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_windows</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
+                    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">static_dim</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">reshaped_means</span> <span class="o">=</span> <span class="n">means</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="p">,</span> <span class="n">reshaped_means</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+        <span class="n">means</span><span class="p">,</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_tensors</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span>
+
+        <span class="c1"># Add batch axis if necessary</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">T_</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">grad_output</span> <span class="o">=</span> <span class="n">grad_output</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">B</span><span class="p">,</span> <span class="n">T_</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">grad_output</span><span class="p">)</span>
+
+        <span class="n">reshaped</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">T</span> <span class="o">==</span> <span class="n">T_</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">reshaped</span><span class="p">:</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_windows</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
+                <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">grad</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">grad</span></div>
+
+
+<div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Maximum Liklihood Paramter Generation (MLPG).</span>
 
 <span class="sd">    The parameters are almost same as :func:`nnmnkwii.functions.mlpg` expects.</span>
 <span class="sd">    The differences are:</span>
 
-<span class="sd">    - The function assumes ``mean_frames`` as :obj:`torch.autograd.Variable`</span>
+<span class="sd">    - The function assumes ``means`` as :obj:`torch.autograd.Variable`</span>
 <span class="sd">      instead of :obj:`numpy.ndarray`.</span>
 <span class="sd">    - The fucntion assumes ``variances_frames`` as :obj:`torch.FloatTensor`　</span>
 <span class="sd">      instead of :obj:`numpy.ndarray`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        mean_frames (torch.autograd.Variable): Means</span>
-<span class="sd">        variance_frames (torch.FloatTensor): Variances</span>
+<span class="sd">        means (torch.autograd.Variable): Means</span>
+<span class="sd">        variances (torch.FloatTensor): Variances</span>
 <span class="sd">        windows (list): A sequence of window specification</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        :func:`nnmnkwii.functions.mlpg`</span>
+<span class="sd">        :obj:`nnmnkwii.autograd.MLPG`, :func:`nnmnkwii.functions.mlpg`</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">)(</span><span class="n">mean_frames</span><span class="p">)</span></div>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">variances</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">variances</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">D</span><span class="p">:</span>
+        <span class="n">variances</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">expand</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">variances</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)(</span><span class="n">means</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="unit_variance_mlpg"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html#nnmnkwii.autograd.unit_variance_mlpg">[docs]</a><span class="k">def</span> <span class="nf">unit_variance_mlpg</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Special case of MLPG assuming data is normalized to have unit variance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        means (torch.autograd.Variable): Means, of shape (``T x D``) or</span>
+<span class="sd">          (``T*num_windows x static_dim``). See</span>
+<span class="sd">          :func:`nnmnkwii.functions.reshape_means` to reshape means from</span>
+<span class="sd">          (``T x D``) to (``T*num_windows x static_dim``).</span>
+<span class="sd">        R (torch.FloatTensor): MLPG matrix.</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :obj:`nnmnkwii.autograd.UnitVarianceMLPG`,</span>
+<span class="sd">        :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`,</span>
+<span class="sd">        :func:`reshape_means`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">UnitVarianceMLPG</span><span class="p">(</span><span class="n">R</span><span class="p">)(</span><span class="n">means</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -520,7 +657,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0.0.2',
+            VERSION:'0.0.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
