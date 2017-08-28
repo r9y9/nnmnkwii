@@ -37,7 +37,7 @@ def delta_features(x, windows):
 
     Args:
         x (numpy.ndarray): Input static features, of shape (``T x D``).
-        y (list): List of windows. See :func:`nnmnkwii.functions.mlpg` for what
+        y (list): List of windows. See :func:`nnmnkwii.paramgen.mlpg` for what
             the delta window means.
 
     Returns:

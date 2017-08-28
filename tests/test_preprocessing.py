@@ -5,6 +5,7 @@ from nnmnkwii.preprocessing import trim_zeros_frames, remove_zeros_frames
 from nnmnkwii.preprocessing import adjast_frame_length, delta_features
 from nnmnkwii.util import example_audio_file
 from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
+from nnmnkwii.preprocessing import modspec, modphase
 
 from scipy.io import wavfile
 import numpy as np
@@ -131,3 +132,18 @@ def test_dtw_aligner():
         n_iter=3, max_iter_gmm=30, n_components_gmm=4).transform((X, Y))
     assert X_aligned.shape == Y_aligned.shape
     assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
+
+
+def test_modspec_reconstruct():
+    static_dim = 2
+    T = 64
+
+    np.random.seed(1234)
+    generated = np.random.rand(T, static_dim)
+
+    for n in [64, 128]:
+        ms = modspec(generated, n=n)  # ms = |X(w)|^2
+        ms_phase = modphase(generated, n=n)
+        complex_ms = np.sqrt(ms) * ms_phase  # = |X(w)| * phase
+        generated_hat = np.fft.irfft(complex_ms, n=n, axis=0)[:T]
+        assert np.allclose(generated, generated_hat)

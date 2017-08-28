@@ -1,6 +1,6 @@
 from __future__ import with_statement, print_function, absolute_import
 
-from nnmnkwii import functions as F
+from nnmnkwii.preprocessing.modspec import modspec as _modspec
 
 from torch.autograd import Function
 import torch
@@ -24,7 +24,7 @@ class ModSpec(Function):
         self.save_for_backward(y)
 
         y_np = y.numpy()
-        ms = torch.from_numpy(F.modspec(y_np, n=self.n, norm=self.norm))
+        ms = torch.from_numpy(_modspec(y_np, n=self.n, norm=self.norm))
 
         return ms
 
@@ -71,9 +71,6 @@ def modspec(y, n=2048, norm=None):
         y (torch.autograd.Variable): Parameter trajectory.
         n (int): DFT length.
         norm (bool): Normalize DFT output or not. See :obj:`numpy.fft.fft`.
-
-    See also:
-        :func:`nnmnkwii.functions.modspec`
 
     """
     return ModSpec(n=n, norm=norm)(y)

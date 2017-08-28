@@ -1,7 +1,7 @@
 # coding: utf-8
 from __future__ import with_statement, print_function, absolute_import
 
-from nnmnkwii import functions as F
+from nnmnkwii import paramgen as G
 
 from torch.autograd import Function
 import torch
@@ -16,8 +16,8 @@ class MLPG(Function):
     This is meant to be used for Minimum Geneartion Error (MGE) training for
     speech synthesis and voice conversion. See [1]_ and [2]_ for details.
 
-    It relies on :func:`nnmnkwii.functions.mlpg` and
-    :func:`nnmnkwii.functions.mlpg_grad` for forward and backward computation,
+    It relies on :func:`nnmnkwii.paramgen.mlpg` and
+    :func:`nnmnkwii.paramgen.mlpg_grad` for forward and backward computation,
     respectively.
 
     .. [1] Wu, Zhizheng, and Simon King. "Minimum trajectory error training
@@ -29,8 +29,8 @@ class MLPG(Function):
 
     Attributes:
         variances (torch.FloatTensor): Variances same as in
-            :func:`nnmnkwii.functions.mlpg`.
-        windows (list): same as in :func:`nnmnkwii.functions.mlpg`.
+            :func:`nnmnkwii.paramgen.mlpg`.
+        windows (list): same as in :func:`nnmnkwii.paramgen.mlpg`.
 
     Warnings:
         The function is generic but cannot run on CUDA. For faster
@@ -38,8 +38,8 @@ class MLPG(Function):
 
     See also:
         :func:`nnmnkwii.autograd.mlpg`,
-        :func:`nnmnkwii.functions.mlpg`,
-        :func:`nnmnkwii.functions.mlpg_grad`.
+        :func:`nnmnkwii.paramgen.mlpg`,
+        :func:`nnmnkwii.paramgen.mlpg_grad`.
     """
 
     def __init__(self, variances, windows):
@@ -57,7 +57,7 @@ class MLPG(Function):
 
         means_np = means.numpy()
         variances_np = variances.numpy()
-        y = F.mlpg(means_np, variances_np, self.windows)
+        y = G.mlpg(means_np, variances_np, self.windows)
         y = torch.from_numpy(y.astype(np.float32))
         return y
 
@@ -70,7 +70,7 @@ class MLPG(Function):
         grad_output_numpy = grad_output.numpy()
         means_numpy = means.numpy()
         variances_numpy = variances.numpy()
-        grads_numpy = F.mlpg_grad(
+        grads_numpy = G.mlpg_grad(
             means_numpy, variances_numpy, self.windows,
             grad_output_numpy)
 
@@ -104,12 +104,12 @@ class UnitVarianceMLPG(Function):
 
     To avoid dupulicate computations in forward and backward, the function
     takes ``R`` at construction time. The matrix ``R`` can be computed by
-    :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.
+    :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.
 
     Args:
         R: Unit-variance MLPG matrix of shape (``T x num_windows*T``). This
           should be created with
-          :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.
+          :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.
 
 
     Attributes:
@@ -184,7 +184,7 @@ class UnitVarianceMLPG(Function):
 def mlpg(means, variances, windows):
     """Maximum Liklihood Paramter Generation (MLPG).
 
-    The parameters are almost same as :func:`nnmnkwii.functions.mlpg` expects.
+    The parameters are almost same as :func:`nnmnkwii.paramgen.mlpg` expects.
     The differences are:
 
     - The function assumes ``means`` as :obj:`torch.autograd.Variable`
@@ -198,7 +198,7 @@ def mlpg(means, variances, windows):
         windows (list): A sequence of window specification
 
     See also:
-        :obj:`nnmnkwii.autograd.MLPG`, :func:`nnmnkwii.functions.mlpg`
+        :obj:`nnmnkwii.autograd.MLPG`, :func:`nnmnkwii.paramgen.mlpg`
 
     """
     T, D = means.size()
@@ -214,13 +214,13 @@ def unit_variance_mlpg(R, means):
     Args:
         means (torch.autograd.Variable): Means, of shape (``T x D``) or
           (``T*num_windows x static_dim``). See
-          :func:`nnmnkwii.functions.reshape_means` to reshape means from
+          :func:`nnmnkwii.paramgen.reshape_means` to reshape means from
           (``T x D``) to (``T*num_windows x static_dim``).
         R (torch.FloatTensor): MLPG matrix.
 
     See also:
         :obj:`nnmnkwii.autograd.UnitVarianceMLPG`,
-        :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`,
+        :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`,
         :func:`reshape_means`.
     """
     return UnitVarianceMLPG(R)(means)

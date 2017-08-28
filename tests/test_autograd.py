@@ -2,7 +2,7 @@ from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.autograd._impl.mlpg import MLPG, UnitVarianceMLPG
 from nnmnkwii.autograd._impl.modspec import ModSpec
-from nnmnkwii import functions as F
+from nnmnkwii import paramgen as G
 from nnmnkwii import autograd as AF
 
 from torch.autograd import gradcheck
@@ -43,7 +43,7 @@ def test_functional_mlpg():
         means = torch.rand(T, static_dim * len(windows))
         variances = torch.ones(static_dim * len(windows))
 
-        y = F.mlpg(means.numpy(), variances.numpy(), windows)
+        y = G.mlpg(means.numpy(), variances.numpy(), windows)
         y = Variable(torch.from_numpy(y), requires_grad=False)
 
         means = Variable(means, requires_grad=True)
@@ -56,7 +56,7 @@ def test_functional_mlpg():
         nn.MSELoss()(y_hat, y).backward()
 
         # unit_variance_mlpg
-        R = torch.from_numpy(F.unit_variance_mlpg_matrix(windows, T))
+        R = torch.from_numpy(G.unit_variance_mlpg_matrix(windows, T))
         y_hat = AF.unit_variance_mlpg(R, means)
         assert np.allclose(y.data.numpy(), y_hat.data.numpy())
 
@@ -81,13 +81,13 @@ def test_unit_variance_mlpg_gradcheck():
                          requires_grad=True)
 
         # Input for UnitVarianceMLPG
-        reshaped_means = F.reshape_means(
+        reshaped_means = G.reshape_means(
             means.data.clone().numpy(), static_dim)
         reshaped_means = Variable(torch.from_numpy(reshaped_means),
                                   requires_grad=True)
 
         # Compute MLPG matrix
-        R = F.unit_variance_mlpg_matrix(windows, T).astype(np.float32)
+        R = G.unit_variance_mlpg_matrix(windows, T).astype(np.float32)
         R = torch.from_numpy(R)
 
         # UnitVarianceMLPG can take input with both means and reshaped_means
@@ -127,12 +127,12 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
         means_expanded = means.expand(
             batch_size, means.shape[0], means.shape[1])
         reshaped_means = torch.from_numpy(
-            F.reshape_means(means.numpy(), static_dim))
+            G.reshape_means(means.numpy(), static_dim))
         reshaped_means_expanded = reshaped_means.expand(
             batch_size, reshaped_means.shape[0], reshaped_means.shape[1])
 
         # Target
-        y = F.mlpg(means.numpy(), np.ones(static_dim * len(windows)), windows)
+        y = G.mlpg(means.numpy(), np.ones(static_dim * len(windows)), windows)
         y = Variable(torch.from_numpy(y), requires_grad=False)
         y_expanded = y.expand(batch_size, y.size(0), y.size(1))
 
@@ -144,7 +144,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
             reshaped_means_expanded, requires_grad=True)
 
         # Case 1: 2d with reshaped means
-        R = torch.from_numpy(F.unit_variance_mlpg_matrix(windows, T))
+        R = torch.from_numpy(G.unit_variance_mlpg_matrix(windows, T))
         y_hat1 = AF.unit_variance_mlpg(R, reshaped_means)
 
         # Case 2: 3d with reshaped means

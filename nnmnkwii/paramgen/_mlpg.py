@@ -33,14 +33,14 @@ def build_win_mats(windows, T):
         banded representation.
 
     Examples:
-        >>> from nnmnkwii import functions as F
+        >>> from nnmnkwii import paramgen as G
         >>> import numpy as np
         >>> windows = [
         ...     (0, 0, np.array([1.0])),            # static
         ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
         ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
         ... ]
-        >>> win_mats = F.build_win_mats(windows, 3)
+        >>> win_mats = G.build_win_mats(windows, 3)
     """
     win_mats = []
     for l, u, win_coeff in windows:
@@ -149,7 +149,7 @@ def mlpg(mean_frames, variance_frames, windows):
         Generated static features over time
 
     Examples:
-        >>> from nnmnkwii import functions as F
+        >>> from nnmnkwii import paramgen as G
         >>> windows = [
         ...         (0, 0, np.array([1.0])),            # static
         ...         (1, 1, np.array([-0.5, 0.0, 0.5])), # delta
@@ -158,7 +158,7 @@ def mlpg(mean_frames, variance_frames, windows):
         >>> T, static_dim = 10, 24
         >>> mean_frames = np.random.rand(T, static_dim * len(windows))
         >>> variance_frames = np.random.rand(T, static_dim * len(windows))
-        >>> static_features = F.mlpg(mean_frames, variance_frames, windows)
+        >>> static_features = G.mlpg(mean_frames, variance_frames, windows)
         >>> assert static_features.shape == (T, static_dim)
 
     See also:
@@ -198,7 +198,7 @@ def mlpg(mean_frames, variance_frames, windows):
 def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
     """MLPG gradient computation
 
-    Parameters are same as :func:`nnmnkwii.functions.mlpg` except for
+    Parameters are same as :func:`nnmnkwii.paramgen.mlpg` except for
     ``grad_output``. See the function docmenent for what the parameters mean.
 
     Let :math:`d` is the index of static features, :math:`l` is the index
@@ -311,17 +311,17 @@ def unit_variance_mlpg_matrix(windows, T):
 
     See also:
         :func:`nnmnkwii.autograd.UnitVarianceMLPG`,
-        :func:`nnmnkwii.functions.mlpg`.
+        :func:`nnmnkwii.paramgen.mlpg`.
 
     Examples:
-        >>> from nnmnkwii import functions as F
+        >>> from nnmnkwii import paramgen as G
         >>> import numpy as np
         >>> windows = [
         ...         (0, 0, np.array([1.0])),
         ...         (1, 1, np.array([-0.5, 0.0, 0.5])),
         ...         (1, 1, np.array([1.0, -2.0, 1.0])),
         ...     ]
-        >>> F.unit_variance_mlpg_matrix(windows, 3)
+        >>> G.unit_variance_mlpg_matrix(windows, 3)
         array([[  2.73835927e-01,   1.95121944e-01,   9.20177400e-02,
                   9.75609720e-02,  -9.09090936e-02,  -9.75609720e-02,
                  -3.52549881e-01,  -2.43902430e-02,   1.10864742e-02],
@@ -357,7 +357,7 @@ def reshape_means(means, static_dim):
         No-op if already reshaped.
 
     Examples:
-        >>> from nnmnkwii import functions as F
+        >>> from nnmnkwii import paramgen as G
         >>> import numpy as np
         >>> T, static_dim = 2, 2
         >>> windows = [
@@ -366,7 +366,7 @@ def reshape_means(means, static_dim):
         ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta
         ... ]
         >>> means = np.random.rand(T, static_dim * len(windows))
-        >>> reshaped_means = F.reshape_means(means, static_dim)
+        >>> reshaped_means = G.reshape_means(means, static_dim)
         >>> assert reshaped_means.shape == (T*len(windows), static_dim)
     """
     T, D = means.shape

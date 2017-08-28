@@ -1,6 +1,6 @@
 from __future__ import division, print_function, absolute_import
 
-from nnmnkwii import functions as F
+from nnmnkwii import paramgen as G
 from nnmnkwii import autograd as AF
 from torch.autograd import Variable
 import torch
@@ -45,10 +45,10 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
     torch.manual_seed(1234)
     means = np.random.rand(T, static_dim * len(windows)).astype(np.float32)
     variances = np.ones(static_dim * len(windows))
-    reshaped_means = F.reshape_means(means, static_dim)
+    reshaped_means = G.reshape_means(means, static_dim)
 
     # Ppseud target
-    y = F.mlpg(means, variances, windows).astype(np.float32)
+    y = G.mlpg(means, variances, windows).astype(np.float32)
 
     # Pack into variables
     means = Variable(torch.from_numpy(means), requires_grad=True)
@@ -70,7 +70,7 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
     since = time.time()
     if use_cuda:
         y = y.cuda()
-    R = F.unit_variance_mlpg_matrix(windows, T)
+    R = G.unit_variance_mlpg_matrix(windows, T)
     R = torch.from_numpy(R)
     # Assuming minibatch are zero-ppaded, we only need to create MLPG matrix
     # per-minibatch, not per-utterance.

@@ -1,8 +1,8 @@
 from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.util import apply_each2d_padded, apply_each2d_trim
-from nnmnkwii import functions as F
 from nnmnkwii.util.linalg import cholesky_inv, cholesky_inv_banded
+from nnmnkwii.paramgen import build_win_mats
 
 import numpy as np
 import scipy.linalg
@@ -65,7 +65,7 @@ def _get_banded_test_mat(win_mats, T):
 def test_linalg_choleskey_inv():
     for windows in _get_windows_set():
         for T in [5, 10]:
-            win_mats = F.build_win_mats(windows, T)
+            win_mats = build_win_mats(windows, T)
             P = _get_banded_test_mat(win_mats, T).full()
             L = scipy.linalg.cholesky(P, lower=True)
             U = scipy.linalg.cholesky(P, lower=False)
