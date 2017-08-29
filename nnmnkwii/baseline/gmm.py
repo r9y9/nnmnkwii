@@ -34,7 +34,7 @@ class MLPGBase(object):
         if swap:
             self.tgt_means, self.src_means = self.src_means, self.tgt_means
             self.covarYY, self.covarXX = self.covarXX, self.covarYY
-            self.covarYX, self.covarXY = self.XY, self.covarYX
+            self.covarYX, self.covarXY = self.covarXY, self.covarYX
 
         # p(x), which is used to compute posterior prob. for a given source
         # spectral feature in mapping stage.
