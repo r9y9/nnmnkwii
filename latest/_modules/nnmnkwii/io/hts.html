@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.3 documentation</title>
+  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4.dev0
               </div>
             
           
@@ -398,7 +398,7 @@
             
   <h1>Source code for nnmnkwii.io.hts</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Part of code here is adapted from Merlin. Their license follows:</span>
-<span class="c1">################################################################################</span>
+<span class="c1">##########################################################################</span>
 <span class="c1">#           The Neural Network (NN) based Speech Synthesis System</span>
 <span class="c1">#                https://github.com/CSTR-Edinburgh/merlin</span>
 <span class="c1">#</span>
@@ -435,7 +435,7 @@
 <span class="c1">#  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,</span>
 <span class="c1">#  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF</span>
 <span class="c1">#  THIS SOFTWARE.</span>
-<span class="c1">################################################################################</span>
+<span class="c1">##########################################################################</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
@@ -692,7 +692,8 @@
     <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">binary_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">continuous_dict</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="c1"># I guess `LL` means Left-left, but it doesn&#39;t seem to be docmented anywhere</span>
+    <span class="c1"># I guess `LL` means Left-left, but it doesn&#39;t seem to be docmented</span>
+    <span class="c1"># anywhere</span>
     <span class="n">LL</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="s1">&#39;LL-&#39;</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -766,7 +767,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.3',
+            VERSION:'0.0.4.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

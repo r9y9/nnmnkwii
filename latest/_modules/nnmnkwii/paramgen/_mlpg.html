@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.3 documentation</title>
+  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4.dev0
               </div>
             
           
@@ -432,14 +432,14 @@
 <span class="sd">        banded representation.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; windows = [</span>
 <span class="sd">        ...     (0, 0, np.array([1.0])),            # static</span>
 <span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
 <span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
 <span class="sd">        ... ]</span>
-<span class="sd">        &gt;&gt;&gt; win_mats = F.build_win_mats(windows, 3)</span>
+<span class="sd">        &gt;&gt;&gt; win_mats = G.build_win_mats(windows, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">win_mats</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">win_coeff</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
@@ -548,7 +548,7 @@
 <span class="sd">        Generated static features over time</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
 <span class="sd">        &gt;&gt;&gt; windows = [</span>
 <span class="sd">        ...         (0, 0, np.array([1.0])),            # static</span>
 <span class="sd">        ...         (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
@@ -557,7 +557,7 @@
 <span class="sd">        &gt;&gt;&gt; T, static_dim = 10, 24</span>
 <span class="sd">        &gt;&gt;&gt; mean_frames = np.random.rand(T, static_dim * len(windows))</span>
 <span class="sd">        &gt;&gt;&gt; variance_frames = np.random.rand(T, static_dim * len(windows))</span>
-<span class="sd">        &gt;&gt;&gt; static_features = F.mlpg(mean_frames, variance_frames, windows)</span>
+<span class="sd">        &gt;&gt;&gt; static_features = G.mlpg(mean_frames, variance_frames, windows)</span>
 <span class="sd">        &gt;&gt;&gt; assert static_features.shape == (T, static_dim)</span>
 
 <span class="sd">    See also:</span>
@@ -597,7 +597,7 @@
 <div class="viewcode-block" id="mlpg_grad"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html#nnmnkwii.paramgen.mlpg_grad">[docs]</a><span class="k">def</span> <span class="nf">mlpg_grad</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;MLPG gradient computation</span>
 
-<span class="sd">    Parameters are same as :func:`nnmnkwii.functions.mlpg` except for</span>
+<span class="sd">    Parameters are same as :func:`nnmnkwii.paramgen.mlpg` except for</span>
 <span class="sd">    ``grad_output``. See the function docmenent for what the parameters mean.</span>
 
 <span class="sd">    Let :math:`d` is the index of static features, :math:`l` is the index</span>
@@ -710,17 +710,17 @@
 
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`nnmnkwii.autograd.UnitVarianceMLPG`,</span>
-<span class="sd">        :func:`nnmnkwii.functions.mlpg`.</span>
+<span class="sd">        :func:`nnmnkwii.paramgen.mlpg`.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; windows = [</span>
 <span class="sd">        ...         (0, 0, np.array([1.0])),</span>
 <span class="sd">        ...         (1, 1, np.array([-0.5, 0.0, 0.5])),</span>
 <span class="sd">        ...         (1, 1, np.array([1.0, -2.0, 1.0])),</span>
 <span class="sd">        ...     ]</span>
-<span class="sd">        &gt;&gt;&gt; F.unit_variance_mlpg_matrix(windows, 3)</span>
+<span class="sd">        &gt;&gt;&gt; G.unit_variance_mlpg_matrix(windows, 3)</span>
 <span class="sd">        array([[  2.73835927e-01,   1.95121944e-01,   9.20177400e-02,</span>
 <span class="sd">                  9.75609720e-02,  -9.09090936e-02,  -9.75609720e-02,</span>
 <span class="sd">                 -3.52549881e-01,  -2.43902430e-02,   1.10864742e-02],</span>
@@ -756,7 +756,7 @@
 <span class="sd">        No-op if already reshaped.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii import functions as F</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; T, static_dim = 2, 2</span>
 <span class="sd">        &gt;&gt;&gt; windows = [</span>
@@ -765,7 +765,7 @@
 <span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
 <span class="sd">        ... ]</span>
 <span class="sd">        &gt;&gt;&gt; means = np.random.rand(T, static_dim * len(windows))</span>
-<span class="sd">        &gt;&gt;&gt; reshaped_means = F.reshape_means(means, static_dim)</span>
+<span class="sd">        &gt;&gt;&gt; reshaped_means = G.reshape_means(means, static_dim)</span>
 <span class="sd">        &gt;&gt;&gt; assert reshaped_means.shape == (T*len(windows), static_dim)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span>
@@ -811,7 +811,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.3',
+            VERSION:'0.0.4.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

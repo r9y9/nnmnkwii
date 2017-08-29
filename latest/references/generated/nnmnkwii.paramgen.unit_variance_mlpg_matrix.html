@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.paramgen.unit_variance_mlpg_matrix &mdash; nnmnkwii 0.0.3 documentation</title>
+  <title>nnmnkwii.paramgen.unit_variance_mlpg_matrix &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../../index.html"/>
         <link rel="up" title="Parameter generation" href="../paramgen.html"/>
         <link rel="next" title="nnmnkwii.paramgen.reshape_means" href="nnmnkwii.paramgen.reshape_means.html"/>
         <link rel="prev" title="nnmnkwii.paramgen.mlpg_grad" href="nnmnkwii.paramgen.mlpg_grad.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4.dev0
               </div>
             
           
@@ -470,17 +470,17 @@ normalized to have unit-variances, MLPG can be written as follows:</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="../autograd.html#nnmnkwii.autograd.UnitVarianceMLPG" title="nnmnkwii.autograd.UnitVarianceMLPG"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.autograd.UnitVarianceMLPG()</span></code></a>,
-<code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.functions.mlpg()</span></code>.</p>
+<a class="reference internal" href="nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>.</p>
 </div>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>
 <span class="gp">... </span>        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])),</span>
 <span class="gp">... </span>        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])),</span>
 <span class="gp">... </span>    <span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">F</span><span class="o">.</span><span class="n">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">G</span><span class="o">.</span><span class="n">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="go">array([[  2.73835927e-01,   1.95121944e-01,   9.20177400e-02,</span>
 <span class="go">          9.75609720e-02,  -9.09090936e-02,  -9.75609720e-02,</span>
 <span class="go">         -3.52549881e-01,  -2.43902430e-02,   1.10864742e-02],</span>
@@ -540,7 +540,7 @@ normalized to have unit-variances, MLPG can be written as follows:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.3',
+            VERSION:'0.0.4.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

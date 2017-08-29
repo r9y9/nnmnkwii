@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.3 documentation</title>
+  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4.dev0
               </div>
             
           
@@ -398,7 +398,7 @@
             
   <h1>Source code for nnmnkwii.frontend.merlin</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Part of code here is adapted from Merlin. Their license follows:</span>
-<span class="c1">################################################################################</span>
+<span class="c1">##########################################################################</span>
 <span class="c1">#           The Neural Network (NN) based Speech Synthesis System</span>
 <span class="c1">#                https://github.com/CSTR-Edinburgh/merlin</span>
 <span class="c1">#</span>
@@ -435,7 +435,7 @@
 <span class="c1">#  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,</span>
 <span class="c1">#  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF</span>
 <span class="c1">#  THIS SOFTWARE.</span>
-<span class="c1">################################################################################</span>
+<span class="c1">##########################################################################</span>
 
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
@@ -611,7 +611,7 @@
 
                 <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;minimal_phoneme&#39;</span><span class="p">:</span>
                     <span class="c1"># features which distinguish frame position in phoneme</span>
-                      <span class="c1"># fraction through phone forwards</span>
+                    <span class="c1"># fraction through phone forwards</span>
                     <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
                         <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
                     <span class="c1"># fraction through phone backwards</span>
@@ -682,7 +682,8 @@
     <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
     <span class="n">phone_duration</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">state_duration_base</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
+                        <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
         <span class="c1"># remove state information [k]</span>
         <span class="k">assert</span> <span class="n">full_label</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;]&quot;</span>
         <span class="n">full_label_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_label</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
@@ -869,11 +870,11 @@
                                             <span class="n">feature_type</span><span class="o">=</span><span class="s2">&quot;numerical&quot;</span><span class="p">,</span>
                                             <span class="n">unit_size</span><span class="o">=</span><span class="s2">&quot;state&quot;</span><span class="p">,</span>
                                             <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">feature_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">feature_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">unit_size</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">unit_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">feature_size</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">feature_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
 
     <span class="n">dur_dim</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">num_states</span><span class="p">()</span> <span class="k">if</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;state&quot;</span> <span class="k">else</span> <span class="mi">1</span>
@@ -889,7 +890,8 @@
     <span class="n">dur_dim</span> <span class="o">=</span> <span class="n">state_number</span>
 
     <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
+                        <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
         <span class="c1"># remove state information [k]</span>
         <span class="n">full_label_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_label</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
         <span class="n">state_index</span> <span class="o">=</span> <span class="n">full_label</span><span class="p">[</span><span class="n">full_label_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
@@ -903,7 +905,8 @@
 
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">state_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-                <span class="n">phone_duration</span> <span class="o">+=</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span> <span class="o">//</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+                <span class="n">phone_duration</span> <span class="o">+=</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span>
+                                   <span class="n">s</span><span class="p">)</span> <span class="o">//</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
 
         <span class="k">if</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;binary&quot;</span><span class="p">:</span>
             <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">frame_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -927,7 +930,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">assert</span> <span class="kc">False</span>
 
-        <span class="c1">### writing into dur_feature_matrix ###</span>
+        <span class="c1"># writing into dur_feature_matrix</span>
         <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
             <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="n">dur_feature_index</span><span class="p">:</span><span class="n">dur_feature_index</span> <span class="o">+</span>
                                <span class="n">frame_number</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_array</span>
@@ -947,11 +950,11 @@
                                             <span class="n">feature_type</span><span class="o">=</span><span class="s2">&quot;numerical&quot;</span><span class="p">,</span>
                                             <span class="n">unit_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span>
                                             <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">feature_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">feature_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">unit_size</span> <span class="o">!=</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">feature_size</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">feature_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
         <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
@@ -974,7 +977,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="kc">False</span>
 
-        <span class="c1">### writing into dur_feature_matrix ###</span>
+        <span class="c1"># writing into dur_feature_matrix</span>
         <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
             <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="n">dur_feature_index</span><span class="p">:</span><span class="n">dur_feature_index</span> <span class="o">+</span>
                                <span class="n">frame_number</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_block_array</span>
@@ -1015,9 +1018,11 @@
 <span class="sd">        (40, 5)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">is_state_alignment_label</span><span class="p">():</span>
-        <span class="k">return</span> <span class="n">extract_dur_from_state_alignment_labels</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">extract_dur_from_state_alignment_labels</span><span class="p">(</span>
+            <span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">extract_dur_from_phone_alignment_labels</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">extract_dur_from_phone_alignment_labels</span><span class="p">(</span>
+            <span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -1054,7 +1059,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.3',
+            VERSION:'0.0.4.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

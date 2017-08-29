@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.0.3 documentation</title>
+  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4.dev0
               </div>
             
           
@@ -400,7 +400,7 @@
 <span></span><span class="c1"># coding: utf-8</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
 
 <span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="k">import</span> <span class="n">Function</span>
 <span class="kn">import</span> <span class="nn">torch</span>
@@ -415,8 +415,8 @@
 <span class="sd">    This is meant to be used for Minimum Geneartion Error (MGE) training for</span>
 <span class="sd">    speech synthesis and voice conversion. See [1]_ and [2]_ for details.</span>
 
-<span class="sd">    It relies on :func:`nnmnkwii.functions.mlpg` and</span>
-<span class="sd">    :func:`nnmnkwii.functions.mlpg_grad` for forward and backward computation,</span>
+<span class="sd">    It relies on :func:`nnmnkwii.paramgen.mlpg` and</span>
+<span class="sd">    :func:`nnmnkwii.paramgen.mlpg_grad` for forward and backward computation,</span>
 <span class="sd">    respectively.</span>
 
 <span class="sd">    .. [1] Wu, Zhizheng, and Simon King. &quot;Minimum trajectory error training</span>
@@ -428,8 +428,8 @@
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        variances (torch.FloatTensor): Variances same as in</span>
-<span class="sd">            :func:`nnmnkwii.functions.mlpg`.</span>
-<span class="sd">        windows (list): same as in :func:`nnmnkwii.functions.mlpg`.</span>
+<span class="sd">            :func:`nnmnkwii.paramgen.mlpg`.</span>
+<span class="sd">        windows (list): same as in :func:`nnmnkwii.paramgen.mlpg`.</span>
 
 <span class="sd">    Warnings:</span>
 <span class="sd">        The function is generic but cannot run on CUDA. For faster</span>
@@ -437,8 +437,8 @@
 
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`nnmnkwii.autograd.mlpg`,</span>
-<span class="sd">        :func:`nnmnkwii.functions.mlpg`,</span>
-<span class="sd">        :func:`nnmnkwii.functions.mlpg_grad`.</span>
+<span class="sd">        :func:`nnmnkwii.paramgen.mlpg`,</span>
+<span class="sd">        :func:`nnmnkwii.paramgen.mlpg_grad`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
@@ -456,7 +456,7 @@
 
         <span class="n">means_np</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">variances_np</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">y</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">means_np</span><span class="p">,</span> <span class="n">variances_np</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">means_np</span><span class="p">,</span> <span class="n">variances_np</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">y</span>
 
@@ -469,7 +469,7 @@
         <span class="n">grad_output_numpy</span> <span class="o">=</span> <span class="n">grad_output</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">means_numpy</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">variances_numpy</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">grads_numpy</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">mlpg_grad</span><span class="p">(</span>
+        <span class="n">grads_numpy</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">mlpg_grad</span><span class="p">(</span>
             <span class="n">means_numpy</span><span class="p">,</span> <span class="n">variances_numpy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">,</span>
             <span class="n">grad_output_numpy</span><span class="p">)</span>
 
@@ -503,12 +503,12 @@
 
 <span class="sd">    To avoid dupulicate computations in forward and backward, the function</span>
 <span class="sd">    takes ``R`` at construction time. The matrix ``R`` can be computed by</span>
-<span class="sd">    :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.</span>
+<span class="sd">    :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        R: Unit-variance MLPG matrix of shape (``T x num_windows*T``). This</span>
 <span class="sd">          should be created with</span>
-<span class="sd">          :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`.</span>
+<span class="sd">          :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.</span>
 
 
 <span class="sd">    Attributes:</span>
@@ -517,6 +517,7 @@
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`nnmnkwii.autograd.unit_variance_mlpg`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">R</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">UnitVarianceMLPG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">R</span>
@@ -582,7 +583,7 @@
 <div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Maximum Liklihood Paramter Generation (MLPG).</span>
 
-<span class="sd">    The parameters are almost same as :func:`nnmnkwii.functions.mlpg` expects.</span>
+<span class="sd">    The parameters are almost same as :func:`nnmnkwii.paramgen.mlpg` expects.</span>
 <span class="sd">    The differences are:</span>
 
 <span class="sd">    - The function assumes ``means`` as :obj:`torch.autograd.Variable`</span>
@@ -596,7 +597,7 @@
 <span class="sd">        windows (list): A sequence of window specification</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        :obj:`nnmnkwii.autograd.MLPG`, :func:`nnmnkwii.functions.mlpg`</span>
+<span class="sd">        :obj:`nnmnkwii.autograd.MLPG`, :func:`nnmnkwii.paramgen.mlpg`</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
@@ -605,19 +606,20 @@
     <span class="k">assert</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">variances</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">)(</span><span class="n">means</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="unit_variance_mlpg"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html#nnmnkwii.autograd.unit_variance_mlpg">[docs]</a><span class="k">def</span> <span class="nf">unit_variance_mlpg</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Special case of MLPG assuming data is normalized to have unit variance.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        means (torch.autograd.Variable): Means, of shape (``T x D``) or</span>
 <span class="sd">          (``T*num_windows x static_dim``). See</span>
-<span class="sd">          :func:`nnmnkwii.functions.reshape_means` to reshape means from</span>
+<span class="sd">          :func:`nnmnkwii.paramgen.reshape_means` to reshape means from</span>
 <span class="sd">          (``T x D``) to (``T*num_windows x static_dim``).</span>
 <span class="sd">        R (torch.FloatTensor): MLPG matrix.</span>
 
 <span class="sd">    See also:</span>
 <span class="sd">        :obj:`nnmnkwii.autograd.UnitVarianceMLPG`,</span>
-<span class="sd">        :func:`nnmnkwii.functions.unit_variance_mlpg_matrix`,</span>
+<span class="sd">        :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`,</span>
 <span class="sd">        :func:`reshape_means`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">UnitVarianceMLPG</span><span class="p">(</span><span class="n">R</span><span class="p">)(</span><span class="n">means</span><span class="p">)</span></div>
@@ -657,7 +659,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0.0.3',
+            VERSION:'0.0.4.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

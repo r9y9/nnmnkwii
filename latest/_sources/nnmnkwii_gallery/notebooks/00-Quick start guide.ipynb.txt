@@ -148,7 +148,7 @@
     "aperiodicity = pyworld.d4c(x, f0, timeaxis, fs)\n",
     "\n",
     "# This trims spectrum that has very small power. Just to make visualization looks good.\n",
-    "from nnmnkwii.util import trim_zeros_frames\n",
+    "from nnmnkwii.preprocessing import trim_zeros_frames\n",
     "spectrogram = trim_zeros_frames(spectrogram)\n",
     "\n",
     "# Let's see spectrogram representaion\n",

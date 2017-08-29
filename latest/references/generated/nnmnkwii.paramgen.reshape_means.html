@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.paramgen.reshape_means &mdash; nnmnkwii 0.0.3 documentation</title>
+  <title>nnmnkwii.paramgen.reshape_means &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.3 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../../index.html"/>
         <link rel="up" title="Parameter generation" href="../paramgen.html"/>
         <link rel="next" title="Post-filters" href="../postfilters.html"/>
         <link rel="prev" title="nnmnkwii.paramgen.unit_variance_mlpg_matrix" href="nnmnkwii.paramgen.unit_variance_mlpg_matrix.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.3
+                0.0.4.dev0
               </div>
             
           
@@ -460,7 +460,7 @@ No-op if already reshaped.</p>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">T</span><span class="p">,</span> <span class="n">static_dim</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
@@ -469,7 +469,7 @@ No-op if already reshaped.</p>
 <span class="gp">... </span>    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])),</span> <span class="c1"># delta-delta</span>
 <span class="gp">... </span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">static_dim</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">reshaped_means</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">reshape_means</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reshaped_means</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">reshape_means</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">reshaped_means</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">),</span> <span class="n">static_dim</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -521,7 +521,7 @@ No-op if already reshaped.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.3',
+            VERSION:'0.0.4.dev0',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
