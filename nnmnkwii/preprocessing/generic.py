@@ -4,6 +4,43 @@ from __future__ import division, print_function, absolute_import
 import numpy as np
 from sklearn.utils.extmath import _incremental_mean_and_var
 from sklearn.preprocessing.data import _handle_zeros_in_scale
+from scipy import signal
+
+
+def preemphasis(x, coef=0.97):
+    """Pre-emphasis
+
+    Args:
+        x (1d-array): Input signal.
+        coef (float): Pre-emphasis coefficient.
+
+    Returns:
+        array: Output filtered signal.
+
+    See also:
+        :func:`inv_preemphasis`
+    """
+    b = np.array([1., -coef], x.dtype)
+    a = np.array([1.], x.dtype)
+    return signal.lfilter(b, a, x)
+
+
+def inv_preemphasis(x, coef=0.97):
+    """Inverse operation of pre-emphasis
+
+    Args:
+        x (1d-array): Input signal.
+        coef (float): Pre-emphasis coefficient.
+
+    Returns:
+        array: Output filtered signal.
+
+    See also:
+        :func:`preemphasis`
+    """
+    b = np.array([1.], x.dtype)
+    a = np.array([1., -coef], x.dtype)
+    return signal.lfilter(b, a, x)
 
 
 def _delta(x, window):

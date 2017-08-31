@@ -4,6 +4,7 @@ Change log
 dev
 ---
 
+- `#27`_: Add preemphasis / inv_preemphasis
 - `#26`_: Add tests for GMM based voice conversion if swap=True
 - `#25`_: fix typo in nnmnkwii/baseline/gmm.py
 
@@ -34,3 +35,4 @@ v0.0.1 <2017-08-14>
 .. _#23: https://github.com/r9y9/nnmnkwii/pull/23
 .. _#25: https://github.com/r9y9/nnmnkwii/pull/25
 .. _#26: https://github.com/r9y9/nnmnkwii/issues/26
+.. _#27: https://github.com/r9y9/nnmnkwii/pull/27

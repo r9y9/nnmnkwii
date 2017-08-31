@@ -6,6 +6,7 @@ from nnmnkwii.preprocessing import adjast_frame_length, delta_features
 from nnmnkwii.util import example_audio_file
 from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 from nnmnkwii.preprocessing import modspec, modphase
+from nnmnkwii.preprocessing import preemphasis, inv_preemphasis
 
 from scipy.io import wavfile
 import numpy as np
@@ -33,6 +34,18 @@ def _get_windows_set():
         ],
     ]
     return windows_set
+
+
+def test_preemphasis():
+    for dtype in [np.float32, np.float64]:
+        np.random.seed(1234)
+        x = np.random.rand(16000 * 5).astype(dtype)
+        y = preemphasis(x, 0.97)
+        assert x.shape == y.shape
+        assert x.dtype == y.dtype
+        x_hat = inv_preemphasis(y, 0.97)
+        assert x_hat.dtype == x.dtype
+        assert np.allclose(x_hat, x, atol=1e-5)
 
 
 def test_interp1d():
