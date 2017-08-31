@@ -15,12 +15,15 @@ version = '0.0.4'
 
 # Adapted from https://github.com/pytorch/pytorch
 cwd = os.path.dirname(os.path.abspath(__file__))
-try:
-    sha = subprocess.check_output(
-        ['git', 'rev-parse', 'HEAD'], cwd=cwd).decode('ascii').strip()
-    version += '+' + sha[:7]
-except subprocess.CalledProcessError:
-    pass
+if os.getenv('NNMNKWII_BUILD_VERSION'):
+    version = os.getenv('NNMNKWII_BUILD_VERSION')
+else:
+    try:
+        sha = subprocess.check_output(
+            ['git', 'rev-parse', 'HEAD'], cwd=cwd).decode('ascii').strip()
+        version += '+' + sha[:7]
+    except subprocess.CalledProcessError:
+        pass
 
 
 class build_py(setuptools.command.build_py.build_py):
