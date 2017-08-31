@@ -1,8 +1,8 @@
 Change log
 ==========
 
-v0.0.4
----
+v0.0.4 <2017-09-01>
+-------------------
 
 - `#28`_: Setuptools improvements. 1) __version__ now includes git commit hash. 2) description read README.rst using pandoc.
 - `#27`_: Add preemphasis / inv_preemphasis

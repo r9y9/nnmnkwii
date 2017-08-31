@@ -109,12 +109,13 @@ if not exists('README.rst'):
 if exists('README.rst'):
     README = open('README.rst').read()
 else:
-    README = 'Library to build speech synthesis systems designed for easy and fast prototyping.'
+    README = ''
 
 setup(
     name='nnmnkwii',
     version=version,
-    description=README,
+    description='Library to build speech synthesis systems designed for easy and fast prototyping.',
+    long_description=README,
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
     url='https://github.com/r9y9/nnmnkwii',
