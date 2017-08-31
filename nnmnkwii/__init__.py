@@ -7,6 +7,7 @@ https://github.com/r9y9/nnmnkwii
 
 from __future__ import division, print_function, absolute_import
 
-import pkg_resources
-
-__version__ = pkg_resources.get_distribution('nnmnkwii').version
+try:
+    from .version import __version__
+except ImportError:
+    raise ImportError("BUG: version.py doesn't exist. Please file a bug report.")

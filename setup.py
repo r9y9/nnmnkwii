@@ -3,9 +3,47 @@
 from __future__ import with_statement, print_function, absolute_import
 
 from setuptools import setup, find_packages, Extension
+import setuptools.command.develop
+import setuptools.command.build_py
 from distutils.version import LooseVersion
 from os.path import join
+import subprocess
+import os
 import numpy as np
+
+version = '0.0.4'
+
+# Adapted from https://github.com/pytorch/pytorch
+cwd = os.path.dirname(os.path.abspath(__file__))
+try:
+    sha = subprocess.check_output(
+        ['git', 'rev-parse', 'HEAD'], cwd=cwd).decode('ascii').strip()
+    version += '+' + sha[:7]
+except subprocess.CalledProcessError:
+    pass
+
+
+class build_py(setuptools.command.build_py.build_py):
+
+    def run(self):
+        self.create_version_file()
+        setuptools.command.build_py.build_py.run(self)
+
+    @staticmethod
+    def create_version_file():
+        global version, cwd
+        print('-- Building version ' + version)
+        version_path = os.path.join(cwd, 'nnmnkwii', 'version.py')
+        with open(version_path, 'w') as f:
+            f.write("__version__ = '{}'\n".format(version))
+
+
+class develop(setuptools.command.develop.develop):
+
+    def run(self):
+        build_py.create_version_file()
+        setuptools.command.develop.develop.run(self)
+
 
 min_cython_ver = '0.21.0'
 try:
@@ -46,9 +84,12 @@ ext_modules = [
     ),
 ]
 
+cmdclass['build_py'] = build_py
+cmdclass['develop'] = develop
+
 setup(
     name='nnmnkwii',
-    version='0.0.4-dev',
+    version=version,
     description='Library to build speech synthesis systems designed for easy and fast prototyping.',
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
