@@ -1,6 +1,0 @@
-nnmnkwii\.util\.meanstd
-=======================
-
-.. currentmodule:: nnmnkwii.util
-
-.. autofunction:: meanstd

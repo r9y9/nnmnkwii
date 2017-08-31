@@ -1,6 +1,0 @@
-nnmnkwii\.util\.meanvar
-=======================
-
-.. currentmodule:: nnmnkwii.util
-
-.. autofunction:: meanvar

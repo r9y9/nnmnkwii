@@ -1,6 +1,0 @@
-nnmnkwii\.functions\.reshape\_means
-===================================
-
-.. currentmodule:: nnmnkwii.functions
-
-.. autofunction:: reshape_means

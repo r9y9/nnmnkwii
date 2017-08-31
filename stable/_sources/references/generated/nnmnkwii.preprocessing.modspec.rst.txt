@@ -1,6 +1,0 @@
-nnmnkwii\.preprocessing\.modspec
-================================
-
-.. currentmodule:: nnmnkwii.preprocessing
-
-.. autofunction:: modspec

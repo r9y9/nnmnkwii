@@ -1,6 +1,0 @@
-nnmnkwii\.functions\.modspec
-============================
-
-.. currentmodule:: nnmnkwii.functions
-
-.. autofunction:: modspec

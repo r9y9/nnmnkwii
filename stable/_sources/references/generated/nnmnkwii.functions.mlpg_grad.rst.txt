@@ -1,6 +1,0 @@
-nnmnkwii\.functions\.mlpg\_grad
-===============================
-
-.. currentmodule:: nnmnkwii.functions
-
-.. autofunction:: mlpg_grad
