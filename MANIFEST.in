@@ -1,2 +1,3 @@
 include README.md LICENSE.md
 recursive-include nnmnkwii COPYING
+recursive-include nnmnkwii/util/_example_data *.lab *.wav *.npz *.hed
