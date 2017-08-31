@@ -6,7 +6,7 @@ from setuptools import setup, find_packages, Extension
 import setuptools.command.develop
 import setuptools.command.build_py
 from distutils.version import LooseVersion
-from os.path import join
+from os.path import join, exists
 import subprocess
 import os
 import numpy as np
@@ -43,6 +43,19 @@ class develop(setuptools.command.develop.develop):
     def run(self):
         build_py.create_version_file()
         setuptools.command.develop.develop.run(self)
+
+
+def create_readme_rst():
+    global cwd
+    try:
+        subprocess.check_call(
+            ["pandoc", "--from=markdown", "--to=rst", "--output=README.rst",
+             "README.md"], cwd=cwd)
+        print("Generated README.rst from README.md using pandoc.")
+    except subprocess.CalledProcessError:
+        pass
+    except OSError:
+        pass
 
 
 min_cython_ver = '0.21.0'
@@ -87,10 +100,18 @@ ext_modules = [
 cmdclass['build_py'] = build_py
 cmdclass['develop'] = develop
 
+if not exists('README.rst'):
+    create_readme_rst()
+
+if exists('README.rst'):
+    README = open('README.rst').read()
+else:
+    README = 'Library to build speech synthesis systems designed for easy and fast prototyping.'
+
 setup(
     name='nnmnkwii',
     version=version,
-    description='Library to build speech synthesis systems designed for easy and fast prototyping.',
+    description=README,
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
     url='https://github.com/r9y9/nnmnkwii',
