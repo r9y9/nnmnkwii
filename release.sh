@@ -14,7 +14,7 @@ TAG=$(git describe --exact-match --tags HEAD)
 
 VERSION=${TAG/v/}
 
-NNMNKWII_BUILD_VERSION=$VERSION python setup.py sdist
+NNMNKWII_BUILD_VERSION=$VERSION python setup.py develop sdist
 echo "*** Ready to release! nnmnkwii $TAG ***"
 echo "Please run the following command manually:"
 echo NNMNKWII_BUILD_VERSION=$VERSION python setup.py sdist upload
