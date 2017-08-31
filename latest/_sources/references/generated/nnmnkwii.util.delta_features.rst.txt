@@ -1,6 +1,0 @@
-nnmnkwii\.util\.delta\_features
-===============================
-
-.. currentmodule:: nnmnkwii.util
-
-.. autofunction:: delta_features

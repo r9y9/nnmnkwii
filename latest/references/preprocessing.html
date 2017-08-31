@@ -36,7 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../index.html"/>
-        <link rel="next" title="nnmnkwii.preprocessing.delta_features" href="generated/nnmnkwii.preprocessing.delta_features.html"/>
+        <link rel="next" title="nnmnkwii.preprocessing.preemphasis" href="generated/nnmnkwii.preprocessing.preemphasis.html"/>
         <link rel="prev" title="nnmnkwii.postfilters.merlin_post_filter" href="generated/nnmnkwii.postfilters.merlin_post_filter.html"/> 
 
   
@@ -281,6 +281,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pre-processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generic">Generic</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
@@ -329,6 +331,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#dev">dev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
@@ -444,6 +447,12 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.preemphasis.html#nnmnkwii.preprocessing.preemphasis" title="nnmnkwii.preprocessing.preemphasis"><code class="xref py py-obj docutils literal"><span class="pre">preemphasis</span></code></a>(x[,&nbsp;coef])</td>
+<td>Pre-emphasis</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_preemphasis.html#nnmnkwii.preprocessing.inv_preemphasis" title="nnmnkwii.preprocessing.inv_preemphasis"><code class="xref py py-obj docutils literal"><span class="pre">inv_preemphasis</span></code></a>(x[,&nbsp;coef])</td>
+<td>Inverse operation of pre-emphasis</td>
+</tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.delta_features.html#nnmnkwii.preprocessing.delta_features" title="nnmnkwii.preprocessing.delta_features"><code class="xref py py-obj docutils literal"><span class="pre">delta_features</span></code></a>(x,&nbsp;windows)</td>
 <td>Compute delta features and combine them.</td>
 </tr>
@@ -621,7 +630,7 @@ directly instead.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="generated/nnmnkwii.preprocessing.delta_features.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.delta_features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="generated/nnmnkwii.preprocessing.preemphasis.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.preemphasis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="generated/nnmnkwii.postfilters.merlin_post_filter.html" class="btn btn-neutral" title="nnmnkwii.postfilters.merlin_post_filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

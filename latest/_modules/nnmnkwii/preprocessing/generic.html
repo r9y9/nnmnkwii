@@ -280,6 +280,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
@@ -328,6 +330,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#dev">dev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
@@ -403,6 +406,43 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span> <span class="k">import</span> <span class="n">_incremental_mean_and_var</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing.data</span> <span class="k">import</span> <span class="n">_handle_zeros_in_scale</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">signal</span>
+
+
+<div class="viewcode-block" id="preemphasis"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html#nnmnkwii.preprocessing.preemphasis">[docs]</a><span class="k">def</span> <span class="nf">preemphasis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="mf">0.97</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pre-emphasis</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (1d-array): Input signal.</span>
+<span class="sd">        coef (float): Pre-emphasis coefficient.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array: Output filtered signal.</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`inv_preemphasis`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="n">coef</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">signal</span><span class="o">.</span><span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="inv_preemphasis"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html#nnmnkwii.preprocessing.inv_preemphasis">[docs]</a><span class="k">def</span> <span class="nf">inv_preemphasis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="mf">0.97</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inverse operation of pre-emphasis</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (1d-array): Input signal.</span>
+<span class="sd">        coef (float): Pre-emphasis coefficient.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array: Output filtered signal.</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`preemphasis`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="n">coef</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">signal</span><span class="o">.</span><span class="n">lfilter</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></div>
 
 
 <span class="k">def</span> <span class="nf">_delta</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">window</span><span class="p">):</span>

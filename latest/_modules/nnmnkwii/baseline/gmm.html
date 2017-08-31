@@ -280,6 +280,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
@@ -328,6 +330,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#dev">dev</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
@@ -433,7 +436,7 @@
         <span class="k">if</span> <span class="n">swap</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">XY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span>
 
         <span class="c1"># p(x), which is used to compute posterior prob. for a given source</span>
         <span class="c1"># spectral feature in mapping stage.</span>

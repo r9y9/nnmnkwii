@@ -1,6 +1,0 @@
-nnmnkwii\.functions\.mlpg
-=========================
-
-.. currentmodule:: nnmnkwii.functions
-
-.. autofunction:: mlpg

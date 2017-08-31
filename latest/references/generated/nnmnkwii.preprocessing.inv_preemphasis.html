@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.apply_each2d_trim &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
+  <title>nnmnkwii.preprocessing.inv_preemphasis &mdash; nnmnkwii 0.0.4.dev0 documentation</title>
   
 
   
@@ -36,9 +36,9 @@
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.4.dev0 documentation" href="../../index.html"/>
-        <link rel="up" title="Utilities" href="../util.html"/>
-        <link rel="next" title="nnmnkwii.util.example_label_file" href="nnmnkwii.util.example_label_file.html"/>
-        <link rel="prev" title="nnmnkwii.util.apply_each2d_padded" href="nnmnkwii.util.apply_each2d_padded.html"/> 
+        <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
+        <link rel="next" title="nnmnkwii.preprocessing.delta_features" href="nnmnkwii.preprocessing.delta_features.html"/>
+        <link rel="prev" title="nnmnkwii.preprocessing.preemphasis" href="nnmnkwii.preprocessing.preemphasis.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -279,11 +279,11 @@
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
@@ -307,10 +307,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../util.html">Utilities</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../util.html#function-utilities">Function utilities</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../util.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../util.html#function-utilities">Function utilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">nnmnkwii.util.apply_each2d_trim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../util.html#files">Files</a><ul>
@@ -382,15 +382,15 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../util.html">Utilities</a> &raquo;</li>
+          <li><a href="../preprocessing.html">Pre-processing</a> &raquo;</li>
         
-      <li>nnmnkwii.util.apply_each2d_trim</li>
+      <li>nnmnkwii.preprocessing.inv_preemphasis</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/references/generated/nnmnkwii.util.apply_each2d_trim.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/references/generated/nnmnkwii.preprocessing.inv_preemphasis.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -437,30 +437,34 @@
     margin-right: 4px;  /* make room for the exclamation icon */
 }
 </style>
-<div class="section" id="nnmnkwii-util-apply-each2d-trim">
-<h1>nnmnkwii.util.apply_each2d_trim<a class="headerlink" href="#nnmnkwii-util-apply-each2d-trim" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nnmnkwii-preprocessing-inv-preemphasis">
+<h1>nnmnkwii.preprocessing.inv_preemphasis<a class="headerlink" href="#nnmnkwii-preprocessing-inv-preemphasis" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="nnmnkwii.util.apply_each2d_trim">
-<code class="descclassname">nnmnkwii.util.</code><code class="descname">apply_each2d_trim</code><span class="sig-paren">(</span><em>func2d</em>, <em>X</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/util.html#apply_each2d_trim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.util.apply_each2d_trim" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply function for each trimmed 2d slice.</p>
+<dt id="nnmnkwii.preprocessing.inv_preemphasis">
+<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">inv_preemphasis</code><span class="sig-paren">(</span><em>x</em>, <em>coef=0.97</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#inv_preemphasis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.inv_preemphasis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inverse operation of pre-emphasis</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>func2d</strong> (<em>Function</em>) – Function applied multiple times for each 2d slice.</li>
-<li><strong>X</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Input 3d array of shape (<code class="docutils literal"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>)</li>
+<li><strong>x</strong> (<em>1d-array</em>) – Input signal.</li>
+<li><strong>coef</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#float" title="(in Python v2.7)"><em>float</em></a>) – Pre-emphasis coefficient.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Output array (<code class="docutils literal"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">T</span> <span class="pre">x</span> <span class="pre">D'</span></code>)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Output filtered signal.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)">numpy.ndarray</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)">array</a></p>
 </td>
 </tr>
 </tbody>
 </table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.preemphasis.html#nnmnkwii.preprocessing.preemphasis" title="nnmnkwii.preprocessing.preemphasis"><code class="xref py py-func docutils literal"><span class="pre">preemphasis()</span></code></a></p>
+</div>
 </dd></dl>
 
 </div>
@@ -475,10 +479,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nnmnkwii.util.example_label_file.html" class="btn btn-neutral float-right" title="nnmnkwii.util.example_label_file" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nnmnkwii.preprocessing.delta_features.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.delta_features" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nnmnkwii.util.apply_each2d_padded.html" class="btn btn-neutral" title="nnmnkwii.util.apply_each2d_padded" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nnmnkwii.preprocessing.preemphasis.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.preemphasis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

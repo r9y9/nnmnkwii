@@ -1,6 +1,0 @@
-nnmnkwii\.functions\.build\_win\_mats
-=====================================
-
-.. currentmodule:: nnmnkwii.functions
-
-.. autofunction:: build_win_mats

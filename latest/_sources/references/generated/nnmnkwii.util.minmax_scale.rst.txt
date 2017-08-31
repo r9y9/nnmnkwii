@@ -1,6 +1,0 @@
-nnmnkwii\.util\.minmax\_scale
-=============================
-
-.. currentmodule:: nnmnkwii.util
-
-.. autofunction:: minmax_scale

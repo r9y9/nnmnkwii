@@ -14,6 +14,8 @@ Utterance-wise operations
 .. autosummary::
    :toctree: generated/
 
+   preemphasis
+   inv_preemphasis
    delta_features
    trim_zeros_frames
    remove_zeros_frames
