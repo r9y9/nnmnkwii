@@ -4,7 +4,7 @@ Change log
 v0.0.5
 ------
 
-
+- Fix example data wasn't included in release tar ball.
 
 v0.0.4 <2017-09-01>
 -------------------
