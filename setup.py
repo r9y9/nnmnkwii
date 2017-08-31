@@ -3,9 +3,60 @@
 from __future__ import with_statement, print_function, absolute_import
 
 from setuptools import setup, find_packages, Extension
+import setuptools.command.develop
+import setuptools.command.build_py
 from distutils.version import LooseVersion
-from os.path import join
+from os.path import join, exists
+import subprocess
+import os
 import numpy as np
+
+version = '0.0.4'
+
+# Adapted from https://github.com/pytorch/pytorch
+cwd = os.path.dirname(os.path.abspath(__file__))
+try:
+    sha = subprocess.check_output(
+        ['git', 'rev-parse', 'HEAD'], cwd=cwd).decode('ascii').strip()
+    version += '+' + sha[:7]
+except subprocess.CalledProcessError:
+    pass
+
+
+class build_py(setuptools.command.build_py.build_py):
+
+    def run(self):
+        self.create_version_file()
+        setuptools.command.build_py.build_py.run(self)
+
+    @staticmethod
+    def create_version_file():
+        global version, cwd
+        print('-- Building version ' + version)
+        version_path = os.path.join(cwd, 'nnmnkwii', 'version.py')
+        with open(version_path, 'w') as f:
+            f.write("__version__ = '{}'\n".format(version))
+
+
+class develop(setuptools.command.develop.develop):
+
+    def run(self):
+        build_py.create_version_file()
+        setuptools.command.develop.develop.run(self)
+
+
+def create_readme_rst():
+    global cwd
+    try:
+        subprocess.check_call(
+            ["pandoc", "--from=markdown", "--to=rst", "--output=README.rst",
+             "README.md"], cwd=cwd)
+        print("Generated README.rst from README.md using pandoc.")
+    except subprocess.CalledProcessError:
+        pass
+    except OSError:
+        pass
+
 
 min_cython_ver = '0.21.0'
 try:
@@ -46,10 +97,21 @@ ext_modules = [
     ),
 ]
 
+cmdclass['build_py'] = build_py
+cmdclass['develop'] = develop
+
+if not exists('README.rst'):
+    create_readme_rst()
+
+if exists('README.rst'):
+    README = open('README.rst').read()
+else:
+    README = 'Library to build speech synthesis systems designed for easy and fast prototyping.'
+
 setup(
     name='nnmnkwii',
-    version='0.0.4-dev',
-    description='Library to build speech synthesis systems designed for easy and fast prototyping.',
+    version=version,
+    description=README,
     author='Ryuichi Yamamoto',
     author_email='zryuichi@gmail.com',
     url='https://github.com/r9y9/nnmnkwii',

@@ -1,9 +1,10 @@
 Change log
 ==========
 
-dev
+v0.0.4
 ---
 
+- `#28`_: Setuptools improvements. 1) __version__ now includes git commit hash. 2) description read README.rst using pandoc.
 - `#27`_: Add preemphasis / inv_preemphasis
 - `#26`_: Add tests for GMM based voice conversion if swap=True
 - `#25`_: fix typo in nnmnkwii/baseline/gmm.py
@@ -36,3 +37,4 @@ v0.0.1 <2017-08-14>
 .. _#25: https://github.com/r9y9/nnmnkwii/pull/25
 .. _#26: https://github.com/r9y9/nnmnkwii/issues/26
 .. _#27: https://github.com/r9y9/nnmnkwii/pull/27
+.. _#28: https://github.com/r9y9/nnmnkwii/pull/28
