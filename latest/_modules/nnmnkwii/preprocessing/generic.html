@@ -422,6 +422,15 @@
 
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`inv_preemphasis`</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_audio_file</span>
+<span class="sd">        &gt;&gt;&gt; from scipy.io import wavfile</span>
+<span class="sd">        &gt;&gt;&gt; fs, x = wavfile.read(example_audio_file())</span>
+<span class="sd">        &gt;&gt;&gt; x = x.astype(np.float64)</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import preprocessing as P</span>
+<span class="sd">        &gt;&gt;&gt; y = P.preemphasis(x, coef=0.97)</span>
+<span class="sd">        &gt;&gt;&gt; assert x.shape == y.shape</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="n">coef</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
@@ -440,6 +449,15 @@
 
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`preemphasis`</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_audio_file</span>
+<span class="sd">        &gt;&gt;&gt; from scipy.io import wavfile</span>
+<span class="sd">        &gt;&gt;&gt; fs, x = wavfile.read(example_audio_file())</span>
+<span class="sd">        &gt;&gt;&gt; x = x.astype(np.float64)</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import preprocessing as P</span>
+<span class="sd">        &gt;&gt;&gt; x_hat = P.inv_preemphasis(P.preemphasis(x, coef=0.97), coef=0.97)</span>
+<span class="sd">        &gt;&gt;&gt; assert np.allclose(x, x_hat)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
     <span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="o">-</span><span class="n">coef</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
