@@ -19,6 +19,15 @@ def preemphasis(x, coef=0.97):
 
     See also:
         :func:`inv_preemphasis`
+
+    Examples:
+        >>> from nnmnkwii.util import example_audio_file
+        >>> from scipy.io import wavfile
+        >>> fs, x = wavfile.read(example_audio_file())
+        >>> x = x.astype(np.float64)
+        >>> from nnmnkwii import preprocessing as P
+        >>> y = P.preemphasis(x, coef=0.97)
+        >>> assert x.shape == y.shape
     """
     b = np.array([1., -coef], x.dtype)
     a = np.array([1.], x.dtype)
@@ -37,6 +46,15 @@ def inv_preemphasis(x, coef=0.97):
 
     See also:
         :func:`preemphasis`
+
+    Examples:
+        >>> from nnmnkwii.util import example_audio_file
+        >>> from scipy.io import wavfile
+        >>> fs, x = wavfile.read(example_audio_file())
+        >>> x = x.astype(np.float64)
+        >>> from nnmnkwii import preprocessing as P
+        >>> x_hat = P.inv_preemphasis(P.preemphasis(x, coef=0.97), coef=0.97)
+        >>> assert np.allclose(x, x_hat)
     """
     b = np.array([1.], x.dtype)
     a = np.array([1., -coef], x.dtype)
