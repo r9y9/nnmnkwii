@@ -124,7 +124,7 @@ class FileSourceDataset(Dataset):
         return len(self.collected_files)
 
     def asarray(self, padded_length=None, dtype=np.float32,
-                padded_length_guess=100):
+                padded_length_guess=1000):
         """Convert dataset to numpy array.
 
         This try to load entire dataset into a single 3d numpy array.
