@@ -12,7 +12,7 @@ from sklearn.mixture import GaussianMixture
 
 
 class DTWAligner(object):
-    """Align feature matcies using fastdtw_.
+    """Align feature matrices using fastdtw_.
 
     .. _fastdtw: https://github.com/slaypni/fastdtw
 
@@ -46,8 +46,10 @@ class DTWAligner(object):
         X, Y = XY
         assert X.ndim == 3 and Y.ndim == 3
 
-        X_aligned = np.zeros_like(X)
-        Y_aligned = np.zeros_like(Y)
+        longer_features = X if X.shape[1] > Y.shape[1] else Y
+
+        X_aligned = np.zeros_like(longer_features)
+        Y_aligned = np.zeros_like(longer_features)
         for idx, (x, y) in enumerate(zip(X, Y)):
             x, y = trim_zeros_frames(x), trim_zeros_frames(y)
             dist, path = fastdtw(x, y, radius=self.radius, dist=self.dist)
@@ -55,6 +57,16 @@ class DTWAligner(object):
             pathx = list(map(lambda l: l[0], path))
             pathy = list(map(lambda l: l[1], path))
             x, y = x[pathx], y[pathy]
+            max_len = max(len(x), len(y))
+            if max_len > X_aligned.shape[1] or max_len > Y_aligned.shape[1]:
+                pad_size = max(max_len - X_aligned.shape[1],
+                               max_len > Y_aligned.shape[1])
+                X_aligned = np.pad(
+                    X_aligned, [(0, 0), (0, pad_size), (0, 0)],
+                    mode="constant", constant_values=0)
+                Y_aligned = np.pad(
+                    Y_aligned, [(0, 0), (0, pad_size), (0, 0)],
+                    mode="constant", constant_values=0)
             X_aligned[idx][:len(x)] = x
             Y_aligned[idx][:len(y)] = y
             if self.verbose > 0:
@@ -63,7 +75,7 @@ class DTWAligner(object):
 
 
 class IterativeDTWAligner(object):
-    """Align feature matcies iteratively using GMM-based feature conversion.
+    """Align feature matrices iteratively using GMM-based feature conversion.
 
     .. _fastdtw: https://github.com/slaypni/fastdtw
 
@@ -104,9 +116,11 @@ class IterativeDTWAligner(object):
         X, Y = XY
         assert X.ndim == 3 and Y.ndim == 3
 
+        longer_features = X if X.shape[1] > Y.shape[1] else Y
+
         Xc = X.copy()  # this will be updated iteratively
-        X_aligned = np.zeros_like(X)
-        Y_aligned = np.zeros_like(Y)
+        X_aligned = np.zeros_like(longer_features)
+        Y_aligned = np.zeros_like(longer_features)
         refined_paths = np.empty(len(X), dtype=np.object)
 
         for idx in range(self.n_iter):
@@ -119,6 +133,19 @@ class IterativeDTWAligner(object):
 
                 refined_paths[idx] = pathx
                 x, y = x[pathx], y[pathy]
+
+                max_len = max(len(x), len(y))
+                if max_len > X_aligned.shape[1] or max_len > Y_aligned.shape[1]:
+                    pad_size = max(
+                        max_len - X_aligned.shape[1],
+                        max_len > Y_aligned.shape[1])
+                    X_aligned = np.pad(
+                        X_aligned, [(0, 0), (0, pad_size), (0, 0)],
+                        mode="constant", constant_values=0)
+                    Y_aligned = np.pad(
+                        Y_aligned, [(0, 0), (0, pad_size), (0, 0)],
+                        mode="constant", constant_values=0)
+
                 X_aligned[idx][:len(x)] = x
                 Y_aligned[idx][:len(y)] = y
                 if self.verbose > 0:

@@ -7,6 +7,8 @@ from nnmnkwii.util import example_audio_file
 from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 from nnmnkwii.preprocessing import modspec, modphase
 from nnmnkwii.preprocessing import preemphasis, inv_preemphasis
+from nnmnkwii.util import example_file_data_sources_for_duration_model
+from nnmnkwii.datasets import FileSourceDataset
 
 from scipy.io import wavfile
 import numpy as np
@@ -120,6 +122,20 @@ def _get_mcep(x, fs, frame_period=5, order=24):
     return mc
 
 
+def test_dtw_frame_length_adjastment():
+    _, X = example_file_data_sources_for_duration_model()
+    X = FileSourceDataset(X)
+    X_unaligned = X.asarray()
+    # This should trigger frame length adjastment
+    Y_unaligned = np.pad(X_unaligned, [(0, 0), (5, 0), (0, 0)],
+                         mode="constant", constant_values=0)
+    Y_unaligned = Y_unaligned[:, :-5, :]
+    for aligner in [DTWAligner(), IterativeDTWAligner(
+            n_iter=1, max_iter_gmm=1, n_components_gmm=1)]:
+        X_aligned, Y_aligned = aligner.transform((X_unaligned, Y_unaligned))
+        assert X_aligned.shape == Y_aligned.shape
+
+
 def test_dtw_aligner():
     x, fs = librosa.load(example_audio_file(), sr=None)
     assert fs == 16000
@@ -142,7 +158,7 @@ def test_dtw_aligner():
     assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
 
     X_aligned, Y_aligned = IterativeDTWAligner(
-        n_iter=3, max_iter_gmm=30, n_components_gmm=4).transform((X, Y))
+        n_iter=2, max_iter_gmm=10, n_components_gmm=2).transform((X, Y))
     assert X_aligned.shape == Y_aligned.shape
     assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
 
