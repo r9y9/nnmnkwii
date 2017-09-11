@@ -18,8 +18,8 @@ def _get_small_datasets(padded=False, duration=False, padded_length=1000):
     else:
         X, Y = example_file_data_sources_for_acoustic_model()
     if padded:
-        X = PaddedFileSourceDataset(X, padded_length=1000)
-        Y = PaddedFileSourceDataset(Y, padded_length=1000)
+        X = PaddedFileSourceDataset(X, padded_length=padded_length)
+        Y = PaddedFileSourceDataset(Y, padded_length=padded_length)
     else:
         X = FileSourceDataset(X)
         Y = FileSourceDataset(Y)
@@ -27,7 +27,7 @@ def _get_small_datasets(padded=False, duration=False, padded_length=1000):
 
 
 def test_asarray():
-    X, Y = _get_small_datasets(padded=True, duration=True)
+    X, Y = _get_small_datasets(padded=False, duration=True)
     lengths = [len(x) for x in X]
     X, Y = _get_small_datasets(
         padded=True, duration=True, padded_length=np.max(lengths))
@@ -35,8 +35,24 @@ def test_asarray():
     assert X_array.ndim == 3
     assert np.allclose(X_array, X.asarray())
 
+    # Explicitly give padded length to actual max time length
     X, Y = _get_small_datasets(padded=False, duration=True)
     assert np.allclose(X_array, X.asarray(padded_length=np.max(lengths)))
+
+    # Make sure that auto-guessing padded_length should get same result as
+    # explicitly given max time length
+    assert np.allclose(X_array, X.asarray(padded_length=None))
+
+    # Force triggering re-allocations
+    assert np.allclose(X_array, X.asarray(
+        padded_length=None, padded_length_guess=1))
+
+    def __test_very_small_padded_length():
+        X, Y = _get_small_datasets(padded=False, duration=True)
+        X.asarray(padded_length=1)
+
+    # Should raise `num frames exceeded`
+    yield raises(RuntimeError)(__test_very_small_padded_length)
 
 
 def test_duration_sources():

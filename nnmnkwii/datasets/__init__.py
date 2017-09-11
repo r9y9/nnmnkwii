@@ -123,36 +123,51 @@ class FileSourceDataset(Dataset):
     def __len__(self):
         return len(self.collected_files)
 
-    def asarray(self, padded_length, dtype=np.float32, lengths=None):
+    def asarray(self, padded_length=None, dtype=np.float32,
+                padded_length_guess=100):
         """Convert dataset to numpy array.
 
         This try to load entire dataset into a single 3d numpy array.
 
         Args:
             padded_length (int): Number of maximum time frames to be expected.
+              If None, it is set to actual maximum time length.
+            dtype (numpy.dtype): Numpy dtype.
+            padded_length_guess: (int): Initial guess of max time length of
+              padded dataset array. Used if ``padded_length`` is None.
         Returns:
-            3d-array: ``N x T^max x D`` array
+            3d-array: Array of shape ``N x T^max x D`` if ``padded_length`` is
+            None, otherwise ``N x padded_length x D``.
         """
         collected_files = self.collected_files
-        T = padded_length
+        if padded_length is not None:
+            T = padded_length
+        else:
+            T = padded_length_guess  # initial guess
 
         D = self[0].shape[-1]
         N = len(self)
         X = np.zeros((N, T, D), dtype=dtype)
+        lengths = np.zeros(N, dtype=np.int)
 
-        if lengths is not None:
-            assert len(lengths) == N
-        else:
-            lengths = np.zeros(N, dtype=np.int)
         for idx, paths in enumerate(collected_files):
             x = self.file_data_source.collect_features(*paths)
+            lengths[idx] = len(x)
             if len(x) > T:
-                raise RuntimeError("""
-Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
-                    len(x), T))
-                # TODO: segmentation algorithm?
+                if padded_length is not None:
+                    raise RuntimeError(
+                        """Num frames {} exceeded: {}.
+Try larger value for padded_length, or set to None""".format(len(x), T))
+                n = len(x) - T
+                # Padd zeros to end of time axis
+                X = np.pad(X, [(0, 0), (0, n), (0, 0)],
+                           mode="constant", constant_values=0)
             X[idx][:len(x), :] = x
             lengths[idx] = len(x)
+
+        if padded_length is None:
+            max_len = np.max(lengths)
+            X = X[:, :max_len, :]
         return X
 
 
@@ -217,9 +232,9 @@ Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
         else:
             return self._getitem_one_sample(idx)
 
-    def asarray(self, dtype=np.float32, lengths=None):
+    def asarray(self, dtype=np.float32):
         return super(PaddedFileSourceDataset, self).asarray(
-            self.padded_length, dtype=dtype, lengths=lengths)
+            self.padded_length, dtype=dtype)
 
 
 class MemoryCacheDataset(Dataset):

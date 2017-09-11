@@ -5,6 +5,7 @@ v0.0.5
 ------
 
 - Fix example data wasn't included in release tar ball.
+- Support ``padded_length`` is ``None`` for :obj:`nnmnkwii.datasets.FileSourceDataset`.
 
 v0.0.4 <2017-09-01>
 -------------------
