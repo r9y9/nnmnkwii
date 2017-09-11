@@ -589,18 +589,28 @@ find data to be loaded and 2) how to collect features from them.</p>
 </div>
 <dl class="method">
 <dt id="nnmnkwii.datasets.FileSourceDataset.asarray">
-<code class="descname">asarray</code><span class="sig-paren">(</span><em>padded_length</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>lengths=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset.asarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="Permalink to this definition">¶</a></dt>
+<code class="descname">asarray</code><span class="sig-paren">(</span><em>padded_length=None</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>padded_length_guess=1000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset.asarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert dataset to numpy array.</p>
 <p>This try to load entire dataset into a single 3d numpy array.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Number of maximum time frames to be expected.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Number of maximum time frames to be expected.
+If None, it is set to actual maximum time length.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.13)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
+<li><strong>padded_length_guess</strong> – (int): Initial guess of max time length of
+padded dataset array. Used if <code class="docutils literal"><span class="pre">padded_length</span></code> is None.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> array</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of shape <code class="docutils literal"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> if <code class="docutils literal"><span class="pre">padded_length</span></code> is
+None, otherwise <code class="docutils literal"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">padded_length</span> <span class="pre">x</span> <span class="pre">D</span></code>.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">3d-array</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">3d-array</p>
+</td>
 </tr>
 </tbody>
 </table>
