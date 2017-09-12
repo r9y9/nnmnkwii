@@ -22,19 +22,19 @@ class DTWAligner(object):
         verbose (int): Verbose flag. Default is 0.
 
     Examples:
-        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
-        >>> from nnmnkwii.datasets import PaddedFileSourceDataset
+        >>> from nnmnkwii.util import example_file_data_sources_for_duration_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
         >>> from nnmnkwii.preprocessing.alignment import DTWAligner
-        >>> _, X = example_file_data_sources_for_acoustic_model()
-        >>> X = PaddedFileSourceDataset(X, 1000).asarray()
+        >>> _, X = example_file_data_sources_for_duration_model()
+        >>> X = FileSourceDataset(X).asarray()
         >>> X.shape
-        (3, 1000, 187)
+        (3, 40, 5)
         >>> Y = X.copy()
         >>> X_aligned, Y_aligned = DTWAligner().transform((X, Y))
         >>> X_aligned.shape
-        (3, 1000, 187)
+        (3, 40, 5)
         >>> Y_aligned.shape
-        (3, 1000, 187)
+        (3, 40, 5)
     """
 
     def __init__(self, dist=lambda x, y: norm(x - y), radius=1, verbose=0):
@@ -88,19 +88,19 @@ class IterativeDTWAligner(object):
         n_components_gmm (int): Number of mixture components in GMM.
 
     Examples:
-        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
-        >>> from nnmnkwii.datasets import PaddedFileSourceDataset
+        >>> from nnmnkwii.util import example_file_data_sources_for_duration_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
         >>> from nnmnkwii.preprocessing.alignment import IterativeDTWAligner
-        >>> _, X = example_file_data_sources_for_acoustic_model()
-        >>> X = PaddedFileSourceDataset(X, 1000).asarray()
+        >>> _, X = example_file_data_sources_for_duration_model()
+        >>> X = FileSourceDataset(X).asarray()
         >>> X.shape
-        (3, 1000, 187)
+        (3, 40, 5)
         >>> Y = X.copy()
         >>> X_aligned, Y_aligned = IterativeDTWAligner(n_iter=1).transform((X, Y))
         >>> X_aligned.shape
-        (3, 1000, 187)
+        (3, 40, 5)
         >>> Y_aligned.shape
-        (3, 1000, 187)
+        (3, 40, 5)
     """
 
     def __init__(self, n_iter=3, dist=lambda x, y: norm(x - y),
