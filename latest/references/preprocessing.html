@@ -523,7 +523,7 @@ directly instead.</p>
 <span class="target" id="module-nnmnkwii.preprocessing.alignment"></span><dl class="class">
 <dt id="nnmnkwii.preprocessing.alignment.DTWAligner">
 <em class="property">class </em><code class="descclassname">nnmnkwii.preprocessing.alignment.</code><code class="descname">DTWAligner</code><span class="sig-paren">(</span><em>dist=&lt;function DTWAligner.&lt;lambda&gt;&gt;</em>, <em>radius=1</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/preprocessing/alignment.html#DTWAligner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.alignment.DTWAligner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Align feature matcies using <a class="reference external" href="https://github.com/slaypni/fastdtw">fastdtw</a>.</p>
+<dd><p>Align feature matrices using <a class="reference external" href="https://github.com/slaypni/fastdtw">fastdtw</a>.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.preprocessing.alignment.DTWAligner.dist">
 <code class="descname">dist</code><a class="headerlink" href="#nnmnkwii.preprocessing.alignment.DTWAligner.dist" title="Permalink to this definition">¶</a></dt>
@@ -543,19 +543,19 @@ directly instead.</p>
 </dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">PaddedFileSourceDataset</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_duration_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing.alignment</span> <span class="k">import</span> <span class="n">DTWAligner</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_duration_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(3, 1000, 187)</span>
+<span class="go">(3, 40, 5)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">DTWAligner</span><span class="p">()</span><span class="o">.</span><span class="n">transform</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(3, 1000, 187)</span>
+<span class="go">(3, 40, 5)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y_aligned</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(3, 1000, 187)</span>
+<span class="go">(3, 40, 5)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -563,7 +563,7 @@ directly instead.</p>
 <dl class="class">
 <dt id="nnmnkwii.preprocessing.alignment.IterativeDTWAligner">
 <em class="property">class </em><code class="descclassname">nnmnkwii.preprocessing.alignment.</code><code class="descname">IterativeDTWAligner</code><span class="sig-paren">(</span><em>n_iter=3</em>, <em>dist=&lt;function IterativeDTWAligner.&lt;lambda&gt;&gt;</em>, <em>radius=1</em>, <em>max_iter_gmm=100</em>, <em>n_components_gmm=16</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/preprocessing/alignment.html#IterativeDTWAligner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.alignment.IterativeDTWAligner" title="Permalink to this definition">¶</a></dt>
-<dd><p>Align feature matcies iteratively using GMM-based feature conversion.</p>
+<dd><p>Align feature matrices iteratively using GMM-based feature conversion.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.preprocessing.alignment.IterativeDTWAligner.n_iter">
 <code class="descname">n_iter</code><a class="headerlink" href="#nnmnkwii.preprocessing.alignment.IterativeDTWAligner.n_iter" title="Permalink to this definition">¶</a></dt>
@@ -601,19 +601,19 @@ directly instead.</p>
 </dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">PaddedFileSourceDataset</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_duration_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing.alignment</span> <span class="k">import</span> <span class="n">IterativeDTWAligner</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_duration_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(3, 1000, 187)</span>
+<span class="go">(3, 40, 5)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">IterativeDTWAligner</span><span class="p">(</span><span class="n">n_iter</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(3, 1000, 187)</span>
+<span class="go">(3, 40, 5)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">Y_aligned</span><span class="o">.</span><span class="n">shape</span>
-<span class="go">(3, 1000, 187)</span>
+<span class="go">(3, 40, 5)</span>
 </pre></div>
 </div>
 </dd></dl>

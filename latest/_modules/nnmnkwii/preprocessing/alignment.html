@@ -415,7 +415,7 @@
 
 
 <div class="viewcode-block" id="DTWAligner"><a class="viewcode-back" href="../../../references/preprocessing.html#nnmnkwii.preprocessing.alignment.DTWAligner">[docs]</a><span class="k">class</span> <span class="nc">DTWAligner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Align feature matcies using fastdtw_.</span>
+    <span class="sd">&quot;&quot;&quot;Align feature matrices using fastdtw_.</span>
 
 <span class="sd">    .. _fastdtw: https://github.com/slaypni/fastdtw</span>
 
@@ -425,19 +425,19 @@
 <span class="sd">        verbose (int): Verbose flag. Default is 0.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import PaddedFileSourceDataset</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_duration_model</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import DTWAligner</span>
-<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_acoustic_model()</span>
-<span class="sd">        &gt;&gt;&gt; X = PaddedFileSourceDataset(X, 1000).asarray()</span>
+<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_duration_model()</span>
+<span class="sd">        &gt;&gt;&gt; X = FileSourceDataset(X).asarray()</span>
 <span class="sd">        &gt;&gt;&gt; X.shape</span>
-<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        (3, 40, 5)</span>
 <span class="sd">        &gt;&gt;&gt; Y = X.copy()</span>
 <span class="sd">        &gt;&gt;&gt; X_aligned, Y_aligned = DTWAligner().transform((X, Y))</span>
 <span class="sd">        &gt;&gt;&gt; X_aligned.shape</span>
-<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        (3, 40, 5)</span>
 <span class="sd">        &gt;&gt;&gt; Y_aligned.shape</span>
-<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        (3, 40, 5)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
@@ -478,7 +478,7 @@
 
 
 <div class="viewcode-block" id="IterativeDTWAligner"><a class="viewcode-back" href="../../../references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner">[docs]</a><span class="k">class</span> <span class="nc">IterativeDTWAligner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Align feature matcies iteratively using GMM-based feature conversion.</span>
+    <span class="sd">&quot;&quot;&quot;Align feature matrices iteratively using GMM-based feature conversion.</span>
 
 <span class="sd">    .. _fastdtw: https://github.com/slaypni/fastdtw</span>
 
@@ -491,19 +491,19 @@
 <span class="sd">        n_components_gmm (int): Number of mixture components in GMM.</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import PaddedFileSourceDataset</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_duration_model</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import IterativeDTWAligner</span>
-<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_acoustic_model()</span>
-<span class="sd">        &gt;&gt;&gt; X = PaddedFileSourceDataset(X, 1000).asarray()</span>
+<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_duration_model()</span>
+<span class="sd">        &gt;&gt;&gt; X = FileSourceDataset(X).asarray()</span>
 <span class="sd">        &gt;&gt;&gt; X.shape</span>
-<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        (3, 40, 5)</span>
 <span class="sd">        &gt;&gt;&gt; Y = X.copy()</span>
 <span class="sd">        &gt;&gt;&gt; X_aligned, Y_aligned = IterativeDTWAligner(n_iter=1).transform((X, Y))</span>
 <span class="sd">        &gt;&gt;&gt; X_aligned.shape</span>
-<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        (3, 40, 5)</span>
 <span class="sd">        &gt;&gt;&gt; Y_aligned.shape</span>
-<span class="sd">        (3, 1000, 187)</span>
+<span class="sd">        (3, 40, 5)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span>
