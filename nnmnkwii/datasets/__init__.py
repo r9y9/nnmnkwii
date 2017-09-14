@@ -3,6 +3,7 @@ from __future__ import with_statement, print_function, absolute_import
 import numpy as np
 
 from collections import OrderedDict
+from warnings import warn
 
 
 class FileDataSource(object):
@@ -111,6 +112,9 @@ class FileSourceDataset(Dataset):
             collected_files = np.asarray(collected_files).T
         else:
             collected_files = np.atleast_2d(collected_files).T
+        if len(collected_files) == 0:
+            warn("No files are collected. You might have specified wrong data source.")
+
         self.collected_files = collected_files
 
     def __getitem__(self, idx):
