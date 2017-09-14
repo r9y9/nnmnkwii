@@ -2,6 +2,7 @@ from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
 from nnmnkwii.datasets import MemoryCacheFramewiseDataset
+from nnmnkwii.datasets import FileDataSource
 from nnmnkwii.util import example_file_data_sources_for_acoustic_model
 from nnmnkwii.util import example_file_data_sources_for_duration_model
 
@@ -24,6 +25,22 @@ def _get_small_datasets(padded=False, duration=False, padded_length=1000):
         X = FileSourceDataset(X)
         Y = FileSourceDataset(Y)
     return X, Y
+
+
+def test_empty_dataset():
+    class EmptyDataSource(FileDataSource):
+        def collect_files(self):
+            return []
+
+        def collect_features(path):
+            pass
+    X = FileSourceDataset(EmptyDataSource())
+
+    def __test_outof_range(X):
+        print(X[0])
+
+    # Should raise IndexError
+    yield raises(IndexError)(__test_outof_range), X
 
 
 def test_asarray():
