@@ -2,7 +2,8 @@ from __future__ import with_statement, print_function, absolute_import
 
 from nnmnkwii.datasets import FileDataSource
 
-from os.path import join, splitext
+import numpy as np
+from os.path import join, splitext, isdir
 from os import listdir
 
 _speakers = ["fujitou", "tsuchiya", "uemura"]
@@ -14,33 +15,43 @@ def _get_dir(speaker, emotion):
 
 
 class VoiceStatisticsWavFileDataSource(FileDataSource):
-    """Voice-statistics data source
+    """File data source for Voice-statistics dataset.
 
-    You can get the dataset from `voice-statistics`_.
+    A builtin implementation of ``FileDataSource`` for voice-statistics
+    dataset. Users are expected to inherit the class and implement
+    ``collect_features`` method, which defines how features are computed
+    given a wav path.
+
+    You can download data (~720MB) from `voice-statistics`_.
 
     _voice-statistics: http://voice-statistics.github.io/
 
-    Attributes:
-        data_root: Data root
-        speakers (list): List of speakers to load.
+    Args:
+        data_root (str): Data root
+        speakers (list): List of speakers to load. Supported names of speaker
+          are "fujitou", "tsuchiya" and "uemura".
         labelmap (dict[optional]): Dict of speaker labels. If None,
-            it's assigned as incrementally (i.e., 0, 1, 2) for specified
-            speakers.
+          it's assigned as incrementally (i.e., 0, 1, 2) for specified
+          speakers.
         max_files_per_dir (int): Maximum files per directory to load.
         emotions (list): List of emotions we use.
+
+    Attributes:
+        labels (numpy.ndarray): List of speaker identifiers determined by
+          labelmap. Stored in ``collect_files``.
     """
 
     def __init__(self, data_root, speakers, labelmap=None, max_files_per_dir=2,
                  emotions=["normal"]):
         for speaker in speakers:
             if speaker not in _speakers:
-                raise RuntimeError(
+                raise ValueError(
                     "Unknown speaker '{}'. It should be one of {}".format(
                         speaker, _speakers))
 
         for emotion in emotions:
             if emotion not in _emotions:
-                raise RuntimeError(
+                raise ValueError(
                     "Unknown emotion '{}'. It should be one of {}".format(
                         emotion, _emotions))
 
@@ -65,16 +76,18 @@ class VoiceStatisticsWavFileDataSource(FileDataSource):
                             self.emotions))
             files = []
             for d in dirs:
+                if not isdir(d):
+                    raise RuntimeError("{} doesn't exist.".format(d))
+
                 fs = [join(d, f) for f in listdir(d)]
                 fs = list(filter(lambda x: splitext(x)[1] == ".wav", fs))
                 fs = sorted(fs)
                 fs = fs[:self.max_files_per_dir]
                 files.extend(fs)
-            files = sorted(files)
 
-            for f in files[:self.max_files_per_dir]:
+            for f in files:
                 paths.append(f)
                 labels.append(self.labelmap[speaker])
 
-        self.labels = labels
+        self.labels = np.array(labels, dtype=np.int32)
         return paths
