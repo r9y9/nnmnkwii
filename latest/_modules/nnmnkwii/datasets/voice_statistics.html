@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.baseline.gmm &mdash; nnmnkwii 0.0.5+c2ece48 documentation</title>
+  <title>nnmnkwii.datasets.voice_statistics &mdash; nnmnkwii 0.0.5+c2ece48 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.5+c2ece48 documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
+        <link rel="up" title="nnmnkwii.datasets" href="../datasets.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -389,7 +389,9 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>nnmnkwii.baseline.gmm</li>
+          <li><a href="../datasets.html">nnmnkwii.datasets</a> &raquo;</li>
+        
+      <li>nnmnkwii.datasets.voice_statistics</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -406,215 +408,106 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for nnmnkwii.baseline.gmm</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="k">import</span> <span class="n">GaussianMixture</span>
-<span class="kn">from</span> <span class="nn">sklearn.mixture.gaussian_mixture</span> <span class="k">import</span> <span class="n">_compute_precision_cholesky</span>
+  <h1>Source code for nnmnkwii.datasets.voice_statistics</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.paramgen</span> <span class="k">import</span> <span class="n">mlpg</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
 
-<span class="c1"># TODO: this can be refactored to be more flexible</span>
-<span class="c1"># e.g. take `swap` and `diff` out of the class</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
 
-
-<span class="k">class</span> <span class="nc">MLPGBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmm</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="k">assert</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariance_type</span> <span class="o">==</span> <span class="s2">&quot;full&quot;</span>
-        <span class="c1"># D: static + delta dim</span>
-        <span class="n">D</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">num_mixtures</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weights</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">weights_</span>
-
-        <span class="c1"># Split source and target parameters from joint GMM</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[:,</span> <span class="p">:</span><span class="n">D</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[:,</span> <span class="n">D</span><span class="p">:]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[:,</span> <span class="p">:</span><span class="n">D</span><span class="p">,</span> <span class="p">:</span><span class="n">D</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[:,</span> <span class="p">:</span><span class="n">D</span><span class="p">,</span> <span class="n">D</span><span class="p">:]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[:,</span> <span class="n">D</span><span class="p">:,</span> <span class="p">:</span><span class="n">D</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[:,</span> <span class="n">D</span><span class="p">:,</span> <span class="n">D</span><span class="p">:]</span>
-
-        <span class="k">if</span> <span class="n">diff</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-
-        <span class="c1"># swap src and target parameters</span>
-        <span class="k">if</span> <span class="n">swap</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span>
-
-        <span class="c1"># p(x), which is used to compute posterior prob. for a given source</span>
-        <span class="c1"># spectral feature in mapping stage.</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">px</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span>
-            <span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">num_mixtures</span><span class="p">,</span> <span class="n">covariance_type</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="o">.</span><span class="n">means_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="o">.</span><span class="n">covariances_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="o">.</span><span class="n">weights_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">weights</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="o">.</span><span class="n">precisions_cholesky_</span> <span class="o">=</span> <span class="n">_compute_precision_cholesky</span><span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="o">.</span><span class="n">covariances_</span><span class="p">,</span> <span class="s2">&quot;full&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">src</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="n">tgt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">src</span><span class="p">):</span>
-                <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_frame</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-                <span class="n">tgt</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span> <span class="o">=</span> <span class="n">y</span>
-            <span class="k">return</span> <span class="n">tgt</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transform_frame</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_transform_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Mapping source spectral feature x to target spectral feature y</span>
-<span class="sd">        so that minimize the mean least squared error.</span>
-<span class="sd">        More specifically, it returns the value E(p(y|x)].</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            src (array): shape (`order of spectral feature`) source speaker&#39;s</span>
-<span class="sd">                spectral feature that will be transformed</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            array: converted spectral feature</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">D</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
-
-        <span class="c1"># Eq.(11)</span>
-        <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">num_mixtures</span><span class="p">,</span> <span class="n">D</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_mixtures</span><span class="p">):</span>
-            <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">src</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
-            <span class="n">E</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span><span class="p">[</span><span class="n">m</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
-
-        <span class="c1"># Eq.(9) p(m|x)</span>
-        <span class="n">posterior</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">src</span><span class="p">))</span>
-
-        <span class="c1"># Eq.(13) conditinal mean E[p(y|x)]</span>
-        <span class="k">return</span> <span class="n">posterior</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">E</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="n">available_speakers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fujitou&quot;</span><span class="p">,</span> <span class="s2">&quot;tsuchiya&quot;</span><span class="p">,</span> <span class="s2">&quot;uemura&quot;</span><span class="p">]</span>
+<span class="n">available_emotions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;angry&quot;</span><span class="p">,</span> <span class="s2">&quot;happy&quot;</span><span class="p">,</span> <span class="s2">&quot;normal&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="MLPG"><a class="viewcode-back" href="../../../references/baseline.html#nnmnkwii.baseline.gmm.MLPG">[docs]</a><span class="k">class</span> <span class="nc">MLPG</span><span class="p">(</span><span class="n">MLPGBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Maximum likelihood Parameter Generation (MLPG) for GMM-basd voice</span>
-<span class="sd">    conversion [1]_.</span>
+<span class="k">def</span> <span class="nf">_get_dir</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">emotion</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">emotion</span><span class="p">)</span>
 
-<span class="sd">    Notes:</span>
-<span class="sd">        - Source speaker&#39;s feature: ``X = {x_t}, 0 &lt;= t &lt; T``</span>
-<span class="sd">        - Target speaker&#39;s feature: ``Y = {y_t}, 0 &lt;= t &lt; T``</span>
 
-<span class="sd">        where T is the number of time frames.</span>
+<div class="viewcode-block" id="WavFileDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.voice_statistics.WavFileDataSource">[docs]</a><span class="k">class</span> <span class="nc">WavFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wav file data source for Voice-statistics dataset.</span>
 
-<span class="sd">    See papar [1]_ for details.</span>
-
-<span class="sd">    The code was adapted from https://gist.github.com/r9y9/88bda659c97f46f42525.</span>
+<span class="sd">    The data source collects wav files from voice-statistics.</span>
+<span class="sd">    Users are expected to inherit the class and implement</span>
+<span class="sd">    ``collect_features`` method, which defines how features are computed</span>
+<span class="sd">    given a wav file path.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        gmm (sklearn.mixture.GaussianMixture): Gaussian Mixture Models of</span>
-<span class="sd">            source and target joint features.</span>
-<span class="sd">        windows (list): List of windows. See :func:`nnmnkwii.functions.mlpg` for</span>
-<span class="sd">            details.</span>
-<span class="sd">        swap (bool): If True, source -&gt; target, otherwise target -&gt; source.</span>
-<span class="sd">        diff (bool): Convert GMM -&gt; DIFFGMM if True.</span>
+<span class="sd">        data_root (str): Data root</span>
+<span class="sd">        speakers (list): List of speakers to load. Supported names of speaker</span>
+<span class="sd">          are ``fujitou``, ``tsuchiya`` and ``uemura``.</span>
+<span class="sd">        labelmap (dict[optional]): Dict of speaker labels. If None,</span>
+<span class="sd">          it&#39;s assigned as incrementally (i.e., 0, 1, 2) for specified</span>
+<span class="sd">          speakers.</span>
+<span class="sd">        max_files (int): Total number of files to be collected.</span>
+<span class="sd">        emotions (list): List of emotions we use. Supported names of emotions</span>
+<span class="sd">          are ``angry``, ``happy`` and ``normal``.</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        num_mixtures (int): The number of Gaussian mixtures</span>
-<span class="sd">        weights (array):  shape (`num_mixtures`), weights for each gaussian</span>
-<span class="sd">        src_means (array): shape (`num_mixtures`, `order of spectral feature`)</span>
-<span class="sd">            means of GMM for a source speaker</span>
-<span class="sd">        tgt_means (array): shape (`num_mixtures`, `order of spectral feature`)</span>
-<span class="sd">            means of GMM for a target speaker</span>
-<span class="sd">        covarXX (array): shape (`num_mixtures`, `order of spectral feature`,</span>
-<span class="sd">            `order of spectral feature`)</span>
-<span class="sd">            variance matrix of source speaker&#39;s spectral feature</span>
-<span class="sd">        covarXY (array): shape (`num_mixtures`, `order of spectral feature`,</span>
-<span class="sd">            `order of spectral feature`)</span>
-<span class="sd">            covariance matrix of source and target speaker&#39;s spectral feature</span>
-<span class="sd">        covarYX (array): shape (`num_mixtures`, `order of spectral feature`,</span>
-<span class="sd">            `order of spectral feature`)</span>
-<span class="sd">            covariance matrix of target and source speaker&#39;s spectral feature</span>
-<span class="sd">        covarYY (array): shape (`num_mixtures`, `order of spectral feature`,</span>
-<span class="sd">            `order of spectral feature`) variance matrix of target speaker&#39;s</span>
-<span class="sd">            spectral feature</span>
-<span class="sd">        D (array): shape (`num_mixtures`, `order of spectral feature`,</span>
-<span class="sd">            `order of spectral feature`) covariance matrices of target static</span>
-<span class="sd">            spectral features</span>
-<span class="sd">        px (sklearn.mixture.GaussianMixture): Gaussian Mixture Models of source</span>
-<span class="sd">            speaker&#39;s features</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from sklearn.mixture import GaussianMixture</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.baseline.gmm import MLPG</span>
-<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
-<span class="sd">        &gt;&gt;&gt; static_dim, T = 24, 10</span>
-<span class="sd">        &gt;&gt;&gt; windows = [</span>
-<span class="sd">        ...     (0, 0, np.array([1.0])),</span>
-<span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])),</span>
-<span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])),</span>
-<span class="sd">        ... ]</span>
-<span class="sd">        &gt;&gt;&gt; src = np.random.rand(T, static_dim * len(windows))</span>
-<span class="sd">        &gt;&gt;&gt; tgt = np.random.rand(T, static_dim * len(windows))</span>
-<span class="sd">        &gt;&gt;&gt; XY = np.concatenate((src, tgt), axis=-1) # pseudo parallel data</span>
-<span class="sd">        &gt;&gt;&gt; gmm = GaussianMixture(n_components=4)</span>
-<span class="sd">        &gt;&gt;&gt; _ = gmm.fit(XY)</span>
-<span class="sd">        &gt;&gt;&gt; paramgen = MLPG(gmm, windows=windows)</span>
-<span class="sd">        &gt;&gt;&gt; generated = paramgen.transform(src)</span>
-<span class="sd">        &gt;&gt;&gt; assert generated.shape == (T, static_dim)</span>
-
-<span class="sd">    See also:</span>
-<span class="sd">        :class:`nnmnkwii.preprocessing.alignment.IterativeDTWAligner`.</span>
-
-<span class="sd">    .. [1] [Toda 2007] Voice Conversion Based on Maximum Likelihood Estimation</span>
-<span class="sd">      of Spectral Parameter Trajectory.</span>
+<span class="sd">        labels (numpy.ndarray): List of speaker identifiers determined by</span>
+<span class="sd">          labelmap. Stored in ``collect_files``.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MLPG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">swap</span><span class="p">,</span> <span class="n">diff</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">windows</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>
-                <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])),</span>
-            <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">windows</span> <span class="o">=</span> <span class="n">windows</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">static_dim</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                 <span class="n">emotions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;normal&quot;</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="n">speakers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">speaker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_speakers</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unknown speaker &#39;</span><span class="si">{}</span><span class="s2">&#39;. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">speaker</span><span class="p">,</span> <span class="n">available_speakers</span><span class="p">))</span>
 
-<div class="viewcode-block" id="MLPG.transform"><a class="viewcode-back" href="../../../references/baseline.html#nnmnkwii.baseline.gmm.MLPG.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Mapping source feature x to target feature y so that maximize the</span>
-<span class="sd">        likelihood of y given x.</span>
+        <span class="k">for</span> <span class="n">emotion</span> <span class="ow">in</span> <span class="n">emotions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">emotion</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_emotions</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unknown emotion &#39;</span><span class="si">{}</span><span class="s2">&#39;. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">emotion</span><span class="p">,</span> <span class="n">available_emotions</span><span class="p">))</span>
 
-<span class="sd">        Args:</span>
-<span class="sd">            src (array): shape (`the number of frames`, `the order of spectral</span>
-<span class="sd">                feature`) a sequence of source speaker&#39;s spectral feature that</span>
-<span class="sd">                will be transformed.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speakers</span> <span class="o">=</span> <span class="n">speakers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emotions</span> <span class="o">=</span> <span class="n">emotions</span>
+        <span class="k">if</span> <span class="n">labelmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">labelmap</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">speakers</span><span class="p">):</span>
+                <span class="n">labelmap</span><span class="p">[</span><span class="n">speaker</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelmap</span> <span class="o">=</span> <span class="n">labelmap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="o">=</span> <span class="n">max_files</span>
+
+<div class="viewcode-block" id="WavFileDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Collect wav files for specific speakers.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            array: a sequence of transformed features</span>
+<span class="sd">            list: List of collected wav files.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">T</span><span class="p">,</span> <span class="n">feature_dim</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">src</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="k">if</span> <span class="n">feature_dim</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_dim</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">MLPG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+        <span class="n">max_files_per_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">emotions</span><span class="p">)</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">:</span>
+            <span class="n">dirs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="n">_get_dir</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">emotions</span><span class="p">))</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">isdir</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> doesn&#39;t exist.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
 
-        <span class="c1"># A suboptimum mixture sequence  (eq.37)</span>
-        <span class="n">optimum_mix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">px</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
+                <span class="n">fs</span> <span class="o">=</span> <span class="p">[</span><span class="n">join</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span>
+                <span class="n">fs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">splitext</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.wav&quot;</span><span class="p">,</span> <span class="n">fs</span><span class="p">))</span>
+                <span class="n">fs</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
+                <span class="n">fs</span> <span class="o">=</span> <span class="n">fs</span><span class="p">[:</span><span class="n">max_files_per_dir</span><span class="p">]</span>
+                <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
 
-        <span class="c1"># Compute E eq.(40)</span>
-        <span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">feature_dim</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
-            <span class="n">m</span> <span class="o">=</span> <span class="n">optimum_mix</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>  <span class="c1"># estimated mixture index at time t</span>
-            <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">src</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_means</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
-            <span class="c1"># Eq. (22)</span>
-            <span class="n">E</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tgt_means</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span><span class="p">[</span><span class="n">m</span><span class="p">],</span> <span class="n">xx</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelmap</span><span class="p">[</span><span class="n">speaker</span><span class="p">])</span>
 
-        <span class="c1"># Compute D eq.(23)</span>
-        <span class="c1"># Approximated variances with diagonals so that we can do MLPG</span>
-        <span class="c1"># efficiently in dimention-wise manner</span>
-        <span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">feature_dim</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
-            <span class="n">m</span> <span class="o">=</span> <span class="n">optimum_mix</span><span class="p">[</span><span class="n">t</span><span class="p">]</span>
-            <span class="c1"># Eq. (23), with approximating covariances as diagonals</span>
-            <span class="n">D</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covarYY</span><span class="p">[</span><span class="n">m</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covarYX</span><span class="p">[</span><span class="n">m</span><span class="p">])</span> <span class="o">/</span> \
-                <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covarXX</span><span class="p">[</span><span class="n">m</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">covarXY</span><span class="p">[</span><span class="n">m</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">paths</span></div></div>
 
-        <span class="c1"># Once we have mean and variance over frames, then we can do MLPG</span>
-        <span class="k">return</span> <span class="n">mlpg</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">D</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span></div></div>
+
+<span class="c1"># For compat, remove this after v0.1.0</span>
+<span class="n">VoiceStatisticsWavFileDataSource</span> <span class="o">=</span> <span class="n">WavFileDataSource</span>
 </pre></div>
 
            </div>

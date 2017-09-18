@@ -4,6 +4,7 @@ Change log
 v0.0.5
 ------
 
+- `#31`_: Cleanup data source implementations and add docs.
 - Fix example data wasn't included in release tar ball.
 - Support ``padded_length`` is ``None`` for :obj:`nnmnkwii.datasets.FileSourceDataset`.
 - Automatic frame length adjastment for DTWAligner / IterativeDTWAligner
@@ -45,3 +46,4 @@ v0.0.1 <2017-08-14>
 .. _#26: https://github.com/r9y9/nnmnkwii/issues/26
 .. _#27: https://github.com/r9y9/nnmnkwii/pull/27
 .. _#28: https://github.com/r9y9/nnmnkwii/pull/28
+.. _#31: https://github.com/r9y9/nnmnkwii/pull/31

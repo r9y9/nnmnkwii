@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.5+ff8bbac documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.5+c2ece48 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.5+ff8bbac documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.5+c2ece48 documentation" href="../index.html"/>
         <link rel="next" title="Display" href="display.html"/>
         <link rel="prev" title="Baseline" href="baseline.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.5+ff8bbac
+                0.0.5+c2ece48
               </div>
             
           
@@ -238,6 +238,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dataset-that-supports-utterance-wise-iteration">Dataset that supports utterance-wise iteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#builtin-data-sources">Builtin data sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lj-speech-en">LJ-Speech (en)</a></li>
 </ul>
 </li>
 </ul>
@@ -803,6 +809,291 @@ give sufficient large number of cache size, to avoid many file re-loading.</p>
 
 </div>
 </div>
+<div class="section" id="builtin-data-sources">
+<h2>Builtin data sources<a class="headerlink" href="#builtin-data-sources" title="Permalink to this headline">¶</a></h2>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">builtin data sources are experimental features. May change in future.</p>
+</div>
+<p>There are a couple of builtin file data sources for typical datasets to make it
+easy to work on those. With the following data source implementation,
+you only need to implement <code class="docutils literal"><span class="pre">collect_features</span></code>, which
+defines what features you want from wav file or text (depends on data source).
+If you want maximum flexibility to access dataset, you may want to implement your
+own data source, instead of using bulitin ones.</p>
+<p>Suppose we are trying to extract acoustic features from wav files from
+CMU Arctic, then you can write for example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="kn">import</span> <span class="n">trim_zeros_frames</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileSourceDataset</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">cmu_arctic</span>
+<span class="kn">import</span> <span class="nn">pysptk</span>
+<span class="kn">import</span> <span class="nn">pyworld</span>
+
+<span class="k">class</span> <span class="nc">MyFileDataSource</span><span class="p">(</span><span class="n">cmu_arctic</span><span class="o">.</span><span class="n">WavFileDataSource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">collect_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute mel-cepstrum given a wav file.&quot;&quot;&quot;</span>
+        <span class="n">fs</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">f0</span><span class="p">,</span> <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">dio</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">frame_period</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">f0</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">stonemask</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">timeaxis</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+        <span class="n">spectrogram</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">cheaptrick</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">timeaxis</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+        <span class="n">spectrogram</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">spectrogram</span><span class="p">)</span>
+        <span class="n">mc</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">sp2mc</span><span class="p">(</span><span class="n">spectrogram</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.41</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mc</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">DATA_ROOT</span> <span class="o">=</span> <span class="s2">&quot;/home/ryuichi/data/cmu_arctic/&quot;</span> <span class="c1"># your data path</span>
+<span class="n">data_source</span> <span class="o">=</span> <span class="n">MyFileDataSource</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;clb&quot;</span><span class="p">],</span> <span class="n">max_files</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># 100 wav files of `clb` speaker will be collected</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">data_source</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+    <span class="c1"># do anything on acoustic features (e.g., save to disk)</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>More real examples can be found in <a class="reference external" href="https://github.com/r9y9/nnmnkwii/tree/master/tests">tests directory</a> in nnmnkwii and
+tutorial notebooks in <a class="reference external" href="https://github.com/r9y9/nnmnkwii_gallery">nnmnkwii_gallery</a>.</p>
+<div class="section" id="cmu-arctic-en">
+<h3>CMU Arctic (en)<a class="headerlink" href="#cmu-arctic-en" title="Permalink to this headline">¶</a></h3>
+<p>You can download data from <a class="reference external" href="http://festvox.org/cmu_arctic/">http://festvox.org/cmu_arctic/</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.cmu_arctic.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=50</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/cmu_arctic.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for CMU Arctic dataset.</p>
+<p>The data source collects wav files from CMU Arctic.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<em>list</em>) – List of speakers to find. Supported names of speaker
+are <code class="docutils literal"><span class="pre">awb</span></code>, <code class="docutils literal"><span class="pre">bdl</span></code>, <code class="docutils literal"><span class="pre">clb</span></code>, <code class="docutils literal"><span class="pre">jmk</span></code>, <code class="docutils literal"><span class="pre">ksp</span></code>, <code class="docutils literal"><span class="pre">rms</span></code> and <code class="docutils literal"><span class="pre">slt</span></code>.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/cmu_arctic.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files for specific speakers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="voice-statistics-jp">
+<h3>Voice statistics (jp)<a class="headerlink" href="#voice-statistics-jp" title="Permalink to this headline">¶</a></h3>
+<p>You can download data (~720MB) from <a class="reference external" href="https://voice-statistics.github.io/">https://voice-statistics.github.io/</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.voice_statistics.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers, labelmap=None, max_files=50, emotions=['normal']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for Voice-statistics dataset.</p>
+<p>The data source collects wav files from voice-statistics.
+Users are expected to inherit the class and implement
+<code class="docutils literal"><span class="pre">collect_features</span></code> method, which defines how features are computed
+given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root</li>
+<li><strong>speakers</strong> (<em>list</em>) – List of speakers to load. Supported names of speaker
+are <code class="docutils literal"><span class="pre">fujitou</span></code>, <code class="docutils literal"><span class="pre">tsuchiya</span></code> and <code class="docutils literal"><span class="pre">uemura</span></code>.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>emotions</strong> (<em>list</em>) – List of emotions we use. Supported names of emotions
+are <code class="docutils literal"><span class="pre">angry</span></code>, <code class="docutils literal"><span class="pre">happy</span></code> and <code class="docutils literal"><span class="pre">normal</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt>
+<code class="descname">labels</code></dt>
+<dd><p><em>numpy.ndarray</em> – List of speaker identifiers determined by
+labelmap. Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files for specific speakers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lj-speech-en">
+<h3>LJ-Speech (en)<a class="headerlink" href="#lj-speech-en" title="Permalink to this headline">¶</a></h3>
+<p>You can download data (2.6GB) from <a class="reference external" href="https://keithito.com/LJ-Speech-Dataset/">https://keithito.com/LJ-Speech-Dataset/</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.ljspeech.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.ljspeech.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for LJSpeech dataset.</p>
+<p>The data source collects text transcriptions from LJSpeech.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.TranscriptionDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.TranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Metadata, shapeo (<code class="docutils literal"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.ljspeech.TranscriptionDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#TranscriptionDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect text transcriptions.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note that it returns list of transcriptions (str), not file paths.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of text transcription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.ljspeech.</code><code class="descname">NormalizedTranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#NormalizedTranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalized transcription data source for LJSpeech dataset.</p>
+<p>Similar to <code class="docutils literal"><span class="pre">LJSpeechTranscriptionDataSource</span></code>, but this collect normalized
+transcriptions instead of raw ones.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.NormalizedTranscriptionDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.NormalizedTranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Metadata, shape (<code class="docutils literal"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#NormalizedTranscriptionDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect normalized text transcriptions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of normalized text transcription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.ljspeech.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.ljspeech.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for LJSpeech dataset.</p>
+<p>The data source collects wav files from LJSpeech.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.WavFileDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.WavFileDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Metadata, shape (<code class="docutils literal"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.ljspeech.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
 </div>
 
 
@@ -849,7 +1140,7 @@ give sufficient large number of cache size, to avoid many file re-loading.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.5+ff8bbac',
+            VERSION:'0.0.5+c2ece48',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

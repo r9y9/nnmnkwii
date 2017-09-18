@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; nnmnkwii 0.0.5+ff8bbac documentation</title>
+  <title>Index &mdash; nnmnkwii 0.0.5+c2ece48 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.5+ff8bbac documentation" href="index.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.5+c2ece48 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.5+ff8bbac
+                0.0.5+c2ece48
               </div>
             
           
@@ -237,6 +237,12 @@
 <li class="toctree-l2"><a class="reference internal" href="references/datasets.html#implementation">Implementation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="references/datasets.html#dataset-that-supports-utterance-wise-iteration">Dataset that supports utterance-wise iteration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="references/datasets.html#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="references/datasets.html#builtin-data-sources">Builtin data sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="references/datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
 </ul>
 </li>
 </ul>
@@ -467,10 +473,22 @@
 </li>
       <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_features">collect_features() (nnmnkwii.datasets.FileDataSource method)</a>
 </li>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.cmu_arctic.WavFileDataSource.collect_files">collect_files() (nnmnkwii.datasets.cmu_arctic.WavFileDataSource method)</a>
+
+      <ul>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_files">(nnmnkwii.datasets.FileDataSource method)</a>
+</li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource.collect_files">(nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource method)</a>
+</li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.collect_files">(nnmnkwii.datasets.ljspeech.TranscriptionDataSource method)</a>
+</li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.WavFileDataSource.collect_files">(nnmnkwii.datasets.ljspeech.WavFileDataSource method)</a>
+</li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files">(nnmnkwii.datasets.voice_statistics.WavFileDataSource method)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/datasets.html#nnmnkwii.datasets.FileDataSource.collect_files">collect_files() (nnmnkwii.datasets.FileDataSource method)</a>
-</li>
       <li><a href="references/datasets.html#nnmnkwii.datasets.FileSourceDataset.collected_files">collected_files (nnmnkwii.datasets.FileSourceDataset attribute)</a>
 </li>
       <li><a href="references/io.html#nnmnkwii.io.hts.HTSLabelFile.contexts">contexts (nnmnkwii.io.hts.HTSLabelFile attribute)</a>
@@ -581,16 +599,18 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.labels">labels (nnmnkwii.datasets.WavFileDataSource attribute)</a>, <a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.labels">[1]</a>
+</li>
       <li><a href="references/generated/nnmnkwii.frontend.merlin.linguistic_features.html#nnmnkwii.frontend.merlin.linguistic_features">linguistic_features() (in module nnmnkwii.frontend.merlin)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load">load() (in module nnmnkwii.io.hts)</a>
 
       <ul>
         <li><a href="references/io.html#nnmnkwii.io.hts.HTSLabelFile.load">(nnmnkwii.io.hts.HTSLabelFile method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set">load_question_set() (in module nnmnkwii.io.hts)</a>
 </li>
   </ul></td>
@@ -613,10 +633,18 @@
 </li>
       <li><a href="references/generated/nnmnkwii.postfilters.merlin_post_filter.html#nnmnkwii.postfilters.merlin_post_filter">merlin_post_filter() (in module nnmnkwii.postfilters)</a>
 </li>
-      <li><a href="references/generated/nnmnkwii.preprocessing.minmax.html#nnmnkwii.preprocessing.minmax">minmax() (in module nnmnkwii.preprocessing)</a>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.NormalizedTranscriptionDataSource.metadata">metadata (nnmnkwii.datasets.NormalizedTranscriptionDataSource attribute)</a>
+
+      <ul>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.TranscriptionDataSource.metadata">(nnmnkwii.datasets.TranscriptionDataSource attribute)</a>
 </li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.metadata">(nnmnkwii.datasets.WavFileDataSource attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.preprocessing.minmax.html#nnmnkwii.preprocessing.minmax">minmax() (in module nnmnkwii.preprocessing)</a>
+</li>
       <li><a href="references/generated/nnmnkwii.preprocessing.minmax_scale.html#nnmnkwii.preprocessing.minmax_scale">minmax_scale() (in module nnmnkwii.preprocessing)</a>
 </li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG">MLPG (class in nnmnkwii.autograd)</a>
@@ -680,6 +708,8 @@
       <li><a href="references/util.html#module-nnmnkwii.util.linalg">nnmnkwii.util.linalg (module)</a>
 </li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.ModSpec.norm">norm (nnmnkwii.autograd.ModSpec attribute)</a>
+</li>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource">NormalizedTranscriptionDataSource (class in nnmnkwii.datasets.ljspeech)</a>
 </li>
       <li><a href="references/baseline.html#nnmnkwii.baseline.gmm.MLPG.num_mixtures">num_mixtures (nnmnkwii.baseline.gmm.MLPG attribute)</a>
 </li>
@@ -751,6 +781,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/baseline.html#nnmnkwii.baseline.gmm.MLPG.tgt_means">tgt_means (nnmnkwii.baseline.gmm.MLPG attribute)</a>
 </li>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.TranscriptionDataSource">TranscriptionDataSource (class in nnmnkwii.datasets.ljspeech)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/baseline.html#nnmnkwii.baseline.gmm.MLPG.transform">transform() (nnmnkwii.baseline.gmm.MLPG method)</a>
@@ -793,10 +825,18 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/baseline.html#nnmnkwii.baseline.gmm.MLPG.weights">weights (nnmnkwii.baseline.gmm.MLPG attribute)</a>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.cmu_arctic.WavFileDataSource">WavFileDataSource (class in nnmnkwii.datasets.cmu_arctic)</a>
+
+      <ul>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.WavFileDataSource">(class in nnmnkwii.datasets.ljspeech)</a>
 </li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.voice_statistics.WavFileDataSource">(class in nnmnkwii.datasets.voice_statistics)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/baseline.html#nnmnkwii.baseline.gmm.MLPG.weights">weights (nnmnkwii.baseline.gmm.MLPG attribute)</a>
+</li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG.windows">windows (nnmnkwii.autograd.MLPG attribute)</a>
 </li>
   </ul></td>
@@ -838,7 +878,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.5+ff8bbac',
+            VERSION:'0.0.5+c2ece48',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

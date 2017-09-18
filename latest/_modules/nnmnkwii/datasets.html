@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.datasets &mdash; nnmnkwii 0.0.5+ff8bbac documentation</title>
+  <title>nnmnkwii.datasets &mdash; nnmnkwii 0.0.5+c2ece48 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.5+ff8bbac documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.5+c2ece48 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.5+ff8bbac
+                0.0.5+c2ece48
               </div>
             
           
@@ -239,6 +239,12 @@
 <li class="toctree-l3"><a class="reference internal" href="../../references/datasets.html#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../../references/datasets.html#builtin-data-sources">Builtin data sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../references/datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../references/datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../references/datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../references/display.html">Display</a><ul class="simple">
@@ -406,6 +412,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 
 
 <div class="viewcode-block" id="FileDataSource"><a class="viewcode-back" href="../../references/datasets.html#nnmnkwii.datasets.FileDataSource">[docs]</a><span class="k">class</span> <span class="nc">FileDataSource</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -514,6 +521,9 @@
             <span class="n">collected_files</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">collected_files</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">collected_files</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">collected_files</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">collected_files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;No files are collected. You might have specified wrong data source.&quot;</span><span class="p">)</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">collected_files</span> <span class="o">=</span> <span class="n">collected_files</span>
 
     <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
@@ -799,7 +809,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.5+ff8bbac',
+            VERSION:'0.0.5+c2ece48',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
