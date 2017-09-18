@@ -1,9 +1,14 @@
 Change log
 ==========
 
-v0.0.5
-------
+v0.0.6 <2017-xx-xx>
+------------------
 
+
+v0.0.5 <2017-09-19>
+-------------------
+
+- `#19`_: Achieved 80% test coverage
 - `#31`_: Cleanup data source implementations and add docs.
 - Fix example data wasn't included in release tar ball.
 - Support ``padded_length`` is ``None`` for :obj:`nnmnkwii.datasets.FileSourceDataset`.
@@ -39,6 +44,7 @@ v0.0.1 <2017-08-14>
 
 
 .. _#17: https://github.com/r9y9/nnmnkwii/pull/17
+.. _#19: https://github.com/r9y9/nnmnkwii/issues/19
 .. _#21: https://github.com/r9y9/nnmnkwii/pull/21
 .. _#22: https://github.com/r9y9/nnmnkwii/issues/22
 .. _#23: https://github.com/r9y9/nnmnkwii/pull/23
