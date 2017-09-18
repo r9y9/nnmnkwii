@@ -18,3 +18,5 @@ NNMNKWII_BUILD_VERSION=$VERSION python setup.py develop sdist
 echo "*** Ready to release! nnmnkwii $TAG ***"
 echo "Please run the following command manually:"
 echo NNMNKWII_BUILD_VERSION=$VERSION python setup.py sdist upload
+echo "Please make sure that release verion is correct."
+cat nnmnkwii/version.py

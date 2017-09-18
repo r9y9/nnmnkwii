@@ -1,8 +1,8 @@
 Change log
 ==========
 
-v0.0.5
-------
+v0.0.5 <2017-09-19>
+-------------------
 
 - `#19`_: Achieved 80% test coverage
 - `#31`_: Cleanup data source implementations and add docs.
