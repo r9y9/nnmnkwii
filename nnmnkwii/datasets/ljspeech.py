@@ -23,10 +23,10 @@ class LJSpeechDataSource(FileDataSource):
         self.metadata = np.asarray(metadata)
 
 
-class LJSpeechTranscriptionDataSource(LJSpeechDataSource):
+class TranscriptionDataSource(LJSpeechDataSource):
     """Transcription data source for LJSpeech dataset.
 
-    A builtin implementation of ``FileDataSource`` for LJSpeech transcriptions.
+    The data source collects text transcriptions from LJSpeech.
     Users are expected to inherit the class and implement ``collect_features``
     method, which defines how features are computed given a transcription.
 
@@ -34,17 +34,26 @@ class LJSpeechTranscriptionDataSource(LJSpeechDataSource):
         data_root (str): Data root.
 
     Attributes:
-        metadata (numpy.ndarray) Metadata, shapeo (``num_files x 3``).
+        metadata (numpy.ndarray): Metadata, shapeo (``num_files x 3``).
     """
 
     def __init__(self, data_root):
-        super(LJSpeechTranscriptionDataSource, self).__init__(data_root)
+        super(TranscriptionDataSource, self).__init__(data_root)
 
     def collect_files(self):
+        """Collect text transcriptions.
+
+        .. warning::
+
+            Note that it returns list of transcriptions (str), not file paths.
+
+        Returns:
+            list: List of text transcription.
+        """
         return list(self.metadata[:, 1])
 
 
-class LJSpeechNormalizedTranscriptionDataSource(LJSpeechDataSource):
+class NormalizedTranscriptionDataSource(LJSpeechDataSource):
     """Normalized transcription data source for LJSpeech dataset.
 
     Similar to ``LJSpeechTranscriptionDataSource``, but this collect normalized
@@ -54,35 +63,44 @@ class LJSpeechNormalizedTranscriptionDataSource(LJSpeechDataSource):
         data_root (str): Data root.
 
     Attributes:
-        metadata (numpy.ndarray) Metadata, shapeo (``num_files x 3``).
+        metadata (numpy.ndarray): Metadata, shape (``num_files x 3``).
     """
 
     def __init__(self, data_root):
-        super(LJSpeechNormalizedTranscriptionDataSource,
-              self).__init__(data_root)
+        super(NormalizedTranscriptionDataSource, self).__init__(data_root)
 
     def collect_files(self):
+        """Collect normalized text transcriptions.
+
+        Returns:
+            list: List of normalized text transcription.
+        """
         return list(self.metadata[:, 2])
 
 
-class LJSpeechWavFileDataSource(LJSpeechDataSource):
+class WavFileDataSource(LJSpeechDataSource):
     """Wav file data source for LJSpeech dataset.
 
-    A builtin implementation of ``FileDataSource`` for LJSpeech wav files.
+    The data source collects wav files from LJSpeech.
     Users are expected to inherit the class and implement ``collect_features``
-    method, which defines how features are computed given a wav path.
+    method, which defines how features are computed given a wav file path.
 
     Args:
         data_root (str): Data root.
 
     Attributes:
-        metadata (numpy.ndarray) Metadata, shapeo (``num_files x 3``).
+        metadata (numpy.ndarray): Metadata, shape (``num_files x 3``).
     """
 
     def __init__(self, data_root):
-        super(LJSpeechWavFileDataSource, self).__init__(data_root)
+        super(WavFileDataSource, self).__init__(data_root)
 
     def collect_files(self):
+        """Collect wav files.
+
+        Returns:
+            list: List of wav files.
+        """
         files = list(map(lambda x: join(self.data_root, "wavs", x + ".wav"),
                          list(self.metadata[:, 0])))
         return files

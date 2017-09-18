@@ -6,54 +6,51 @@ import numpy as np
 from os.path import join, splitext, isdir
 from os import listdir
 
-_speakers = ["fujitou", "tsuchiya", "uemura"]
-_emotions = ["angry", "happy", "normal"]
+available_speakers = ["fujitou", "tsuchiya", "uemura"]
+available_emotions = ["angry", "happy", "normal"]
 
 
 def _get_dir(speaker, emotion):
     return "{}_{}".format(speaker, emotion)
 
 
-class VoiceStatisticsWavFileDataSource(FileDataSource):
-    """File data source for Voice-statistics dataset.
+class WavFileDataSource(FileDataSource):
+    """Wav file data source for Voice-statistics dataset.
 
-    A builtin implementation of ``FileDataSource`` for voice-statistics
-    dataset. Users are expected to inherit the class and implement
+    The data source collects wav files from voice-statistics.
+    Users are expected to inherit the class and implement
     ``collect_features`` method, which defines how features are computed
-    given a wav path.
-
-    You can download data (~720MB) from `voice-statistics`_.
-
-    _voice-statistics: http://voice-statistics.github.io/
+    given a wav file path.
 
     Args:
         data_root (str): Data root
         speakers (list): List of speakers to load. Supported names of speaker
-          are "fujitou", "tsuchiya" and "uemura".
+          are ``fujitou``, ``tsuchiya`` and ``uemura``.
         labelmap (dict[optional]): Dict of speaker labels. If None,
           it's assigned as incrementally (i.e., 0, 1, 2) for specified
           speakers.
-        max_files_per_dir (int): Maximum files per directory to load.
-        emotions (list): List of emotions we use.
+        max_files (int): Total number of files to be collected.
+        emotions (list): List of emotions we use. Supported names of emotions
+          are ``angry``, ``happy`` and ``normal``.
 
     Attributes:
         labels (numpy.ndarray): List of speaker identifiers determined by
           labelmap. Stored in ``collect_files``.
     """
 
-    def __init__(self, data_root, speakers, labelmap=None, max_files_per_dir=2,
+    def __init__(self, data_root, speakers, labelmap=None, max_files=50,
                  emotions=["normal"]):
         for speaker in speakers:
-            if speaker not in _speakers:
+            if speaker not in available_speakers:
                 raise ValueError(
                     "Unknown speaker '{}'. It should be one of {}".format(
-                        speaker, _speakers))
+                        speaker, available_speakers))
 
         for emotion in emotions:
-            if emotion not in _emotions:
+            if emotion not in available_emotions:
                 raise ValueError(
                     "Unknown emotion '{}'. It should be one of {}".format(
-                        emotion, _emotions))
+                        emotion, available_emotions))
 
         self.data_root = data_root
         self.speakers = speakers
@@ -64,13 +61,18 @@ class VoiceStatisticsWavFileDataSource(FileDataSource):
                 labelmap[speaker] = idx
         self.labelmap = labelmap
         self.labels = None
-        self.max_files_per_dir = max_files_per_dir
+        self.max_files = max_files
 
     def collect_files(self):
-        """Collect voice statistice wav files
+        """Collect wav files for specific speakers.
+
+        Returns:
+            list: List of collected wav files.
         """
         paths = []
         labels = []
+
+        max_files_per_dir = self.max_files // len(self.emotions) // len(self.speakers)
         for speaker in self.speakers:
             dirs = list(map(lambda x: join(self.data_root, _get_dir(speaker, x)),
                             self.emotions))
@@ -82,7 +84,7 @@ class VoiceStatisticsWavFileDataSource(FileDataSource):
                 fs = [join(d, f) for f in listdir(d)]
                 fs = list(filter(lambda x: splitext(x)[1] == ".wav", fs))
                 fs = sorted(fs)
-                fs = fs[:self.max_files_per_dir]
+                fs = fs[:max_files_per_dir]
                 files.extend(fs)
 
             for f in files:
@@ -91,3 +93,7 @@ class VoiceStatisticsWavFileDataSource(FileDataSource):
 
         self.labels = np.array(labels, dtype=np.int32)
         return paths
+
+
+# For compat, remove this after v0.1.0
+VoiceStatisticsWavFileDataSource = WavFileDataSource
