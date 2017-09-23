@@ -256,7 +256,7 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
     Ty, Dy = y.shape
     assert Dx == Dy
 
-    if ensure_even == True:
+    if ensure_even:
         divisible_by = 2
 
     if pad:
