@@ -119,6 +119,12 @@ def test_cmu_arctic():
     assert np.all(Y[:max_files // 2] == 1)
     assert np.all(Y[max_files // 2:] == 0)
 
+    # Use all data
+    data_source = MyFileDataSource(
+        DATA_DIR, speakers=["clb", "slt"], max_files=None)
+    X = FileSourceDataset(data_source)
+    assert len(X) == 1132 * 2
+
 
 @attr("require_local_data")
 @attr("require_voice_statistics")
@@ -176,6 +182,12 @@ def test_voice_statistics():
     assert len(X) == max_files
     assert np.all(Y[:max_files // 2] == 0)
     assert np.all(Y[max_files // 2:] == 1)
+
+    # Use all data
+    data_source = MyFileDataSource(
+        DATA_DIR, speakers=["fujitou", "tsuchiya"], max_files=None)
+    X = FileSourceDataset(data_source)
+    assert len(X) == 100 * 2
 
 
 @attr("require_local_data")

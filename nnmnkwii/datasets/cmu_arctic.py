@@ -66,7 +66,10 @@ class WavFileDataSource(FileDataSource):
         paths = []
         labels = []
 
-        max_files_per_speaker = self.max_files // len(self.speakers)
+        if self.max_files is None:
+            max_files_per_speaker = None
+        else:
+            max_files_per_speaker = self.max_files // len(self.speakers)
         for (i, d) in enumerate(speaker_dirs):
             if not isdir(d):
                 raise RuntimeError("{} doesn't exist.".format(d))

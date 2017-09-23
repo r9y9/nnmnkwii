@@ -72,7 +72,11 @@ class WavFileDataSource(FileDataSource):
         paths = []
         labels = []
 
-        max_files_per_dir = self.max_files // len(self.emotions) // len(self.speakers)
+        if self.max_files is None:
+            max_files_per_dir = None
+        else:
+            max_files_per_dir = self.max_files // len(self.emotions) \
+                // len(self.speakers)
         for speaker in self.speakers:
             dirs = list(map(lambda x: join(self.data_root, _get_dir(speaker, x)),
                             self.emotions))
