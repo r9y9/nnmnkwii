@@ -292,6 +292,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 </ul>
@@ -408,7 +409,8 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.postfilters</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">pysptk</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -422,9 +424,16 @@
     <span class="sd">&quot;&quot;&quot;Post-filter used in Merlin.</span>
 
 <span class="sd">    This is a :obj:`pysptk` translation of `Merlin&#39;s post filter`_ written with</span>
-<span class="sd">    SPTK CLI tools.</span>
+<span class="sd">    SPTK CLI tools. Details can be found at `CSTR-Edinburgh/merlin/issues/241`_</span>
+<span class="sd">    and [1]_.</span>
 
 <span class="sd">    .. _Merlin&#39;s post filter: https://goo.gl/jK5Hdd</span>
+<span class="sd">    .. _`CSTR-Edinburgh/merlin/issues/241`: https://github.com/CSTR-Edinburgh/merlin/issues/241</span>
+
+
+<span class="sd">    .. [1] Yoshimura, Takayoshi, et al. &quot;Incorporating a mixed excitation model</span>
+<span class="sd">        and postfilter into HMM‐based text‐to‐speech synthesis.&quot; Systems and</span>
+<span class="sd">        Computers in Japan 36.12 (2005): 43-50.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        mgc (2darray): mel-generalized cepstrum</span>
@@ -444,9 +453,6 @@
 <span class="sd">        &gt;&gt;&gt; mgc = np.random.rand(100, 60)</span>
 <span class="sd">        &gt;&gt;&gt; mgc_filtered = merlin_post_filter(mgc, 0.58)</span>
 <span class="sd">        &gt;&gt;&gt; assert mgc.shape == mgc_filtered.shape</span>
-
-<span class="sd">    TODO:</span>
-<span class="sd">        Reference paper.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mgc</span><span class="o">.</span><span class="n">shape</span>

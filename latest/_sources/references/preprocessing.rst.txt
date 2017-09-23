@@ -20,6 +20,7 @@ Utterance-wise operations
    trim_zeros_frames
    remove_zeros_frames
    adjast_frame_length
+   adjast_frame_lengths
    scale
    minmax_scale
 

@@ -1,0 +1,6 @@
+nnmnkwii\.preprocessing\.adjast\_frame\_lengths
+===============================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: adjast_frame_lengths
