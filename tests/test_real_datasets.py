@@ -14,7 +14,7 @@ import pyworld
 from nnmnkwii.preprocessing import trim_zeros_frames
 
 # Data source implementations
-from nnmnkwii.datasets import cmu_arctic, voice_statistics, ljspeech
+from nnmnkwii.datasets import cmu_arctic, voice_statistics, ljspeech, vcc2016
 
 # Tests marked with "require_local_data" needs data to be downloaded.
 
@@ -66,6 +66,21 @@ def test_ljspeech_dummy():
             source("dummy")
 
         f(data_source)
+
+
+def test_vcc2016_dummy():
+    data_source = vcc2016.WavFileDataSource("dummy", speakers=["SF1"])
+
+    @raises(ValueError)
+    def __test_invalid_speaker():
+        data_source = vcc2016.WavFileDataSource("dummy", speakers=["test"])
+
+    @raises(RuntimeError)
+    def __test_nodir(data_source):
+        data_source.collect_files()
+
+    __test_invalid_speaker()
+    __test_nodir(data_source)
 
 
 @attr("require_local_data")
@@ -239,3 +254,61 @@ def test_ljspeech():
     data_source = MyWavFileDataSource(DATA_DIR)
     X = FileSourceDataset(data_source)
     print(X[0].shape)
+
+
+@attr("require_local_data")
+@attr("require_vcc2016")
+def test_vcc2016():
+    DATA_DIR = join(expanduser("~"), "data", "vcc2016")
+    if not exists(DATA_DIR):
+        warn("Data doesn't exist at {}".format(DATA_DIR))
+        return
+
+    class MyFileDataSource(vcc2016.WavFileDataSource):
+        def __init__(self, data_root, speakers, labelmap=None, max_files=2):
+            super(MyFileDataSource, self).__init__(
+                data_root, speakers, labelmap=labelmap, max_files=max_files)
+            self.alpha = pysptk.util.mcepalpha(16000)
+
+        def collect_features(self, path):
+            fs, x = wavfile.read(path)
+            x = x.astype(np.float64)
+            f0, timeaxis = pyworld.dio(x, fs, frame_period=5)
+            f0 = pyworld.stonemask(x, f0, timeaxis, fs)
+            spectrogram = pyworld.cheaptrick(x, f0, timeaxis, fs)
+            spectrogram = trim_zeros_frames(spectrogram)
+            mc = pysptk.sp2mc(spectrogram, order=24, alpha=self.alpha)
+            return mc.astype(np.float32)
+
+    max_files = 10
+    data_source = MyFileDataSource(
+        DATA_DIR, speakers=["SF1"], max_files=max_files)
+    X = FileSourceDataset(data_source)
+    assert len(X) == max_files
+    print(X[0].shape)  # warmup collect_features path
+
+    # Multi speakers
+    data_source = MyFileDataSource(
+        DATA_DIR, speakers=["SF1", "SF2"], max_files=max_files)
+    X = FileSourceDataset(data_source)
+    assert len(X) == max_files
+
+    # Speaker labels
+    Y = data_source.labels
+    assert np.all(Y[:max_files // 2] == 0)
+    assert np.all(Y[max_files // 2:] == 1)
+
+    # Custum speaker id
+    data_source = MyFileDataSource(
+        DATA_DIR, speakers=["SF1", "SF2"], max_files=max_files,
+        labelmap={"SF1": 1, "SF2": 0})
+    X = FileSourceDataset(data_source)
+    Y = data_source.labels
+    assert np.all(Y[:max_files // 2] == 1)
+    assert np.all(Y[max_files // 2:] == 0)
+
+    # Use all data
+    data_source = MyFileDataSource(
+        DATA_DIR, speakers=["SF1", "SF2"], max_files=None)
+    X = FileSourceDataset(data_source)
+    assert len(X) == 162 * 2
