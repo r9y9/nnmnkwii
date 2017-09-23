@@ -4,12 +4,14 @@ from nnmnkwii.preprocessing.f0 import interp1d
 from nnmnkwii.preprocessing import trim_zeros_frames, remove_zeros_frames
 from nnmnkwii.preprocessing import adjast_frame_lengths, delta_features
 from nnmnkwii.preprocessing import adjast_frame_length
-from nnmnkwii.util import example_audio_file
 from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 from nnmnkwii.preprocessing import modspec, modphase
 from nnmnkwii.preprocessing import preemphasis, inv_preemphasis
+from nnmnkwii import preprocessing as P
 from nnmnkwii.util import example_file_data_sources_for_duration_model
-from nnmnkwii.datasets import FileSourceDataset
+from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+from nnmnkwii.util import example_audio_file
+from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
 
 from scipy.io import wavfile
 import numpy as np
@@ -37,6 +39,60 @@ def _get_windows_set():
         ],
     ]
     return windows_set
+
+
+def test_meanvar():
+    # Pick acoustic features for testing
+    _, X = example_file_data_sources_for_acoustic_model()
+    X = FileSourceDataset(X)
+    lengths = [len(x) for x in X]
+    D = X[0].shape[-1]
+    X_mean, X_var = P.meanvar(X)
+    X_std = np.sqrt(X_var)
+    assert np.isfinite(X_mean).all()
+    assert np.isfinite(X_var).all()
+    assert X_mean.shape[-1] == D
+    assert X_var.shape[-1] == D
+
+    _, X_std_hat = P.meanstd(X)
+    assert np.allclose(X_std, X_std_hat)
+
+    x = X[0]
+    x_scaled = P.scale(x, X_mean, X_std)
+    assert np.isfinite(x_scaled).all()
+
+    # For padded dataset
+    _, X = example_file_data_sources_for_acoustic_model()
+    X = PaddedFileSourceDataset(X, 1000)
+    # Should get same results with padded features
+    X_mean_hat, X_var_hat = P.meanvar(X, lengths)
+    assert np.allclose(X_mean, X_mean_hat)
+    assert np.allclose(X_var, X_var_hat)
+
+
+def test_minmax():
+    # Pick linguistic features for testing
+    X, _ = example_file_data_sources_for_acoustic_model()
+    X = FileSourceDataset(X)
+    lengths = [len(x) for x in X]
+    D = X[0].shape[-1]
+    X_min, X_max = P.minmax(X)
+    assert np.isfinite(X_min).all()
+    assert np.isfinite(X_max).all()
+
+    x = X[0]
+    x_scaled = P.minmax_scale(x, X_min, X_max, feature_range=(0, 0.99))
+    assert np.max(x_scaled) <= 1
+    assert np.min(x_scaled) >= 0
+    assert np.isfinite(x_scaled).all()
+
+    # For padded dataset
+    X, _ = example_file_data_sources_for_acoustic_model()
+    X = PaddedFileSourceDataset(X, 1000)
+    # Should get same results with padded features
+    X_min_hat, X_max_hat = P.minmax(X, lengths)
+    assert np.allclose(X_min, X_min_hat)
+    assert np.allclose(X_max, X_max_hat)
 
 
 def test_preemphasis():

@@ -423,7 +423,7 @@ def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
     Args:
         x (array): Input data
         data_min (array): Data min for each feature dimention.
-        data_sax (array): Data max for each feature dimention.
+        data_max (array): Data max for each feature dimention.
 
     Returns:
         array: Scaled data.
