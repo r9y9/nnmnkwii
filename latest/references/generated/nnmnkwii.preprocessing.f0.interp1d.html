@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.f0.interp1d &mdash; nnmnkwii 0.0.6+3ea4ba1 documentation</title>
+  <title>nnmnkwii.preprocessing.f0.interp1d &mdash; nnmnkwii 0.0.6+325baa4 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+3ea4ba1 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+325baa4 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="Utilities" href="../util.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.minmax" href="nnmnkwii.preprocessing.minmax.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.6+3ea4ba1
+                0.0.6+325baa4
               </div>
             
           
@@ -245,6 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 </ul>
 </li>
 </ul>
@@ -294,6 +295,7 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 </ul>
@@ -454,7 +456,7 @@
 <p>This function generates continuous f0 from discontinuous f0 trajecoty
 based on <code class="xref py py-func docutils literal"><span class="pre">scipy.interpolate.interp1d()</span></code>. This is meat to be used for
 continuous f0 modeling in statistical speech synthesis
-(e.g., see <a class="reference internal" href="#r5" id="id1">[R5]</a>, <a class="reference internal" href="#r6" id="id2">[R6]</a>).</p>
+(e.g., see <a class="reference internal" href="#r6" id="id1">[R6]</a>, <a class="reference internal" href="#r7" id="id2">[R7]</a>).</p>
 <p>If <code class="docutils literal"><span class="pre">kind</span></code> = <code class="docutils literal"><span class="pre">'slinear'</span></code>, then this does same thing as Merlin does.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -488,18 +490,18 @@ trajectory.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">f0</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">continuous_f0</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
-<table class="docutils citation" frame="void" id="r5" rules="none">
+<table class="docutils citation" frame="void" id="r6" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R5]</a></td><td>Yu, Kai, and Steve Young. “Continuous F0 modeling for HMM based
+<tr><td class="label"><a class="fn-backref" href="#id1">[R6]</a></td><td>Yu, Kai, and Steve Young. “Continuous F0 modeling for HMM based
 statistical parametric speech synthesis.” IEEE Transactions on Audio,
 Speech, and Language Processing 19.5 (2011): 1071-1079.</td></tr>
 </tbody>
 </table>
-<table class="docutils citation" frame="void" id="r6" rules="none">
+<table class="docutils citation" frame="void" id="r7" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id2">[R6]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
+<tr><td class="label"><a class="fn-backref" href="#id2">[R7]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
 the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></tr>
 </tbody>
 </table>
@@ -551,7 +553,7 @@ the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></t
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.6+3ea4ba1',
+            VERSION:'0.0.6+325baa4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

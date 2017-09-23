@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.6+3ea4ba1 documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.6+325baa4 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+3ea4ba1 documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+325baa4 documentation" href="../index.html"/>
         <link rel="next" title="Display" href="display.html"/>
         <link rel="prev" title="Baseline" href="baseline.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.6+3ea4ba1
+                0.0.6+325baa4
               </div>
             
           
@@ -244,6 +244,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#cmu-arctic-en">CMU Arctic (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#voice-statistics-jp">Voice statistics (jp)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 </ul>
 </li>
 </ul>
@@ -293,6 +294,7 @@
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 </ul>
@@ -1094,6 +1096,102 @@ method, which defines how features are computed given a wav file path.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="voice-conversion-challenge-vcc-2016-en">
+<h3>Voice Conversion Challenge (VCC) 2016 (en)<a class="headerlink" href="#voice-conversion-challenge-vcc-2016-en" title="Permalink to this headline">¶</a></h3>
+<p>You can download training data (181MB) and evaluation data (~56 MB) from <a class="reference external" href="http://datashare.is.ed.ac.uk/handle/10283/2211">http://datashare.is.ed.ac.uk/handle/10283/2211</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vcc2016.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=50</em>, <em>training_data_root=None</em>, <em>evaluation_data_root=None</em>, <em>training=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vcc2016.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for Voice Conversion Challenge (VCC) 2016 dataset.</p>
+<p>The data source collects wav files from VCC2016 dataset.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">VCC2016 datasets are composed of training data and evaluation data,
+which can be downloaded separately. <code class="docutils literal"><span class="pre">data_root</span></code> should point to the
+directory that contains both the training and evaluation data.</p>
+</div>
+<p>Directory structure should look like for example:</p>
+<div class="highlight-shell"><div class="highlight"><pre><span></span>&gt; tree -d ~/data/vcc2016/
+/home/ryuichi/data/vcc2016/
+├── evaluation_all
+│   ├── SF1
+│   ├── SF2
+│   ├── SF3
+│   ├── SM1
+│   ├── SM2
+│   ├── TF1
+│   ├── TF2
+│   ├── TM1
+│   ├── TM2
+│   └── TM3
+└── vcc2016_training
+    ├── SF1
+    ├── SF2
+    ├── SF3
+    ├── SM1
+    ├── SM2
+    ├── TF1
+    ├── TF2
+    ├── TM1
+    ├── TM2
+    └── TM3
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root. It’s assumed that training and evaluation
+data are placed at <code class="docutils literal"><span class="pre">${data_root}/vcc2016_training</span></code> and</li>
+<li><strong>respectively</strong><strong>, </strong><strong>by default.</strong> (<em>${data_root}/evaluation_all</em><em>,</em>) – </li>
+<li><strong>speakers</strong> (<em>list</em>) – List of speakers to find. Supported names of speaker
+are <code class="docutils literal"><span class="pre">SF1</span></code>, <code class="docutils literal"><span class="pre">SF2</span></code>, <code class="docutils literal"><span class="pre">SF3</span></code>, <code class="docutils literal"><span class="pre">SM1</span></code>, <code class="docutils literal"><span class="pre">SM2</span></code>, <code class="docutils literal"><span class="pre">TF1</span></code>, <code class="docutils literal"><span class="pre">TF2</span></code>,
+<code class="docutils literal"><span class="pre">TM1</span></code>, <code class="docutils literal"><span class="pre">TM2</span></code> and <code class="docutils literal"><span class="pre">TM3</span></code>.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>training_data_root</strong> – If specified, try to search training data to the
+directory. If None, set to <code class="docutils literal"><span class="pre">${data_root}/vcc2016_training</span></code>.</li>
+<li><strong>evaluation_data_root</strong> – If specified, try to search evaluation data to the
+directory. If None, set to <code class="docutils literal"><span class="pre">${data_root}/evaluation_all</span></code>.</li>
+<li><strong>training</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Whether it collects training data or not. If False,
+it collects evaluation data.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt>
+<code class="descname">labels</code></dt>
+<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vcc2016.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files for specific speakers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -1141,7 +1239,7 @@ method, which defines how features are computed given a wav file path.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.6+3ea4ba1',
+            VERSION:'0.0.6+325baa4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -166,3 +166,11 @@ You can download data (2.6GB) from https://keithito.com/LJ-Speech-Dataset/.
 
 .. autoclass:: nnmnkwii.datasets.ljspeech.WavFileDataSource
     :members:
+
+Voice Conversion Challenge (VCC) 2016 (en)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can download training data (181MB) and evaluation data (~56 MB) from http://datashare.is.ed.ac.uk/handle/10283/2211.
+
+.. autoclass:: nnmnkwii.datasets.vcc2016.WavFileDataSource
+    :members:
