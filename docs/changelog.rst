@@ -4,6 +4,7 @@ Change log
 v0.0.6 <2017-xx-xx>
 ------------------
 
+- Add builtin data source for Voice Conversion Challenge (VCC) 2016 dataset.
 - `#34`_: Add :func:`nnmnkwii.preprocessing.adjast_frame_length`.
 - `#34`_: ``adjast_frame_lengths`` now supports ``divisible_by`` parameter. ``ensure_even`` is deprecated.
 - `#34`_: Rename ``adjast_frame_length`` to ``adjast_Frame_lengths``
