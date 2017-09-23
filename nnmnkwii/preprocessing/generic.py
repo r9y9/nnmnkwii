@@ -168,42 +168,108 @@ def remove_zeros_frames(x, eps=1e-7):
     return x[s > eps]
 
 
-def adjast_frame_length(x, y, pad=True, ensure_even=False):
-    """Adjast frame lengths given two feature matrices.
+def adjast_frame_length(x, pad=True, divisible_by=1):
+    """Adjast frame length given a feature matrix.
 
-    This ensures that two feature matrices have same number of frames, by
-    padding zeros to the end or removing last frames.
+    This adjast the number of frames of a given feature matrix to be divisible
+    by ``divisible_by`` by padding zeros to the end or removing the last frames.
 
     Args:
-        x (ndarray): Input 2d feature matrix, shape (``T^1 x D``).
-        y (ndarray): Input 2d feature matrix, shape (``T^2 x D``).
+        x (numpy.ndarray): Input 2d feature matrix, shape (``T x D``).
         pad (bool) : If True, pads zeros to the end, otherwise removes last few
-            frames to ensure same frame lengths.
-        ensure_even (bool) : If True, ensure number of frames to be even number.
+          frames to ensure same frame lengths.
+        divisible_by (int) : If ``divisible_by`` > 0, number of frames will be
+          adjasted to be divisible by ``divisible_by``.
 
     Returns:
-        Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).
+        numpy.ndarray: Adjasted feature matrix, of each shape (``T' x D``).
 
     Examples:
         >>> from nnmnkwii.preprocessing import adjast_frame_length
         >>> import numpy as np
         >>> x = np.zeros((10, 1))
+        >>> x = adjast_frame_lengths(x, pad=True, divisible_by=3)
+        >>> assert x.shape[0] == 12
+
+    See also:
+        :func:`nnmnkwii.preprocessing.adjast_frame_lengths`
+    """
+    Tx, D = x.shape
+
+    if divisible_by > 1:
+        rem = Tx % divisible_by
+        if rem == 0:
+            T = Tx
+        else:
+            if pad:
+                T = Tx + divisible_by - rem
+            else:
+                T = Tx - rem
+    else:
+        T = Tx
+
+    if Tx != T:
+        if T > Tx:
+            x = np.vstack(
+                (x, np.zeros((T - Tx, D), dtype=x.dtype)))
+        else:
+            x = x[:T]
+
+    return x
+
+
+def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
+    """Adjast frame lengths given two feature matrices.
+
+    This ensures that two feature matrices have same number of frames, by
+    padding zeros to the end or removing last frames.
+
+    .. warning::
+
+        ``ensure_even`` is deprecated and will be removed in v0.1.0.
+        Use ``divisible_by=2`` instead.
+
+    Args:
+        x (numpy.ndarray): Input 2d feature matrix, shape (``T^1 x D``).
+        y (numpy.ndarray): Input 2d feature matrix, shape (``T^2 x D``).
+        pad (bool) : If True, pads zeros to the end, otherwise removes last few
+          frames to ensure same frame lengths.
+        ensure_even (bool) : If True, ensure number of frames to be even number.
+        divisible_by (int) : If ``divisible_by`` > 0, number of frames will be
+          adjasted to be divisible by ``divisible_by``.
+
+    Returns:
+        Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).
+
+    Examples:
+        >>> from nnmnkwii.preprocessing import adjast_frame_lengths
+        >>> import numpy as np
+        >>> x = np.zeros((10, 1))
         >>> y = np.zeros((11, 1))
-        >>> x, y = adjast_frame_length(x, y)
+        >>> x, y = adjast_frame_lengths(x, y)
         >>> assert len(x) == len(y)
+
+    See also:
+        :func:`nnmnkwii.preprocessing.adjast_frame_length`
     """
     Tx, Dx = x.shape
     Ty, Dy = y.shape
     assert Dx == Dy
 
+    if ensure_even == True:
+        divisible_by = 2
+
     if pad:
         T = max(Tx, Ty)
-        if ensure_even:
-            T = T + 1 if T % 2 != 0 else T
+        if divisible_by > 1:
+            rem = T % divisible_by
+            if rem != 0:
+                T = T + divisible_by - rem
     else:
         T = min(Tx, Ty)
-        if ensure_even:
-            T = T - 1 if T % 2 != 0 else T
+        if divisible_by > 1:
+            rem = T % divisible_by
+            T = T - rem
 
     if Tx != T:
         if Tx < T:

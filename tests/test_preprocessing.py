@@ -2,7 +2,8 @@ from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.preprocessing.f0 import interp1d
 from nnmnkwii.preprocessing import trim_zeros_frames, remove_zeros_frames
-from nnmnkwii.preprocessing import adjast_frame_length, delta_features
+from nnmnkwii.preprocessing import adjast_frame_lengths, delta_features
+from nnmnkwii.preprocessing import adjast_frame_length
 from nnmnkwii.util import example_audio_file
 from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 from nnmnkwii.preprocessing import modspec, modphase
@@ -76,30 +77,64 @@ def test_trim_remove_zeros_frames():
         assert trimmed.shape[1] == mat.shape[1]
 
 
-def test_adjast_frame_length():
+def test_adjast_frame_length_divisible():
+    D = 5
+    T = 10
+
+    x = np.random.rand(T, D)
+    assert T == adjast_frame_length(x, pad=True, divisible_by=1).shape[0]
+    assert T == adjast_frame_length(x, pad=True, divisible_by=2).shape[0]
+    print(adjast_frame_length(x, pad=True, divisible_by=3).shape[0])
+    assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=3).shape[0]
+    assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=4).shape[0]
+
+    assert T == adjast_frame_length(x, pad=False, divisible_by=1).shape[0]
+    assert T == adjast_frame_length(x, pad=False, divisible_by=2).shape[0]
+    assert T - 1 == adjast_frame_length(x, pad=False, divisible_by=3).shape[0]
+    assert T - 2 == adjast_frame_length(x, pad=False, divisible_by=4).shape[0]
+
+    # Should preserve dtype
+    for dtype in [np.float32, np.float64]:
+        x = np.random.rand(T, D).astype(dtype)
+        assert x.dtype == adjast_frame_length(x, pad=True, divisible_by=3).dtype
+        assert x.dtype == adjast_frame_length(x, pad=False, divisible_by=3).dtype
+
+
+def test_adjast_frame_lengths():
     D = 5
     T1 = 10
     T2 = 11
 
     x = np.random.rand(T1, D)
     y = np.random.rand(T2, D)
-    x_hat, y_hat = adjast_frame_length(x, y, pad=True)
+    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True)
     assert x_hat.shape == y_hat.shape
     assert x_hat.shape[0] == 11
 
-    x_hat, y_hat = adjast_frame_length(x, y, pad=False)
+    x_hat, y_hat = adjast_frame_lengths(x, y, pad=False)
     assert x_hat.shape == y_hat.shape
     assert x_hat.shape[0] == 10
 
-    x_hat, y_hat = adjast_frame_length(x, y, pad=True,
-                                       ensure_even=True)
+    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
+                                        divisible_by=2)
     assert x_hat.shape == y_hat.shape
     assert x_hat.shape[0] == 12
 
-    x_hat, y_hat = adjast_frame_length(x, y, pad=False,
-                                       ensure_even=True)
+    x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
+                                        divisible_by=2)
     assert x_hat.shape == y_hat.shape
     assert x_hat.shape[0] == 10
+
+    # Divisible
+    x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
+                                        divisible_by=3)
+    assert x_hat.shape == y_hat.shape
+    assert x_hat.shape[0] == 9
+
+    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
+                                        divisible_by=3)
+    assert x_hat.shape == y_hat.shape
+    assert x_hat.shape[0] == 12
 
 
 def test_delta_features():
@@ -147,7 +182,7 @@ def test_dtw_aligner():
     D = X.shape[-1]
 
     # Create padded pair
-    X, Y = adjast_frame_length(X, Y, ensure_even=True)
+    X, Y = adjast_frame_lengths(X, Y, divisible_by=2)
 
     # Add utterance axis
     X = X.reshape(1, -1, D)

@@ -4,6 +4,9 @@ Change log
 v0.0.6 <2017-xx-xx>
 ------------------
 
+- Add :func:`nnmnkwii.preprocessing.adajst_frame_length`.
+- ``adjast_frame_lengths`` now supports ``divisible_by`` parameter. ``ensure_even`` is deprecated.
+- Rename ``adjast_frame_length`` to ``adjast_Frame_lengths``
 - Add references to :func:`nnmnkwii.postfilters.merlin_post_filter`.
 
 v0.0.5 <2017-09-19>
