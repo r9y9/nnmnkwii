@@ -4,6 +4,7 @@ Change log
 v0.0.6 <2017-xx-xx>
 ------------------
 
+- Add references to :func:`nnmnkwii.postfilters.merlin_post_filter`.
 
 v0.0.5 <2017-09-19>
 -------------------

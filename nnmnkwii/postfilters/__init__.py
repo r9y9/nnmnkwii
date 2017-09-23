@@ -12,9 +12,16 @@ def merlin_post_filter(mgc, alpha,
     """Post-filter used in Merlin.
 
     This is a :obj:`pysptk` translation of `Merlin's post filter`_ written with
-    SPTK CLI tools.
+    SPTK CLI tools. Details can be found at `CSTR-Edinburgh/merlin/issues/241`_
+    and [1]_.
 
     .. _Merlin's post filter: https://goo.gl/jK5Hdd
+    .. _`CSTR-Edinburgh/merlin/issues/241`: https://github.com/CSTR-Edinburgh/merlin/issues/241
+
+
+    .. [1] Yoshimura, Takayoshi, et al. "Incorporating a mixed excitation model
+        and postfilter into HMM‐based text‐to‐speech synthesis." Systems and
+        Computers in Japan 36.12 (2005): 43-50.
 
     Args:
         mgc (2darray): mel-generalized cepstrum
@@ -34,9 +41,6 @@ def merlin_post_filter(mgc, alpha,
         >>> mgc = np.random.rand(100, 60)
         >>> mgc_filtered = merlin_post_filter(mgc, 0.58)
         >>> assert mgc.shape == mgc_filtered.shape
-
-    TODO:
-        Reference paper.
 
     """
     _, D = mgc.shape
