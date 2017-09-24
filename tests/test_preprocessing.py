@@ -41,6 +41,43 @@ def _get_windows_set():
     return windows_set
 
 
+def test_meanvar_incremental():
+    np.random.seed(1234)
+    N = 32
+    X = np.random.randn(N, 100, 24)
+    lengths = [len(x) for x in X]
+    X_mean = np.mean(X, axis=(0, 1))
+    X_var = np.var(X, axis=(0, 1))
+    X_std = np.sqrt(X_var)
+
+    # Check consistency with numpy
+    X_mean_inc, X_var_inc = P.meanvar(X)
+    assert np.allclose(X_mean, X_mean_inc)
+    assert np.allclose(X_var, X_var_inc)
+
+    # Split dataset and compute meanvar incrementaly
+    X_a = X[:N // 2]
+    X_b = X[N // 2:]
+    X_mean_a, X_var_a, last_sample_count = P.meanvar(
+        X_a, return_last_sample_count=True)
+    assert last_sample_count == np.sum(lengths[:N // 2])
+    X_mean_b, X_var_b = P.meanvar(
+        X_b, init_mean=X_mean_a, init_var=X_var_a,
+        last_sample_count=last_sample_count)
+    assert np.allclose(X_mean, X_mean_b)
+    assert np.allclose(X_var, X_var_b)
+
+    # meanstd
+    X_mean_a, X_std_a, last_sample_count = P.meanstd(
+        X_a, return_last_sample_count=True)
+    assert last_sample_count == np.sum(lengths[:N // 2])
+    X_mean_b, X_std_b = P.meanstd(
+        X_b, init_mean=X_mean_a, init_var=X_std_a**2,
+        last_sample_count=last_sample_count)
+    assert np.allclose(X_mean, X_mean_b)
+    assert np.allclose(X_std, X_std_b)
+
+
 def test_meanvar():
     # Pick acoustic features for testing
     _, X = example_file_data_sources_for_acoustic_model()

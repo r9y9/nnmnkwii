@@ -288,7 +288,8 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
     return x, y
 
 
-def meanvar(dataset, lengths=None):
+def meanvar(dataset, lengths=None, init_mean=0., init_var=0.,
+            last_sample_count=0, return_last_sample_count=False):
     """Mean/variance computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
@@ -297,9 +298,18 @@ def meanvar(dataset, lengths=None):
     Args:
         dataset (nnmnkwii.datasets.Dataset): Dataset
         lengths: (list): Frame lengths for each dataset sample.
+        init_mean (array or scalar): Initial value for mean vector.
+        init_var (array or scaler): Initial value for variance vector.
+        last_sample_count (int): Last sample count. Default is 0. If you set
+          non-default ``init_mean`` and ``init_var``, you need to set
+          ``last_sample_count`` property. Typically this will be the number of
+          time frames ever seen.
+        return_last_sample_count (bool): Return ``last_sample_count`` if True.
 
     Returns:
-        tuple: Mean and variance for each dimention.
+        tuple: Mean and variance for each dimention. If
+          ``return_last_sample_count`` is True, returns ``last_sample_count``
+          as well.
 
     See also:
         :func:`nnmnkwii.preprocessing.meanstd`, :func:`nnmnkwii.preprocessing.scale`
@@ -315,18 +325,23 @@ def meanvar(dataset, lengths=None):
     """
     dtype = dataset[0].dtype
 
-    mean_, var_ = 0., 0.
-    last_sample_count = 0
+    mean_, var_ = init_mean, init_var
     for idx, x in enumerate(dataset):
         if lengths is not None:
             x = x[:lengths[idx]]
         mean_, var_, _ = _incremental_mean_and_var(
             x, mean_, var_, last_sample_count)
         last_sample_count += len(x)
-    return mean_.astype(dtype), var_.astype(dtype)
+    mean_, var_ = mean_.astype(dtype), var_.astype(dtype)
+
+    if return_last_sample_count:
+        return mean_, var_, last_sample_count
+    else:
+        return mean_, var_
 
 
-def meanstd(dataset, lengths=None):
+def meanstd(dataset, lengths=None, init_mean=0., init_var=0.,
+            last_sample_count=0, return_last_sample_count=False):
     """Mean/std-deviation computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
@@ -335,9 +350,18 @@ def meanstd(dataset, lengths=None):
     Args:
         dataset (nnmnkwii.datasets.Dataset): Dataset
         lengths: (list): Frame lengths for each dataset sample.
+        init_mean (array or scalar): Initial value for mean vector.
+        init_var (array or scaler): Initial value for variance vector.
+        last_sample_count (int): Last sample count. Default is 0. If you set
+          non-default ``init_mean`` and ``init_var``, you need to set
+          ``last_sample_count`` property. Typically this will be the number of
+          time frames ever seen.
+        return_last_sample_count (bool): Return ``last_sample_count`` if True.
 
     Returns:
-        tuple: Mean and variance for each dimention.
+        tuple: Mean and variance for each dimention. If
+          ``return_last_sample_count`` is True, returns ``last_sample_count``
+          as well.
 
     See also:
         :func:`nnmnkwii.preprocessing.meanvar`, :func:`nnmnkwii.preprocessing.scale`
@@ -351,8 +375,15 @@ def meanstd(dataset, lengths=None):
         >>> lengths = [len(y) for y in Y]
         >>> data_mean, data_std = meanstd(Y, lengths)
     """
-    m, v = meanvar(dataset, lengths)
-    return m, _handle_zeros_in_scale(np.sqrt(v))
+    ret = meanvar(dataset, lengths, init_mean, init_var,
+                  last_sample_count, return_last_sample_count)
+    m, v = ret[0], ret[1]
+    v = _handle_zeros_in_scale(np.sqrt(v))
+    if return_last_sample_count:
+        assert len(ret) == 3
+        return m, v, ret[2]
+    else:
+        return m, v
 
 
 def minmax(dataset, lengths=None):
