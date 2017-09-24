@@ -4,6 +4,7 @@ import numpy as np
 
 from collections import OrderedDict
 from warnings import warn
+from tqdm import tqdm
 
 
 class FileDataSource(object):
@@ -128,7 +129,7 @@ class FileSourceDataset(Dataset):
         return len(self.collected_files)
 
     def asarray(self, padded_length=None, dtype=np.float32,
-                padded_length_guess=1000):
+                padded_length_guess=1000, verbose=0):
         """Convert dataset to numpy array.
 
         This try to load entire dataset into a single 3d numpy array.
@@ -154,7 +155,14 @@ class FileSourceDataset(Dataset):
         X = np.zeros((N, T, D), dtype=dtype)
         lengths = np.zeros(N, dtype=np.int)
 
-        for idx, paths in enumerate(collected_files):
+        if verbose > 0:
+            def custom_range(x):
+                return tqdm(range(x))
+        else:
+            custom_range = range
+
+        for idx in custom_range(len(collected_files)):
+            paths = collected_files[idx]
             x = self.file_data_source.collect_features(*paths)
             lengths[idx] = len(x)
             if len(x) > T:
