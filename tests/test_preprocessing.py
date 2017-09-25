@@ -13,6 +13,8 @@ from nnmnkwii.util import example_file_data_sources_for_acoustic_model
 from nnmnkwii.util import example_audio_file
 from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
 
+from nose.tools import raises
+
 from scipy.io import wavfile
 import numpy as np
 import pyworld
@@ -106,6 +108,11 @@ def test_meanvar():
     assert np.allclose(X_mean, X_mean_hat)
     assert np.allclose(X_var, X_var_hat)
 
+    # Inverse transform
+    x = X[0]
+    x_hat = P.inv_scale(P.scale(x, X_mean, X_std), X_mean, X_std)
+    assert np.allclose(x, x_hat, atol=1e-7)
+
 
 def test_minmax():
     # Pick linguistic features for testing
@@ -123,6 +130,23 @@ def test_minmax():
     assert np.min(x_scaled) >= 0
     assert np.isfinite(x_scaled).all()
 
+    # Need to specify (min, max) or (scale_, min_)
+    @raises(ValueError)
+    def __test_raise1(x, X_min, X_max):
+        P.minmax_scale(x)
+
+    @raises(ValueError)
+    def __test_raise2(x, X_min, X_max):
+        P.inv_minmax_scale(x)
+
+    __test_raise1(x, X_min, X_max)
+    __test_raise2(x, X_min, X_max)
+
+    # Explicit scale_ and min_
+    scale_, min_ = P.minmax_scale_params(X_min, X_max, feature_range=(0, 0.99))
+    x_scaled_hat = P.minmax_scale(x, scale_=scale_, min_=min_)
+    assert np.allclose(x_scaled, x_scaled_hat)
+
     # For padded dataset
     X, _ = example_file_data_sources_for_acoustic_model()
     X = PaddedFileSourceDataset(X, 1000)
@@ -130,6 +154,15 @@ def test_minmax():
     X_min_hat, X_max_hat = P.minmax(X, lengths)
     assert np.allclose(X_min, X_min_hat)
     assert np.allclose(X_max, X_max_hat)
+
+    # Inverse transform
+    x = X[0]
+    x_hat = P.inv_minmax_scale(P.minmax_scale(x, X_min, X_max), X_min, X_max)
+    assert np.allclose(x, x_hat)
+
+    x_hat = P.inv_minmax_scale(
+        P.minmax_scale(x, scale_=scale_, min_=min_), scale_=scale_, min_=min_)
+    assert np.allclose(x, x_hat)
 
 
 def test_preemphasis():

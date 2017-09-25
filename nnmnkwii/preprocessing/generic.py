@@ -442,22 +442,110 @@ def scale(x, data_mean, data_std):
         >>> lengths = [len(y) for y in Y]
         >>> data_mean, data_std = meanstd(Y, lengths)
         >>> scaled_y = scale(Y[0], data_mean, data_std)
+
+    See also:
+        :func:`nnmnkwii.preprocessing.inv_scale`
     """
     return (x - data_mean) / _handle_zeros_in_scale(data_std, copy=False)
 
 
-def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
-    """Min/max scaling for given a single data.
+def inv_scale(x, data_mean, data_std):
+    """Inverse tranform of mean/variance scaling.
 
-    Given data min, max and feature range, apply min/max normalization to data.
+    Given mean and variances, apply mean-variance denormalization to data.
+
+    Args:
+        x (array): Input data
+        data_mean (array): Means for each feature dimention.
+        data_std (array): Standard deviation for each feature dimention.
+
+    Returns:
+        array: Denormalized data.
+
+    See also:
+        :func:`nnmnkwii.preprocessing.scale`
+    """
+    return data_std * x + data_mean
+
+
+def __minmax_scale_factor(data_min, data_max, feature_range):
+    data_range = data_max - data_min
+    scale = (feature_range[1] - feature_range[0]) / \
+        _handle_zeros_in_scale(data_range, copy=False)
+    return scale
+
+
+def minmax_scale_params(data_min, data_max, feature_range=(0, 1)):
+    """Compute parameters required to perform min/max scaling.
+
+    Given data min, max and feature range, computes scalining factor and
+    minimum value. Min/max scaling can be done as follows:
+
+    .. code-block:: python
+
+        x_scaled = x * scale_ + min_
 
     Args:
         x (array): Input data
         data_min (array): Data min for each feature dimention.
         data_max (array): Data max for each feature dimention.
+        feature_range (array like): Feature range.
+
+    Returns:
+        tuple: Scaling factor and minimum value for scaled data.
+
+    Examples:
+        >>> from nnmnkwii.preprocessing import minmax, minmax_scale
+        >>> from nnmnkwii.preprocessing import minmax_scale_params
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> data_min, data_max = minmax(X)
+        >>> scale_, min_ = minmax_scale_params(data_min, data_max)
+        >>> scaled_x = minmax_scale(X[0], scale_=scale_, min_=min_)
+
+    See also:
+        :func:`nnmnkwii.preprocessing.minmax_scale`,
+        :func:`nnmnkwii.preprocessing.inv_minmax_scale`
+    """
+    scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
+    min_ = feature_range[0] - data_min * scale_
+    return scale_, min_
+
+
+def minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
+                 scale_=None, min_=None):
+    """Min/max scaling for given a single data.
+
+    Given data min, max and feature range, apply min/max normalization to data.
+    Optionally, you can get a little performance improvement to give scaling
+    factor (``scale_``) and minimum value (``min_``) used in scaling explicitly.
+    Those values can be computed by
+    :func:`nnmnkwii.preprocessing.minmax_scale_params`.
+
+    .. note::
+
+        If ``scale_`` and ``min_`` are given, ``feature_range`` will be ignored.
+
+    Args:
+        x (array): Input data
+        data_min (array): Data min for each feature dimention.
+        data_max (array): Data max for each feature dimention.
+        feature_range (array like): Feature range.
+        scale\_ ([optional]array): Scaling factor.
+        min\_ ([optional]array): Minimum value for scaling.
 
     Returns:
         array: Scaled data.
+
+    Raises:
+        ValueError: If (``data_min``, ``data_max``) or
+          (``scale_`` and ``min_``) are not specified.
+
+    See also:
+        :func:`nnmnkwii.preprocessing.inv_minmax_scale`,
+        :func:`nnmnkwii.preprocessing.minmax_scale_params`
 
     Examples:
         >>> from nnmnkwii.preprocessing import minmax, minmax_scale
@@ -465,15 +553,53 @@ def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
         >>> from nnmnkwii.datasets import FileSourceDataset
         >>> X, Y = example_file_data_sources_for_acoustic_model()
         >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
-        >>> lengths = [len(x) for x in X]
-        >>> data_min, data_max = minmax(X, lengths)
-        >>> scaled_x = minmax_scale(X[0], data_min, data_max, feature_range=(0.01, 0.99))
-
-    TODO:
-        min'/scale instead of min/max?
+        >>> data_min, data_max = minmax(X)
+        >>> scaled_x = minmax_scale(X[0], data_min, data_max)
     """
-    data_range = data_max - data_min
-    scale = (feature_range[1] - feature_range[0]) / \
-        _handle_zeros_in_scale(data_range, copy=False)
-    min_ = feature_range[0] - data_min * scale
-    return x * scale + min_
+    if (scale_ is None or min_ is None) and (data_min is None or data_max is None):
+        raise ValueError("""
+`data_min` and `data_max` or `scale_` and `min_` must be specified to perform minmax scale""")
+    if scale_ is None:
+        scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
+    if min_ is None:
+        min_ = feature_range[0] - data_min * scale_
+    return x * scale_ + min_
+
+
+def inv_minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
+                     scale_=None, min_=None):
+    """Inverse transform of min/max scaling for given a single data.
+
+    Given data min, max and feature range, apply min/max denormalization to data.
+
+    .. note::
+
+        If ``scale_`` and ``min_`` are given, ``feature_range`` will be ignored.
+
+    Args:
+        x (array): Input data
+        data_min (array): Data min for each feature dimention.
+        data_max (array): Data max for each feature dimention.
+        feature_range (array like): Feature range.
+        scale\_ ([optional]array): Scaling factor.
+        min\_ ([optional]array): Minimum value for scaling.
+
+    Returns:
+        array: Scaled data.
+
+    Raises:
+        ValueError: If (``data_min``, ``data_max``) or
+          (``scale_`` and ``min_``) are not specified.
+
+    See also:
+        :func:`nnmnkwii.preprocessing.minmax_scale`,
+        :func:`nnmnkwii.preprocessing.minmax_scale_params`
+    """
+    if (scale_ is None or min_ is None) and (data_min is None or data_max is None):
+        raise ValueError("""
+`data_min` and `data_max` or `scale_` and `min_` must be specified to perform inverse of minmax scale""")
+    if scale_ is None:
+        scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
+    if min_ is None:
+        min_ = feature_range[0] - data_min * scale_
+    return (x - min_) / scale_
