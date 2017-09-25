@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.scale &mdash; nnmnkwii 0.0.6+325baa4 documentation</title>
+  <title>nnmnkwii.preprocessing.scale &mdash; nnmnkwii 0.0.6+c7268e3 documentation</title>
   
 
   
@@ -35,9 +35,9 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+325baa4 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+c7268e3 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
-        <link rel="next" title="nnmnkwii.preprocessing.minmax_scale" href="nnmnkwii.preprocessing.minmax_scale.html"/>
+        <link rel="next" title="nnmnkwii.preprocessing.inv_scale" href="nnmnkwii.preprocessing.inv_scale.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.adjast_frame_lengths" href="nnmnkwii.preprocessing.adjast_frame_lengths.html"/> 
 
   
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.6+325baa4
+                0.0.6+c7268e3
               </div>
             
           
@@ -297,7 +297,10 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
@@ -484,6 +487,10 @@
 <span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_y</span> <span class="o">=</span> <span class="n">scale</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data_mean</span><span class="p">,</span> <span class="n">data_std</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.inv_scale.html#nnmnkwii.preprocessing.inv_scale" title="nnmnkwii.preprocessing.inv_scale"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_scale()</span></code></a></p>
+</div>
 </dd></dl>
 
 </div>
@@ -498,7 +505,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nnmnkwii.preprocessing.minmax_scale.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.minmax_scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nnmnkwii.preprocessing.inv_scale.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.inv_scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="nnmnkwii.preprocessing.adjast_frame_lengths.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.adjast_frame_lengths" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -532,7 +539,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.6+325baa4',
+            VERSION:'0.0.6+c7268e3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

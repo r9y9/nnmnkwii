@@ -4,6 +4,9 @@ Change log
 v0.0.6 <2017-xx-xx>
 ------------------
 
+- `#37`_: Add ``tqdm`` as dependency. Dataset's ``asarray`` now report progress if ``verbose > 0``.
+- `#37`_: Add further support for incremental mean/var computation.
+- `#37`_: Add and improve normalization utilities, :func:`nnmnkwii.preprocessing.inv_scale`, :func:`nnmnkwii.preprocessing.inv_minmax_scale` and :func:`nnmnkwii.preprocessing.minmax_scale_params`.
 - Add builtin data source for Voice Conversion Challenge (VCC) 2016 dataset.
 - `#34`_: Add :func:`nnmnkwii.preprocessing.adjast_frame_length`.
 - `#34`_: ``adjast_frame_lengths`` now supports ``divisible_by`` parameter. ``ensure_even`` is deprecated.
@@ -59,3 +62,4 @@ v0.0.1 <2017-08-14>
 .. _#28: https://github.com/r9y9/nnmnkwii/pull/28
 .. _#31: https://github.com/r9y9/nnmnkwii/pull/31
 .. _#34: https://github.com/r9y9/nnmnkwii/pull/34
+.. _#37: https://github.com/r9y9/nnmnkwii/pull/37

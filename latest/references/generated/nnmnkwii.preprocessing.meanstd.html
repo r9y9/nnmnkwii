@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.meanstd &mdash; nnmnkwii 0.0.6+325baa4 documentation</title>
+  <title>nnmnkwii.preprocessing.meanstd &mdash; nnmnkwii 0.0.6+c7268e3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+325baa4 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+c7268e3 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="nnmnkwii.preprocessing.minmax" href="nnmnkwii.preprocessing.minmax.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.meanvar" href="nnmnkwii.preprocessing.meanvar.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.6+325baa4
+                0.0.6+c7268e3
               </div>
             
           
@@ -297,7 +297,10 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
 </ul>
 </li>
 <li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul class="current">
@@ -451,7 +454,7 @@
 <h1>nnmnkwii.preprocessing.meanstd<a class="headerlink" href="#nnmnkwii-preprocessing-meanstd" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="nnmnkwii.preprocessing.meanstd">
-<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">meanstd</code><span class="sig-paren">(</span><em>dataset</em>, <em>lengths=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#meanstd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.meanstd" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">meanstd</code><span class="sig-paren">(</span><em>dataset</em>, <em>lengths=None</em>, <em>init_mean=0.0</em>, <em>init_var=0.0</em>, <em>last_sample_count=0</em>, <em>return_last_sample_count=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#meanstd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.meanstd" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mean/std-deviation computation given a iterable dataset</p>
 <p>Dataset can have variable length samples. In that cases, you need to
 explicitly specify lengths for all the samples.</p>
@@ -462,10 +465,23 @@ explicitly specify lengths for all the samples.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>dataset</strong> (<a class="reference internal" href="../datasets.html#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><em>nnmnkwii.datasets.Dataset</em></a>) – Dataset</li>
 <li><strong>lengths</strong> – (list): Frame lengths for each dataset sample.</li>
+<li><strong>init_mean</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scalar</em>) – Initial value for mean vector.</li>
+<li><strong>init_var</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scaler</em>) – Initial value for variance vector.</li>
+<li><strong>last_sample_count</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Last sample count. Default is 0. If you set
+non-default <code class="docutils literal"><span class="pre">init_mean</span></code> and <code class="docutils literal"><span class="pre">init_var</span></code>, you need to set
+<code class="docutils literal"><span class="pre">last_sample_count</span></code> property. Typically this will be the number of
+time frames ever seen.</li>
+<li><strong>return_last_sample_count</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Return <code class="docutils literal"><span class="pre">last_sample_count</span></code> if True.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Mean and variance for each dimention.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>Mean and variance for each dimention. If</dt>
+<dd><p class="first last"><code class="docutils literal"><span class="pre">return_last_sample_count</span></code> is True, returns <code class="docutils literal"><span class="pre">last_sample_count</span></code>
+as well.</p>
+</dd>
+</dl>
+</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)">tuple</a></p>
@@ -535,7 +551,7 @@ explicitly specify lengths for all the samples.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.6+325baa4',
+            VERSION:'0.0.6+c7268e3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.6+325baa4 documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.6+c7268e3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+325baa4 documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+c7268e3 documentation" href="../index.html"/>
         <link rel="next" title="Display" href="display.html"/>
         <link rel="prev" title="Baseline" href="baseline.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.6+325baa4
+                0.0.6+c7268e3
               </div>
             
           
@@ -296,7 +296,10 @@
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
@@ -598,7 +601,7 @@ find data to be loaded and 2) how to collect features from them.</p>
 </div>
 <dl class="method">
 <dt id="nnmnkwii.datasets.FileSourceDataset.asarray">
-<code class="descname">asarray</code><span class="sig-paren">(</span><em>padded_length=None</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>padded_length_guess=1000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset.asarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="Permalink to this definition">¶</a></dt>
+<code class="descname">asarray</code><span class="sig-paren">(</span><em>padded_length=None</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>padded_length_guess=1000</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset.asarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert dataset to numpy array.</p>
 <p>This try to load entire dataset into a single 3d numpy array.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1239,7 +1242,7 @@ models.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.6+325baa4',
+            VERSION:'0.0.6+c7268e3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
