@@ -244,9 +244,9 @@ Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
         else:
             return self._getitem_one_sample(idx)
 
-    def asarray(self, dtype=np.float32):
+    def asarray(self, dtype=np.float32, verbose=0):
         return super(PaddedFileSourceDataset, self).asarray(
-            self.padded_length, dtype=dtype)
+            self.padded_length, dtype=dtype, verbose=verbose)
 
 
 class MemoryCacheDataset(Dataset):
