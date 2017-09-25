@@ -43,6 +43,13 @@ def test_empty_dataset():
     yield raises(IndexError)(__test_outof_range), X
 
 
+# verbose=1 triggers tqdm progress report
+def test_asarray_tqdm():
+    for padded in [True, False]:
+        X, _ = _get_small_datasets(padded=False, duration=True)
+        X.asarray(verbose=1)
+
+
 def test_asarray():
     X, Y = _get_small_datasets(padded=False, duration=True)
     lengths = [len(x) for x in X]

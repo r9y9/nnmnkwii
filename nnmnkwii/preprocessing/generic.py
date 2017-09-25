@@ -288,7 +288,8 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
     return x, y
 
 
-def meanvar(dataset, lengths=None):
+def meanvar(dataset, lengths=None, init_mean=0., init_var=0.,
+            last_sample_count=0, return_last_sample_count=False):
     """Mean/variance computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
@@ -297,9 +298,18 @@ def meanvar(dataset, lengths=None):
     Args:
         dataset (nnmnkwii.datasets.Dataset): Dataset
         lengths: (list): Frame lengths for each dataset sample.
+        init_mean (array or scalar): Initial value for mean vector.
+        init_var (array or scaler): Initial value for variance vector.
+        last_sample_count (int): Last sample count. Default is 0. If you set
+          non-default ``init_mean`` and ``init_var``, you need to set
+          ``last_sample_count`` property. Typically this will be the number of
+          time frames ever seen.
+        return_last_sample_count (bool): Return ``last_sample_count`` if True.
 
     Returns:
-        tuple: Mean and variance for each dimention.
+        tuple: Mean and variance for each dimention. If
+          ``return_last_sample_count`` is True, returns ``last_sample_count``
+          as well.
 
     See also:
         :func:`nnmnkwii.preprocessing.meanstd`, :func:`nnmnkwii.preprocessing.scale`
@@ -315,18 +325,23 @@ def meanvar(dataset, lengths=None):
     """
     dtype = dataset[0].dtype
 
-    mean_, var_ = 0., 0.
-    last_sample_count = 0
+    mean_, var_ = init_mean, init_var
     for idx, x in enumerate(dataset):
         if lengths is not None:
             x = x[:lengths[idx]]
         mean_, var_, _ = _incremental_mean_and_var(
             x, mean_, var_, last_sample_count)
         last_sample_count += len(x)
-    return mean_.astype(dtype), var_.astype(dtype)
+    mean_, var_ = mean_.astype(dtype), var_.astype(dtype)
+
+    if return_last_sample_count:
+        return mean_, var_, last_sample_count
+    else:
+        return mean_, var_
 
 
-def meanstd(dataset, lengths=None):
+def meanstd(dataset, lengths=None, init_mean=0., init_var=0.,
+            last_sample_count=0, return_last_sample_count=False):
     """Mean/std-deviation computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
@@ -335,9 +350,18 @@ def meanstd(dataset, lengths=None):
     Args:
         dataset (nnmnkwii.datasets.Dataset): Dataset
         lengths: (list): Frame lengths for each dataset sample.
+        init_mean (array or scalar): Initial value for mean vector.
+        init_var (array or scaler): Initial value for variance vector.
+        last_sample_count (int): Last sample count. Default is 0. If you set
+          non-default ``init_mean`` and ``init_var``, you need to set
+          ``last_sample_count`` property. Typically this will be the number of
+          time frames ever seen.
+        return_last_sample_count (bool): Return ``last_sample_count`` if True.
 
     Returns:
-        tuple: Mean and variance for each dimention.
+        tuple: Mean and variance for each dimention. If
+          ``return_last_sample_count`` is True, returns ``last_sample_count``
+          as well.
 
     See also:
         :func:`nnmnkwii.preprocessing.meanvar`, :func:`nnmnkwii.preprocessing.scale`
@@ -351,8 +375,15 @@ def meanstd(dataset, lengths=None):
         >>> lengths = [len(y) for y in Y]
         >>> data_mean, data_std = meanstd(Y, lengths)
     """
-    m, v = meanvar(dataset, lengths)
-    return m, _handle_zeros_in_scale(np.sqrt(v))
+    ret = meanvar(dataset, lengths, init_mean, init_var,
+                  last_sample_count, return_last_sample_count)
+    m, v = ret[0], ret[1]
+    v = _handle_zeros_in_scale(np.sqrt(v))
+    if return_last_sample_count:
+        assert len(ret) == 3
+        return m, v, ret[2]
+    else:
+        return m, v
 
 
 def minmax(dataset, lengths=None):
@@ -411,22 +442,110 @@ def scale(x, data_mean, data_std):
         >>> lengths = [len(y) for y in Y]
         >>> data_mean, data_std = meanstd(Y, lengths)
         >>> scaled_y = scale(Y[0], data_mean, data_std)
+
+    See also:
+        :func:`nnmnkwii.preprocessing.inv_scale`
     """
     return (x - data_mean) / _handle_zeros_in_scale(data_std, copy=False)
 
 
-def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
-    """Min/max scaling for given a single data.
+def inv_scale(x, data_mean, data_std):
+    """Inverse tranform of mean/variance scaling.
 
-    Given data min, max and feature range, apply min/max normalization to data.
+    Given mean and variances, apply mean-variance denormalization to data.
+
+    Args:
+        x (array): Input data
+        data_mean (array): Means for each feature dimention.
+        data_std (array): Standard deviation for each feature dimention.
+
+    Returns:
+        array: Denormalized data.
+
+    See also:
+        :func:`nnmnkwii.preprocessing.scale`
+    """
+    return data_std * x + data_mean
+
+
+def __minmax_scale_factor(data_min, data_max, feature_range):
+    data_range = data_max - data_min
+    scale = (feature_range[1] - feature_range[0]) / \
+        _handle_zeros_in_scale(data_range, copy=False)
+    return scale
+
+
+def minmax_scale_params(data_min, data_max, feature_range=(0, 1)):
+    """Compute parameters required to perform min/max scaling.
+
+    Given data min, max and feature range, computes scalining factor and
+    minimum value. Min/max scaling can be done as follows:
+
+    .. code-block:: python
+
+        x_scaled = x * scale_ + min_
 
     Args:
         x (array): Input data
         data_min (array): Data min for each feature dimention.
         data_max (array): Data max for each feature dimention.
+        feature_range (array like): Feature range.
+
+    Returns:
+        tuple: Scaling factor and minimum value for scaled data.
+
+    Examples:
+        >>> from nnmnkwii.preprocessing import minmax, minmax_scale
+        >>> from nnmnkwii.preprocessing import minmax_scale_params
+        >>> from nnmnkwii.util import example_file_data_sources_for_acoustic_model
+        >>> from nnmnkwii.datasets import FileSourceDataset
+        >>> X, Y = example_file_data_sources_for_acoustic_model()
+        >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
+        >>> data_min, data_max = minmax(X)
+        >>> scale_, min_ = minmax_scale_params(data_min, data_max)
+        >>> scaled_x = minmax_scale(X[0], scale_=scale_, min_=min_)
+
+    See also:
+        :func:`nnmnkwii.preprocessing.minmax_scale`,
+        :func:`nnmnkwii.preprocessing.inv_minmax_scale`
+    """
+    scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
+    min_ = feature_range[0] - data_min * scale_
+    return scale_, min_
+
+
+def minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
+                 scale_=None, min_=None):
+    """Min/max scaling for given a single data.
+
+    Given data min, max and feature range, apply min/max normalization to data.
+    Optionally, you can get a little performance improvement to give scaling
+    factor (``scale_``) and minimum value (``min_``) used in scaling explicitly.
+    Those values can be computed by
+    :func:`nnmnkwii.preprocessing.minmax_scale_params`.
+
+    .. note::
+
+        If ``scale_`` and ``min_`` are given, ``feature_range`` will be ignored.
+
+    Args:
+        x (array): Input data
+        data_min (array): Data min for each feature dimention.
+        data_max (array): Data max for each feature dimention.
+        feature_range (array like): Feature range.
+        scale\_ ([optional]array): Scaling factor.
+        min\_ ([optional]array): Minimum value for scaling.
 
     Returns:
         array: Scaled data.
+
+    Raises:
+        ValueError: If (``data_min``, ``data_max``) or
+          (``scale_`` and ``min_``) are not specified.
+
+    See also:
+        :func:`nnmnkwii.preprocessing.inv_minmax_scale`,
+        :func:`nnmnkwii.preprocessing.minmax_scale_params`
 
     Examples:
         >>> from nnmnkwii.preprocessing import minmax, minmax_scale
@@ -434,15 +553,53 @@ def minmax_scale(x, data_min, data_max, feature_range=(0, 1)):
         >>> from nnmnkwii.datasets import FileSourceDataset
         >>> X, Y = example_file_data_sources_for_acoustic_model()
         >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
-        >>> lengths = [len(x) for x in X]
-        >>> data_min, data_max = minmax(X, lengths)
-        >>> scaled_x = minmax_scale(X[0], data_min, data_max, feature_range=(0.01, 0.99))
-
-    TODO:
-        min'/scale instead of min/max?
+        >>> data_min, data_max = minmax(X)
+        >>> scaled_x = minmax_scale(X[0], data_min, data_max)
     """
-    data_range = data_max - data_min
-    scale = (feature_range[1] - feature_range[0]) / \
-        _handle_zeros_in_scale(data_range, copy=False)
-    min_ = feature_range[0] - data_min * scale
-    return x * scale + min_
+    if (scale_ is None or min_ is None) and (data_min is None or data_max is None):
+        raise ValueError("""
+`data_min` and `data_max` or `scale_` and `min_` must be specified to perform minmax scale""")
+    if scale_ is None:
+        scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
+    if min_ is None:
+        min_ = feature_range[0] - data_min * scale_
+    return x * scale_ + min_
+
+
+def inv_minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
+                     scale_=None, min_=None):
+    """Inverse transform of min/max scaling for given a single data.
+
+    Given data min, max and feature range, apply min/max denormalization to data.
+
+    .. note::
+
+        If ``scale_`` and ``min_`` are given, ``feature_range`` will be ignored.
+
+    Args:
+        x (array): Input data
+        data_min (array): Data min for each feature dimention.
+        data_max (array): Data max for each feature dimention.
+        feature_range (array like): Feature range.
+        scale\_ ([optional]array): Scaling factor.
+        min\_ ([optional]array): Minimum value for scaling.
+
+    Returns:
+        array: Scaled data.
+
+    Raises:
+        ValueError: If (``data_min``, ``data_max``) or
+          (``scale_`` and ``min_``) are not specified.
+
+    See also:
+        :func:`nnmnkwii.preprocessing.minmax_scale`,
+        :func:`nnmnkwii.preprocessing.minmax_scale_params`
+    """
+    if (scale_ is None or min_ is None) and (data_min is None or data_max is None):
+        raise ValueError("""
+`data_min` and `data_max` or `scale_` and `min_` must be specified to perform inverse of minmax scale""")
+    if scale_ is None:
+        scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
+    if min_ is None:
+        min_ = feature_range[0] - data_min * scale_
+    return (x - min_) / scale_

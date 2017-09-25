@@ -130,7 +130,8 @@ setup(
         'bandmat',
         'fastdtw',
         'sklearn',
-        'pysptk >= 0.1.7'
+        'pysptk >= 0.1.7',
+        'tqdm',
     ],
     tests_require=['nose', 'coverage'],
     extras_require={

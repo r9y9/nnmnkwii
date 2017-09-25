@@ -13,6 +13,8 @@ from nnmnkwii.util import example_file_data_sources_for_acoustic_model
 from nnmnkwii.util import example_audio_file
 from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
 
+from nose.tools import raises
+
 from scipy.io import wavfile
 import numpy as np
 import pyworld
@@ -39,6 +41,43 @@ def _get_windows_set():
         ],
     ]
     return windows_set
+
+
+def test_meanvar_incremental():
+    np.random.seed(1234)
+    N = 32
+    X = np.random.randn(N, 100, 24)
+    lengths = [len(x) for x in X]
+    X_mean = np.mean(X, axis=(0, 1))
+    X_var = np.var(X, axis=(0, 1))
+    X_std = np.sqrt(X_var)
+
+    # Check consistency with numpy
+    X_mean_inc, X_var_inc = P.meanvar(X)
+    assert np.allclose(X_mean, X_mean_inc)
+    assert np.allclose(X_var, X_var_inc)
+
+    # Split dataset and compute meanvar incrementaly
+    X_a = X[:N // 2]
+    X_b = X[N // 2:]
+    X_mean_a, X_var_a, last_sample_count = P.meanvar(
+        X_a, return_last_sample_count=True)
+    assert last_sample_count == np.sum(lengths[:N // 2])
+    X_mean_b, X_var_b = P.meanvar(
+        X_b, init_mean=X_mean_a, init_var=X_var_a,
+        last_sample_count=last_sample_count)
+    assert np.allclose(X_mean, X_mean_b)
+    assert np.allclose(X_var, X_var_b)
+
+    # meanstd
+    X_mean_a, X_std_a, last_sample_count = P.meanstd(
+        X_a, return_last_sample_count=True)
+    assert last_sample_count == np.sum(lengths[:N // 2])
+    X_mean_b, X_std_b = P.meanstd(
+        X_b, init_mean=X_mean_a, init_var=X_std_a**2,
+        last_sample_count=last_sample_count)
+    assert np.allclose(X_mean, X_mean_b)
+    assert np.allclose(X_std, X_std_b)
 
 
 def test_meanvar():
@@ -69,6 +108,11 @@ def test_meanvar():
     assert np.allclose(X_mean, X_mean_hat)
     assert np.allclose(X_var, X_var_hat)
 
+    # Inverse transform
+    x = X[0]
+    x_hat = P.inv_scale(P.scale(x, X_mean, X_std), X_mean, X_std)
+    assert np.allclose(x, x_hat, atol=1e-7)
+
 
 def test_minmax():
     # Pick linguistic features for testing
@@ -86,6 +130,23 @@ def test_minmax():
     assert np.min(x_scaled) >= 0
     assert np.isfinite(x_scaled).all()
 
+    # Need to specify (min, max) or (scale_, min_)
+    @raises(ValueError)
+    def __test_raise1(x, X_min, X_max):
+        P.minmax_scale(x)
+
+    @raises(ValueError)
+    def __test_raise2(x, X_min, X_max):
+        P.inv_minmax_scale(x)
+
+    __test_raise1(x, X_min, X_max)
+    __test_raise2(x, X_min, X_max)
+
+    # Explicit scale_ and min_
+    scale_, min_ = P.minmax_scale_params(X_min, X_max, feature_range=(0, 0.99))
+    x_scaled_hat = P.minmax_scale(x, scale_=scale_, min_=min_)
+    assert np.allclose(x_scaled, x_scaled_hat)
+
     # For padded dataset
     X, _ = example_file_data_sources_for_acoustic_model()
     X = PaddedFileSourceDataset(X, 1000)
@@ -93,6 +154,15 @@ def test_minmax():
     X_min_hat, X_max_hat = P.minmax(X, lengths)
     assert np.allclose(X_min, X_min_hat)
     assert np.allclose(X_max, X_max_hat)
+
+    # Inverse transform
+    x = X[0]
+    x_hat = P.inv_minmax_scale(P.minmax_scale(x, X_min, X_max), X_min, X_max)
+    assert np.allclose(x, x_hat)
+
+    x_hat = P.inv_minmax_scale(
+        P.minmax_scale(x, scale_=scale_, min_=min_), scale_=scale_, min_=min_)
+    assert np.allclose(x, x_hat)
 
 
 def test_preemphasis():

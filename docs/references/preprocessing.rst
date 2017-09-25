@@ -22,7 +22,10 @@ Utterance-wise operations
    adjast_frame_length
    adjast_frame_lengths
    scale
+   inv_scale
+   minmax_scale_params
    minmax_scale
+   inv_minmax_scale
 
 
 Dataset-wise operations
