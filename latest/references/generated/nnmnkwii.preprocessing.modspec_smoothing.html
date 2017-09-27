@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.modspec_smoothing &mdash; nnmnkwii 0.0.6+e86ae9d documentation</title>
+  <title>nnmnkwii.preprocessing.modspec_smoothing &mdash; nnmnkwii 0.0.6+d4ed9db documentation</title>
   
 
   
@@ -35,7 +35,10 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+e86ae9d documentation" href="../../index.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.6+d4ed9db documentation" href="../../index.html"/>
+        <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
+        <link rel="next" title="nnmnkwii.preprocessing.meanvar" href="nnmnkwii.preprocessing.meanvar.html"/>
+        <link rel="prev" title="nnmnkwii.preprocessing.inv_modspec" href="nnmnkwii.preprocessing.inv_modspec.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -67,7 +70,7 @@
             
             
               <div class="version">
-                0.0.6+e86ae9d
+                0.0.6+d4ed9db
               </div>
             
           
@@ -216,7 +219,7 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Package references</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
@@ -283,9 +286,9 @@
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
@@ -299,6 +302,8 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.modspec_smoothing</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
@@ -393,6 +398,8 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="../preprocessing.html">Pre-processing</a> &raquo;</li>
+        
       <li>nnmnkwii.preprocessing.modspec_smoothing</li>
     
     
@@ -456,11 +463,11 @@
 modulation spectrum (MS).</p>
 <p>It’s known that the effect of the MS components in high MS frequency bands
 on quality of analysis-synthesized speech is negligible in HMM-based speech
-synthesis. See <a class="reference internal" href="#r1" id="id1">[R1]</a> for details.</p>
-<table class="docutils citation" frame="void" id="r1" rules="none">
+synthesis. See <a class="reference internal" href="#r9" id="id1">[R9]</a> for details.</p>
+<table class="docutils citation" frame="void" id="r9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R1]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
+<tr><td class="label"><a class="fn-backref" href="#id1">[R9]</a></td><td>Takamichi, Shinnosuke, et al. “The NAIST text-to-speech system for
 the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></tr>
 </tbody>
 </table>
@@ -509,6 +516,15 @@ log modulation spectrum domain or not.</li>
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nnmnkwii.preprocessing.meanvar.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.meanvar" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="nnmnkwii.preprocessing.inv_modspec.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.inv_modspec" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
@@ -536,7 +552,7 @@ log modulation spectrum domain or not.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.6+e86ae9d',
+            VERSION:'0.0.6+d4ed9db',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

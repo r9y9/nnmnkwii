@@ -2,7 +2,7 @@ Change log
 ==========
 
 v0.0.6 <2017-xx-xx>
-------------------
+-------------------
 
 - `#38`_: Add parameter trajectory smoothing.
 - `#37`_: Add ``tqdm`` as dependency. Dataset's ``asarray`` now report progress if ``verbose > 0``.

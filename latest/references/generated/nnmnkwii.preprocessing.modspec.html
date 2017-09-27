@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.modspec &mdash; nnmnkwii 0.0.6+e86ae9d documentation</title>
+  <title>nnmnkwii.preprocessing.modspec &mdash; nnmnkwii 0.0.6+d4ed9db documentation</title>
   
 
   
@@ -35,8 +35,9 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+e86ae9d documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+d4ed9db documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
+        <link rel="next" title="nnmnkwii.preprocessing.inv_modspec" href="nnmnkwii.preprocessing.inv_modspec.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.inv_minmax_scale" href="nnmnkwii.preprocessing.inv_minmax_scale.html"/> 
 
   
@@ -69,7 +70,7 @@
             
             
               <div class="version">
-                0.0.6+e86ae9d
+                0.0.6+d4ed9db
               </div>
             
           
@@ -301,6 +302,8 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
@@ -454,46 +457,54 @@
 <h1>nnmnkwii.preprocessing.modspec<a class="headerlink" href="#nnmnkwii-preprocessing-modspec" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="nnmnkwii.preprocessing.modspec">
-<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">modspec</code><span class="sig-paren">(</span><em>y</em>, <em>n=4096</em>, <em>norm=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/modspec.html#modspec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.modspec" title="Permalink to this definition">¶</a></dt>
-<dd><p>Modulation spectrum computation</p>
-<p>Given an parameter trajectory (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>), it computes modulation spectrum.
-Here we define modulation spectrum is power of discrete Fourier transform
-of parameter trajectory. See <a class="reference internal" href="#r1" id="id1">[R1]</a> for example application.</p>
-<table class="docutils citation" frame="void" id="r1" rules="none">
+<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">modspec</code><span class="sig-paren">(</span><em>x</em>, <em>n=4096</em>, <em>norm=None</em>, <em>return_phase=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/modspec.html#modspec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.modspec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modulation spectrum (MS) computation</p>
+<p>Given a parameter trajectory, it computes modulation spectrum. In the
+library, we define modulation spectrum as power of discrete Fourier transform
+of parameter trajectory across time-axis. See <a class="reference internal" href="#r8" id="id1">[R8]</a> for example application.</p>
+<table class="docutils citation" frame="void" id="r8" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R1]</a></td><td>Takamichi, Shinnosuke, et al. “A postfilter to modify the modulation
+<tr><td class="label"><a class="fn-backref" href="#id1">[R8]</a></td><td>Takamichi, Shinnosuke, et al. “A postfilter to modify the modulation
 spectrum in HMM-based speech synthesis.” Acoustics, Speech and Signal
 Processing (ICASSP), 2014 IEEE International Conference on. IEEE, 2014.</td></tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This may move in different module in future.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>n</strong> – DFT length</li>
-<li><strong>norm</strong> – Normalization mode. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.13)"><code class="xref py py-func docutils literal"><span class="pre">numpy.fft.fft()</span></code></a></li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Parameter trajectory, shape (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – DFT length</li>
+<li><strong>norm</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Normalization mode. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.13)"><code class="xref py py-func docutils literal"><span class="pre">numpy.fft.fft()</span></code></a>.</li>
+<li><strong>return_phase</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – If True, return phase of MS.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Modulation spectrum as <code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">n//2</span> <span class="pre">+</span> <span class="pre">1</span></code> array.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Modulation spectrum (<code class="docutils literal"><span class="pre">n//2</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">x</span> <span class="pre">D</span></code>) and
+phase (if <code class="docutils literal"><span class="pre">return_phase</span></code> is True).</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)">numpy.ndarray</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)">tuple</a> or <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)">numpy.ndarray</a></p>
 </td>
 </tr>
 </tbody>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="nnmnkwii.autograd.modspec.html#nnmnkwii.autograd.modspec" title="nnmnkwii.autograd.modspec"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.autograd.modspec()</span></code></a></p>
+<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.inv_modspec.html#nnmnkwii.preprocessing.inv_modspec" title="nnmnkwii.preprocessing.inv_modspec"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_modspec()</span></code></a>,
+<a class="reference internal" href="nnmnkwii.autograd.modspec.html#nnmnkwii.autograd.modspec" title="nnmnkwii.autograd.modspec"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.autograd.modspec()</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">functions</span> <span class="k">as</span> <span class="n">F</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">preprocessing</span> <span class="k">as</span> <span class="n">P</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">generated</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ms</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">modspec</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ms</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">modspec</span><span class="p">(</span><span class="n">generated</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ms</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(9, 2)</span>
 </pre></div>
@@ -511,6 +522,8 @@ Processing (ICASSP), 2014 IEEE International Conference on. IEEE, 2014.</td></tr
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="nnmnkwii.preprocessing.inv_modspec.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.inv_modspec" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="nnmnkwii.preprocessing.inv_minmax_scale.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.inv_minmax_scale" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -544,7 +557,7 @@ Processing (ICASSP), 2014 IEEE International Conference on. IEEE, 2014.</td></tr
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.6+e86ae9d',
+            VERSION:'0.0.6+d4ed9db',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
