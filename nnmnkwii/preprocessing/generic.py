@@ -188,7 +188,7 @@ def adjast_frame_length(x, pad=True, divisible_by=1):
         >>> from nnmnkwii.preprocessing import adjast_frame_length
         >>> import numpy as np
         >>> x = np.zeros((10, 1))
-        >>> x = adjast_frame_lengths(x, pad=True, divisible_by=3)
+        >>> x = adjast_frame_length(x, pad=True, divisible_by=3)
         >>> assert x.shape[0] == 12
 
     See also:
