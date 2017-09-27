@@ -26,6 +26,9 @@ Utterance-wise operations
    minmax_scale_params
    minmax_scale
    inv_minmax_scale
+   modspec
+   inv_modspec
+   modspec_smoothing
 
 
 Dataset-wise operations

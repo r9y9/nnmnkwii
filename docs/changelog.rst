@@ -4,6 +4,7 @@ Change log
 v0.0.6 <2017-xx-xx>
 ------------------
 
+- `#38`_: Add parameter trajectory smoothing.
 - `#37`_: Add ``tqdm`` as dependency. Dataset's ``asarray`` now report progress if ``verbose > 0``.
 - `#37`_: Add further support for incremental mean/var computation.
 - `#37`_: Add and improve normalization utilities, :func:`nnmnkwii.preprocessing.inv_scale`, :func:`nnmnkwii.preprocessing.inv_minmax_scale` and :func:`nnmnkwii.preprocessing.minmax_scale_params`.
@@ -63,3 +64,4 @@ v0.0.1 <2017-08-14>
 .. _#31: https://github.com/r9y9/nnmnkwii/pull/31
 .. _#34: https://github.com/r9y9/nnmnkwii/pull/34
 .. _#37: https://github.com/r9y9/nnmnkwii/pull/37
+.. _#38: https://github.com/r9y9/nnmnkwii/issues/38
