@@ -288,7 +288,7 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
     return x, y
 
 
-def meanvar(dataset, lengths=None, init_mean=0., init_var=0.,
+def meanvar(dataset, lengths=None, mean_=0., var_=0.,
             last_sample_count=0, return_last_sample_count=False):
     """Mean/variance computation given a iterable dataset
 
@@ -298,10 +298,10 @@ def meanvar(dataset, lengths=None, init_mean=0., init_var=0.,
     Args:
         dataset (nnmnkwii.datasets.Dataset): Dataset
         lengths: (list): Frame lengths for each dataset sample.
-        init_mean (array or scalar): Initial value for mean vector.
-        init_var (array or scaler): Initial value for variance vector.
+        mean\_ (array or scalar): Initial value for mean vector.
+        var\_ (array or scaler): Initial value for variance vector.
         last_sample_count (int): Last sample count. Default is 0. If you set
-          non-default ``init_mean`` and ``init_var``, you need to set
+          non-default ``mean_`` and ``var_``, you need to set
           ``last_sample_count`` property. Typically this will be the number of
           time frames ever seen.
         return_last_sample_count (bool): Return ``last_sample_count`` if True.
@@ -325,7 +325,6 @@ def meanvar(dataset, lengths=None, init_mean=0., init_var=0.,
     """
     dtype = dataset[0].dtype
 
-    mean_, var_ = init_mean, init_var
     for idx, x in enumerate(dataset):
         if lengths is not None:
             x = x[:lengths[idx]]
@@ -340,7 +339,7 @@ def meanvar(dataset, lengths=None, init_mean=0., init_var=0.,
         return mean_, var_
 
 
-def meanstd(dataset, lengths=None, init_mean=0., init_var=0.,
+def meanstd(dataset, lengths=None, mean_=0., var_=0.,
             last_sample_count=0, return_last_sample_count=False):
     """Mean/std-deviation computation given a iterable dataset
 
@@ -350,10 +349,10 @@ def meanstd(dataset, lengths=None, init_mean=0., init_var=0.,
     Args:
         dataset (nnmnkwii.datasets.Dataset): Dataset
         lengths: (list): Frame lengths for each dataset sample.
-        init_mean (array or scalar): Initial value for mean vector.
-        init_var (array or scaler): Initial value for variance vector.
+        mean\_ (array or scalar): Initial value for mean vector.
+        var\_ (array or scaler): Initial value for variance vector.
         last_sample_count (int): Last sample count. Default is 0. If you set
-          non-default ``init_mean`` and ``init_var``, you need to set
+          non-default ``mean_`` and ``var_``, you need to set
           ``last_sample_count`` property. Typically this will be the number of
           time frames ever seen.
         return_last_sample_count (bool): Return ``last_sample_count`` if True.
@@ -375,7 +374,7 @@ def meanstd(dataset, lengths=None, init_mean=0., init_var=0.,
         >>> lengths = [len(y) for y in Y]
         >>> data_mean, data_std = meanstd(Y, lengths)
     """
-    ret = meanvar(dataset, lengths, init_mean, init_var,
+    ret = meanvar(dataset, lengths, mean_, var_,
                   last_sample_count, return_last_sample_count)
     m, v = ret[0], ret[1]
     v = _handle_zeros_in_scale(np.sqrt(v))

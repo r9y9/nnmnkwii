@@ -64,7 +64,7 @@ def test_meanvar_incremental():
         X_a, return_last_sample_count=True)
     assert last_sample_count == np.sum(lengths[:N // 2])
     X_mean_b, X_var_b = P.meanvar(
-        X_b, init_mean=X_mean_a, init_var=X_var_a,
+        X_b, mean_=X_mean_a, var_=X_var_a,
         last_sample_count=last_sample_count)
     assert np.allclose(X_mean, X_mean_b)
     assert np.allclose(X_var, X_var_b)
@@ -74,7 +74,7 @@ def test_meanvar_incremental():
         X_a, return_last_sample_count=True)
     assert last_sample_count == np.sum(lengths[:N // 2])
     X_mean_b, X_std_b = P.meanstd(
-        X_b, init_mean=X_mean_a, init_var=X_std_a**2,
+        X_b, mean_=X_mean_a, var_=X_std_a**2,
         last_sample_count=last_sample_count)
     assert np.allclose(X_mean, X_mean_b)
     assert np.allclose(X_std, X_std_b)
