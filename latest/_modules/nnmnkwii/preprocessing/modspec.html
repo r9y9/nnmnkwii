@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.0.6+e86ae9d documentation</title>
+  <title>nnmnkwii.preprocessing.modspec &mdash; nnmnkwii 0.0.6+e86ae9d documentation</title>
   
 
   
@@ -36,7 +36,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.6+e86ae9d documentation" href="../../../index.html"/>
-        <link rel="up" title="nnmnkwii.util" href="../util.html"/> 
+        <link rel="up" title="Module code" href="../../index.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -396,9 +396,7 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../util.html">nnmnkwii.util</a> &raquo;</li>
-        
-      <li>nnmnkwii.util.files</li>
+      <li>nnmnkwii.preprocessing.modspec</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -415,169 +413,174 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for nnmnkwii.util.files</h1><div class="highlight"><pre>
-<span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-
-<span class="kn">import</span> <span class="nn">pkg_resources</span>
-
-<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
+  <h1>Source code for nnmnkwii.preprocessing.modspec</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
+
+<span class="c1"># TODO: this may be removed in future.</span>
 
 
-<div class="viewcode-block" id="example_label_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_label_file.html#nnmnkwii.util.example_label_file">[docs]</a><span class="k">def</span> <span class="nf">example_label_file</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get path of example HTS-style full-context lable file.</span>
+<div class="viewcode-block" id="modspec"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.modspec.html#nnmnkwii.preprocessing.modspec">[docs]</a><span class="k">def</span> <span class="nf">modspec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_phase</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Modulation spectrum (MS) computation</span>
 
-<span class="sd">    Corresponding audio file can be accessed by</span>
-<span class="sd">    :func:`example_audio_file`.</span>
+<span class="sd">    Given a parameter trajectory, it computes modulation spectrum. In the</span>
+<span class="sd">    library, we define modulation spectrum as power of discrete Fourier transform</span>
+<span class="sd">    of parameter trajectory across time-axis. See [1]_ for example application.</span>
+
+<span class="sd">    .. [1] Takamichi, Shinnosuke, et al. &quot;A postfilter to modify the modulation</span>
+<span class="sd">      spectrum in HMM-based speech synthesis.&quot; Acoustics, Speech and Signal</span>
+<span class="sd">      Processing (ICASSP), 2014 IEEE International Conference on. IEEE, 2014.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        This may move in different module in future.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y (numpy.ndarray): Parameter trajectory, shape (``T x D``).</span>
+<span class="sd">        n (int): DFT length</span>
+<span class="sd">        norm (str): Normalization mode. See :func:`numpy.fft.fft`.</span>
+<span class="sd">        return_phase (bool): If True, return phase of MS.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: Path of the example label file.</span>
+<span class="sd">        tuple or numpy.ndarray: Modulation spectrum (``n//2 + 1 x D``) and</span>
+<span class="sd">        phase (if ``return_phase`` is True).</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        :func:`example_audio_file`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_modspec`,</span>
+<span class="sd">        :func:`nnmnkwii.autograd.modspec`</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
-<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import preprocessing as P</span>
+<span class="sd">        &gt;&gt;&gt; generated = np.random.rand(10, 2)</span>
+<span class="sd">        &gt;&gt;&gt; ms = P.modspec(generated, n=16)</span>
+<span class="sd">        &gt;&gt;&gt; ms.shape</span>
+<span class="sd">        (9, 2)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;arctic_a0009&quot;</span>
-    <span class="n">label_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">_state.lab&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">label_path</span></div>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># DFT against time axis</span>
+    <span class="n">s_complex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">imag</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">R</span> <span class="o">+</span> <span class="n">I</span> <span class="o">*</span> <span class="n">I</span>
+
+    <span class="c1"># TODO: this is ugly...</span>
+    <span class="k">if</span> <span class="n">return_phase</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ms</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">s_complex</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ms</span></div>
 
 
-<div class="viewcode-block" id="example_audio_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_audio_file.html#nnmnkwii.util.example_audio_file">[docs]</a><span class="k">def</span> <span class="nf">example_audio_file</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get path of audio file.</span>
+<span class="c1"># For compat</span>
+<span class="k">def</span> <span class="nf">modphase</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">modspec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">return_phase</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="inv_modspec"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.inv_modspec.html#nnmnkwii.preprocessing.inv_modspec">[docs]</a><span class="k">def</span> <span class="nf">inv_modspec</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inverse transform of modulation spectrum computation</span>
+
+<span class="sd">    Given an modulation spectrum and it&#39;s phase, it recovers original parameter</span>
+<span class="sd">    trajectory.</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        Returned parameter trajectory has shape (``n x D``), where ``n`` is DFT</span>
+<span class="sd">        length used in modulation spectrum compuattion. You will have to</span>
+<span class="sd">        trim it yourself to the actual time length if needed.</span>
+
+<span class="sd">    .. warning::</span>
+
+<span class="sd">        This may move in different module in future.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        ms (numpy.ndarray): Modulation spectrum (``n//2 + 1 x D``).</span>
+<span class="sd">        phase (numpy.ndarray): Phase of modulation spectrum (``n//2 + 1 x D``).</span>
+<span class="sd">        norm (str): Normalization mode. See :func:`numpy.fft.fft`.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: Path of the example audio file.</span>
+<span class="sd">        numpy.ndarray: Recovered parameter trajectory, shape (``n x D``).</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import preprocessing as P</span>
+<span class="sd">        &gt;&gt;&gt; generated = np.random.rand(10, 2)</span>
+<span class="sd">        &gt;&gt;&gt; ms, phase = P.modspec(generated, n=16, return_phase=True)</span>
+<span class="sd">        &gt;&gt;&gt; generated_hat = P.inv_modspec(ms, phase)</span>
+<span class="sd">        &gt;&gt;&gt; assert np.allclose(generated, generated_hat)</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        :func:`example_label_file`</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_audio_file</span>
-<span class="sd">        &gt;&gt;&gt; from scipy.io import wavfile</span>
-<span class="sd">        &gt;&gt;&gt; fs, x = wavfile.read(example_audio_file())</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.modspec`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;arctic_a0009&quot;</span>
-    <span class="n">wav_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">.wav&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">wav_path</span></div>
+    <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">ms</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span>
+
+    <span class="c1"># |X(x)|^2 -&gt; |X(w)|</span>
+    <span class="n">amp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">ms</span><span class="p">)</span>
+
+    <span class="c1"># X(w)</span>
+    <span class="n">complex_ms</span> <span class="o">=</span> <span class="n">amp</span> <span class="o">*</span> <span class="n">phase</span>
+
+    <span class="c1"># x</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">complex_ms</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span></div>
 
 
-<div class="viewcode-block" id="example_question_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_question_file.html#nnmnkwii.util.example_question_file">[docs]</a><span class="k">def</span> <span class="nf">example_question_file</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get path of example question file.</span>
+<div class="viewcode-block" id="modspec_smoothing"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.modspec_smoothing.html#nnmnkwii.preprocessing.modspec_smoothing">[docs]</a><span class="k">def</span> <span class="nf">modspec_smoothing</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">modfs</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4096</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cutoff</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">log_domain</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parameter trajectory smoothing by removing high frequency bands of MS.</span>
 
-<span class="sd">    The question file was taken from Merlin_.</span>
+<span class="sd">    Given an parameter trajectory, it removes high frequency bands of its</span>
+<span class="sd">    modulation spectrum (MS).</span>
 
-<span class="sd">    .. _Merlin: https://github.com/CSTR-Edinburgh/merlin</span>
+<span class="sd">    It&#39;s known that the effect of the MS components in high MS frequency bands</span>
+<span class="sd">    on quality of analysis-synthesized speech is negligible in HMM-based speech</span>
+<span class="sd">    synthesis. See [1]_ for details.</span>
+
+<span class="sd">    .. [1] Takamichi, Shinnosuke, et al. &quot;The NAIST text-to-speech system for</span>
+<span class="sd">      the Blizzard Challenge 2015.&quot; Proc. Blizzard Challenge workshop. 2015.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (numpy.ndarray): Parameter trajectory, shape (``T x D``).</span>
+<span class="sd">        modfs (int): Sampling frequency in modulation spectrum domain. In</span>
+<span class="sd">          frame-based processing, this will be ``fs / hop_length``.</span>
+<span class="sd">        n (int): DFT length</span>
+<span class="sd">        norm (str): Normalization mode. See :func:`numpy.fft.fft`.</span>
+<span class="sd">        cutoff (float): Cut-off frequency in Hz.</span>
+<span class="sd">        log_domain (bool): Whether it performs high frequency band removal on</span>
+<span class="sd">          log modulation spectrum domain or not.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: Path of the example audio file.</span>
+<span class="sd">        numpy.ndarray: Smoothed parameter trajectory, shape (``T x D``).</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_question_file</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
-<span class="sd">        &gt;&gt;&gt; binary_dict, continuous_dict = hts.load_question_set(example_question_file())</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import preprocessing as P</span>
+<span class="sd">        &gt;&gt;&gt; generated = np.random.rand(10, 2)</span>
+<span class="sd">        &gt;&gt;&gt; smoothed = P.modspec_smoothing(generated, modfs=200, n=16, cutoff=50)</span>
+<span class="sd">        &gt;&gt;&gt; smoothed.shape</span>
+<span class="sd">        (10, 2)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/questions-radio_dnn_416.hed&#39;</span><span class="p">)</span></div>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">cutoff</span> <span class="o">&gt;</span> <span class="n">modfs</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s2">&quot;Cutoff frequency </span><span class="si">{}</span><span class="s2"> hz must be larger than Nyquist freqeuency </span><span class="si">{}</span><span class="s2">. hz&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">cutoff</span><span class="p">,</span> <span class="n">modfs</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s2">&quot;DFT length </span><span class="si">{}</span><span class="s2"> must be larger than time length </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">))</span>
 
+    <span class="n">ms</span><span class="p">,</span> <span class="n">phase</span> <span class="o">=</span> <span class="n">modspec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">return_phase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">log_domain</span><span class="p">:</span>
+        <span class="n">ms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">ms</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">BinaryFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
+    <span class="k">if</span> <span class="n">cutoff</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">limit_bin</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="n">cutoff</span> <span class="o">/</span> <span class="n">modfs</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">limit_bin</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">ms</span><span class="p">):</span>
+            <span class="n">ms</span><span class="p">[</span><span class="n">limit_bin</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;*.npz&quot;</span><span class="p">)))</span>
+    <span class="k">if</span> <span class="n">log_domain</span><span class="p">:</span>
+        <span class="n">ms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">ms</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">collect_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="s2">&quot;data&quot;</span><span class="p">]</span>
-
-
-<span class="k">class</span> <span class="nc">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="n">BinaryFileDataSource</span><span class="p">):</span>
-    <span class="n">SLT_DEMO_DATA_ROOT</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/slt_arctic_demo_data&#39;</span><span class="p">)</span>
-
-    <span class="n">mgc_dim</span> <span class="o">=</span> <span class="mi">75</span>
-    <span class="n">lf0_dim</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">vuv_dim</span> <span class="o">=</span> <span class="mi">1</span>
-    <span class="n">bap_dim</span> <span class="o">=</span> <span class="mi">3</span>
-
-    <span class="n">fs</span> <span class="o">=</span> <span class="mi">16000</span>
-    <span class="n">frame_period</span> <span class="o">=</span> <span class="mi">5</span>
-    <span class="n">hop_length</span> <span class="o">=</span> <span class="mi">80</span>
-    <span class="n">fftlen</span> <span class="o">=</span> <span class="mi">1024</span>
-    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.41</span>
-
-    <span class="n">mgc_start_idx</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">lf0_start_idx</span> <span class="o">=</span> <span class="mi">75</span>
-    <span class="n">vuv_start_idx</span> <span class="o">=</span> <span class="mi">78</span>
-    <span class="n">bap_start_idx</span> <span class="o">=</span> <span class="mi">79</span>
-
-    <span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>
-        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])),</span>
-        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])),</span>
-    <span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleSLTArcticFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SLT_DEMO_DATA_ROOT</span><span class="p">,</span> <span class="n">directory</span><span class="p">))</span>
-
-
-<div class="viewcode-block" id="example_file_data_sources_for_duration_model"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html#nnmnkwii.util.example_file_data_sources_for_duration_model">[docs]</a><span class="k">def</span> <span class="nf">example_file_data_sources_for_duration_model</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get file data sources for duration model training.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple: Tuple of :obj:`FileDataSource` s for example data.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_duration_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = example_file_data_sources_for_duration_model()</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = FileSourceDataset(X), FileSourceDataset(Y)</span>
-<span class="sd">        &gt;&gt;&gt; for x, y in zip(X, Y):</span>
-<span class="sd">        ...     print(x.shape, y.shape)</span>
-<span class="sd">        ...</span>
-<span class="sd">        (35, 416) (35, 5)</span>
-<span class="sd">        (40, 416) (40, 5)</span>
-<span class="sd">        (39, 416) (39, 5)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;X_duration&quot;</span><span class="p">)</span>
-    <span class="n">Y</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;Y_duration&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span></div>
-
-
-<div class="viewcode-block" id="example_file_data_sources_for_acoustic_model"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html#nnmnkwii.util.example_file_data_sources_for_acoustic_model">[docs]</a><span class="k">def</span> <span class="nf">example_file_data_sources_for_acoustic_model</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;Get file data sources for acoustic model training</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        tuple: Tuple of :obj:`FileDataSource` s for example data.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_acoustic_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = example_file_data_sources_for_acoustic_model()</span>
-<span class="sd">        &gt;&gt;&gt; X, Y = FileSourceDataset(X), FileSourceDataset(Y)</span>
-<span class="sd">        &gt;&gt;&gt; for x, y in zip(X, Y):</span>
-<span class="sd">        ...     print(x.shape, y.shape)</span>
-<span class="sd">        ...</span>
-<span class="sd">        (578, 425) (578, 187)</span>
-<span class="sd">        (675, 425) (675, 187)</span>
-<span class="sd">        (606, 425) (606, 187)</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;X_acoustic&quot;</span><span class="p">)</span>
-    <span class="n">Y</span> <span class="o">=</span> <span class="n">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="s2">&quot;Y_acoustic&quot;</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span></div>
+    <span class="n">x_hat</span> <span class="o">=</span> <span class="n">inv_modspec</span><span class="p">(</span><span class="n">ms</span><span class="p">,</span> <span class="n">phase</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ascontiguousarray</span><span class="p">(</span><span class="n">x_hat</span><span class="p">[:</span><span class="n">T</span><span class="p">])</span></div>
 </pre></div>
 
            </div>

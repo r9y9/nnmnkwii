@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.meanvar &mdash; nnmnkwii 0.0.6+c7268e3 documentation</title>
+  <title>nnmnkwii.preprocessing.meanvar &mdash; nnmnkwii 0.0.6+e86ae9d documentation</title>
   
 
   
@@ -35,10 +35,9 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+c7268e3 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+e86ae9d documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
-        <link rel="next" title="nnmnkwii.preprocessing.meanstd" href="nnmnkwii.preprocessing.meanstd.html"/>
-        <link rel="prev" title="nnmnkwii.preprocessing.inv_minmax_scale" href="nnmnkwii.preprocessing.inv_minmax_scale.html"/> 
+        <link rel="next" title="nnmnkwii.preprocessing.meanstd" href="nnmnkwii.preprocessing.meanstd.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -70,7 +69,7 @@
             
             
               <div class="version">
-                0.0.6+c7268e3
+                0.0.6+e86ae9d
               </div>
             
           
@@ -301,6 +300,7 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
 </ul>
 </li>
 <li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul class="current">
@@ -454,7 +454,7 @@
 <h1>nnmnkwii.preprocessing.meanvar<a class="headerlink" href="#nnmnkwii-preprocessing-meanvar" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="nnmnkwii.preprocessing.meanvar">
-<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">meanvar</code><span class="sig-paren">(</span><em>dataset</em>, <em>lengths=None</em>, <em>init_mean=0.0</em>, <em>init_var=0.0</em>, <em>last_sample_count=0</em>, <em>return_last_sample_count=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#meanvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.meanvar" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">meanvar</code><span class="sig-paren">(</span><em>dataset</em>, <em>lengths=None</em>, <em>mean_=0.0</em>, <em>var_=0.0</em>, <em>last_sample_count=0</em>, <em>return_last_sample_count=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#meanvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.meanvar" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mean/variance computation given a iterable dataset</p>
 <p>Dataset can have variable length samples. In that cases, you need to
 explicitly specify lengths for all the samples.</p>
@@ -465,10 +465,10 @@ explicitly specify lengths for all the samples.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>dataset</strong> (<a class="reference internal" href="../datasets.html#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><em>nnmnkwii.datasets.Dataset</em></a>) – Dataset</li>
 <li><strong>lengths</strong> – (list): Frame lengths for each dataset sample.</li>
-<li><strong>init_mean</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scalar</em>) – Initial value for mean vector.</li>
-<li><strong>init_var</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scaler</em>) – Initial value for variance vector.</li>
+<li><strong>mean</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scalar</em>) – Initial value for mean vector.</li>
+<li><strong>var</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scaler</em>) – Initial value for variance vector.</li>
 <li><strong>last_sample_count</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Last sample count. Default is 0. If you set
-non-default <code class="docutils literal"><span class="pre">init_mean</span></code> and <code class="docutils literal"><span class="pre">init_var</span></code>, you need to set
+non-default <code class="docutils literal"><span class="pre">mean_</span></code> and <code class="docutils literal"><span class="pre">var_</span></code>, you need to set
 <code class="docutils literal"><span class="pre">last_sample_count</span></code> property. Typically this will be the number of
 time frames ever seen.</li>
 <li><strong>return_last_sample_count</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Return <code class="docutils literal"><span class="pre">last_sample_count</span></code> if True.</li>
@@ -520,8 +520,6 @@ as well.</p>
         <a href="nnmnkwii.preprocessing.meanstd.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.meanstd" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nnmnkwii.preprocessing.inv_minmax_scale.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.inv_minmax_scale" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
     </div>
   
 
@@ -551,7 +549,7 @@ as well.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.6+c7268e3',
+            VERSION:'0.0.6+e86ae9d',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

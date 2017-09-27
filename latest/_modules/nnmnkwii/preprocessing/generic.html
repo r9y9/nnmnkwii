@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.6+685c7c6 documentation</title>
+  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.6+e86ae9d documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+685c7c6 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6+e86ae9d documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.6+685c7c6
+                0.0.6+e86ae9d
               </div>
             
           
@@ -299,6 +299,7 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
@@ -603,7 +604,7 @@
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import adjast_frame_length</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; x = np.zeros((10, 1))</span>
-<span class="sd">        &gt;&gt;&gt; x = adjast_frame_lengths(x, pad=True, divisible_by=3)</span>
+<span class="sd">        &gt;&gt;&gt; x = adjast_frame_length(x, pad=True, divisible_by=3)</span>
 <span class="sd">        &gt;&gt;&gt; assert x.shape[0] == 12</span>
 
 <span class="sd">    See also:</span>
@@ -703,7 +704,7 @@
     <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span></div>
 
 
-<div class="viewcode-block" id="meanvar"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.meanvar.html#nnmnkwii.preprocessing.meanvar">[docs]</a><span class="k">def</span> <span class="nf">meanvar</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">init_mean</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">init_var</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+<div class="viewcode-block" id="meanvar"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.meanvar.html#nnmnkwii.preprocessing.meanvar">[docs]</a><span class="k">def</span> <span class="nf">meanvar</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mean_</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">var_</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
             <span class="n">last_sample_count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_last_sample_count</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Mean/variance computation given a iterable dataset</span>
 
@@ -713,10 +714,10 @@
 <span class="sd">    Args:</span>
 <span class="sd">        dataset (nnmnkwii.datasets.Dataset): Dataset</span>
 <span class="sd">        lengths: (list): Frame lengths for each dataset sample.</span>
-<span class="sd">        init_mean (array or scalar): Initial value for mean vector.</span>
-<span class="sd">        init_var (array or scaler): Initial value for variance vector.</span>
+<span class="sd">        mean_ (array or scalar): Initial value for mean vector.</span>
+<span class="sd">        var_ (array or scaler): Initial value for variance vector.</span>
 <span class="sd">        last_sample_count (int): Last sample count. Default is 0. If you set</span>
-<span class="sd">          non-default ``init_mean`` and ``init_var``, you need to set</span>
+<span class="sd">          non-default ``mean_`` and ``var_``, you need to set</span>
 <span class="sd">          ``last_sample_count`` property. Typically this will be the number of</span>
 <span class="sd">          time frames ever seen.</span>
 <span class="sd">        return_last_sample_count (bool): Return ``last_sample_count`` if True.</span>
@@ -740,7 +741,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dtype</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
 
-    <span class="n">mean_</span><span class="p">,</span> <span class="n">var_</span> <span class="o">=</span> <span class="n">init_mean</span><span class="p">,</span> <span class="n">init_var</span>
+    <span class="n">mean_</span><span class="p">,</span> <span class="n">var_</span> <span class="o">=</span> <span class="n">mean_</span><span class="p">,</span> <span class="n">var_</span>
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dataset</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">lengths</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">lengths</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span>
@@ -755,7 +756,7 @@
         <span class="k">return</span> <span class="n">mean_</span><span class="p">,</span> <span class="n">var_</span></div>
 
 
-<div class="viewcode-block" id="meanstd"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.meanstd.html#nnmnkwii.preprocessing.meanstd">[docs]</a><span class="k">def</span> <span class="nf">meanstd</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">init_mean</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">init_var</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
+<div class="viewcode-block" id="meanstd"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.meanstd.html#nnmnkwii.preprocessing.meanstd">[docs]</a><span class="k">def</span> <span class="nf">meanstd</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">mean_</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">var_</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span>
             <span class="n">last_sample_count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_last_sample_count</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Mean/std-deviation computation given a iterable dataset</span>
 
@@ -765,10 +766,10 @@
 <span class="sd">    Args:</span>
 <span class="sd">        dataset (nnmnkwii.datasets.Dataset): Dataset</span>
 <span class="sd">        lengths: (list): Frame lengths for each dataset sample.</span>
-<span class="sd">        init_mean (array or scalar): Initial value for mean vector.</span>
-<span class="sd">        init_var (array or scaler): Initial value for variance vector.</span>
+<span class="sd">        mean\_ (array or scalar): Initial value for mean vector.</span>
+<span class="sd">        var\_ (array or scaler): Initial value for variance vector.</span>
 <span class="sd">        last_sample_count (int): Last sample count. Default is 0. If you set</span>
-<span class="sd">          non-default ``init_mean`` and ``init_var``, you need to set</span>
+<span class="sd">          non-default ``mean_`` and ``var_``, you need to set</span>
 <span class="sd">          ``last_sample_count`` property. Typically this will be the number of</span>
 <span class="sd">          time frames ever seen.</span>
 <span class="sd">        return_last_sample_count (bool): Return ``last_sample_count`` if True.</span>
@@ -790,7 +791,7 @@
 <span class="sd">        &gt;&gt;&gt; lengths = [len(y) for y in Y]</span>
 <span class="sd">        &gt;&gt;&gt; data_mean, data_std = meanstd(Y, lengths)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">meanvar</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">init_mean</span><span class="p">,</span> <span class="n">init_var</span><span class="p">,</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">meanvar</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">mean_</span><span class="p">,</span> <span class="n">var_</span><span class="p">,</span>
                   <span class="n">last_sample_count</span><span class="p">,</span> <span class="n">return_last_sample_count</span><span class="p">)</span>
     <span class="n">m</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ret</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">v</span> <span class="o">=</span> <span class="n">_handle_zeros_in_scale</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
@@ -1054,7 +1055,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.6+685c7c6',
+            VERSION:'0.0.6+e86ae9d',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
