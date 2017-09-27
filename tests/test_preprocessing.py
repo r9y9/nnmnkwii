@@ -332,8 +332,42 @@ def test_modspec_reconstruct():
     generated = np.random.rand(T, static_dim)
 
     for n in [64, 128]:
-        ms = modspec(generated, n=n)  # ms = |X(w)|^2
-        ms_phase = modphase(generated, n=n)
-        complex_ms = np.sqrt(ms) * ms_phase  # = |X(w)| * phase
-        generated_hat = np.fft.irfft(complex_ms, n=n, axis=0)[:T]
+        ms, phase = P.modspec(generated, n=n, return_phase=True)  # ms = |X(w)|^2
+        generated_hat = P.inv_modspec(ms, phase)[:T]
         assert np.allclose(generated, generated_hat)
+
+
+def test_modspec_smoothing():
+    static_dim = 2
+    T = 64
+
+    np.random.seed(1234)
+    y = np.random.rand(T, static_dim)
+
+    modfs = 200
+    for log_domain in [True, False]:
+        for norm in [None, "ortho"]:
+            for n in [1024, 2048]:
+                # Nyquist freq
+                y_hat = P.modspec_smoothing(y, modfs, n=n, norm=norm,
+                                            cutoff=modfs // 2,
+                                            log_domain=log_domain)
+                assert np.allclose(y, y_hat)
+
+                # Smooth
+                P.modspec_smoothing(y, modfs, n=n, norm=norm,
+                                    cutoff=modfs // 4,
+                                    log_domain=log_domain)
+
+    # Cutoff frequency larger than modfs//2
+    @raises(ValueError)
+    def __test_invalid_param(y, modfs):
+        P.modspec_smoothing(y, modfs, n=2048, cutoff=modfs // 2 + 1)
+
+    # FFT size should larger than time length
+    @raises(RuntimeError)
+    def __test_invalid_time_length(y, modfs):
+        P.modspec_smoothing(y, modfs, n=32, cutoff=modfs // 2)
+
+    __test_invalid_time_length(y, modfs)
+    __test_invalid_param(y, modfs)
