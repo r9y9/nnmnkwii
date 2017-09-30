@@ -143,8 +143,8 @@ def test_minmax():
     __test_raise2(x, X_min, X_max)
 
     # Explicit scale_ and min_
-    scale_, min_ = P.minmax_scale_params(X_min, X_max, feature_range=(0, 0.99))
-    x_scaled_hat = P.minmax_scale(x, scale_=scale_, min_=min_)
+    min_, scale_ = P.minmax_scale_params(X_min, X_max, feature_range=(0, 0.99))
+    x_scaled_hat = P.minmax_scale(x, min_=min_, scale_=scale_)
     assert np.allclose(x_scaled, x_scaled_hat)
 
     # For padded dataset

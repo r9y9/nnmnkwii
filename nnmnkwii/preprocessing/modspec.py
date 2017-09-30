@@ -89,7 +89,7 @@ def inv_modspec(ms, phase, norm=None):
         >>> from nnmnkwii import preprocessing as P
         >>> generated = np.random.rand(10, 2)
         >>> ms, phase = P.modspec(generated, n=16, return_phase=True)
-        >>> generated_hat = P.inv_modspec(ms, phase)
+        >>> generated_hat = P.inv_modspec(ms, phase)[:len(generated)]
         >>> assert np.allclose(generated, generated_hat)
 
     See also:

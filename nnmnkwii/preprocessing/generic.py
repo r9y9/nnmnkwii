@@ -491,7 +491,7 @@ def minmax_scale_params(data_min, data_max, feature_range=(0, 1)):
         feature_range (array like): Feature range.
 
     Returns:
-        tuple: Scaling factor and minimum value for scaled data.
+        tuple: Minimum value and scaling factor for scaled data.
 
     Examples:
         >>> from nnmnkwii.preprocessing import minmax, minmax_scale
@@ -501,8 +501,8 @@ def minmax_scale_params(data_min, data_max, feature_range=(0, 1)):
         >>> X, Y = example_file_data_sources_for_acoustic_model()
         >>> X, Y = FileSourceDataset(X), FileSourceDataset(Y)
         >>> data_min, data_max = minmax(X)
-        >>> scale_, min_ = minmax_scale_params(data_min, data_max)
-        >>> scaled_x = minmax_scale(X[0], scale_=scale_, min_=min_)
+        >>> min_, scale_ = minmax_scale_params(data_min, data_max)
+        >>> scaled_x = minmax_scale(X[0], min_=min_, scale_=scale_)
 
     See also:
         :func:`nnmnkwii.preprocessing.minmax_scale`,
@@ -510,7 +510,7 @@ def minmax_scale_params(data_min, data_max, feature_range=(0, 1)):
     """
     scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
     min_ = feature_range[0] - data_min * scale_
-    return scale_, min_
+    return min_, scale_
 
 
 def minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
