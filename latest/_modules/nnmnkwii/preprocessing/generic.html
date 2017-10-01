@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.6+d4ed9db documentation</title>
+  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.7+fbf8ce1 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.6+d4ed9db documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.7+fbf8ce1 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.6+d4ed9db
+                0.0.7+fbf8ce1
               </div>
             
           
@@ -344,7 +344,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-6-2017-xx-xx">v0.0.6 &lt;2017-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-7-2017-xx-xx">v0.0.7 &lt;2017-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
@@ -909,7 +910,7 @@
 <span class="sd">        feature_range (array like): Feature range.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        tuple: Scaling factor and minimum value for scaled data.</span>
+<span class="sd">        tuple: Minimum value and scaling factor for scaled data.</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import minmax, minmax_scale</span>
@@ -919,8 +920,8 @@
 <span class="sd">        &gt;&gt;&gt; X, Y = example_file_data_sources_for_acoustic_model()</span>
 <span class="sd">        &gt;&gt;&gt; X, Y = FileSourceDataset(X), FileSourceDataset(Y)</span>
 <span class="sd">        &gt;&gt;&gt; data_min, data_max = minmax(X)</span>
-<span class="sd">        &gt;&gt;&gt; scale_, min_ = minmax_scale_params(data_min, data_max)</span>
-<span class="sd">        &gt;&gt;&gt; scaled_x = minmax_scale(X[0], scale_=scale_, min_=min_)</span>
+<span class="sd">        &gt;&gt;&gt; min_, scale_ = minmax_scale_params(data_min, data_max)</span>
+<span class="sd">        &gt;&gt;&gt; scaled_x = minmax_scale(X[0], min_=min_, scale_=scale_)</span>
 
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`nnmnkwii.preprocessing.minmax_scale`,</span>
@@ -928,7 +929,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">scale_</span> <span class="o">=</span> <span class="n">__minmax_scale_factor</span><span class="p">(</span><span class="n">data_min</span><span class="p">,</span> <span class="n">data_max</span><span class="p">,</span> <span class="n">feature_range</span><span class="p">)</span>
     <span class="n">min_</span> <span class="o">=</span> <span class="n">feature_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">data_min</span> <span class="o">*</span> <span class="n">scale_</span>
-    <span class="k">return</span> <span class="n">scale_</span><span class="p">,</span> <span class="n">min_</span></div>
+    <span class="k">return</span> <span class="n">min_</span><span class="p">,</span> <span class="n">scale_</span></div>
 
 
 <div class="viewcode-block" id="minmax_scale"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html#nnmnkwii.preprocessing.minmax_scale">[docs]</a><span class="k">def</span> <span class="nf">minmax_scale</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">data_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
@@ -1056,7 +1057,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.6+d4ed9db',
+            VERSION:'0.0.7+fbf8ce1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
