@@ -1,0 +1,1110 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.6 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="nnmnkwii 0.0.6 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../design.html">General design documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design_jp.html">設計ドキュメント (Japanese)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Cut-silence-frames">Cut silence frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Linguistic-features">Linguistic features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-datasets">Playing with datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Get-example-file-sources">Get example file sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-data">Load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Utterance-wise-iteration">Utterance-wise iteration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Memory-cache-iteration">Memory cache iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Frame-wise-iteration">Frame-wise iteration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html">DNN text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-loop">Training loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html">Bidirectional-LSTM based RNNs for text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Trainining-loop">Trainining loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html">GMM-based voice conversion (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Convert-dataset-to-arrays">Convert dataset to arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Align-source-and-target-features">Align source and target features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-parallel-data-look-like?">How parallel data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Append-delta-features">Append delta features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Finally,-we-get-joint-feature-matrix">Finally, we get joint feature matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Model">Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Visualize-model">Visualize model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Means">Means</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Covariances">Covariances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Listen-results">Listen results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-different?">How different?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Package references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/autograd.html">Autograd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#functional-interface">Functional interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#function-classes">Function classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/baseline.html">Baseline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/baseline.html#module-nnmnkwii.baseline.gmm">GMM voice conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/datasets.html">Datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#implementation">Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-utterance-wise-iteration">Dataset that supports utterance-wise iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#builtin-data-sources">Builtin data sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.duration_features.html">nnmnkwii.frontend.merlin.duration_features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/io.html">IO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load_question_set.html">nnmnkwii.io.hts.load_question_set</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/metrics.html">Evaluation metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/postfilters.html">Post-filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#f0">F0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#alignment">Alignment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/util.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#files">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_label_file.html">nnmnkwii.util.example_label_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_audio_file.html">nnmnkwii.util.example_audio_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">nnmnkwii</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nnmnkwii.frontend.merlin</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nnmnkwii.frontend.merlin</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Part of code here is adapted from Merlin. Their license follows:</span>
+<span class="c1">##########################################################################</span>
+<span class="c1">#           The Neural Network (NN) based Speech Synthesis System</span>
+<span class="c1">#                https://github.com/CSTR-Edinburgh/merlin</span>
+<span class="c1">#</span>
+<span class="c1">#                Centre for Speech Technology Research</span>
+<span class="c1">#                     University of Edinburgh, UK</span>
+<span class="c1">#                      Copyright (c) 2014-2015</span>
+<span class="c1">#                        All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># The system as a whole and most of the files in it are distributed</span>
+<span class="c1"># under the following copyright and conditions</span>
+<span class="c1">#</span>
+<span class="c1">#  Permission is hereby granted, free of charge, to use and distribute</span>
+<span class="c1">#  this software and its documentation without restriction, including</span>
+<span class="c1">#  without limitation the rights to use, copy, modify, merge, publish,</span>
+<span class="c1">#  distribute, sublicense, and/or sell copies of this work, and to</span>
+<span class="c1">#  permit persons to whom this work is furnished to do so, subject to</span>
+<span class="c1">#  the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1">#   - Redistributions of source code must retain the above copyright</span>
+<span class="c1">#     notice, this list of conditions and the following disclaimer.</span>
+<span class="c1">#   - Redistributions in binary form must reproduce the above</span>
+<span class="c1">#     copyright notice, this list of conditions and the following</span>
+<span class="c1">#     disclaimer in the documentation and/or other materials provided</span>
+<span class="c1">#     with the distribution.</span>
+<span class="c1">#   - The authors&#39; names may not be used to endorse or promote products derived</span>
+<span class="c1">#     from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#  THE UNIVERSITY OF EDINBURGH AND THE CONTRIBUTORS TO THIS WORK</span>
+<span class="c1">#  DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING</span>
+<span class="c1">#  ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT</span>
+<span class="c1">#  SHALL THE UNIVERSITY OF EDINBURGH NOR THE CONTRIBUTORS BE LIABLE</span>
+<span class="c1">#  FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES</span>
+<span class="c1">#  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN</span>
+<span class="c1">#  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,</span>
+<span class="c1">#  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF</span>
+<span class="c1">#  THIS SOFTWARE.</span>
+<span class="c1">##########################################################################</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
+
+
+<span class="k">def</span> <span class="nf">get_frame_feature_size</span><span class="p">(</span><span class="n">subphone_features</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">subphone_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># the phoneme level features only</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="n">subphone_features</span> <span class="o">=</span> <span class="n">subphone_features</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s2">&quot;subphone_features = &#39;none&#39; is deprecated, use None instead&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;full&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">9</span>  <span class="c1"># zhizheng&#39;s original 5 state features + 4 phoneme features</span>
+    <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;minimal_frame&#39;</span><span class="p">:</span>
+        <span class="c1"># the minimal features necessary to go from a state-level to</span>
+        <span class="c1"># frame-level model</span>
+        <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;state_only&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span>  <span class="c1"># this is equivalent to a state-based system</span>
+    <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;frame_only&#39;</span><span class="p">:</span>
+        <span class="c1"># this is equivalent to a frame-based system without relying on</span>
+        <span class="c1"># state-features</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;uniform_state&#39;</span><span class="p">:</span>
+        <span class="c1"># this is equivalent to a frame-based system with uniform</span>
+        <span class="c1"># state-features</span>
+        <span class="k">return</span> <span class="mi">2</span>
+    <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;minimal_phoneme&#39;</span><span class="p">:</span>
+        <span class="c1"># this is equivalent to a frame-based system with minimal features</span>
+        <span class="k">return</span> <span class="mi">3</span>
+    <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;coarse_coding&#39;</span><span class="p">:</span>
+        <span class="c1"># this is equivalent to a frame-based positioning system reported in</span>
+        <span class="c1"># Heiga Zen&#39;s work</span>
+        <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s1">&#39;Unknown value for subphone_features: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subphone_features</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="kc">False</span>
+
+
+<span class="k">def</span> <span class="nf">compute_coarse_coding_features</span><span class="p">(</span><span class="n">num_states</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">600</span><span class="p">):</span>
+    <span class="c1"># TODO</span>
+    <span class="k">assert</span> <span class="n">num_states</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="n">cc_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">num_states</span><span class="p">,</span> <span class="n">npoints</span><span class="p">))</span>
+
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+    <span class="n">x3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+
+    <span class="n">mu1</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">mu2</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="n">mu3</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+    <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.4</span>
+
+    <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">norm</span>
+    <span class="n">cc_features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu1</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+    <span class="n">cc_features</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu2</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
+    <span class="n">cc_features</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu3</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cc_features</span>
+
+
+<span class="k">def</span> <span class="nf">extract_coarse_coding_features_relative</span><span class="p">(</span><span class="n">cc_features</span><span class="p">,</span> <span class="n">phone_duration</span><span class="p">):</span>
+    <span class="n">dur</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+
+    <span class="n">cc_feat_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dur</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dur</span><span class="p">):</span>
+        <span class="c1"># TODO: does the magic number really make sense?</span>
+        <span class="c1"># need to investigate</span>
+        <span class="n">rel_indx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mi">200</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">dur</span><span class="p">))</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">300</span> <span class="o">+</span> <span class="n">rel_indx</span><span class="p">]</span>
+        <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_features</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">200</span> <span class="o">+</span> <span class="n">rel_indx</span><span class="p">]</span>
+        <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_features</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">rel_indx</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">cc_feat_matrix</span>
+
+
+<span class="k">def</span> <span class="nf">pattern_matching_binary</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="n">dict_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">)</span>
+    <span class="n">lab_binary_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dict_size</span><span class="p">):</span>
+        <span class="n">current_question_list</span> <span class="o">=</span> <span class="n">binary_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">binary_flag</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">iq</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">current_question_list</span><span class="p">)):</span>
+            <span class="n">current_compiled</span> <span class="o">=</span> <span class="n">current_question_list</span><span class="p">[</span><span class="n">iq</span><span class="p">]</span>
+
+            <span class="n">ms</span> <span class="o">=</span> <span class="n">current_compiled</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">binary_flag</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">break</span>
+        <span class="n">lab_binary_vector</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">binary_flag</span>
+
+    <span class="k">return</span> <span class="n">lab_binary_vector</span>
+
+
+<span class="k">def</span> <span class="nf">pattern_matching_continous_position</span><span class="p">(</span><span class="n">continuous_dict</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="n">dict_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">continuous_dict</span><span class="p">)</span>
+
+    <span class="n">lab_continuous_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dict_size</span><span class="p">):</span>
+
+        <span class="n">continuous_value</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
+
+        <span class="n">current_compiled</span> <span class="o">=</span> <span class="n">continuous_dict</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="n">ms</span> <span class="o">=</span> <span class="n">current_compiled</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">continuous_value</span> <span class="o">=</span> <span class="n">ms</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">lab_continuous_vector</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">continuous_value</span>
+
+    <span class="k">return</span> <span class="n">lab_continuous_vector</span>
+
+
+<span class="k">def</span> <span class="nf">load_labels_with_phone_alignment</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span>
+                                     <span class="n">binary_dict</span><span class="p">,</span>
+                                     <span class="n">continuous_dict</span><span class="p">,</span>
+                                     <span class="n">subphone_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                     <span class="n">manual_dur_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">dict_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">continuous_dict</span><span class="p">)</span>
+    <span class="n">frame_feature_size</span> <span class="o">=</span> <span class="n">get_frame_feature_size</span><span class="p">(</span><span class="n">subphone_features</span><span class="p">)</span>
+    <span class="n">dimension</span> <span class="o">=</span> <span class="n">frame_feature_size</span> <span class="o">+</span> <span class="n">dict_size</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="n">hts</span><span class="o">.</span><span class="n">HTSLabelFile</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">add_frame_features</span><span class="p">:</span>
+        <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">(),</span> <span class="n">dimension</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_phones</span><span class="p">(),</span> <span class="n">dimension</span><span class="p">))</span>
+
+    <span class="n">label_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
+        <span class="n">cc_features</span> <span class="o">=</span> <span class="n">compute_coarse_coding_features</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+
+        <span class="c1"># to do - support different frame shift - currently hardwired to 5msec</span>
+        <span class="c1"># currently under beta testing: support different frame shift</span>
+        <span class="k">if</span> <span class="n">manual_dur_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">frame_number</span> <span class="o">=</span> <span class="n">manual_dur_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">frame_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="mi">50000</span><span class="p">)</span>
+
+        <span class="n">label_binary_vector</span> <span class="o">=</span> <span class="n">pattern_matching_binary</span><span class="p">(</span>
+            <span class="n">binary_dict</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span>
+
+        <span class="c1"># if there is no CQS question, the label_continuous_vector will</span>
+        <span class="c1"># become to empty</span>
+        <span class="n">label_continuous_vector</span> <span class="o">=</span> <span class="n">pattern_matching_continous_position</span><span class="p">(</span>
+            <span class="n">continuous_dict</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span>
+        <span class="n">label_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">label_binary_vector</span><span class="p">,</span> <span class="n">label_continuous_vector</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
+            <span class="n">cc_feat_matrix</span> <span class="o">=</span> <span class="n">extract_coarse_coding_features_relative</span><span class="p">(</span><span class="n">cc_features</span><span class="p">,</span>
+                                                                     <span class="n">frame_number</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">add_frame_features</span><span class="p">:</span>
+            <span class="n">current_block_binary_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">frame_number</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="n">frame_feature_size</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frame_number</span><span class="p">):</span>
+                <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                           <span class="mi">0</span><span class="p">:</span><span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_vector</span>
+
+                <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;minimal_phoneme&#39;</span><span class="p">:</span>
+                    <span class="c1"># features which distinguish frame position in phoneme</span>
+                    <span class="c1"># fraction through phone forwards</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+                    <span class="c1"># fraction through phone backwards</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">frame_number</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+                    <span class="c1"># phone duration</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;coarse_coding&#39;</span><span class="p">:</span>
+                    <span class="c1"># features which distinguish frame position in phoneme</span>
+                    <span class="c1"># using three continous numerical features</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;unknown subphone_features type&#39;</span><span class="p">)</span>
+
+            <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
+                                 <span class="n">frame_number</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
+            <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="n">frame_number</span>
+
+        <span class="k">elif</span> <span class="n">subphone_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">current_block_binary_array</span> <span class="o">=</span> <span class="n">label_vector</span>
+            <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
+                                 <span class="mi">1</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
+            <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># TODO</span>
+            <span class="k">assert</span> <span class="kc">False</span>
+
+    <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">label_feature_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">label_feature_index</span><span class="p">,</span> <span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">label_feature_matrix</span>
+
+
+<span class="k">def</span> <span class="nf">load_labels_with_state_alignment</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span>
+                                     <span class="n">binary_dict</span><span class="p">,</span>
+                                     <span class="n">continuous_dict</span><span class="p">,</span>
+                                     <span class="n">subphone_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">dict_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">continuous_dict</span><span class="p">)</span>
+    <span class="n">frame_feature_size</span> <span class="o">=</span> <span class="n">get_frame_feature_size</span><span class="p">(</span><span class="n">subphone_features</span><span class="p">)</span>
+    <span class="n">dimension</span> <span class="o">=</span> <span class="n">frame_feature_size</span> <span class="o">+</span> <span class="n">dict_size</span>
+
+    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="n">hts</span><span class="o">.</span><span class="n">HTSLabelFile</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">add_frame_features</span><span class="p">:</span>
+        <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">(),</span> <span class="n">dimension</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_phones</span><span class="p">(),</span> <span class="n">dimension</span><span class="p">))</span>
+
+    <span class="n">label_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># TODO</span>
+    <span class="n">state_number</span> <span class="o">=</span> <span class="mi">5</span>
+
+    <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
+        <span class="n">cc_features</span> <span class="o">=</span> <span class="n">compute_coarse_coding_features</span><span class="p">()</span>
+
+    <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+    <span class="n">phone_duration</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">state_duration_base</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
+                        <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+        <span class="c1"># remove state information [k]</span>
+        <span class="k">assert</span> <span class="n">full_label</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;]&quot;</span>
+        <span class="n">full_label_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_label</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
+        <span class="n">state_index</span> <span class="o">=</span> <span class="n">full_label</span><span class="p">[</span><span class="n">full_label_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">state_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state_index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">state_index_backward</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">-</span> <span class="n">state_index</span>  <span class="c1"># TODO</span>
+        <span class="n">full_label</span> <span class="o">=</span> <span class="n">full_label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">full_label_length</span><span class="p">]</span>
+
+        <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
+
+        <span class="k">if</span> <span class="n">state_index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">current_frame_number</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">phone_duration</span> <span class="o">=</span> <span class="n">frame_number</span>
+            <span class="n">state_duration_base</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="n">label_binary_vector</span> <span class="o">=</span> <span class="n">pattern_matching_binary</span><span class="p">(</span>
+                <span class="n">binary_dict</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span>
+
+            <span class="c1"># if there is no CQS question, the label_continuous_vector will</span>
+            <span class="c1"># become to empty</span>
+            <span class="n">label_continuous_vector</span> <span class="o">=</span> <span class="n">pattern_matching_continous_position</span><span class="p">(</span>
+                <span class="n">continuous_dict</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span>
+            <span class="n">label_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">label_binary_vector</span><span class="p">,</span> <span class="n">label_continuous_vector</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">state_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">phone_duration</span> <span class="o">+=</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
+
+            <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
+                <span class="n">cc_feat_matrix</span> <span class="o">=</span> <span class="n">extract_coarse_coding_features_relative</span><span class="p">(</span>
+                    <span class="n">cc_features</span><span class="p">,</span> <span class="n">phone_duration</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">add_frame_features</span><span class="p">:</span>
+            <span class="n">current_block_binary_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">frame_number</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="n">frame_feature_size</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">frame_number</span><span class="p">):</span>
+                <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                           <span class="mi">0</span><span class="p">:</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_vector</span>
+
+                <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;full&#39;</span><span class="p">:</span>
+                    <span class="c1"># Zhizheng&#39;s original 9 subphone features:</span>
+                    <span class="c1"># fraction through state (forwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+                    <span class="c1"># fraction through state (backwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">frame_number</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+                    <span class="c1"># length of state in frames</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+                    <span class="c1"># state index (counting forwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">state_index</span><span class="p">)</span>
+                    <span class="c1"># state index (counting backwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span>
+                                               <span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">state_index_backward</span><span class="p">)</span>
+
+                    <span class="c1"># length of phone in frames</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+                    <span class="c1"># fraction of the phone made up by current state</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span>
+                                               <span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+                    <span class="c1"># fraction through phone (backwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">phone_duration</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="n">state_duration_base</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+                    <span class="c1"># fraction through phone (forwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">state_duration_base</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;state_only&#39;</span><span class="p">:</span>
+                    <span class="c1"># features which only distinguish state:</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">state_index</span><span class="p">)</span>  <span class="c1"># state index (counting forwards)</span>
+
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;frame_only&#39;</span><span class="p">:</span>
+                    <span class="c1"># features which distinguish frame position in phoneme:</span>
+                    <span class="n">current_frame_number</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="c1"># fraction through phone (counting forwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">current_frame_number</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;uniform_state&#39;</span><span class="p">:</span>
+                    <span class="c1"># features which distinguish frame position in phoneme:</span>
+                    <span class="n">current_frame_number</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="c1"># fraction through phone (counting forwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">current_frame_number</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+                    <span class="n">new_state_index</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+                        <span class="mi">1</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">current_frame_number</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span><span class="p">))</span>
+                    <span class="c1"># state index (counting forwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">new_state_index</span><span class="p">)</span>
+
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
+                    <span class="c1"># features which distinguish frame position in phoneme</span>
+                    <span class="c1"># using three continous numerical features</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span>
+                                               <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">current_frame_number</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span>
+                                               <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">current_frame_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span>
+                                               <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cc_feat_matrix</span><span class="p">[</span><span class="n">current_frame_number</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">phone_duration</span><span class="p">)</span>
+                    <span class="n">current_frame_number</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;minimal_frame&#39;</span><span class="p">:</span>
+                    <span class="c1"># features which distinguish state and minimally frame</span>
+                    <span class="c1"># position in state:</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                        <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>  <span class="c1"># fraction through state (forwards)</span>
+                    <span class="c1"># state index (counting forwards)</span>
+                    <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                               <span class="n">dict_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">state_index</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">subphone_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">pass</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">assert</span> <span class="kc">False</span>
+
+            <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
+                                 <span class="n">frame_number</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
+            <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="n">frame_number</span>
+        <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;state_only&#39;</span> <span class="ow">and</span> <span class="n">state_index</span> <span class="o">==</span> <span class="n">state_number</span><span class="p">:</span>
+            <span class="n">current_block_binary_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
+                <span class="p">(</span><span class="n">state_number</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="n">frame_feature_size</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">state_number</span><span class="p">):</span>
+                <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span>
+                                           <span class="mi">0</span><span class="p">:</span><span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="n">label_vector</span>
+                <span class="n">current_block_binary_array</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">dict_size</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span>
+                    <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># state index (counting forwards)</span>
+            <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
+                                 <span class="n">state_number</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
+            <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="n">state_number</span>
+        <span class="k">elif</span> <span class="n">subphone_features</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">state_index</span> <span class="o">==</span> <span class="n">state_number</span><span class="p">:</span>
+            <span class="n">current_block_binary_array</span> <span class="o">=</span> <span class="n">label_vector</span>
+            <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
+                                 <span class="mi">1</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
+            <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="n">state_duration_base</span> <span class="o">+=</span> <span class="n">frame_number</span>
+
+    <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">label_feature_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">label_feature_index</span><span class="p">,</span> <span class="p">]</span>
+    <span class="k">return</span> <span class="n">label_feature_matrix</span>
+
+
+<div class="viewcode-block" id="linguistic_features"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html#nnmnkwii.frontend.merlin.linguistic_features">[docs]</a><span class="k">def</span> <span class="nf">linguistic_features</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Linguistic features from HTS-style full-context labels.</span>
+
+<span class="sd">    This converts HTS-style full-context labels to it&#39;s numeric representation</span>
+<span class="sd">    given feature extraction regexes which should be constructed from</span>
+<span class="sd">    HTS-style question set. The input full-context must be aligned with</span>
+<span class="sd">    phone-level or state-level.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        hts_label (hts.HTSLabelFile): Input full-context label file</span>
+<span class="sd">        binary_dict (dict): Dictionary used to extract binary features</span>
+<span class="sd">        continuous_dict (dict): Dictionary used to extrract continuous features</span>
+<span class="sd">        subphone_features (dict): Type of sub-phone features we use.</span>
+<span class="sd">        add_frame_features (dict): Whether add frame-level features or not.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ndarray: Numpy array representation of linguistic features.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.frontend import merlin as fe</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file, example_question_file</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
+<span class="sd">        &gt;&gt;&gt; binary_dict, continuous_dict = hts.load_question_set(example_question_file())</span>
+<span class="sd">        &gt;&gt;&gt; features = fe.linguistic_features(labels, binary_dict, continuous_dict)</span>
+<span class="sd">        &gt;&gt;&gt; features.shape</span>
+<span class="sd">        (40, 416)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">is_state_alignment_label</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">load_labels_with_state_alignment</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_labels_with_phone_alignment</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">extract_dur_from_state_alignment_labels</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span>
+                                            <span class="n">feature_type</span><span class="o">=</span><span class="s2">&quot;numerical&quot;</span><span class="p">,</span>
+                                            <span class="n">unit_size</span><span class="o">=</span><span class="s2">&quot;state&quot;</span><span class="p">,</span>
+                                            <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">feature_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unit_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">feature_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
+
+    <span class="n">dur_dim</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">num_states</span><span class="p">()</span> <span class="k">if</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;state&quot;</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
+        <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_phones</span><span class="p">(),</span> <span class="n">dur_dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">(),</span> <span class="n">dur_dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+    <span class="n">current_dur_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dur_dim</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">state_number</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">num_states</span><span class="p">()</span>
+    <span class="n">dur_dim</span> <span class="o">=</span> <span class="n">state_number</span>
+
+    <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
+                        <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+        <span class="c1"># remove state information [k]</span>
+        <span class="n">full_label_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">full_label</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
+        <span class="n">state_index</span> <span class="o">=</span> <span class="n">full_label</span><span class="p">[</span><span class="n">full_label_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">state_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state_index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">//</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+
+        <span class="k">if</span> <span class="n">state_index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">phone_duration</span> <span class="o">=</span> <span class="n">frame_number</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">state_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+                <span class="n">phone_duration</span> <span class="o">+=</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span>
+                                   <span class="n">s</span><span class="p">)</span> <span class="o">//</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+
+        <span class="k">if</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;binary&quot;</span><span class="p">:</span>
+            <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">frame_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;state&quot;</span><span class="p">:</span>
+                <span class="n">current_block_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">state_index</span> <span class="o">==</span> <span class="n">state_number</span><span class="p">:</span>
+                    <span class="n">current_block_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;numerical&quot;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;state&quot;</span><span class="p">:</span>
+                <span class="n">current_dur_array</span><span class="p">[</span><span class="n">current_index</span> <span class="o">%</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame_number</span>
+                <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span> <span class="ow">and</span> <span class="n">state_index</span> <span class="o">==</span> <span class="n">state_number</span><span class="p">:</span>
+                    <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">current_dur_array</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
+                    <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span>
+                        <span class="n">current_dur_array</span><span class="o">.</span><span class="n">transpose</span><span class="p">(),</span> <span class="p">(</span><span class="n">frame_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
+                <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">phone_duration</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="kc">False</span>
+
+        <span class="c1"># writing into dur_feature_matrix</span>
+        <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
+            <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="n">dur_feature_index</span><span class="p">:</span><span class="n">dur_feature_index</span> <span class="o">+</span>
+                               <span class="n">frame_number</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_array</span>
+            <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="n">dur_feature_index</span> <span class="o">+</span> <span class="n">frame_number</span>
+        <span class="k">elif</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span> <span class="ow">and</span> <span class="n">state_index</span> <span class="o">==</span> <span class="n">state_number</span><span class="p">:</span>
+            <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="n">dur_feature_index</span><span class="p">:</span><span class="n">dur_feature_index</span> <span class="o">+</span>
+                               <span class="mi">1</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_array</span>
+            <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="n">dur_feature_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># dur_feature_matrix = dur_feature_matrix[0:dur_feature_index, ]</span>
+    <span class="k">return</span> <span class="n">dur_feature_matrix</span>
+
+
+<span class="k">def</span> <span class="nf">extract_dur_from_phone_alignment_labels</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span>
+                                            <span class="n">feature_type</span><span class="o">=</span><span class="s2">&quot;numerical&quot;</span><span class="p">,</span>
+                                            <span class="n">unit_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span>
+                                            <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">feature_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">unit_size</span> <span class="o">!=</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">feature_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;frame&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
+        <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_phones</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+    <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+        <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> \
+            <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+
+        <span class="n">phone_duration</span> <span class="o">=</span> <span class="n">frame_number</span>
+
+        <span class="k">if</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;binary&quot;</span><span class="p">:</span>
+            <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">frame_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">current_block_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;numerical&quot;</span><span class="p">:</span>
+            <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">phone_duration</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="kc">False</span>
+
+        <span class="c1"># writing into dur_feature_matrix</span>
+        <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
+            <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="n">dur_feature_index</span><span class="p">:</span><span class="n">dur_feature_index</span> <span class="o">+</span>
+                               <span class="n">frame_number</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_block_array</span>
+            <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="n">dur_feature_index</span> <span class="o">+</span> <span class="n">frame_number</span>
+        <span class="k">elif</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
+            <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="n">dur_feature_index</span><span class="p">:</span><span class="n">dur_feature_index</span> <span class="o">+</span>
+                               <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_block_array</span>
+            <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="n">dur_feature_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="kc">False</span>
+
+    <span class="c1"># dur_feature_matrix = dur_feature_matrix[0:dur_feature_index]</span>
+    <span class="k">return</span> <span class="n">dur_feature_matrix</span>
+
+
+<div class="viewcode-block" id="duration_features"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.frontend.merlin.duration_features.html#nnmnkwii.frontend.merlin.duration_features">[docs]</a><span class="k">def</span> <span class="nf">duration_features</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Duration features from HTS-style full-context labels.</span>
+
+<span class="sd">    The input full-context must be aligned with phone-level or state-level.</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        hts_labels (hts.HTSLabelFile): HTS label file.</span>
+<span class="sd">        feature_type (str): ``numerical`` or ``binary``</span>
+<span class="sd">        unit_size (str): ``phoneme`` or ``state``</span>
+<span class="sd">        feature_size (str): ``frame`` or ``phoneme``</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        duration_features (ndarray): numpy array representation of linguistic features.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.frontend import merlin as fe</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
+<span class="sd">        &gt;&gt;&gt; features = fe.duration_features(labels)</span>
+<span class="sd">        &gt;&gt;&gt; features.shape</span>
+<span class="sd">        (40, 5)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">is_state_alignment_label</span><span class="p">():</span>
+        <span class="k">return</span> <span class="n">extract_dur_from_state_alignment_labels</span><span class="p">(</span>
+            <span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">extract_dur_from_phone_alignment_labels</span><span class="p">(</span>
+            <span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ryuichi Yamamoto.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
