@@ -4,6 +4,7 @@ Change log
 v0.0.7 <2017-xx-xx>
 -------------------
 
+- `#42`_: Fix installation failsure on no-utf-8 environments
 
 v0.0.6 <2017-10-01>
 -------------------
@@ -69,3 +70,4 @@ v0.0.1 <2017-08-14>
 .. _#34: https://github.com/r9y9/nnmnkwii/pull/34
 .. _#37: https://github.com/r9y9/nnmnkwii/pull/37
 .. _#38: https://github.com/r9y9/nnmnkwii/issues/38
+.. _#42: https://github.com/r9y9/nnmnkwii/issues/42
