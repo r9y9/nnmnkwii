@@ -107,7 +107,7 @@ if not exists('README.rst'):
     create_readme_rst()
 
 if exists('README.rst'):
-    README = open('README.rst').read()
+    README = open('README.rst', 'rb').read().decode("utf-8")
 else:
     README = ''
 

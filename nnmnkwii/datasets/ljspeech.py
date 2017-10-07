@@ -14,10 +14,10 @@ class LJSpeechDataSource(FileDataSource):
             raise RuntimeError(
                 "metadata.csv doesn't exists at \"{}\"".format(metadata_path))
 
-        with open(metadata_path, encoding="utf-8") as f:
+        with open(metadata_path, "rb") as f:
             metadata = []
             for line in f:
-                parts = line.strip().split("|")
+                parts = line.decode("utf-8").strip().split("|")
                 assert len(parts) == 3
                 metadata.append(parts)
         self.metadata = np.asarray(metadata)
