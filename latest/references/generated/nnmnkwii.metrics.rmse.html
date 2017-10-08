@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.example_question_file &mdash; nnmnkwii 0.0.7+06cfac4 documentation</title>
+  <title>nnmnkwii.metrics.rmse &mdash; nnmnkwii 0.0.7+ccdb5d1 documentation</title>
   
 
   
@@ -35,10 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.7+06cfac4 documentation" href="../../index.html"/>
-        <link rel="up" title="Utilities" href="../util.html"/>
-        <link rel="next" title="nnmnkwii.util.example_file_data_sources_for_duration_model" href="nnmnkwii.util.example_file_data_sources_for_duration_model.html"/>
-        <link rel="prev" title="nnmnkwii.util.example_audio_file" href="nnmnkwii.util.example_audio_file.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.7+ccdb5d1 documentation" href="../../index.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -70,7 +67,7 @@
             
             
               <div class="version">
-                0.0.7+06cfac4
+                0.0.7+ccdb5d1
               </div>
             
           
@@ -219,7 +216,7 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Package references</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
@@ -273,8 +270,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../metrics.html">Evaluation metrics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../paramgen.html">Parameter generation</a><ul>
@@ -324,16 +319,16 @@
 <li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#alignment">Alignment</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../util.html">Utilities</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../util.html">Utilities</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../util.html#function-utilities">Function utilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
 </ul>
 </li>
-<li class="toctree-l2 current"><a class="reference internal" href="../util.html#files">Files</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../util.html#files">Files</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_label_file.html">nnmnkwii.util.example_label_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_audio_file.html">nnmnkwii.util.example_audio_file</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">nnmnkwii.util.example_question_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
 </ul>
@@ -402,15 +397,13 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../util.html">Utilities</a> &raquo;</li>
-        
-      <li>nnmnkwii.util.example_question_file</li>
+      <li>nnmnkwii.metrics.rmse</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/references/generated/nnmnkwii.util.example_question_file.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/references/generated/nnmnkwii.metrics.rmse.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -457,31 +450,8 @@
     margin-right: 4px;  /* make room for the exclamation icon */
 }
 </style>
-<div class="section" id="nnmnkwii-util-example-question-file">
-<h1>nnmnkwii.util.example_question_file<a class="headerlink" href="#nnmnkwii-util-example-question-file" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="nnmnkwii.util.example_question_file">
-<code class="descclassname">nnmnkwii.util.</code><code class="descname">example_question_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/util/files.html#example_question_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.util.example_question_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get path of example question file.</p>
-<p>The question file was taken from <a class="reference external" href="https://github.com/CSTR-Edinburgh/merlin">Merlin</a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Path of the example audio file.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)">str</a></td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_question_file</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load_question_set</span><span class="p">(</span><span class="n">example_question_file</span><span class="p">())</span>
-</pre></div>
-</div>
-</dd></dl>
-
+<div class="section" id="nnmnkwii-metrics-rmse">
+<h1>nnmnkwii.metrics.rmse<a class="headerlink" href="#nnmnkwii-metrics-rmse" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -491,15 +461,6 @@
            </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="nnmnkwii.util.example_file_data_sources_for_duration_model.html" class="btn btn-neutral float-right" title="nnmnkwii.util.example_file_data_sources_for_duration_model" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="nnmnkwii.util.example_audio_file.html" class="btn btn-neutral" title="nnmnkwii.util.example_audio_file" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -528,7 +489,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.7+06cfac4',
+            VERSION:'0.0.7+ccdb5d1',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Evaluation metrics &mdash; nnmnkwii 0.0.7+8407cd8 documentation</title>
+  <title>Evaluation metrics &mdash; nnmnkwii 0.0.7+06cfac4 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.7+8407cd8 documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.7+06cfac4 documentation" href="../index.html"/>
         <link rel="next" title="nnmnkwii.metrics.melcd" href="generated/nnmnkwii.metrics.melcd.html"/>
         <link rel="prev" title="nnmnkwii.io.hts.load_question_set" href="generated/nnmnkwii.io.hts.load_question_set.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.7+8407cd8
+                0.0.7+06cfac4
               </div>
             
           
@@ -271,6 +271,9 @@
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Evaluation metrics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="paramgen.html">Parameter generation</a><ul>
@@ -453,9 +456,10 @@
 </style>
 <div class="section" id="evaluation-metrics">
 <h1>Evaluation metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this headline">¶</a></h1>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Comming later</p>
+<p>Evaluation metrics for statistical speech synthesis.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The module is experimental. May change in future.</p>
 </div>
 <span class="target" id="module-nnmnkwii.metrics"></span><table border="1" class="longtable docutils">
 <colgroup>
@@ -463,8 +467,17 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.metrics.melcd.html#nnmnkwii.metrics.melcd" title="nnmnkwii.metrics.melcd"><code class="xref py py-obj docutils literal"><span class="pre">melcd</span></code></a>(vec1,&nbsp;vec2)</td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.metrics.melcd.html#nnmnkwii.metrics.melcd" title="nnmnkwii.metrics.melcd"><code class="xref py py-obj docutils literal"><span class="pre">melcd</span></code></a>(X,&nbsp;Y[,&nbsp;lengths])</td>
+<td>Mel-cepstrum distortion (MCD).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.metrics.mean_squared_error.html#nnmnkwii.metrics.mean_squared_error" title="nnmnkwii.metrics.mean_squared_error"><code class="xref py py-obj docutils literal"><span class="pre">mean_squared_error</span></code></a>(X,&nbsp;Y[,&nbsp;lengths])</td>
+<td>Mean squared error (MSE).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.metrics.lf0_mean_squared_error.html#nnmnkwii.metrics.lf0_mean_squared_error" title="nnmnkwii.metrics.lf0_mean_squared_error"><code class="xref py py-obj docutils literal"><span class="pre">lf0_mean_squared_error</span></code></a>(src_f0,&nbsp;src_vuv,&nbsp;…)</td>
+<td>Mean squared error (MSE) for log-F0 sequences.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.metrics.vuv_error.html#nnmnkwii.metrics.vuv_error" title="nnmnkwii.metrics.vuv_error"><code class="xref py py-obj docutils literal"><span class="pre">vuv_error</span></code></a>(src_vuv,&nbsp;tgt_vuv[,&nbsp;lengths])</td>
+<td>Voice/unvoiced error rate computation</td>
 </tr>
 </tbody>
 </table>
@@ -514,7 +527,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.7+8407cd8',
+            VERSION:'0.0.7+06cfac4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

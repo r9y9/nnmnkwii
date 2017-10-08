@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.metrics &mdash; nnmnkwii 0.0.7+8407cd8 documentation</title>
+  <title>nnmnkwii.metrics &mdash; nnmnkwii 0.0.7+06cfac4 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.7+8407cd8 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.7+06cfac4 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.7+8407cd8
+                0.0.7+06cfac4
               </div>
             
           
@@ -270,6 +270,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../references/metrics.html">Evaluation metrics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../references/generated/nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../references/generated/nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../references/generated/nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../references/paramgen.html">Parameter generation</a><ul>
@@ -420,10 +423,181 @@
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="n">_logdb_const</span> <span class="o">=</span> <span class="mf">10.0</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">10.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="melcd"><a class="viewcode-back" href="../../references/generated/nnmnkwii.metrics.melcd.html#nnmnkwii.metrics.melcd">[docs]</a><span class="k">def</span> <span class="nf">melcd</span><span class="p">(</span><span class="n">vec1</span><span class="p">,</span> <span class="n">vec2</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">vec1</span> <span class="o">-</span> <span class="n">vec2</span><span class="p">)))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span></div>
+<span class="c1"># should work on torch and numpy arrays</span>
+<span class="k">def</span> <span class="nf">_sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">isnumpy</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">isscalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_exp</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">isnumpy</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">isscalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="melcd"><a class="viewcode-back" href="../../references/generated/nnmnkwii.metrics.melcd.html#nnmnkwii.metrics.melcd">[docs]</a><span class="k">def</span> <span class="nf">melcd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mel-cepstrum distortion (MCD).</span>
+
+<span class="sd">    The function computes MCD for time-aligned mel-cepstrum sequences.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X (ndarray): Input mel-cepstrum, shape can be either of</span>
+<span class="sd">          (``D``,), (``T x D``) or (``B x T x D``). Both Numpy and torch arrays</span>
+<span class="sd">          are supported.</span>
+<span class="sd">        Y (ndarray): Target mel-cepstrum, shape can be either of</span>
+<span class="sd">          (``D``,), (``T x D``) or (``B x T x D``). Both Numpy and torch arrays</span>
+<span class="sd">          are supported.</span>
+<span class="sd">        lengths (list): Lengths of padded inputs. This should only be specified</span>
+<span class="sd">          if you give mini-batch inputs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Mean mel-cepstrum distortion in dB.</span>
+
+<span class="sd">    .. note::</span>
+
+<span class="sd">        The function doesn&#39;t check if inputs are actually mel-cepstrum.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># summing against feature axis, and then take mean against time axis</span>
+    <span class="c1"># Eq. (1a)</span>
+    <span class="c1"># https://www.cs.cmu.edu/~awb/papers/sltu2008/kominek_black.sltu_2008.pdf</span>
+    <span class="k">if</span> <span class="n">lengths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">Y</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">_sqrt</span><span class="p">((</span><span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">_logdb_const</span> <span class="o">*</span> <span class="n">r</span>
+
+    <span class="c1"># Case for 1-dim features.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="c1"># Add feature axis</span>
+        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">Y</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">_sqrt</span><span class="p">((</span><span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">_logdb_const</span> <span class="o">*</span> <span class="n">s</span> <span class="o">/</span> <span class="n">T</span></div>
+
+
+<div class="viewcode-block" id="mean_squared_error"><a class="viewcode-back" href="../../references/generated/nnmnkwii.metrics.mean_squared_error.html#nnmnkwii.metrics.mean_squared_error">[docs]</a><span class="k">def</span> <span class="nf">mean_squared_error</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mean squared error (MSE).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X (ndarray): Input features, shape can be either of</span>
+<span class="sd">          (``D``,), (``T x D``) or (``B x T x D``). Both Numpy and torch arrays</span>
+<span class="sd">          are supported.</span>
+<span class="sd">        Y (ndarray): Target features, shape can be either of</span>
+<span class="sd">          (``D``,), (``T x D``) or (``B x T x D``). Both Numpy and torch arrays</span>
+<span class="sd">          are supported.</span>
+<span class="sd">        lengths (list): Lengths of padded inputs. This should only be specified</span>
+<span class="sd">          if you give mini-batch inputs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: Mean squared error.</span>
+
+<span class="sd">    .. tip::</span>
+
+<span class="sd">        The function supports 3D padded inputs, while</span>
+<span class="sd">        :func:`sklearn.metrics.mean_squared_error` doesn&#39;t support.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">lengths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">Y</span>
+        <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="p">(</span><span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="lf0_mean_squared_error"><a class="viewcode-back" href="../../references/generated/nnmnkwii.metrics.lf0_mean_squared_error.html#nnmnkwii.metrics.lf0_mean_squared_error">[docs]</a><span class="k">def</span> <span class="nf">lf0_mean_squared_error</span><span class="p">(</span><span class="n">src_f0</span><span class="p">,</span> <span class="n">src_vuv</span><span class="p">,</span> <span class="n">tgt_f0</span><span class="p">,</span> <span class="n">tgt_vuv</span><span class="p">,</span>
+                           <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">linear_domain</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mean squared error (MSE) for log-F0 sequences.</span>
+
+<span class="sd">    MSE is computed for voiced segments.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        src_f0 (ndarray): Input log-F0 sequences, shape can be either of</span>
+<span class="sd">          (``T``,), (``B x T``) or (``B x T x 1``). Both Numpy and torch arrays</span>
+<span class="sd">          are supported.</span>
+<span class="sd">        src_vuv (ndarray): Input voiced/unvoiced flag array, shape can be either</span>
+<span class="sd">          of (``T``, ), (``B x T``) or (``B x T x 1``).</span>
+<span class="sd">        tgt_f0 (ndarray): Target log-F0 sequences, shape can be either of</span>
+<span class="sd">          (``T``,), (``B x T``) or (``B x T x 1``). Both Numpy and torch arrays</span>
+<span class="sd">          are supported.</span>
+<span class="sd">        tgt_vuv (ndarray): Target voiced/unvoiced flag array, shape can be either</span>
+<span class="sd">          of (``T``, ), (``B x T``) or (``B x T x 1``).</span>
+<span class="sd">        lengths (list): Lengths of padded inputs. This should only be specified</span>
+<span class="sd">          if you give mini-batch inputs.</span>
+<span class="sd">        linear_domain (bool): Whether computes MSE on linear frequecy domain or</span>
+<span class="sd">          log-frequency domain.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: mean squared error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">lengths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">voiced_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">src_vuv</span> <span class="o">+</span> <span class="n">tgt_vuv</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">src_f0</span><span class="p">[</span><span class="n">voiced_indices</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">tgt_f0</span><span class="p">[</span><span class="n">voiced_indices</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">linear_domain</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">_exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">x_vuv</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_vuv</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+            <span class="n">src_f0</span><span class="p">,</span> <span class="n">src_vuv</span><span class="p">,</span> <span class="n">tgt_f0</span><span class="p">,</span> <span class="n">tgt_vuv</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">x_vuv</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">x_vuv</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">y_vuv</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">y_vuv</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
+        <span class="n">voiced_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_vuv</span> <span class="o">+</span> <span class="n">y_vuv</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span>
+        <span class="n">T</span> <span class="o">+=</span> <span class="n">voiced_indices</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">voiced_indices</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">voiced_indices</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">linear_domain</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_exp</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">_exp</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="p">(</span><span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="vuv_error"><a class="viewcode-back" href="../../references/generated/nnmnkwii.metrics.vuv_error.html#nnmnkwii.metrics.vuv_error">[docs]</a><span class="k">def</span> <span class="nf">vuv_error</span><span class="p">(</span><span class="n">src_vuv</span><span class="p">,</span> <span class="n">tgt_vuv</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Voice/unvoiced error rate computation</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        src_vuv (ndarray): Input voiced/unvoiced flag array shape can be either</span>
+<span class="sd">          of (``T``, ), (``B x T``) or (``B x T x 1``).</span>
+<span class="sd">        tgt_vuv (ndarray): Target voiced/unvoiced flag array shape can be either</span>
+<span class="sd">          of (``T``, ), (``B x T``) or (``B x T x 1``).</span>
+<span class="sd">        lengths (list): Lengths of padded inputs. This should only be specified</span>
+<span class="sd">          if you give mini-batch inputs.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        float: voiced/unvoiced error rate (0 ~ 1).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">lengths</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">src_vuv</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">src_vuv</span> <span class="o">!=</span> <span class="n">tgt_vuv</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">src_vuv</span><span class="p">,</span> <span class="n">tgt_vuv</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="p">(</span><span class="n">x</span> <span class="o">!=</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">s</span> <span class="o">/</span> <span class="n">T</span></div>
 </pre></div>
 
            </div>
@@ -460,7 +634,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.7+8407cd8',
+            VERSION:'0.0.7+06cfac4',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
