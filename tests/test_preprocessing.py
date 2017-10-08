@@ -323,6 +323,11 @@ def test_dtw_aligner():
     assert X_aligned.shape == Y_aligned.shape
     assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
 
+    # Custom dist function
+    from nnmnkwii.metrics import melcd
+    X_aligned, Y_aligned = DTWAligner(dist=melcd).transform((X, Y))
+    assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
+
 
 def test_modspec_reconstruct():
     static_dim = 2

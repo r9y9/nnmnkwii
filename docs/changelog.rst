@@ -4,6 +4,7 @@ Change log
 v0.0.7 <2017-xx-xx>
 -------------------
 
+- `#12`_: [experimental] Add :obj:`nnmnkwii.metrics` package
 - `#42`_: Fix installation failsure on no-utf-8 environments
 
 v0.0.6 <2017-10-01>
@@ -57,6 +58,7 @@ v0.0.1 <2017-08-14>
 * Initial release
 
 
+.. _#12: https://github.com/r9y9/nnmnkwii/issues/12
 .. _#17: https://github.com/r9y9/nnmnkwii/pull/17
 .. _#19: https://github.com/r9y9/nnmnkwii/issues/19
 .. _#21: https://github.com/r9y9/nnmnkwii/pull/21
