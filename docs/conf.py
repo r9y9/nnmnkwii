@@ -270,4 +270,5 @@ intersphinx_mapping = {
     'pysptk': ('https://pysptk.readthedocs.io/en/latest/', None),
     'pytorch': ('http://pytorch.org/docs/master/', None),
     'librosa': ('http://librosa.github.io/librosa/', None),
+    'sklearn': ('http://scikit-learn.org/stable/', None)
 }
