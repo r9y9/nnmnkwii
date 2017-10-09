@@ -19,6 +19,12 @@ def _exp(x):
     return np.exp(x) if isnumpy else math.exp(x) if isscalar else x.exp()
 
 
+def _sum(x):
+    if isinstance(x, list) or isinstance(x, np.ndarray):
+        return np.sum(x)
+    return float(x.sum())
+
+
 def melcd(X, Y, lengths=None):
     """Mel-cepstrum distortion (MCD).
 
@@ -57,7 +63,7 @@ def melcd(X, Y, lengths=None):
         X, Y = X[:, :, None], Y[:, :, None]
 
     s = 0.0
-    T = np.sum(lengths)
+    T = _sum(lengths)
     for x, y, length in zip(X, Y, lengths):
         x, y = x[:length], y[:length]
         z = x - y
@@ -91,7 +97,7 @@ def mean_squared_error(X, Y, lengths=None):
         z = X - Y
         return math.sqrt((z * z).mean())
 
-    T = np.sum(lengths) * X.shape[-1]
+    T = _sum(lengths) * X.shape[-1]
     s = 0.0
     for x, y, length in zip(X, Y, lengths):
         x, y = x[:length], y[:length]
@@ -170,7 +176,7 @@ def vuv_error(src_vuv, tgt_vuv, lengths=None):
         T = np.prod(src_vuv.shape)
         return (src_vuv != tgt_vuv).sum() / float(T)
 
-    T = np.sum(lengths)
+    T = _sum(lengths)
     s = 0.0
     for x, y, length in zip(src_vuv, tgt_vuv, lengths):
         x, y = x[:length], y[:length]
