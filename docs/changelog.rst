@@ -1,7 +1,7 @@
 Change log
 ==========
 
-v0.0.7 <2017-xx-xx>
+v0.0.7 <2017-10-09>
 -------------------
 
 - `#12`_: [experimental] Add :obj:`nnmnkwii.metrics` package
