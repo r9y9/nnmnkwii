@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.postfilters.merlin_post_filter &mdash; nnmnkwii 0.0.5 documentation</title>
+  <title>nnmnkwii.postfilters.merlin_post_filter &mdash; nnmnkwii 0.0.7 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.5 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.7 documentation" href="../../index.html"/>
         <link rel="up" title="Post-filters" href="../postfilters.html"/>
         <link rel="next" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="prev" title="Post-filters" href="../postfilters.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.5
+                0.0.7
               </div>
             
           
@@ -245,6 +245,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 </ul>
 </li>
 </ul>
@@ -271,6 +272,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../metrics.html">Evaluation metrics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../paramgen.html">Parameter generation</a><ul>
@@ -294,8 +298,15 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
@@ -338,6 +349,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
@@ -451,7 +464,16 @@
 <code class="descclassname">nnmnkwii.postfilters.</code><code class="descname">merlin_post_filter</code><span class="sig-paren">(</span><em>mgc</em>, <em>alpha</em>, <em>minimum_phase_order=511</em>, <em>fftlen=1024</em>, <em>coef=1.4</em>, <em>weight=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/postfilters.html#merlin_post_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.postfilters.merlin_post_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Post-filter used in Merlin.</p>
 <p>This is a <a class="reference external" href="https://pysptk.readthedocs.io/en/latest/index.html#module-pysptk" title="(in pysptk v0.1.8.dev0)"><code class="xref py py-obj docutils literal"><span class="pre">pysptk</span></code></a> translation of <a class="reference external" href="https://goo.gl/jK5Hdd">Merlin’s post filter</a> written with
-SPTK CLI tools.</p>
+SPTK CLI tools. Details can be found at <a class="reference external" href="https://github.com/CSTR-Edinburgh/merlin/issues/241">CSTR-Edinburgh/merlin/issues/241</a>
+and <a class="reference internal" href="#r5" id="id1">[R5]</a>.</p>
+<table class="docutils citation" frame="void" id="r5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[R5]</a></td><td>Yoshimura, Takayoshi, et al. “Incorporating a mixed excitation model
+and postfilter into HMM‐based text‐to‐speech synthesis.” Systems and
+Computers in Japan 36.12 (2005): 43-50.</td></tr>
+</tbody>
+</table>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -482,10 +504,6 @@ cepstrum. If None, set automatically by <code class="docutils literal"><span cla
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mgc_filtered</span> <span class="o">=</span> <span class="n">merlin_post_filter</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">mgc</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">mgc_filtered</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
-</div>
-<div class="admonition-todo admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<p class="last">Reference paper.</p>
 </div>
 </dd></dl>
 
@@ -535,7 +553,7 @@ cepstrum. If None, set automatically by <code class="docutils literal"><span cla
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.5',
+            VERSION:'0.0.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -20,8 +20,15 @@ Utterance-wise operations
    trim_zeros_frames
    remove_zeros_frames
    adjast_frame_length
+   adjast_frame_lengths
    scale
+   inv_scale
+   minmax_scale_params
    minmax_scale
+   inv_minmax_scale
+   modspec
+   inv_modspec
+   modspec_smoothing
 
 
 Dataset-wise operations

@@ -9,7 +9,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; nnmnkwii 0.0.5 documentation</title>
+  <title>Index &mdash; nnmnkwii 0.0.7 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
         <link rel="index" title="Index"
               href="#"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.5 documentation" href="index.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.7 documentation" href="index.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.5
+                0.0.7
               </div>
             
           
@@ -243,6 +243,7 @@
 <li class="toctree-l3"><a class="reference internal" href="references/datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="references/datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="references/datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="references/datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 </ul>
 </li>
 </ul>
@@ -269,6 +270,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references/metrics.html">Evaluation metrics</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/generated/nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references/paramgen.html">Parameter generation</a><ul>
@@ -292,8 +296,15 @@
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
@@ -336,6 +347,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
@@ -433,10 +446,12 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/generated/nnmnkwii.preprocessing.adjast_frame_length.html#nnmnkwii.preprocessing.adjast_frame_length">adjast_frame_length() (in module nnmnkwii.preprocessing)</a>
 </li>
-      <li><a href="references/generated/nnmnkwii.util.apply_each2d_padded.html#nnmnkwii.util.apply_each2d_padded">apply_each2d_padded() (in module nnmnkwii.util)</a>
+      <li><a href="references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html#nnmnkwii.preprocessing.adjast_frame_lengths">adjast_frame_lengths() (in module nnmnkwii.preprocessing)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.util.apply_each2d_padded.html#nnmnkwii.util.apply_each2d_padded">apply_each2d_padded() (in module nnmnkwii.util)</a>
+</li>
       <li><a href="references/generated/nnmnkwii.util.apply_each2d_trim.html#nnmnkwii.util.apply_each2d_trim">apply_each2d_trim() (in module nnmnkwii.util)</a>
 </li>
       <li><a href="references/datasets.html#nnmnkwii.datasets.FileSourceDataset.asarray">asarray() (nnmnkwii.datasets.FileSourceDataset method)</a>
@@ -483,6 +498,8 @@
         <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.collect_files">(nnmnkwii.datasets.ljspeech.TranscriptionDataSource method)</a>
 </li>
         <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.WavFileDataSource.collect_files">(nnmnkwii.datasets.ljspeech.WavFileDataSource method)</a>
+</li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.vcc2016.WavFileDataSource.collect_files">(nnmnkwii.datasets.vcc2016.WavFileDataSource method)</a>
 </li>
         <li><a href="references/datasets.html#nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files">(nnmnkwii.datasets.voice_statistics.WavFileDataSource method)</a>
 </li>
@@ -587,9 +604,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/generated/nnmnkwii.preprocessing.f0.interp1d.html#nnmnkwii.preprocessing.f0.interp1d">interp1d() (in module nnmnkwii.preprocessing.f0)</a>
 </li>
+      <li><a href="references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html#nnmnkwii.preprocessing.inv_minmax_scale">inv_minmax_scale() (in module nnmnkwii.preprocessing)</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.preprocessing.inv_modspec.html#nnmnkwii.preprocessing.inv_modspec">inv_modspec() (in module nnmnkwii.preprocessing)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/generated/nnmnkwii.preprocessing.inv_preemphasis.html#nnmnkwii.preprocessing.inv_preemphasis">inv_preemphasis() (in module nnmnkwii.preprocessing)</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.preprocessing.inv_scale.html#nnmnkwii.preprocessing.inv_scale">inv_scale() (in module nnmnkwii.preprocessing)</a>
 </li>
       <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner">IterativeDTWAligner (class in nnmnkwii.preprocessing.alignment)</a>
 </li>
@@ -599,7 +622,9 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.labels">labels (nnmnkwii.datasets.WavFileDataSource attribute)</a>, <a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.labels">[1]</a>
+      <li><a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.labels">labels (nnmnkwii.datasets.WavFileDataSource attribute)</a>, <a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.labels">[1]</a>, <a href="references/datasets.html#nnmnkwii.datasets.WavFileDataSource.labels">[2]</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.metrics.lf0_mean_squared_error.html#nnmnkwii.metrics.lf0_mean_squared_error">lf0_mean_squared_error() (in module nnmnkwii.metrics)</a>
 </li>
       <li><a href="references/generated/nnmnkwii.frontend.merlin.linguistic_features.html#nnmnkwii.frontend.merlin.linguistic_features">linguistic_features() (in module nnmnkwii.frontend.merlin)</a>
 </li>
@@ -620,6 +645,8 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner.max_iter_gmm">max_iter_gmm (nnmnkwii.preprocessing.alignment.IterativeDTWAligner attribute)</a>
+</li>
+      <li><a href="references/generated/nnmnkwii.metrics.mean_squared_error.html#nnmnkwii.metrics.mean_squared_error">mean_squared_error() (in module nnmnkwii.metrics)</a>
 </li>
       <li><a href="references/generated/nnmnkwii.preprocessing.meanstd.html#nnmnkwii.preprocessing.meanstd">meanstd() (in module nnmnkwii.preprocessing)</a>
 </li>
@@ -647,6 +674,8 @@
 </li>
       <li><a href="references/generated/nnmnkwii.preprocessing.minmax_scale.html#nnmnkwii.preprocessing.minmax_scale">minmax_scale() (in module nnmnkwii.preprocessing)</a>
 </li>
+      <li><a href="references/generated/nnmnkwii.preprocessing.minmax_scale_params.html#nnmnkwii.preprocessing.minmax_scale_params">minmax_scale_params() (in module nnmnkwii.preprocessing)</a>
+</li>
       <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG">MLPG (class in nnmnkwii.autograd)</a>
 
       <ul>
@@ -664,6 +693,12 @@
       <li><a href="references/autograd.html#nnmnkwii.autograd.ModSpec">ModSpec (class in nnmnkwii.autograd)</a>
 </li>
       <li><a href="references/generated/nnmnkwii.autograd.modspec.html#nnmnkwii.autograd.modspec">modspec() (in module nnmnkwii.autograd)</a>
+
+      <ul>
+        <li><a href="references/generated/nnmnkwii.preprocessing.modspec.html#nnmnkwii.preprocessing.modspec">(in module nnmnkwii.preprocessing)</a>
+</li>
+      </ul></li>
+      <li><a href="references/generated/nnmnkwii.preprocessing.modspec_smoothing.html#nnmnkwii.preprocessing.modspec_smoothing">modspec_smoothing() (in module nnmnkwii.preprocessing)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -811,14 +846,16 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/autograd.html#nnmnkwii.autograd.MLPG.variances">variances (nnmnkwii.autograd.MLPG attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.DTWAligner.verbose">verbose (nnmnkwii.preprocessing.alignment.DTWAligner attribute)</a>
 
       <ul>
         <li><a href="references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner.verbose">(nnmnkwii.preprocessing.alignment.IterativeDTWAligner attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="references/generated/nnmnkwii.metrics.vuv_error.html#nnmnkwii.metrics.vuv_error">vuv_error() (in module nnmnkwii.metrics)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -829,6 +866,8 @@
 
       <ul>
         <li><a href="references/datasets.html#nnmnkwii.datasets.ljspeech.WavFileDataSource">(class in nnmnkwii.datasets.ljspeech)</a>
+</li>
+        <li><a href="references/datasets.html#nnmnkwii.datasets.vcc2016.WavFileDataSource">(class in nnmnkwii.datasets.vcc2016)</a>
 </li>
         <li><a href="references/datasets.html#nnmnkwii.datasets.voice_statistics.WavFileDataSource">(class in nnmnkwii.datasets.voice_statistics)</a>
 </li>
@@ -878,7 +917,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.5',
+            VERSION:'0.0.7',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
