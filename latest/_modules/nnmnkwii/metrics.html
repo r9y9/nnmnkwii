@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.metrics &mdash; nnmnkwii 0.0.7+06cfac4 documentation</title>
+  <title>nnmnkwii.metrics &mdash; nnmnkwii 0.0.8+8f75242 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.7+06cfac4 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.8+8f75242 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.7+06cfac4
+                0.0.8+8f75242
               </div>
             
           
@@ -347,7 +347,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-7-2017-xx-xx">v0.0.7 &lt;2017-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-8-2017-xx-xx">v0.0.8 &lt;2017-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
@@ -441,6 +442,12 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="k">else</span> <span class="n">math</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">exp</span><span class="p">()</span>
 
 
+<span class="k">def</span> <span class="nf">_sum</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+
 <div class="viewcode-block" id="melcd"><a class="viewcode-back" href="../../references/generated/nnmnkwii.metrics.melcd.html#nnmnkwii.metrics.melcd">[docs]</a><span class="k">def</span> <span class="nf">melcd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Mel-cepstrum distortion (MCD).</span>
 
@@ -479,7 +486,7 @@
         <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">Y</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">_sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
         <span class="n">z</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
@@ -513,7 +520,7 @@
         <span class="n">z</span> <span class="o">=</span> <span class="n">X</span> <span class="o">-</span> <span class="n">Y</span>
         <span class="k">return</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">z</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
-    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">_sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span> <span class="o">*</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
@@ -592,7 +599,7 @@
         <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">src_vuv</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">src_vuv</span> <span class="o">!=</span> <span class="n">tgt_vuv</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
 
-    <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
+    <span class="n">T</span> <span class="o">=</span> <span class="n">_sum</span><span class="p">(</span><span class="n">lengths</span><span class="p">)</span>
     <span class="n">s</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">src_vuv</span><span class="p">,</span> <span class="n">tgt_vuv</span><span class="p">,</span> <span class="n">lengths</span><span class="p">):</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">length</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">length</span><span class="p">]</span>
@@ -634,7 +641,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.7+06cfac4',
+            VERSION:'0.0.8+8f75242',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
