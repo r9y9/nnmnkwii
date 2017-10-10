@@ -53,7 +53,7 @@ def get_frame_feature_size(subphone_features="full"):
         return 0
     subphone_features = subphone_features.strip().lower()
     if subphone_features == "none":
-        raise RuntimeError(
+        raise ValueError(
             "subphone_features = 'none' is deprecated, use None instead")
     if subphone_features == 'full':
         return 9  # zhizheng's original 5 state features + 4 phoneme features
@@ -79,7 +79,7 @@ def get_frame_feature_size(subphone_features="full"):
         # Heiga Zen's work
         return 4
     else:
-        raise RuntimeError(
+        raise ValueError(
             'Unknown value for subphone_features: %s' % (subphone_features))
     assert False
 
@@ -233,7 +233,7 @@ def load_labels_with_phone_alignment(hts_labels,
                 elif subphone_features is None:
                     pass
                 else:
-                    raise RuntimeError(
+                    raise ValueError(
                         "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
                             subphone_features, add_frame_features))
 
@@ -251,7 +251,7 @@ def load_labels_with_phone_alignment(hts_labels,
 
     # omg
     if label_feature_index == 0:
-        raise RuntimeError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+        raise ValueError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
             subphone_features, add_frame_features))
 
     label_feature_matrix = label_feature_matrix[0:label_feature_index, ]
@@ -434,7 +434,7 @@ def load_labels_with_state_alignment(hts_labels,
 
     # omg
     if label_feature_index == 0:
-        raise RuntimeError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+        raise ValueError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
             subphone_features, add_frame_features))
 
     label_feature_matrix = label_feature_matrix[0:label_feature_index, ]
