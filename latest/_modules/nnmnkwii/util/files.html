@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.0.8+8f75242 documentation</title>
+  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.0.8+75d3f75 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.8+8f75242 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.8+75d3f75 documentation" href="../../../index.html"/>
         <link rel="up" title="nnmnkwii.util" href="../util.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.8+8f75242
+                0.0.8+75d3f75
               </div>
             
           
@@ -435,11 +435,15 @@
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
 
 
-<div class="viewcode-block" id="example_label_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_label_file.html#nnmnkwii.util.example_label_file">[docs]</a><span class="k">def</span> <span class="nf">example_label_file</span><span class="p">():</span>
+<div class="viewcode-block" id="example_label_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_label_file.html#nnmnkwii.util.example_label_file">[docs]</a><span class="k">def</span> <span class="nf">example_label_file</span><span class="p">(</span><span class="n">phone_level</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Get path of example HTS-style full-context lable file.</span>
 
 <span class="sd">    Corresponding audio file can be accessed by</span>
 <span class="sd">    :func:`example_audio_file`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        phone_level: If True, returns phone-level aligment, otherwise state-level</span>
+<span class="sd">          alignment.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        str: Path of the example label file.</span>
@@ -454,7 +458,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;arctic_a0009&quot;</span>
     <span class="n">label_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">_state.lab&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">.lab&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;phone&quot;</span> <span class="k">if</span> <span class="n">phone_level</span> <span class="k">else</span> <span class="s2">&quot;state&quot;</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">label_path</span></div>
 
 
@@ -621,7 +626,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.8+8f75242',
+            VERSION:'0.0.8+75d3f75',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.8+8f75242 documentation</title>
+  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.8+75d3f75 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.8+8f75242 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.8+75d3f75 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.8+8f75242
+                0.0.8+75d3f75
               </div>
             
           
@@ -421,7 +421,9 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.frontend.merlin</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Part of code here is adapted from Merlin. Their license follows:</span>
+<span></span><span class="c1"># coding: utf-8</span>
+
+<span class="c1"># Part of code here is adapted from Merlin. Their license follows:</span>
 <span class="c1">##########################################################################</span>
 <span class="c1">#           The Neural Network (NN) based Speech Synthesis System</span>
 <span class="c1">#                https://github.com/CSTR-Edinburgh/merlin</span>
@@ -474,7 +476,7 @@
         <span class="k">return</span> <span class="mi">0</span>
     <span class="n">subphone_features</span> <span class="o">=</span> <span class="n">subphone_features</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;subphone_features = &#39;none&#39; is deprecated, use None instead&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;full&#39;</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">9</span>  <span class="c1"># zhizheng&#39;s original 5 state features + 4 phoneme features</span>
@@ -500,7 +502,7 @@
         <span class="c1"># Heiga Zen&#39;s work</span>
         <span class="k">return</span> <span class="mi">4</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s1">&#39;Unknown value for subphone_features: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subphone_features</span><span class="p">))</span>
     <span class="k">assert</span> <span class="kc">False</span>
 
@@ -586,11 +588,11 @@
                                      <span class="n">binary_dict</span><span class="p">,</span>
                                      <span class="n">continuous_dict</span><span class="p">,</span>
                                      <span class="n">subphone_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                                     <span class="n">manual_dur_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">dict_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">continuous_dict</span><span class="p">)</span>
     <span class="n">frame_feature_size</span> <span class="o">=</span> <span class="n">get_frame_feature_size</span><span class="p">(</span><span class="n">subphone_features</span><span class="p">)</span>
     <span class="n">dimension</span> <span class="o">=</span> <span class="n">frame_feature_size</span> <span class="o">+</span> <span class="n">dict_size</span>
+    <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
 
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="n">hts</span><span class="o">.</span><span class="n">HTSLabelFile</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">add_frame_features</span><span class="p">:</span>
@@ -604,13 +606,7 @@
         <span class="n">cc_features</span> <span class="o">=</span> <span class="n">compute_coarse_coding_features</span><span class="p">()</span>
 
     <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
-
-        <span class="c1"># to do - support different frame shift - currently hardwired to 5msec</span>
-        <span class="c1"># currently under beta testing: support different frame shift</span>
-        <span class="k">if</span> <span class="n">manual_dur_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">frame_number</span> <span class="o">=</span> <span class="n">manual_dur_data</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">frame_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="mi">50000</span><span class="p">)</span>
+        <span class="n">frame_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">frame_shift_in_micro_sec</span><span class="p">)</span>
 
         <span class="n">label_binary_vector</span> <span class="o">=</span> <span class="n">pattern_matching_binary</span><span class="p">(</span>
             <span class="n">binary_dict</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span>
@@ -660,7 +656,9 @@
                 <span class="k">elif</span> <span class="n">subphone_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">pass</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">&#39;unknown subphone_features type&#39;</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span><span class="p">))</span>
 
             <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
                                  <span class="n">frame_number</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
@@ -672,8 +670,12 @@
                                  <span class="mi">1</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
             <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># TODO</span>
-            <span class="k">assert</span> <span class="kc">False</span>
+            <span class="k">pass</span>
+
+    <span class="c1"># omg</span>
+    <span class="k">if</span> <span class="n">label_feature_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span><span class="p">))</span>
 
     <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">label_feature_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">label_feature_index</span><span class="p">,</span> <span class="p">]</span>
 
@@ -696,9 +698,7 @@
         <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_phones</span><span class="p">(),</span> <span class="n">dimension</span><span class="p">))</span>
 
     <span class="n">label_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="c1"># TODO</span>
-    <span class="n">state_number</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">state_number</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">num_states</span><span class="p">()</span>
 
     <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
         <span class="n">cc_features</span> <span class="o">=</span> <span class="n">compute_coarse_coding_features</span><span class="p">()</span>
@@ -714,7 +714,7 @@
         <span class="n">state_index</span> <span class="o">=</span> <span class="n">full_label</span><span class="p">[</span><span class="n">full_label_length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
 
         <span class="n">state_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state_index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">state_index_backward</span> <span class="o">=</span> <span class="mi">6</span> <span class="o">-</span> <span class="n">state_index</span>  <span class="c1"># TODO</span>
+        <span class="n">state_index_backward</span> <span class="o">=</span> <span class="n">state_number</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">state_index</span>
         <span class="n">full_label</span> <span class="o">=</span> <span class="n">full_label</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">full_label_length</span><span class="p">]</span>
 
         <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
@@ -834,6 +834,7 @@
                                  <span class="n">frame_number</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
             <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="n">frame_number</span>
         <span class="k">elif</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s1">&#39;state_only&#39;</span> <span class="ow">and</span> <span class="n">state_index</span> <span class="o">==</span> <span class="n">state_number</span><span class="p">:</span>
+            <span class="c1"># TODO: this pass seems not working</span>
             <span class="n">current_block_binary_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span>
                 <span class="p">(</span><span class="n">state_number</span><span class="p">,</span> <span class="n">dict_size</span> <span class="o">+</span> <span class="n">frame_feature_size</span><span class="p">))</span>
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">state_number</span><span class="p">):</span>
@@ -849,8 +850,15 @@
             <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
                                  <span class="mi">1</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
             <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
 
         <span class="n">state_duration_base</span> <span class="o">+=</span> <span class="n">frame_number</span>
+
+    <span class="c1"># omg</span>
+    <span class="k">if</span> <span class="n">label_feature_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span><span class="p">))</span>
 
     <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">label_feature_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">label_feature_index</span><span class="p">,</span> <span class="p">]</span>
     <span class="k">return</span> <span class="n">label_feature_matrix</span>
@@ -862,27 +870,62 @@
 <span class="sd">    This converts HTS-style full-context labels to it&#39;s numeric representation</span>
 <span class="sd">    given feature extraction regexes which should be constructed from</span>
 <span class="sd">    HTS-style question set. The input full-context must be aligned with</span>
-<span class="sd">    phone-level or state-level.</span>
+<span class="sd">    phone-level or state-level.　</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        The implementation is adapted from Merlin, but no internal algorithms are</span>
+<span class="sd">        changed. Unittests ensure this can get same results with Merlin</span>
+<span class="sd">        for several typical settings.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        hts_label (hts.HTSLabelFile): Input full-context label file</span>
 <span class="sd">        binary_dict (dict): Dictionary used to extract binary features</span>
 <span class="sd">        continuous_dict (dict): Dictionary used to extrract continuous features</span>
-<span class="sd">        subphone_features (dict): Type of sub-phone features we use.</span>
+<span class="sd">        subphone_features (dict): Type of sub-phone features. According</span>
+<span class="sd">          to the Merlin&#39;s source code, None, ``full``, ``state_only``,</span>
+<span class="sd">          ``frame_only``, ``uniform_state``, ``minimal_phoneme`` and</span>
+<span class="sd">          ``coarse_coding`` are supported. **However**, None, ``full`` (for state</span>
+<span class="sd">          alignment) and ``coarse_coding`` (phone alignment) are only tested in</span>
+<span class="sd">          this library. Default is None.</span>
 <span class="sd">        add_frame_features (dict): Whether add frame-level features or not.</span>
+<span class="sd">          Default is False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        ndarray: Numpy array representation of linguistic features.</span>
+<span class="sd">        numpy.ndarray: Numpy array representation of linguistic features.</span>
 
 <span class="sd">    Examples:</span>
+<span class="sd">        For state-level labels</span>
+
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.frontend import merlin as fe</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file, example_question_file</span>
-<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file(phone_level=False))</span>
 <span class="sd">        &gt;&gt;&gt; binary_dict, continuous_dict = hts.load_question_set(example_question_file())</span>
-<span class="sd">        &gt;&gt;&gt; features = fe.linguistic_features(labels, binary_dict, continuous_dict)</span>
+<span class="sd">        &gt;&gt;&gt; features = fe.linguistic_features(labels, binary_dict, continuous_dict,</span>
+<span class="sd">        ...     subphone_features=&quot;full&quot;, add_frame_features=True)</span>
+<span class="sd">        &gt;&gt;&gt; features.shape</span>
+<span class="sd">        (615, 425)</span>
+<span class="sd">        &gt;&gt;&gt; features = fe.linguistic_features(labels, binary_dict, continuous_dict,</span>
+<span class="sd">        ...     subphone_features=None, add_frame_features=False)</span>
 <span class="sd">        &gt;&gt;&gt; features.shape</span>
 <span class="sd">        (40, 416)</span>
+
+<span class="sd">        For phone-level labels</span>
+
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.frontend import merlin as fe</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file, example_question_file</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file(phone_level=True))</span>
+<span class="sd">        &gt;&gt;&gt; binary_dict, continuous_dict = hts.load_question_set(example_question_file())</span>
+<span class="sd">        &gt;&gt;&gt; features = fe.linguistic_features(labels, binary_dict, continuous_dict,</span>
+<span class="sd">        ...     subphone_features=&quot;coarse_coding&quot;, add_frame_features=True)</span>
+<span class="sd">        &gt;&gt;&gt; features.shape</span>
+<span class="sd">        (615, 420)</span>
+<span class="sd">        &gt;&gt;&gt; features = fe.linguistic_features(labels, binary_dict, continuous_dict,</span>
+<span class="sd">        ...     subphone_features=None, add_frame_features=False)</span>
+<span class="sd">        &gt;&gt;&gt; features.shape</span>
+<span class="sd">        (40, 416)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">is_state_alignment_label</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">load_labels_with_state_alignment</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -1022,24 +1065,43 @@
 
 <span class="sd">    The input full-context must be aligned with phone-level or state-level.</span>
 
+<span class="sd">    .. note::</span>
+<span class="sd">        The implementation is adapted from Merlin, but no internal algorithms are</span>
+<span class="sd">        changed. Unittests ensure this can get same results with Merlin</span>
+<span class="sd">        for several typical settings.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        hts_labels (hts.HTSLabelFile): HTS label file.</span>
-<span class="sd">        feature_type (str): ``numerical`` or ``binary``</span>
-<span class="sd">        unit_size (str): ``phoneme`` or ``state``</span>
-<span class="sd">        feature_size (str): ``frame`` or ``phoneme``</span>
+<span class="sd">        feature_type (str): ``numerical`` or ``binary``. Default is ``numerical``.</span>
+<span class="sd">        unit_size (str): ``phoneme`` or ``state``. Default for state-level and</span>
+<span class="sd">          phone-level alignment is ``state`` and ``phoneme``, respectively.</span>
+<span class="sd">        feature_size (str): ``frame`` or ``phoneme``. Default is ``phoneme``.</span>
+<span class="sd">          ``frame`` is only supported for state-level alignments.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        duration_features (ndarray): numpy array representation of linguistic features.</span>
+<span class="sd">        numpy.ndarray: numpy array representation of duration features.</span>
 
 <span class="sd">    Examples:</span>
+<span class="sd">        For state-level alignments</span>
+
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.frontend import merlin as fe</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
-<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file(phone_level=False))</span>
 <span class="sd">        &gt;&gt;&gt; features = fe.duration_features(labels)</span>
 <span class="sd">        &gt;&gt;&gt; features.shape</span>
 <span class="sd">        (40, 5)</span>
+
+<span class="sd">        For phone-level alignments</span>
+
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.frontend import merlin as fe</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file(phone_level=True))</span>
+<span class="sd">        &gt;&gt;&gt; features = fe.duration_features(labels)</span>
+<span class="sd">        &gt;&gt;&gt; features.shape</span>
+<span class="sd">        (40, 1)</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">is_state_alignment_label</span><span class="p">():</span>
         <span class="k">return</span> <span class="n">extract_dur_from_state_alignment_labels</span><span class="p">(</span>
@@ -1083,7 +1145,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.8+8f75242',
+            VERSION:'0.0.8+75d3f75',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
