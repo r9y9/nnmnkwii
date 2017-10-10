@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # Part of code here is adapted from Merlin. Their license follows:
 ##########################################################################
 #           The Neural Network (NN) based Speech Synthesis System
@@ -51,7 +53,7 @@ def get_frame_feature_size(subphone_features="full"):
         return 0
     subphone_features = subphone_features.strip().lower()
     if subphone_features == "none":
-        raise RuntimeError(
+        raise ValueError(
             "subphone_features = 'none' is deprecated, use None instead")
     if subphone_features == 'full':
         return 9  # zhizheng's original 5 state features + 4 phoneme features
@@ -77,7 +79,7 @@ def get_frame_feature_size(subphone_features="full"):
         # Heiga Zen's work
         return 4
     else:
-        raise RuntimeError(
+        raise ValueError(
             'Unknown value for subphone_features: %s' % (subphone_features))
     assert False
 
@@ -163,11 +165,11 @@ def load_labels_with_phone_alignment(hts_labels,
                                      binary_dict,
                                      continuous_dict,
                                      subphone_features=None,
-                                     add_frame_features=False,
-                                     manual_dur_data=None):
+                                     add_frame_features=False):
     dict_size = len(binary_dict) + len(continuous_dict)
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
+    frame_shift_in_micro_sec = hts_labels.frame_shift_in_micro_sec
 
     assert isinstance(hts_labels, hts.HTSLabelFile)
     if add_frame_features:
@@ -181,13 +183,7 @@ def load_labels_with_phone_alignment(hts_labels,
         cc_features = compute_coarse_coding_features()
 
     for idx, (start_time, end_time, full_label) in enumerate(hts_labels):
-
-        # to do - support different frame shift - currently hardwired to 5msec
-        # currently under beta testing: support different frame shift
-        if manual_dur_data is not None:
-            frame_number = manual_dur_data[idx]
-        else:
-            frame_number = int((end_time - start_time) / 50000)
+        frame_number = int((end_time - start_time) / frame_shift_in_micro_sec)
 
         label_binary_vector = pattern_matching_binary(
             binary_dict, full_label)
@@ -237,7 +233,9 @@ def load_labels_with_phone_alignment(hts_labels,
                 elif subphone_features is None:
                     pass
                 else:
-                    raise RuntimeError('unknown subphone_features type')
+                    raise ValueError(
+                        "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+                            subphone_features, add_frame_features))
 
             label_feature_matrix[label_feature_index:label_feature_index +
                                  frame_number, ] = current_block_binary_array
@@ -249,8 +247,12 @@ def load_labels_with_phone_alignment(hts_labels,
                                  1, ] = current_block_binary_array
             label_feature_index = label_feature_index + 1
         else:
-            # TODO
-            assert False
+            pass
+
+    # omg
+    if label_feature_index == 0:
+        raise ValueError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+            subphone_features, add_frame_features))
 
     label_feature_matrix = label_feature_matrix[0:label_feature_index, ]
 
@@ -273,9 +275,7 @@ def load_labels_with_state_alignment(hts_labels,
         label_feature_matrix = np.empty((hts_labels.num_phones(), dimension))
 
     label_feature_index = 0
-
-    # TODO
-    state_number = 5
+    state_number = hts_labels.num_states()
 
     if subphone_features == "coarse_coding":
         cc_features = compute_coarse_coding_features()
@@ -291,7 +291,7 @@ def load_labels_with_state_alignment(hts_labels,
         state_index = full_label[full_label_length + 1]
 
         state_index = int(state_index) - 1
-        state_index_backward = 6 - state_index  # TODO
+        state_index_backward = state_number + 1 - state_index
         full_label = full_label[0:full_label_length]
 
         frame_number = (end_time - start_time) // frame_shift_in_micro_sec
@@ -411,6 +411,7 @@ def load_labels_with_state_alignment(hts_labels,
                                  frame_number] = current_block_binary_array
             label_feature_index = label_feature_index + frame_number
         elif subphone_features == 'state_only' and state_index == state_number:
+            # TODO: this pass seems not working
             current_block_binary_array = np.zeros(
                 (state_number, dict_size + frame_feature_size))
             for i in range(state_number):
@@ -426,8 +427,15 @@ def load_labels_with_state_alignment(hts_labels,
             label_feature_matrix[label_feature_index:label_feature_index +
                                  1, ] = current_block_binary_array
             label_feature_index = label_feature_index + 1
+        else:
+            pass
 
         state_duration_base += frame_number
+
+    # omg
+    if label_feature_index == 0:
+        raise ValueError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+            subphone_features, add_frame_features))
 
     label_feature_matrix = label_feature_matrix[0:label_feature_index, ]
     return label_feature_matrix
@@ -439,27 +447,62 @@ def linguistic_features(hts_labels, *args, **kwargs):
     This converts HTS-style full-context labels to it's numeric representation
     given feature extraction regexes which should be constructed from
     HTS-style question set. The input full-context must be aligned with
-    phone-level or state-level.
+    phone-level or state-level.　
+
+    .. note::
+        The implementation is adapted from Merlin, but no internal algorithms are
+        changed. Unittests ensure this can get same results with Merlin
+        for several typical settings.
 
     Args:
         hts_label (hts.HTSLabelFile): Input full-context label file
         binary_dict (dict): Dictionary used to extract binary features
         continuous_dict (dict): Dictionary used to extrract continuous features
-        subphone_features (dict): Type of sub-phone features we use.
+        subphone_features (dict): Type of sub-phone features. According
+          to the Merlin's source code, None, ``full``, ``state_only``,
+          ``frame_only``, ``uniform_state``, ``minimal_phoneme`` and
+          ``coarse_coding`` are supported. **However**, None, ``full`` (for state
+          alignment) and ``coarse_coding`` (phone alignment) are only tested in
+          this library. Default is None.
         add_frame_features (dict): Whether add frame-level features or not.
+          Default is False.
 
     Returns:
-        ndarray: Numpy array representation of linguistic features.
+        numpy.ndarray: Numpy array representation of linguistic features.
 
     Examples:
+        For state-level labels
+
         >>> from nnmnkwii.frontend import merlin as fe
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_label_file, example_question_file
-        >>> labels = hts.load(example_label_file())
+        >>> labels = hts.load(example_label_file(phone_level=False))
         >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
-        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict)
+        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        ...     subphone_features="full", add_frame_features=True)
+        >>> features.shape
+        (615, 425)
+        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        ...     subphone_features=None, add_frame_features=False)
         >>> features.shape
         (40, 416)
+
+        For phone-level labels
+
+        >>> from nnmnkwii.frontend import merlin as fe
+        >>> from nnmnkwii.io import hts
+        >>> from nnmnkwii.util import example_label_file, example_question_file
+        >>> labels = hts.load(example_label_file(phone_level=True))
+        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
+        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        ...     subphone_features="coarse_coding", add_frame_features=True)
+        >>> features.shape
+        (615, 420)
+        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        ...     subphone_features=None, add_frame_features=False)
+        >>> features.shape
+        (40, 416)
+
     """
     if hts_labels.is_state_alignment_label():
         return load_labels_with_state_alignment(hts_labels, *args, **kwargs)
@@ -599,24 +642,43 @@ def duration_features(hts_labels, *args, **kwargs):
 
     The input full-context must be aligned with phone-level or state-level.
 
+    .. note::
+        The implementation is adapted from Merlin, but no internal algorithms are
+        changed. Unittests ensure this can get same results with Merlin
+        for several typical settings.
 
     Args:
         hts_labels (hts.HTSLabelFile): HTS label file.
-        feature_type (str): ``numerical`` or ``binary``
-        unit_size (str): ``phoneme`` or ``state``
-        feature_size (str): ``frame`` or ``phoneme``
+        feature_type (str): ``numerical`` or ``binary``. Default is ``numerical``.
+        unit_size (str): ``phoneme`` or ``state``. Default for state-level and
+          phone-level alignment is ``state`` and ``phoneme``, respectively.
+        feature_size (str): ``frame`` or ``phoneme``. Default is ``phoneme``.
+          ``frame`` is only supported for state-level alignments.
 
     Returns:
-        duration_features (ndarray): numpy array representation of linguistic features.
+        numpy.ndarray: numpy array representation of duration features.
 
     Examples:
+        For state-level alignments
+
         >>> from nnmnkwii.frontend import merlin as fe
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_label_file
-        >>> labels = hts.load(example_label_file())
+        >>> labels = hts.load(example_label_file(phone_level=False))
         >>> features = fe.duration_features(labels)
         >>> features.shape
         (40, 5)
+
+        For phone-level alignments
+
+        >>> from nnmnkwii.frontend import merlin as fe
+        >>> from nnmnkwii.io import hts
+        >>> from nnmnkwii.util import example_label_file
+        >>> labels = hts.load(example_label_file(phone_level=True))
+        >>> features = fe.duration_features(labels)
+        >>> features.shape
+        (40, 1)
+
     """
     if hts_labels.is_state_alignment_label():
         return extract_dur_from_state_alignment_labels(

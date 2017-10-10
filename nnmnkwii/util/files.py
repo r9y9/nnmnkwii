@@ -10,11 +10,15 @@ from glob import glob
 from os.path import join
 
 
-def example_label_file():
+def example_label_file(phone_level=False):
     """Get path of example HTS-style full-context lable file.
 
     Corresponding audio file can be accessed by
     :func:`example_audio_file`.
+
+    Args:
+        phone_level: If True, returns phone-level aligment, otherwise state-level
+          alignment.
 
     Returns:
         str: Path of the example label file.
@@ -29,7 +33,8 @@ def example_label_file():
     """
     name = "arctic_a0009"
     label_path = pkg_resources.resource_filename(
-        __name__, '_example_data/{}_state.lab'.format(name))
+        __name__, '_example_data/{}_{}.lab'.format(
+            name, "phone" if phone_level else "state"))
     return label_path
 
 
