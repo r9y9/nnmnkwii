@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # Part of code here is adapted from Merlin. Their license follows:
 ##########################################################################
 #           The Neural Network (NN) based Speech Synthesis System
