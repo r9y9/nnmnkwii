@@ -1,10 +1,10 @@
 # nnmnkwii (nanami)
-
 [![][docs-stable-img]][docs-stable-url]
 [![][docs-latest-img]][docs-latest-url]
 [![PyPI](https://img.shields.io/pypi/v/nnmnkwii.svg)](https://pypi.python.org/pypi/nnmnkwii)
 [![Build Status](https://travis-ci.org/r9y9/nnmnkwii.svg?branch=master)](https://travis-ci.org/r9y9/nnmnkwii)
 [![codecov](https://codecov.io/gh/r9y9/nnmnkwii/branch/master/graph/badge.svg)](https://codecov.io/gh/r9y9/nnmnkwii)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1009252.svg)](https://doi.org/10.5281/zenodo.1009252)
 
 Library to build speech synthesis systems designed for easy and fast prototyping.
 
