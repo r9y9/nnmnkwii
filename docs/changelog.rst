@@ -4,7 +4,7 @@ Change log
 v0.0.8 <2017-xx-xx>
 -------------------
 
-- Add support for build without cython
+- `#49`_: Add support for build without cython
 - `#46`_: Cleanup frontnend implementation
 
 v0.0.7 <2017-10-09>
@@ -80,3 +80,4 @@ v0.0.1 <2017-08-14>
 .. _#38: https://github.com/r9y9/nnmnkwii/issues/38
 .. _#42: https://github.com/r9y9/nnmnkwii/issues/42
 .. _#46: https://github.com/r9y9/nnmnkwii/pull/46
+.. _#49: https://github.com/r9y9/nnmnkwii/issues/49
