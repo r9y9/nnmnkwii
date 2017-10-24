@@ -81,7 +81,11 @@ if cython:
     ext = '.pyx'
     cmdclass = {'build_ext': build_ext}
 else:
-    raise RuntimeError("Builds without cython may be supported in future.")
+    ext = '.c'
+    cmdclass = {}
+    print("Building extentions from pre-generated C source")
+    if not os.path.exists(join("nnmnkwii", "paramgen", "mlpg_helper" + ext)):
+        raise RuntimeError("Cython is required to generate C code.")
 
 ext_modules = [
     Extension(

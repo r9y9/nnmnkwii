@@ -4,6 +4,7 @@ Change log
 v0.0.8 <2017-xx-xx>
 -------------------
 
+- Add support for build without cython
 - `#46`_: Cleanup frontnend implementation
 
 v0.0.7 <2017-10-09>
