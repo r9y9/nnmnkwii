@@ -1,7 +1,7 @@
 Change log
 ==========
 
-v0.0.8 <2017-xx-xx>
+v0.0.8 <2017-10-25>
 -------------------
 
 - `#49`_: Add support for build without cython
