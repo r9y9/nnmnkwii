@@ -1,0 +1,6 @@
+nnmnkwii\.frontend\.merlin\.duration\_features
+==============================================
+
+.. currentmodule:: nnmnkwii.frontend.merlin
+
+.. autofunction:: duration_features

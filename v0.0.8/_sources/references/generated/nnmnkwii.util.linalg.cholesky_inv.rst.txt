@@ -1,0 +1,6 @@
+nnmnkwii\.util\.linalg\.cholesky\_inv
+=====================================
+
+.. currentmodule:: nnmnkwii.util.linalg
+
+.. autofunction:: cholesky_inv
