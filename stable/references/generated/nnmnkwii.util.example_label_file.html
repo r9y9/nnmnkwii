@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.example_label_file &mdash; nnmnkwii 0.0.7 documentation</title>
+  <title>nnmnkwii.util.example_label_file &mdash; nnmnkwii 0.0.8 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.7 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.8 documentation" href="../../index.html"/>
         <link rel="up" title="Utilities" href="../util.html"/>
         <link rel="next" title="nnmnkwii.util.example_audio_file" href="nnmnkwii.util.example_audio_file.html"/>
         <link rel="prev" title="nnmnkwii.util.apply_each2d_trim" href="nnmnkwii.util.apply_each2d_trim.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.7
+                0.0.8
               </div>
             
           
@@ -349,6 +349,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-8-2017-10-25">v0.0.8 &lt;2017-10-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
@@ -461,7 +462,7 @@
 <h1>nnmnkwii.util.example_label_file<a class="headerlink" href="#nnmnkwii-util-example-label-file" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="nnmnkwii.util.example_label_file">
-<code class="descclassname">nnmnkwii.util.</code><code class="descname">example_label_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/util/files.html#example_label_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.util.example_label_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nnmnkwii.util.</code><code class="descname">example_label_file</code><span class="sig-paren">(</span><em>phone_level=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/util/files.html#example_label_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.util.example_label_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get path of example HTS-style full-context lable file.</p>
 <p>Corresponding audio file can be accessed by
 <a class="reference internal" href="nnmnkwii.util.example_audio_file.html#nnmnkwii.util.example_audio_file" title="nnmnkwii.util.example_audio_file"><code class="xref py py-func docutils literal"><span class="pre">example_audio_file()</span></code></a>.</p>
@@ -469,9 +470,12 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Path of the example label file.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>phone_level</strong> – If True, returns phone-level aligment, otherwise state-level
+alignment.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)">str</a></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Path of the example label file.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)">str</a></td>
 </tr>
 </tbody>
 </table>
@@ -533,7 +537,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.7',
+            VERSION:'0.0.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

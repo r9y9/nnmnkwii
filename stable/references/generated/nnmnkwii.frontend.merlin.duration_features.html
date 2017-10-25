@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.frontend.merlin.duration_features &mdash; nnmnkwii 0.0.7 documentation</title>
+  <title>nnmnkwii.frontend.merlin.duration_features &mdash; nnmnkwii 0.0.8 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.7 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.8 documentation" href="../../index.html"/>
         <link rel="up" title="Frontend" href="../frontend.html"/>
         <link rel="next" title="Functions" href="../functions.html"/>
         <link rel="prev" title="nnmnkwii.frontend.merlin.linguistic_features" href="nnmnkwii.frontend.merlin.linguistic_features.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.7
+                0.0.8
               </div>
             
           
@@ -349,6 +349,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-8-2017-10-25">v0.0.8 &lt;2017-10-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
@@ -464,34 +465,53 @@
 <code class="descclassname">nnmnkwii.frontend.merlin.</code><code class="descname">duration_features</code><span class="sig-paren">(</span><em>hts_labels</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/frontend/merlin.html#duration_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.frontend.merlin.duration_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>Duration features from HTS-style full-context labels.</p>
 <p>The input full-context must be aligned with phone-level or state-level.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The implementation is adapted from Merlin, but no internal algorithms are
+changed. Unittests ensure this can get same results with Merlin
+for several typical settings.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>hts_labels</strong> (<a class="reference internal" href="../io.html#nnmnkwii.io.hts.HTSLabelFile" title="nnmnkwii.io.hts.HTSLabelFile"><em>hts.HTSLabelFile</em></a>) – HTS label file.</li>
-<li><strong>feature_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – <code class="docutils literal"><span class="pre">numerical</span></code> or <code class="docutils literal"><span class="pre">binary</span></code></li>
-<li><strong>unit_size</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – <code class="docutils literal"><span class="pre">phoneme</span></code> or <code class="docutils literal"><span class="pre">state</span></code></li>
-<li><strong>feature_size</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – <code class="docutils literal"><span class="pre">frame</span></code> or <code class="docutils literal"><span class="pre">phoneme</span></code></li>
+<li><strong>feature_type</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – <code class="docutils literal"><span class="pre">numerical</span></code> or <code class="docutils literal"><span class="pre">binary</span></code>. Default is <code class="docutils literal"><span class="pre">numerical</span></code>.</li>
+<li><strong>unit_size</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – <code class="docutils literal"><span class="pre">phoneme</span></code> or <code class="docutils literal"><span class="pre">state</span></code>. Default for state-level and
+phone-level alignment is <code class="docutils literal"><span class="pre">state</span></code> and <code class="docutils literal"><span class="pre">phoneme</span></code>, respectively.</li>
+<li><strong>feature_size</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – <code class="docutils literal"><span class="pre">frame</span></code> or <code class="docutils literal"><span class="pre">phoneme</span></code>. Default is <code class="docutils literal"><span class="pre">phoneme</span></code>.
+<code class="docutils literal"><span class="pre">frame</span></code> is only supported for state-level alignments.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">numpy array representation of linguistic features.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">numpy array representation of duration features.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#nnmnkwii.frontend.merlin.duration_features" title="nnmnkwii.frontend.merlin.duration_features">duration_features</a> (ndarray)</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)">numpy.ndarray</a></p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
+<p>For state-level alignments</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.frontend</span> <span class="k">import</span> <span class="n">merlin</span> <span class="k">as</span> <span class="n">fe</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_label_file</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">example_label_file</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">example_label_file</span><span class="p">(</span><span class="n">phone_level</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">features</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">duration_features</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">features</span><span class="o">.</span><span class="n">shape</span>
 <span class="go">(40, 5)</span>
+</pre></div>
+</div>
+<p>For phone-level alignments</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.frontend</span> <span class="k">import</span> <span class="n">merlin</span> <span class="k">as</span> <span class="n">fe</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_label_file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">example_label_file</span><span class="p">(</span><span class="n">phone_level</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">features</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">duration_features</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">features</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(40, 1)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -542,7 +562,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.7',
+            VERSION:'0.0.8',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
