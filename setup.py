@@ -128,7 +128,7 @@ setup(
     ext_modules=ext_modules,
     cmdclass=cmdclass,
     install_requires=[
-        'numpy >= 1.8.0',
+        'numpy >= 1.11.0',
         'scipy',
         'cython >= ' + min_cython_ver,
         'bandmat',
