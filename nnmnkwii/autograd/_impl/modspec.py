@@ -51,7 +51,7 @@ class ModSpec(Function):
         grads = torch.zeros(T, D)
         C = 2  # normalization constant
         if self.norm == "ortho":
-            C /= np.sqrt(T)  # np.sqrt(self.n)
+            C /= np.sqrt(self.n)
 
         for d in range(D):
             r = R[:, d][:, None]
