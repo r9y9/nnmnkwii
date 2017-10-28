@@ -4,6 +4,7 @@ Change log
 v0.0.9 <2017-xx-xx>
 -------------------
 
+- `#51`_: Fix modspec autograd bug for ``norm='ortho'``
 
 v0.0.8 <2017-10-25>
 -------------------
@@ -85,3 +86,4 @@ v0.0.1 <2017-08-14>
 .. _#42: https://github.com/r9y9/nnmnkwii/issues/42
 .. _#46: https://github.com/r9y9/nnmnkwii/pull/46
 .. _#49: https://github.com/r9y9/nnmnkwii/issues/49
+.. _#51: https://github.com/r9y9/nnmnkwii/pull/51
