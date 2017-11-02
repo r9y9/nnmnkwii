@@ -328,7 +328,7 @@ def test_vcc2016():
 
 @attr("require_local_data")
 @attr("require_jsut")
-def test_ljspeech():
+def test_jsut():
     DATA_DIR = join(expanduser("~"), "data", "jsut_ver1")
     if not exists(DATA_DIR):
         warn("Data doesn't exist at {}".format(DATA_DIR))
