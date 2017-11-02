@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.9+d195de2 documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.9+8afc05c documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.9+d195de2 documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.9+8afc05c documentation" href="../index.html"/>
         <link rel="next" title="Display" href="display.html"/>
         <link rel="prev" title="Baseline" href="baseline.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.9+d195de2
+                0.0.9+8afc05c
               </div>
             
           
@@ -243,6 +243,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#builtin-data-sources">Builtin data sources</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cmu-arctic-en">CMU Arctic (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsut-jp">JSUT (jp)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lj-speech-en">LJ-Speech (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 </ul>
@@ -984,6 +985,64 @@ labelmap. Stored in <code class="docutils literal"><span class="pre">collect_fil
 </dd></dl>
 
 </div>
+<div class="section" id="jsut-jp">
+<h3>JSUT (jp)<a class="headerlink" href="#jsut-jp" title="Permalink to this headline">¶</a></h3>
+<p>JSUT (Japanese speech corpus of Saruwatari Lab, University of Tokyo).</p>
+<p>You can download data (2.7GB) from <a class="reference external" href="https://sites.google.com/site/shinnosuketakamichi/publication/jsut">https://sites.google.com/site/shinnosuketakamichi/publication/jsut</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As of Nov. 4, 2017, 30 wav files are missing in just_ver1, while transcriptions exist.
+Note that current data source implementations do ignore these missing files.</p>
+</div>
+<dl class="class">
+<dt id="nnmnkwii.datasets.jsut.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for JSUT dataset.</p>
+<p>The data source collects text transcriptions from JSUT.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<em>list</em>) – Subsets.  Supported names of subset are <code class="docutils literal"><span class="pre">basic5000</span></code>,
+<code class="docutils literal"><span class="pre">countersuffix26</span></code>, <code class="docutils literal"><span class="pre">loanword128</span></code>, <code class="docutils literal"><span class="pre">onomatopee300</span></code>,
+<code class="docutils literal"><span class="pre">precedent130</span></code>, <code class="docutils literal"><span class="pre">repeat500</span></code>, <code class="docutils literal"><span class="pre">travel1000</span></code>, <code class="docutils literal"><span class="pre">utparaphrase512</span></code>.
+and <code class="docutils literal"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.jsut.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for JSUT dataset.</p>
+<p>The data source collects wav files from JSUT.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<em>list</em>) – Subsets.  Supported names of subset are <code class="docutils literal"><span class="pre">basic5000</span></code>,
+<code class="docutils literal"><span class="pre">countersuffix26</span></code>, <code class="docutils literal"><span class="pre">loanword128</span></code>, <code class="docutils literal"><span class="pre">onomatopee300</span></code>,
+<code class="docutils literal"><span class="pre">precedent130</span></code>, <code class="docutils literal"><span class="pre">repeat500</span></code>, <code class="docutils literal"><span class="pre">travel1000</span></code>, <code class="docutils literal"><span class="pre">utparaphrase512</span></code>.
+and <code class="docutils literal"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="lj-speech-en">
 <h3>LJ-Speech (en)<a class="headerlink" href="#lj-speech-en" title="Permalink to this headline">¶</a></h3>
 <p>You can download data (2.6GB) from <a class="reference external" href="https://keithito.com/LJ-Speech-Dataset/">https://keithito.com/LJ-Speech-Dataset/</a>.</p>
@@ -1251,7 +1310,7 @@ models.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.9+d195de2',
+            VERSION:'0.0.9+8afc05c',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

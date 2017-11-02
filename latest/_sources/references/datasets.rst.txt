@@ -153,6 +153,24 @@ You can download data (~720MB) from https://voice-statistics.github.io/.
 .. autoclass:: nnmnkwii.datasets.voice_statistics.WavFileDataSource
     :members:
 
+
+JSUT (jp)
+^^^^^^^^^
+
+JSUT (Japanese speech corpus of Saruwatari Lab, University of Tokyo).
+
+You can download data (2.7GB) from https://sites.google.com/site/shinnosuketakamichi/publication/jsut.
+
+.. warning::
+    As of Nov. 4, 2017, 30 wav files are missing in just_ver1, while transcriptions exist.
+    Note that current data source implementations do ignore these missing files.
+
+.. autoclass:: nnmnkwii.datasets.jsut.TranscriptionDataSource
+    :members:
+
+.. autoclass:: nnmnkwii.datasets.jsut.WavFileDataSource
+    :members:
+
 LJ-Speech (en)
 ^^^^^^^^^^^^^^
 

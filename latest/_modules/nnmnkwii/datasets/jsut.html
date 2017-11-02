@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.alignment &mdash; nnmnkwii 0.0.9+8afc05c documentation</title>
+  <title>nnmnkwii.datasets.jsut &mdash; nnmnkwii 0.0.9+8afc05c documentation</title>
   
 
   
@@ -36,7 +36,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.9+8afc05c documentation" href="../../../index.html"/>
-        <link rel="up" title="Module code" href="../../index.html"/> 
+        <link rel="up" title="nnmnkwii.datasets" href="../datasets.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -405,7 +405,9 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-      <li>nnmnkwii.preprocessing.alignment</li>
+          <li><a href="../datasets.html">nnmnkwii.datasets</a> &raquo;</li>
+        
+      <li>nnmnkwii.datasets.jsut</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -422,179 +424,147 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for nnmnkwii.preprocessing.alignment</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+  <h1>Source code for nnmnkwii.datasets.jsut</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">trim_zeros_frames</span>
-<span class="kn">from</span> <span class="nn">nnmnkwii.baseline.gmm</span> <span class="k">import</span> <span class="n">MLPG</span>
-
-<span class="kn">from</span> <span class="nn">fastdtw</span> <span class="k">import</span> <span class="n">fastdtw</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">numpy.linalg</span> <span class="k">import</span> <span class="n">norm</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
 
-<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="k">import</span> <span class="n">GaussianMixture</span>
+<span class="n">available_subsets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;countersuffix26&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;loanword128&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;onomatopee300&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;precedent130&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;repeat500&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;travel1000&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;utparaphrase512&quot;</span><span class="p">,</span>
+                     <span class="s2">&quot;voiceactress100&quot;</span><span class="p">,</span>
+                     <span class="p">]</span>
 
 
-<div class="viewcode-block" id="DTWAligner"><a class="viewcode-back" href="../../../references/preprocessing.html#nnmnkwii.preprocessing.alignment.DTWAligner">[docs]</a><span class="k">class</span> <span class="nc">DTWAligner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Align feature matrices using fastdtw_.</span>
+<span class="k">class</span> <span class="nc">BaseDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="s2">&quot;basic5000&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">=</span> <span class="n">subset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
+        <span class="n">transcription_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">subset</span><span class="p">,</span> <span class="s2">&quot;transcript_utf8.txt&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">transcription_path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;transcript_utf8.txt doesn&#39;t exists at </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">transcription_path</span><span class="p">))</span>
 
-<span class="sd">    .. _fastdtw: https://github.com/slaypni/fastdtw</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">transcription_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">names</span><span class="p">,</span> <span class="n">transcriptions</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;:&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">name</span><span class="p">,</span> <span class="n">transcription</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
 
-<span class="sd">    Attributes:</span>
-<span class="sd">        dist (function): Distance function. Default is :func:`numpy.linalg.norm`.</span>
-<span class="sd">        radius (int): Radius parameter in fastdtw_.</span>
-<span class="sd">        verbose (int): Verbose flag. Default is 0.</span>
+                <span class="c1"># Hack</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">==</span> <span class="s2">&quot;basic5000&quot;</span> <span class="ow">and</span> <span class="s2">&quot;BASIC4992&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;BASIC4992&quot;</span><span class="p">,</span> <span class="s2">&quot;BASIC5000&quot;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">==</span> <span class="s2">&quot;voiceactress100&quot;</span><span class="p">:</span>
+                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;100_&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">12</span><span class="p">:]</span>
 
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_duration_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import DTWAligner</span>
-<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_duration_model()</span>
-<span class="sd">        &gt;&gt;&gt; X = FileSourceDataset(X).asarray()</span>
-<span class="sd">        &gt;&gt;&gt; X.shape</span>
-<span class="sd">        (3, 40, 5)</span>
-<span class="sd">        &gt;&gt;&gt; Y = X.copy()</span>
-<span class="sd">        &gt;&gt;&gt; X_aligned, Y_aligned = DTWAligner().transform((X, Y))</span>
-<span class="sd">        &gt;&gt;&gt; X_aligned.shape</span>
-<span class="sd">        (3, 40, 5)</span>
-<span class="sd">        &gt;&gt;&gt; Y_aligned.shape</span>
-<span class="sd">        (3, 40, 5)</span>
+                <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">transcriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transcription</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">transcriptions</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">wav_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span><span class="p">,</span> <span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">isdir</span><span class="p">(</span><span class="n">wav_dir</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> doesn&#39;t exist.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wav_dir</span><span class="p">))</span>
+        <span class="n">miss_indices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">):</span>
+            <span class="n">wav_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">wav_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.wav&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">wav_path</span><span class="p">):</span>
+                <span class="n">miss_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">miss_indices</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">warn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2"> wav files were missing in subset </span><span class="si">{}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">miss_indices</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">,</span> <span class="n">miss_indices</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span><span class="p">,</span> <span class="n">miss_indices</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_wav</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_wav</span><span class="p">:</span>
+            <span class="n">wav_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span><span class="p">,</span> <span class="s2">&quot;wav&quot;</span><span class="p">)</span>
+            <span class="n">wav_paths</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">name</span><span class="p">:</span> <span class="n">join</span><span class="p">(</span><span class="n">wav_dir</span><span class="p">,</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.wav&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">wav_paths</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">_JSUTFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="n">is_wav</span><span class="p">,</span> <span class="n">validate</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">subsets</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">subset</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_subsets</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unknown subset &#39;</span><span class="si">{}</span><span class="s2">&#39;. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">subset</span><span class="p">,</span> <span class="n">available_subsets</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsets</span> <span class="o">=</span> <span class="n">subsets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sub_data_sources</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">subsets</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">BaseDataSource</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">subset</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">validate</span><span class="p">:</span>
+                <span class="n">d</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sub_data_sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_wav</span> <span class="o">=</span> <span class="n">is_wav</span>
+
+    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">sub_data_source</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">sub_data_sources</span><span class="p">:</span>
+            <span class="n">paths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">sub_data_source</span><span class="o">.</span><span class="n">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_wav</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TranscriptionDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jsut.TranscriptionDataSource">[docs]</a><span class="k">class</span> <span class="nc">TranscriptionDataSource</span><span class="p">(</span><span class="n">_JSUTFileDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transcription data source for JSUT dataset.</span>
+
+<span class="sd">    The data source collects text transcriptions from JSUT.</span>
+<span class="sd">    Users are expected to inherit the class and implement ``collect_features``</span>
+<span class="sd">    method, which defines how features are computed given a transcription.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        subsets (list): Subsets.  Supported names of subset are ``basic5000``,</span>
+<span class="sd">          ``countersuffix26``, ``loanword128``, ``onomatopee300``,</span>
+<span class="sd">          ``precedent130``, ``repeat500``, ``travel1000``, ``utparaphrase512``.</span>
+<span class="sd">          and ``voiceactress100``. Default is [&quot;basic5000&quot;].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
-
-    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">XY</span><span class="p">):</span>
-        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">XY</span>
-        <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">Y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span>
-
-        <span class="n">longer_features</span> <span class="o">=</span> <span class="n">X</span> <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="n">Y</span>
-
-        <span class="n">X_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">longer_features</span><span class="p">)</span>
-        <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">longer_features</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">)):</span>
-            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-            <span class="n">dist</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">fastdtw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">)</span>
-            <span class="n">dist</span> <span class="o">/=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-            <span class="n">pathx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">path</span><span class="p">))</span>
-            <span class="n">pathy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">path</span><span class="p">))</span>
-            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">pathx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">pathy</span><span class="p">]</span>
-            <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">max_len</span> <span class="o">&gt;</span> <span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">max_len</span> <span class="o">&gt;</span> <span class="n">Y_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                <span class="n">pad_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                               <span class="n">max_len</span> <span class="o">&gt;</span> <span class="n">Y_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-                <span class="n">X_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span>
-                    <span class="n">X_aligned</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_size</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
-                    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span>
-                    <span class="n">Y_aligned</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_size</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
-                    <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-            <span class="n">X_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="n">x</span>
-            <span class="n">Y_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span> <span class="o">=</span> <span class="n">y</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, distance: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">dist</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">validate</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IterativeDTWAligner"><a class="viewcode-back" href="../../../references/preprocessing.html#nnmnkwii.preprocessing.alignment.IterativeDTWAligner">[docs]</a><span class="k">class</span> <span class="nc">IterativeDTWAligner</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Align feature matrices iteratively using GMM-based feature conversion.</span>
+<div class="viewcode-block" id="WavFileDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jsut.WavFileDataSource">[docs]</a><span class="k">class</span> <span class="nc">WavFileDataSource</span><span class="p">(</span><span class="n">_JSUTFileDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wav file data source for JSUT dataset.</span>
 
-<span class="sd">    .. _fastdtw: https://github.com/slaypni/fastdtw</span>
+<span class="sd">    The data source collects wav files from JSUT.</span>
+<span class="sd">    Users are expected to inherit the class and implement ``collect_features``</span>
+<span class="sd">    method, which defines how features are computed given a wav file path.</span>
 
-<span class="sd">    Attributes:</span>
-<span class="sd">        n_iter (int): Number of iterations.</span>
-<span class="sd">        dist (function): Distance function</span>
-<span class="sd">        radius (int): Radius parameter in fastdtw_.</span>
-<span class="sd">        verbose (int): Verbose flag. Default is 0.</span>
-<span class="sd">        max_iter_gmm (int): Maximum iteration to train GMM.</span>
-<span class="sd">        n_components_gmm (int): Number of mixture components in GMM.</span>
-
-<span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_file_data_sources_for_duration_model</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.datasets import FileSourceDataset</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing.alignment import IterativeDTWAligner</span>
-<span class="sd">        &gt;&gt;&gt; _, X = example_file_data_sources_for_duration_model()</span>
-<span class="sd">        &gt;&gt;&gt; X = FileSourceDataset(X).asarray()</span>
-<span class="sd">        &gt;&gt;&gt; X.shape</span>
-<span class="sd">        (3, 40, 5)</span>
-<span class="sd">        &gt;&gt;&gt; Y = X.copy()</span>
-<span class="sd">        &gt;&gt;&gt; X_aligned, Y_aligned = IterativeDTWAligner(n_iter=1).transform((X, Y))</span>
-<span class="sd">        &gt;&gt;&gt; X_aligned.shape</span>
-<span class="sd">        (3, 40, 5)</span>
-<span class="sd">        &gt;&gt;&gt; Y_aligned.shape</span>
-<span class="sd">        (3, 40, 5)</span>
+<span class="sd">    Args:</span>
+<span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        subsets (list): Subsets.  Supported names of subset are ``basic5000``,</span>
+<span class="sd">          ``countersuffix26``, ``loanword128``, ``onomatopee300``,</span>
+<span class="sd">          ``precedent130``, ``repeat500``, ``travel1000``, ``utparaphrase512``.</span>
+<span class="sd">          and ``voiceactress100``. Default is [&quot;basic5000&quot;].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">norm</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="p">),</span>
-                 <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_iter_gmm</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_components_gmm</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span> <span class="o">=</span> <span class="n">n_iter</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">dist</span> <span class="o">=</span> <span class="n">dist</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter_gmm</span> <span class="o">=</span> <span class="n">max_iter_gmm</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">n_components_gmm</span> <span class="o">=</span> <span class="n">n_components_gmm</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">=</span> <span class="n">verbose</span>
-
-    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">XY</span><span class="p">):</span>
-        <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">XY</span>
-        <span class="k">assert</span> <span class="n">X</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span> <span class="ow">and</span> <span class="n">Y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">3</span>
-
-        <span class="n">longer_features</span> <span class="o">=</span> <span class="n">X</span> <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="n">Y</span>
-
-        <span class="n">Xc</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># this will be updated iteratively</span>
-        <span class="n">X_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">longer_features</span><span class="p">)</span>
-        <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">longer_features</span><span class="p">)</span>
-        <span class="n">refined_paths</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_iter</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">Xc</span><span class="p">,</span> <span class="n">Y</span><span class="p">)):</span>
-                <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-                <span class="n">dist</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">fastdtw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dist</span><span class="p">)</span>
-                <span class="n">dist</span> <span class="o">/=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-                <span class="n">pathx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">path</span><span class="p">))</span>
-                <span class="n">pathy</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">l</span><span class="p">:</span> <span class="n">l</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">path</span><span class="p">))</span>
-
-                <span class="n">refined_paths</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">pathx</span>
-                <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">pathx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">pathy</span><span class="p">]</span>
-
-                <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-                <span class="k">if</span> <span class="n">max_len</span> <span class="o">&gt;</span> <span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">or</span> <span class="n">max_len</span> <span class="o">&gt;</span> <span class="n">Y_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-                    <span class="n">pad_size</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
-                        <span class="n">max_len</span> <span class="o">-</span> <span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-                        <span class="n">max_len</span> <span class="o">&gt;</span> <span class="n">Y_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-                    <span class="n">X_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span>
-                        <span class="n">X_aligned</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_size</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
-                        <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-                    <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span>
-                        <span class="n">Y_aligned</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pad_size</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span>
-                        <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;constant&quot;</span><span class="p">,</span> <span class="n">constant_values</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-                <span class="n">X_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="n">x</span>
-                <span class="n">Y_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span> <span class="o">=</span> <span class="n">y</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">, distance: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">dist</span><span class="p">))</span>
-
-            <span class="c1"># Fit</span>
-            <span class="n">gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span>
-                <span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components_gmm</span><span class="p">,</span>
-                <span class="n">covariance_type</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter_gmm</span><span class="p">)</span>
-            <span class="n">XY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span><span class="p">),</span>
-                                <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
-            <span class="n">gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">XY</span><span class="p">)</span>
-            <span class="n">windows</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]))]</span>  <span class="c1"># no delta</span>
-            <span class="n">paramgen</span> <span class="o">=</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="n">windows</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Xc</span><span class="p">)):</span>
-                <span class="n">x</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">Xc</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
-                <span class="n">Xc</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="n">paramgen</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-        <span class="c1"># Finally we can get aligned X</span>
-        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_aligned</span><span class="p">)):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="n">refined_paths</span><span class="p">[</span><span class="n">idx</span><span class="p">]]</span>
-            <span class="n">X_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">][:</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span> <span class="o">=</span> <span class="n">x</span>
-
-        <span class="k">return</span> <span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span></div>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">validate</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
