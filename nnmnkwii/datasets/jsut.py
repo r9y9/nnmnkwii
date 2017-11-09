@@ -78,6 +78,8 @@ class BaseDataSource(FileDataSource):
 
 class _JSUTFileDataSource(FileDataSource):
     def __init__(self, data_root, subsets, is_wav, validate):
+        if subsets == "all":
+            subsets = available_subsets
         for subset in subsets:
             if subset not in available_subsets:
                 raise ValueError(
