@@ -15,7 +15,8 @@ import pyworld
 from nnmnkwii.preprocessing import trim_zeros_frames
 
 # Data source implementations
-from nnmnkwii.datasets import cmu_arctic, voice_statistics, ljspeech, vcc2016, jsut
+from nnmnkwii.datasets import cmu_arctic, voice_statistics, ljspeech, vcc2016
+from nnmnkwii.datasets import jsut, vctk
 
 # Tests marked with "require_local_data" needs data to be downloaded.
 
@@ -86,7 +87,20 @@ def test_vcc2016_dummy():
 
 def test_jsut_dummy():
     data_sources = [jsut.TranscriptionDataSource,
-                    ljspeech.WavFileDataSource]
+                    jsut.WavFileDataSource]
+
+    for data_source in data_sources:
+        @raises(RuntimeError)
+        def f(source):
+            source("dummy")
+
+        f(data_source)
+
+
+def test_vctk_dummy():
+    assert len(vctk.available_speakers) == 108
+    data_sources = [vctk.TranscriptionDataSource,
+                    vctk.WavFileDataSource]
 
     for data_source in data_sources:
         @raises(RuntimeError)
@@ -380,5 +394,80 @@ def test_jsut():
             return mc.astype(np.float32)
 
     data_source = MyWavFileDataSource(DATA_DIR, subsets=["basic5000"])
+    X = FileSourceDataset(data_source)
+    print(X[0].shape)
+
+
+@attr("require_local_data")
+@attr("require_vctk")
+def test_vctk():
+    DATA_DIR = join(expanduser("~"), "data", "VCTK-Corpus")
+    if not exists(DATA_DIR):
+        warn("Data doesn't exist at {}".format(DATA_DIR))
+        return
+
+    class MyTextDataSource(vctk.TranscriptionDataSource):
+        def __init__(self, data_root, speakers, labelmap=None):
+            super(MyTextDataSource, self).__init__(data_root, speakers, labelmap)
+
+        def collect_features(self, text):
+            return text
+
+    # Single speaker
+    data_source = MyTextDataSource(DATA_DIR, speakers=["225"])
+    X = FileSourceDataset(data_source)
+    assert X[0] == "Please call Stella."
+    n_225 = len(X)
+
+    data_source = MyTextDataSource(DATA_DIR, speakers=["p228"])
+    X = FileSourceDataset(data_source)
+    assert X[0] == "Please call Stella."
+    n_228 = len(X)
+
+    # multiple speakers
+    data_source = MyTextDataSource(DATA_DIR, speakers=["225", "228"])
+    X = FileSourceDataset(data_source)
+    assert len(X) == n_225 + n_228
+
+    # All speakers
+    data_source = MyTextDataSource(DATA_DIR, speakers=vctk.available_speakers)
+    X = FileSourceDataset(data_source)
+    assert X[0] == "Please call Stella."
+    assert len(X) == 44085
+
+    # Speaker labels
+    data_source = MyTextDataSource(DATA_DIR, speakers=["225", "228"])
+    X = FileSourceDataset(data_source)
+    labels = data_source.labels
+    assert len(X) == len(labels)
+    assert (labels[:n_225] == 0).all()
+    assert (labels[n_225:] == 1).all()
+
+    # Custum labelmap
+    data_source = MyTextDataSource(DATA_DIR, speakers=["225", "228"],
+                                   labelmap={"225": 225, "228": 228})
+    X = FileSourceDataset(data_source)
+    labels = data_source.labels
+    assert len(X) == len(labels)
+    assert (labels[:n_225] == 225).all()
+    assert (labels[n_225:] == 228).all()
+
+    class MyWavFileDataSource(vctk.WavFileDataSource):
+        def __init__(self, data_root, speakers, labelmap=None):
+            super(MyWavFileDataSource, self).__init__(data_root, speakers, labelmap)
+            self.alpha = pysptk.util.mcepalpha(48000)
+
+        def collect_features(self, path):
+            fs, x = wavfile.read(path)
+            assert fs == 48000
+            x = x.astype(np.float64)
+            f0, timeaxis = pyworld.dio(x, fs, frame_period=5)
+            f0 = pyworld.stonemask(x, f0, timeaxis, fs)
+            spectrogram = pyworld.cheaptrick(x, f0, timeaxis, fs)
+            spectrogram = trim_zeros_frames(spectrogram)
+            mc = pysptk.sp2mc(spectrogram, order=24, alpha=self.alpha)
+            return mc.astype(np.float32)
+
+    data_source = MyWavFileDataSource(DATA_DIR, speakers=["225"])
     X = FileSourceDataset(data_source)
     print(X[0].shape)
