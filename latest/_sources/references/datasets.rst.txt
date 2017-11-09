@@ -145,6 +145,45 @@ You can download data from http://festvox.org/cmu_arctic/.
 .. autoclass:: nnmnkwii.datasets.cmu_arctic.WavFileDataSource
     :members:
 
+VCTK (en)
+^^^^^^^^^
+
+You can download data (15GB) from http://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html.
+
+.. note::
+
+    Note that VCTK data sources don't collect files for speaker ``315``, since there
+    are no transcriptions available for ``315`` entries,
+
+.. autoclass:: nnmnkwii.datasets.vctk.TranscriptionDataSource
+    :members:
+
+.. autoclass:: nnmnkwii.datasets.vctk.WavFileDataSource
+    :members:
+
+
+LJ-Speech (en)
+^^^^^^^^^^^^^^
+
+You can download data (2.6GB) from https://keithito.com/LJ-Speech-Dataset/.
+
+.. autoclass:: nnmnkwii.datasets.ljspeech.TranscriptionDataSource
+    :members:
+
+.. autoclass:: nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource
+    :members:
+
+.. autoclass:: nnmnkwii.datasets.ljspeech.WavFileDataSource
+    :members:
+
+Voice Conversion Challenge (VCC) 2016 (en)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can download training data (181MB) and evaluation data (~56 MB) from http://datashare.is.ed.ac.uk/handle/10283/2211.
+
+.. autoclass:: nnmnkwii.datasets.vcc2016.WavFileDataSource
+    :members:
+
 Voice statistics (jp)
 ^^^^^^^^^^^^^^^^^^^^^
 
@@ -169,26 +208,4 @@ You can download data (2.7GB) from https://sites.google.com/site/shinnosuketakam
     :members:
 
 .. autoclass:: nnmnkwii.datasets.jsut.WavFileDataSource
-    :members:
-
-LJ-Speech (en)
-^^^^^^^^^^^^^^
-
-You can download data (2.6GB) from https://keithito.com/LJ-Speech-Dataset/.
-
-.. autoclass:: nnmnkwii.datasets.ljspeech.TranscriptionDataSource
-    :members:
-
-.. autoclass:: nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource
-    :members:
-
-.. autoclass:: nnmnkwii.datasets.ljspeech.WavFileDataSource
-    :members:
-
-Voice Conversion Challenge (VCC) 2016 (en)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-You can download training data (181MB) and evaluation data (~56 MB) from http://datashare.is.ed.ac.uk/handle/10283/2211.
-
-.. autoclass:: nnmnkwii.datasets.vcc2016.WavFileDataSource
     :members:

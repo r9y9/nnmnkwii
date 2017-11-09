@@ -4,6 +4,7 @@ Change log
 v0.0.9 <2017-xx-xx>
 -------------------
 
+- `#53`_: Add builtin data sources for VCTK dataset
 - `#50`_: Add builtin data sources for JSUT dataset
 - `#51`_: Fix modspec autograd bug for ``norm='ortho'``
 
@@ -89,3 +90,4 @@ v0.0.1 <2017-08-14>
 .. _#49: https://github.com/r9y9/nnmnkwii/issues/49
 .. _#50: https://github.com/r9y9/nnmnkwii/issues/50
 .. _#51: https://github.com/r9y9/nnmnkwii/pull/51
+.. _#53: https://github.com/r9y9/nnmnkwii/issues/53

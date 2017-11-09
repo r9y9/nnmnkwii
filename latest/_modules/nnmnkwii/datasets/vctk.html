@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.linalg &mdash; nnmnkwii 0.0.9+942acae documentation</title>
+  <title>nnmnkwii.datasets.vctk &mdash; nnmnkwii 0.0.9+942acae documentation</title>
   
 
   
@@ -36,7 +36,7 @@
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.9+942acae documentation" href="../../../index.html"/>
-        <link rel="up" title="nnmnkwii.util" href="../util.html"/> 
+        <link rel="up" title="nnmnkwii.datasets" href="../datasets.html"/> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
@@ -406,9 +406,9 @@
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
-          <li><a href="../util.html">nnmnkwii.util</a> &raquo;</li>
+          <li><a href="../datasets.html">nnmnkwii.datasets</a> &raquo;</li>
         
-      <li>nnmnkwii.util.linalg</li>
+      <li>nnmnkwii.datasets.vctk</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -425,50 +425,283 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <h1>Source code for nnmnkwii.util.linalg</h1><div class="highlight"><pre>
+  <h1>Source code for nnmnkwii.datasets.vctk</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">._linalg</span> <span class="k">import</span> <span class="n">dpotri_full_L</span><span class="p">,</span> <span class="n">dpotri_full_U</span>
-<span class="kn">from</span> <span class="nn">._linalg</span> <span class="k">import</span> <span class="n">cholesky_inv_banded</span> <span class="k">as</span> <span class="n">_cholesky_inv_banded</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">basename</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+<span class="c1"># List of available speakers.</span>
+<span class="n">available_speakers</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;225&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;226&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;227&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;228&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;229&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;230&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;231&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;232&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;233&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;234&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;236&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;237&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;238&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;239&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;240&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;241&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;243&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;244&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;245&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;246&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;247&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;248&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;249&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;250&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;251&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;252&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;253&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;254&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;255&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;256&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;257&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;258&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;259&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;260&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;261&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;262&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;263&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;264&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;265&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;266&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;267&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;268&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;269&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;270&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;271&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;272&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;273&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;274&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;275&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;276&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;277&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;278&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;279&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;280&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;281&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;282&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;283&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;284&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;285&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;286&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;287&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;288&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;292&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;293&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;294&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;295&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;297&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;298&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;299&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;300&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;301&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;302&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;303&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;304&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;305&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;306&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;307&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;308&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;310&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;311&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;312&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;313&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;314&quot;</span><span class="p">,</span>
+    <span class="c1"># &quot;315&quot;, transcriptions are missing, so excludes it here</span>
+    <span class="s2">&quot;316&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;317&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;318&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;323&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;326&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;329&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;330&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;333&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;334&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;335&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;336&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;339&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;340&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;341&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;343&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;345&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;347&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;351&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;360&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;361&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;362&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;363&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;364&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;374&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;376&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">available_speakers</span><span class="p">)</span> <span class="o">==</span> <span class="mi">108</span>
 
 
-<div class="viewcode-block" id="cholesky_inv"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html#nnmnkwii.util.linalg.cholesky_inv">[docs]</a><span class="k">def</span> <span class="nf">cholesky_inv</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute inverse matrix of real symmetric positive definite matrix</span>
-<span class="sd">    using choleskey factorization.</span>
+<span class="k">def</span> <span class="nf">_parse_speaker_info</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
+    <span class="n">speaker_info_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;speaker-info.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">speaker_info_path</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+            <span class="s2">&quot;speaker-info.txt doesn&#39;t exists at </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker_info_path</span><span class="p">))</span>
 
-<span class="sd">    The function internally uses LAPACK&#39;s ``dportri``.</span>
+    <span class="n">speaker_info</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">filed_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ID&quot;</span><span class="p">,</span> <span class="s2">&quot;AGE&quot;</span><span class="p">,</span> <span class="s2">&quot;GENDER&quot;</span><span class="p">,</span> <span class="s2">&quot;ACCENTS&quot;</span><span class="p">,</span> <span class="s2">&quot;REGION&quot;</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">speaker_info_path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;ID&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">6</span>
+            <span class="n">ID</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">ID</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="s2">&quot;AGE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="s2">&quot;GENDER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="s2">&quot;ACCENTS&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">speaker_info</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="s2">&quot;REGION&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">fields</span><span class="p">[</span><span class="mi">4</span><span class="p">:])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">speaker_info</span><span class="p">[</span><span class="n">ID</span><span class="p">][</span><span class="s2">&quot;REGION&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">speaker_info</span>
+
+
+<span class="k">class</span> <span class="nc">_VCTKBaseDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
+        <span class="c1"># accept both e.g., &quot;225&quot; and &quot;p225&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">speakers</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">speakers</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
+                <span class="n">speakers</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">speakers</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">if</span> <span class="n">speakers</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">speakers</span> <span class="o">=</span> <span class="n">available_speakers</span>
+        <span class="k">for</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="n">speakers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">speaker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_speakers</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unknown speaker &#39;</span><span class="si">{}</span><span class="s2">&#39;. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">speaker</span><span class="p">,</span> <span class="n">available_speakers</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speakers</span> <span class="o">=</span> <span class="n">speakers</span>
+        <span class="k">if</span> <span class="n">labelmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">labelmap</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">speakers</span><span class="p">):</span>
+                <span class="n">labelmap</span><span class="p">[</span><span class="n">speaker</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelmap</span> <span class="o">=</span> <span class="n">labelmap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">speaker_info</span> <span class="o">=</span> <span class="n">_parse_speaker_info</span><span class="p">(</span><span class="n">data_root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># should have pair of transcription and wav files</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">):</span>
+            <span class="n">txt_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;txt&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span> <span class="o">+</span> <span class="n">speaker</span><span class="p">,</span>
+                                         <span class="s2">&quot;p</span><span class="si">{}</span><span class="s2">_*.txt&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">))))</span>
+            <span class="n">wav_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;wav48&quot;</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span> <span class="o">+</span> <span class="n">speaker</span><span class="p">,</span>
+                                         <span class="s2">&quot;p</span><span class="si">{}</span><span class="s2">_*.wav&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">))))</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">txt_files</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">txt_path</span><span class="p">,</span> <span class="n">wav_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">txt_files</span><span class="p">,</span> <span class="n">wav_files</span><span class="p">):</span>
+                <span class="k">assert</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">txt_path</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">(</span><span class="n">wav_path</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_wav</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_wav</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;wav48&quot;</span><span class="p">)</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;.wav&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">root</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;txt&quot;</span><span class="p">)</span>
+            <span class="n">ext</span> <span class="o">=</span> <span class="s2">&quot;.txt&quot;</span>
+
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">):</span>
+            <span class="n">speaker_dir</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;p&quot;</span> <span class="o">+</span> <span class="n">speaker</span><span class="p">)</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">speaker_dir</span><span class="p">,</span> <span class="s2">&quot;p</span><span class="si">{}</span><span class="s2">_*</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">ext</span><span class="p">))))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_wav</span><span class="p">:</span>
+                <span class="n">files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">files</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">labelmap</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">[</span><span class="n">idx</span><span class="p">]])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">paths</span>
+
+
+<div class="viewcode-block" id="TranscriptionDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.vctk.TranscriptionDataSource">[docs]</a><span class="k">class</span> <span class="nc">TranscriptionDataSource</span><span class="p">(</span><span class="n">_VCTKBaseDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transcription data source for VCTK dataset.</span>
+
+<span class="sd">    The data source collects text transcriptions from VCTK.</span>
+<span class="sd">    Users are expected to inherit the class and implement ``collect_features``</span>
+<span class="sd">    method, which defines how features are computed given a transcription.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        L (numpy.ndarray[dtype=float64]): Lower or upper triangle matrix given</span>
-<span class="sd">          by choleskey factorization.</span>
-<span class="sd">        lower: Set ``True` if you give lower triangle matrix, ``False``</span>
-<span class="sd">          otherwise.</span>
+<span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        speakers (list): List of speakers to find. Speaker id must be ``str``.</span>
+<span class="sd">          For supported names of speaker, please refer to ``available_speakers``</span>
+<span class="sd">          defined in the module.</span>
+<span class="sd">        labelmap (dict[optional]): Dict of speaker labels. If None,</span>
+<span class="sd">          it&#39;s assigned as incrementally (i.e., 0, 1, 2) for specified</span>
+<span class="sd">          speakers.</span>
 
-<span class="sd">    Returns:</span>
-<span class="sd">        numpy.ndarrray: Inverse matrix (full storage).</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        speaker_info (dict): Dict of speaker information dict. Keyes are speaker</span>
+<span class="sd">          ids (str) and each value is speaker information consists of ``AGE``,</span>
+<span class="sd">          ``GENDER`` and ``REGION``.</span>
+<span class="sd">        labels (numpy.ndarray): Speaker labels paired with collected files.</span>
+<span class="sd">          Stored in ``collect_files``. This is useful to build multi-speaker</span>
+<span class="sd">          models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">N1</span><span class="p">,</span> <span class="n">N2</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">shape</span>
-    <span class="k">assert</span> <span class="n">N1</span> <span class="o">==</span> <span class="n">N2</span>
-    <span class="k">assert</span> <span class="n">L</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">float64</span>
-    <span class="n">N</span> <span class="o">=</span> <span class="n">N1</span>
 
-    <span class="c1"># transpose for array order difference (probably)</span>
-    <span class="n">B</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">)</span>
 
-    <span class="c1"># Inplace operations</span>
-    <span class="k">if</span> <span class="n">lower</span><span class="p">:</span>
-        <span class="n">dpotri_full_L</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">dpotri_full_U</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">B</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">N</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">B</span></div>
+    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">collect_files</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="cholesky_inv_banded"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html#nnmnkwii.util.linalg.cholesky_inv_banded">[docs]</a><span class="k">def</span> <span class="nf">cholesky_inv_banded</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-    <span class="c1"># TODO</span>
-    <span class="k">return</span> <span class="n">_cholesky_inv_banded</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span></div>
+<div class="viewcode-block" id="WavFileDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.vctk.WavFileDataSource">[docs]</a><span class="k">class</span> <span class="nc">WavFileDataSource</span><span class="p">(</span><span class="n">_VCTKBaseDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transcription data source for VCTK dataset.</span>
+
+<span class="sd">    The data source collects text transcriptions from VCTK.</span>
+<span class="sd">    Users are expected to inherit the class and implement ``collect_features``</span>
+<span class="sd">    method, which defines how features are computed given a transcription.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        speakers (list): List of speakers to find. Speaker id must be ``str``.</span>
+<span class="sd">          For supported names of speaker, please refer to ``available_speakers``</span>
+<span class="sd">          defined in the module.</span>
+<span class="sd">        labelmap (dict[optional]): Dict of speaker labels. If None,</span>
+<span class="sd">          it&#39;s assigned as incrementally (i.e., 0, 1, 2) for specified</span>
+<span class="sd">          speakers.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        speaker_info (dict): Dict of speaker information dict. Keyes are speaker</span>
+<span class="sd">          ids (str) and each value is speaker information consists of ``AGE``,</span>
+<span class="sd">          ``GENDER`` and ``REGION``.</span>
+<span class="sd">        labels (numpy.ndarray): Speaker labels paired with collected files.</span>
+<span class="sd">          Stored in ``collect_files``. This is useful to build multi-speaker</span>
+<span class="sd">          models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">collect_files</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div>
 </pre></div>
 
            </div>

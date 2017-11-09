@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.9+8afc05c documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.9+942acae documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.9+8afc05c documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.9+942acae documentation" href="../index.html"/>
         <link rel="next" title="Display" href="display.html"/>
         <link rel="prev" title="Baseline" href="baseline.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.9+8afc05c
+                0.0.9+942acae
               </div>
             
           
@@ -242,10 +242,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#builtin-data-sources">Builtin data sources</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#cmu-arctic-en">CMU Arctic (en)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#voice-statistics-jp">Voice statistics (jp)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#jsut-jp">JSUT (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vctk-en">VCTK (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#lj-speech-en">LJ-Speech (en)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsut-jp">JSUT (jp)</a></li>
 </ul>
 </li>
 </ul>
@@ -929,76 +930,19 @@ models.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="voice-statistics-jp">
-<h3>Voice statistics (jp)<a class="headerlink" href="#voice-statistics-jp" title="Permalink to this headline">¶</a></h3>
-<p>You can download data (~720MB) from <a class="reference external" href="https://voice-statistics.github.io/">https://voice-statistics.github.io/</a>.</p>
-<dl class="class">
-<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.voice_statistics.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers, labelmap=None, max_files=50, emotions=['normal']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wav file data source for Voice-statistics dataset.</p>
-<p>The data source collects wav files from voice-statistics.
-Users are expected to inherit the class and implement
-<code class="docutils literal"><span class="pre">collect_features</span></code> method, which defines how features are computed
-given a wav file path.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root</li>
-<li><strong>speakers</strong> (<em>list</em>) – List of speakers to load. Supported names of speaker
-are <code class="docutils literal"><span class="pre">fujitou</span></code>, <code class="docutils literal"><span class="pre">tsuchiya</span></code> and <code class="docutils literal"><span class="pre">uemura</span></code>.</li>
-<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
-it’s assigned as incrementally (i.e., 0, 1, 2) for specified
-speakers.</li>
-<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Total number of files to be collected.</li>
-<li><strong>emotions</strong> (<em>list</em>) – List of emotions we use. Supported names of emotions
-are <code class="docutils literal"><span class="pre">angry</span></code>, <code class="docutils literal"><span class="pre">happy</span></code> and <code class="docutils literal"><span class="pre">normal</span></code>.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-<dl class="attribute">
-<dt>
-<code class="descname">labels</code></dt>
-<dd><p><em>numpy.ndarray</em> – List of speaker identifiers determined by
-labelmap. Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files">
-<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect wav files for specific speakers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="jsut-jp">
-<h3>JSUT (jp)<a class="headerlink" href="#jsut-jp" title="Permalink to this headline">¶</a></h3>
-<p>JSUT (Japanese speech corpus of Saruwatari Lab, University of Tokyo).</p>
-<p>You can download data (2.7GB) from <a class="reference external" href="https://sites.google.com/site/shinnosuketakamichi/publication/jsut">https://sites.google.com/site/shinnosuketakamichi/publication/jsut</a>.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">As of Nov. 4, 2017, 30 wav files are missing in just_ver1, while transcriptions exist.
-Note that current data source implementations do ignore these missing files.</p>
+<div class="section" id="vctk-en">
+<h3>VCTK (en)<a class="headerlink" href="#vctk-en" title="Permalink to this headline">¶</a></h3>
+<p>You can download data (15GB) from <a class="reference external" href="http://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html">http://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that VCTK data sources don’t collect files for speaker <code class="docutils literal"><span class="pre">315</span></code>, since there
+are no transcriptions available for <code class="docutils literal"><span class="pre">315</span></code> entries,</p>
 </div>
 <dl class="class">
-<dt id="nnmnkwii.datasets.jsut.TranscriptionDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transcription data source for JSUT dataset.</p>
-<p>The data source collects text transcriptions from JSUT.
+<dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for VCTK dataset.</p>
+<p>The data source collects text transcriptions from VCTK.
 Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
 method, which defines how features are computed given a transcription.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -1007,39 +951,75 @@ method, which defines how features are computed given a transcription.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>subsets</strong> (<em>list</em>) – Subsets.  Supported names of subset are <code class="docutils literal"><span class="pre">basic5000</span></code>,
-<code class="docutils literal"><span class="pre">countersuffix26</span></code>, <code class="docutils literal"><span class="pre">loanword128</span></code>, <code class="docutils literal"><span class="pre">onomatopee300</span></code>,
-<code class="docutils literal"><span class="pre">precedent130</span></code>, <code class="docutils literal"><span class="pre">repeat500</span></code>, <code class="docutils literal"><span class="pre">travel1000</span></code>, <code class="docutils literal"><span class="pre">utparaphrase512</span></code>.
-and <code class="docutils literal"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+<li><strong>speakers</strong> (<em>list</em>) – List of speakers to find. Speaker id must be <code class="docutils literal"><span class="pre">str</span></code>.
+For supported names of speaker, please refer to <code class="docutils literal"><span class="pre">available_speakers</span></code>
+defined in the module.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.TranscriptionDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.TranscriptionDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – Dict of speaker information dict. Keyes are speaker
+ids (str) and each value is speaker information consists of <code class="docutils literal"><span class="pre">AGE</span></code>,
+<code class="docutils literal"><span class="pre">GENDER</span></code> and <code class="docutils literal"><span class="pre">REGION</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.TranscriptionDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.TranscriptionDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="class">
-<dt id="nnmnkwii.datasets.jsut.WavFileDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wav file data source for JSUT dataset.</p>
-<p>The data source collects wav files from JSUT.
+<dt id="nnmnkwii.datasets.vctk.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for VCTK dataset.</p>
+<p>The data source collects text transcriptions from VCTK.
 Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
-method, which defines how features are computed given a wav file path.</p>
+method, which defines how features are computed given a transcription.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>subsets</strong> (<em>list</em>) – Subsets.  Supported names of subset are <code class="docutils literal"><span class="pre">basic5000</span></code>,
-<code class="docutils literal"><span class="pre">countersuffix26</span></code>, <code class="docutils literal"><span class="pre">loanword128</span></code>, <code class="docutils literal"><span class="pre">onomatopee300</span></code>,
-<code class="docutils literal"><span class="pre">precedent130</span></code>, <code class="docutils literal"><span class="pre">repeat500</span></code>, <code class="docutils literal"><span class="pre">travel1000</span></code>, <code class="docutils literal"><span class="pre">utparaphrase512</span></code>.
-and <code class="docutils literal"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+<li><strong>speakers</strong> (<em>list</em>) – List of speakers to find. Speaker id must be <code class="docutils literal"><span class="pre">str</span></code>.
+For supported names of speaker, please refer to <code class="docutils literal"><span class="pre">available_speakers</span></code>
+defined in the module.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.WavFileDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.WavFileDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>dict</em> – Dict of speaker information dict. Keyes are speaker
+ids (str) and each value is speaker information consists of <code class="docutils literal"><span class="pre">AGE</span></code>,
+<code class="docutils literal"><span class="pre">GENDER</span></code> and <code class="docutils literal"><span class="pre">REGION</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt>
+<code class="descname">labels</code></dt>
+<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1263,6 +1243,120 @@ models.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="voice-statistics-jp">
+<h3>Voice statistics (jp)<a class="headerlink" href="#voice-statistics-jp" title="Permalink to this headline">¶</a></h3>
+<p>You can download data (~720MB) from <a class="reference external" href="https://voice-statistics.github.io/">https://voice-statistics.github.io/</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.voice_statistics.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers, labelmap=None, max_files=50, emotions=['normal']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for Voice-statistics dataset.</p>
+<p>The data source collects wav files from voice-statistics.
+Users are expected to inherit the class and implement
+<code class="docutils literal"><span class="pre">collect_features</span></code> method, which defines how features are computed
+given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root</li>
+<li><strong>speakers</strong> (<em>list</em>) – List of speakers to load. Supported names of speaker
+are <code class="docutils literal"><span class="pre">fujitou</span></code>, <code class="docutils literal"><span class="pre">tsuchiya</span></code> and <code class="docutils literal"><span class="pre">uemura</span></code>.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>emotions</strong> (<em>list</em>) – List of emotions we use. Supported names of emotions
+are <code class="docutils literal"><span class="pre">angry</span></code>, <code class="docutils literal"><span class="pre">happy</span></code> and <code class="docutils literal"><span class="pre">normal</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt>
+<code class="descname">labels</code></dt>
+<dd><p><em>numpy.ndarray</em> – List of speaker identifiers determined by
+labelmap. Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files for specific speakers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="jsut-jp">
+<h3>JSUT (jp)<a class="headerlink" href="#jsut-jp" title="Permalink to this headline">¶</a></h3>
+<p>JSUT (Japanese speech corpus of Saruwatari Lab, University of Tokyo).</p>
+<p>You can download data (2.7GB) from <a class="reference external" href="https://sites.google.com/site/shinnosuketakamichi/publication/jsut">https://sites.google.com/site/shinnosuketakamichi/publication/jsut</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">As of Nov. 4, 2017, 30 wav files are missing in just_ver1, while transcriptions exist.
+Note that current data source implementations do ignore these missing files.</p>
+</div>
+<dl class="class">
+<dt id="nnmnkwii.datasets.jsut.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for JSUT dataset.</p>
+<p>The data source collects text transcriptions from JSUT.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<em>list</em>) – Subsets.  Supported names of subset are <code class="docutils literal"><span class="pre">basic5000</span></code>,
+<code class="docutils literal"><span class="pre">countersuffix26</span></code>, <code class="docutils literal"><span class="pre">loanword128</span></code>, <code class="docutils literal"><span class="pre">onomatopee300</span></code>,
+<code class="docutils literal"><span class="pre">precedent130</span></code>, <code class="docutils literal"><span class="pre">repeat500</span></code>, <code class="docutils literal"><span class="pre">travel1000</span></code>, <code class="docutils literal"><span class="pre">utparaphrase512</span></code>.
+and <code class="docutils literal"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.jsut.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for JSUT dataset.</p>
+<p>The data source collects wav files from JSUT.
+Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<em>list</em>) – Subsets.  Supported names of subset are <code class="docutils literal"><span class="pre">basic5000</span></code>,
+<code class="docutils literal"><span class="pre">countersuffix26</span></code>, <code class="docutils literal"><span class="pre">loanword128</span></code>, <code class="docutils literal"><span class="pre">onomatopee300</span></code>,
+<code class="docutils literal"><span class="pre">precedent130</span></code>, <code class="docutils literal"><span class="pre">repeat500</span></code>, <code class="docutils literal"><span class="pre">travel1000</span></code>, <code class="docutils literal"><span class="pre">utparaphrase512</span></code>.
+and <code class="docutils literal"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -1310,7 +1404,7 @@ models.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.9+8afc05c',
+            VERSION:'0.0.9+942acae',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
