@@ -12,11 +12,21 @@ Library to build speech synthesis systems designed for easy and fast prototyping
 
 Github: https://github.com/r9y9/nnmnkwii
 
-You can find tutorial notebooks in the document. Full code is available at `nnmnkwii_gallery`_. Also advanced examples can be found at the following repositories:
+You can find tutorial notebooks in the document. Full code is available at `nnmnkwii_gallery`_.
 
-- `tacotron_pytorch`_: PyTorch implementation of `Tacotron`_ speech synthesis model.
-- `gantts`_: PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion (VC).
+**External links**
 
+Some of text-to-speech and voice conversion implementations using nnmnkwii can be found at the following external links:
+
+- `deepvoice3_pytorch`_: PyTorch implementation of Deep Voice 3, a convolutional text-to-speech synthesis model. `[arXiv:1710.07654]`_.
+- `tacotron_pytorch`_: PyTorch implementation of `Tacotron`_ speech synthesis model. `[arXiv:1703.10135]`_.
+- `gantts`_: PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion (VC). `[arXiv:1709.08041]`_.
+
+
+.. _`[arXiv:1709.08041]`: https://arxiv.org/abs/1709.08041
+.. _`[arXiv:1710.07654]`: https://arxiv.org/abs/1710.07654
+.. _`[arXiv:1703.10135]`: https://arxiv.org/abs/1703.10135
+.. _`deepvoice3_pytorch`: https://github.com/r9y9/deepvoice3_pytorch
 .. _`tacotron_pytorch`: https://github.com/r9y9/tacotron_pytorch
 .. _`gantts`: https://github.com/r9y9/gantts
 .. _`Tacotron`: https://arxiv.org/abs/1703.10135
