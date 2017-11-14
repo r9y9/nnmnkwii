@@ -163,8 +163,7 @@ J:13+9-2[2]')
         """
         if regex is None:
             regex = re.compile(".*-sil+.*")
-        state_number = 5  # TODO
-        return np.unique(self.silence_label_indices(regex) // state_number)
+        return np.unique(self.silence_label_indices(regex) // self.num_states())
 
     def silence_frame_indices(self, regex=None):
         """Returns silence frame indices

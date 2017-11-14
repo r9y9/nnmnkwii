@@ -94,3 +94,20 @@ def test_label_without_times():
     input_phone_label = join(DATA_DIR, "hts-nit-atr503", "phrase01.lab")
     labels = hts.load(input_phone_label)
     assert not labels.is_state_alignment_label()
+
+
+def test_mono():
+    lab_path = join(DATA_DIR, "BASIC5000_0001.lab")
+    labels = hts.load(lab_path)
+    print(labels)
+    assert not labels.is_state_alignment_label()
+
+    # Should detect begin/end sil regions
+    sil_regex = re.compile("sil")
+
+    for indices in [
+            labels.silence_label_indices(sil_regex),
+            labels.silence_phone_indices(sil_regex)]:
+        assert len(indices) == 2
+        assert indices[0] == 0
+        assert indices[1] == len(labels) - 1
