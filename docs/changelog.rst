@@ -1,7 +1,7 @@
 Change log
 ==========
 
-v0.0.9 <2017-xx-xx>
+v0.0.9 <2017-11-14>
 -------------------
 
 - `#53`_: Add builtin data sources for VCTK dataset
