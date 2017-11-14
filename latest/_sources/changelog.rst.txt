@@ -4,6 +4,8 @@ Change log
 v0.0.10 <2017-xx-xx>
 --------------------
 
+- `#20`_: Support for mono phone labels and fix bug of ``silence_phone_indices()`` for non-state level alignment label files.
+
 v0.0.9 <2017-11-14>
 -------------------
 
@@ -77,6 +79,7 @@ v0.0.1 <2017-08-14>
 .. _#12: https://github.com/r9y9/nnmnkwii/issues/12
 .. _#17: https://github.com/r9y9/nnmnkwii/pull/17
 .. _#19: https://github.com/r9y9/nnmnkwii/issues/19
+.. _#20: https://github.com/r9y9/nnmnkwii/issues/20
 .. _#21: https://github.com/r9y9/nnmnkwii/pull/21
 .. _#22: https://github.com/r9y9/nnmnkwii/issues/22
 .. _#23: https://github.com/r9y9/nnmnkwii/pull/23

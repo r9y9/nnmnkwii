@@ -590,8 +590,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">regex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;.*-sil+.*&quot;</span><span class="p">)</span>
-        <span class="n">state_number</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># TODO</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">silence_label_indices</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="o">//</span> <span class="n">state_number</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">silence_label_indices</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_states</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="HTSLabelFile.silence_frame_indices"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices">[docs]</a>    <span class="k">def</span> <span class="nf">silence_frame_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns silence frame indices</span>
