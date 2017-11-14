@@ -1,0 +1,6 @@
+nnmnkwii\.metrics\.rmse
+=======================
+
+.. currentmodule:: nnmnkwii.metrics
+
+.. autofunction:: rmse

@@ -1,0 +1,6 @@
+nnmnkwii\.metrics\.melcd
+========================
+
+.. currentmodule:: nnmnkwii.metrics
+
+.. autofunction:: melcd

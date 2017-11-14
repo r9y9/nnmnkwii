@@ -1,0 +1,6 @@
+nnmnkwii\.io\.hts\.load\_question\_set
+======================================
+
+.. currentmodule:: nnmnkwii.io.hts
+
+.. autofunction:: load_question_set

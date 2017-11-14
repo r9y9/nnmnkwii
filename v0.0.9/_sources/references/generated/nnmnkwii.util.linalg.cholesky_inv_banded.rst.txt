@@ -1,0 +1,6 @@
+nnmnkwii\.util\.linalg\.cholesky\_inv\_banded
+=============================================
+
+.. currentmodule:: nnmnkwii.util.linalg
+
+.. autofunction:: cholesky_inv_banded
