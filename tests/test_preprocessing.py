@@ -176,6 +176,10 @@ def test_preemphasis():
         assert x_hat.dtype == x.dtype
         assert np.allclose(x_hat, x, atol=1e-5)
 
+    x = np.random.rand(16000)
+    assert np.allclose(P.preemphasis(x, 0), x)
+    assert np.allclose(P.inv_preemphasis(P.preemphasis(x, 0), 0), x)
+
 
 def test_interp1d():
     f0 = np.random.rand(100, 1).astype(np.float32)
