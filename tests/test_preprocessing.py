@@ -43,6 +43,67 @@ def _get_windows_set():
     return windows_set
 
 
+def test_mulaw():
+    # Check corner cases
+    assert P.mulaw_quantize(-1.0, 2) == 0
+    assert P.mulaw_quantize(-0.5, 2) == 0
+    assert P.mulaw_quantize(-0.001, 2) == 0
+    assert P.mulaw_quantize(0.0, 2) == 1
+    assert P.mulaw_quantize(0.0001, 2) == 1
+    assert P.mulaw_quantize(0.5, 2) == 1
+    assert P.mulaw_quantize(0.99999, 2) == 1
+    assert P.mulaw_quantize(1.0, 2) == 2
+
+    np.random.seed(1234)
+    # forward/backward correctness
+    for mu in [128, 256, 512]:
+        for x in np.random.rand(100):
+            y = P.mulaw(x, mu)
+            assert y >= 0 and y <= 1
+            x_hat = P.inv_mulaw(y, mu)
+            assert np.allclose(x, x_hat)
+
+    # forward/backward correctness for quantize
+    for mu in [128, 256, 512]:
+        for x, y in [(-1.0, 0), (0.0, mu // 2), (0.99999, mu - 1)]:
+            y_hat = P.mulaw_quantize(x, mu)
+            err = np.abs(x - P.inv_mulaw_quantize(y_hat, mu))
+            print(y, y_hat, err)
+            assert np.allclose(y, y_hat)
+            # have small quantize error
+            assert err <= 0.1
+
+    # ndarray input
+    for mu in [128, 256, 512]:
+        x = np.random.rand(10)
+        y = P.mulaw(x, mu)
+        x_hat = P.inv_mulaw(y, mu)
+        assert np.allclose(x, x_hat)
+        P.inv_mulaw_quantize(P.mulaw_quantize(x))
+
+    # torch array input
+    import torch
+    torch.manual_seed(1234)
+    for mu in [128, 256, 512]:
+        x = torch.rand(10)
+        y = P.mulaw(x, mu)
+        x_hat = P.inv_mulaw(y, mu)
+        assert np.allclose(x, x_hat)
+        P.inv_mulaw_quantize(P.mulaw_quantize(x))
+
+
+def test_mulaw_real():
+    fs, x = wavfile.read(pysptk.util.example_audio_file())
+    x = (x / 32768.0).astype(np.float32)
+    mu = 256
+    y = P.mulaw_quantize(x, mu)
+    assert y.min() >= 0 and y.max() < mu
+    assert y.dtype == np.int
+    x = P.inv_mulaw_quantize(y, mu) * 32768
+    assert x.dtype == np.float32
+    x = x.astype(np.int16)
+
+
 def test_meanvar_incremental():
     np.random.seed(1234)
     N = 32
