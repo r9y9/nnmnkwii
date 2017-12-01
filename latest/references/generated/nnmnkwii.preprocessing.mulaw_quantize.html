@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.minmax_scale &mdash; nnmnkwii 0.0.10+6f46c5d documentation</title>
+  <title>nnmnkwii.preprocessing.mulaw_quantize &mdash; nnmnkwii 0.0.10+6f46c5d documentation</title>
   
 
   
@@ -37,8 +37,8 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.10+6f46c5d documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
-        <link rel="next" title="nnmnkwii.preprocessing.inv_minmax_scale" href="nnmnkwii.preprocessing.inv_minmax_scale.html"/>
-        <link rel="prev" title="nnmnkwii.preprocessing.minmax_scale_params" href="nnmnkwii.preprocessing.minmax_scale_params.html"/> 
+        <link rel="next" title="nnmnkwii.preprocessing.inv_mulaw_quantize" href="nnmnkwii.preprocessing.inv_mulaw_quantize.html"/>
+        <link rel="prev" title="nnmnkwii.preprocessing.inv_mulaw" href="nnmnkwii.preprocessing.inv_mulaw.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -296,7 +296,7 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.mulaw_quantize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
@@ -308,7 +308,7 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
@@ -413,13 +413,13 @@
         
           <li><a href="../preprocessing.html">Pre-processing</a> &raquo;</li>
         
-      <li>nnmnkwii.preprocessing.minmax_scale</li>
+      <li>nnmnkwii.preprocessing.mulaw_quantize</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/references/generated/nnmnkwii.preprocessing.minmax_scale.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/references/generated/nnmnkwii.preprocessing.mulaw_quantize.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -466,61 +466,61 @@
     margin-right: 4px;  /* make room for the exclamation icon */
 }
 </style>
-<div class="section" id="nnmnkwii-preprocessing-minmax-scale">
-<h1>nnmnkwii.preprocessing.minmax_scale<a class="headerlink" href="#nnmnkwii-preprocessing-minmax-scale" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nnmnkwii-preprocessing-mulaw-quantize">
+<h1>nnmnkwii.preprocessing.mulaw_quantize<a class="headerlink" href="#nnmnkwii-preprocessing-mulaw-quantize" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="nnmnkwii.preprocessing.minmax_scale">
-<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">minmax_scale</code><span class="sig-paren">(</span><em>x</em>, <em>data_min=None</em>, <em>data_max=None</em>, <em>feature_range=(0</em>, <em>1)</em>, <em>scale_=None</em>, <em>min_=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#minmax_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.minmax_scale" title="Permalink to this definition">¶</a></dt>
-<dd><p>Min/max scaling for given a single data.</p>
-<p>Given data min, max and feature range, apply min/max normalization to data.
-Optionally, you can get a little performance improvement to give scaling
-factor (<code class="docutils literal"><span class="pre">scale_</span></code>) and minimum value (<code class="docutils literal"><span class="pre">min_</span></code>) used in scaling explicitly.
-Those values can be computed by
-<a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html#nnmnkwii.preprocessing.minmax_scale_params" title="nnmnkwii.preprocessing.minmax_scale_params"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.minmax_scale_params()</span></code></a>.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If <code class="docutils literal"><span class="pre">scale_</span></code> and <code class="docutils literal"><span class="pre">min_</span></code> are given, <code class="docutils literal"><span class="pre">feature_range</span></code> will be ignored.</p>
-</div>
+<dt id="nnmnkwii.preprocessing.mulaw_quantize">
+<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">mulaw_quantize</code><span class="sig-paren">(</span><em>x</em>, <em>mu=256</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#mulaw_quantize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.mulaw_quantize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mu-Law companding + quantize</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Input data</li>
-<li><strong>data_min</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Data min for each feature dimention.</li>
-<li><strong>data_max</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Data max for each feature dimention.</li>
-<li><strong>feature_range</strong> (<em>array like</em>) – Feature range.</li>
-<li><strong>scale_</strong> (<em>[</em><em>optional</em><em>]</em><a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Scaling factor.</li>
-<li><strong>min_</strong> (<em>[</em><em>optional</em><em>]</em><a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Minimum value for scaling.</li>
+<li><strong>x</strong> (<em>array-like</em>) – Input signal. Each value of input signal must be in
+range of [-1, 1].</li>
+<li><strong>mu</strong> (<em>number</em>) – Compression parameter <code class="docutils literal"><span class="pre">μ</span></code>.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Scaled data.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
+<dt>Quantized signal (dtype=int)</dt>
+<dd><ul class="first last simple">
+<li>y ∈ [0, mu] if x ∈ [-1, 1]</li>
+<li>y ∈ [0, mu) if x ∈ [-1, 1)</li>
+</ul>
+</dd>
+</dl>
+</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first"><a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)">array</a></p>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last"><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – If (<code class="docutils literal"><span class="pre">data_min</span></code>, <code class="docutils literal"><span class="pre">data_max</span></code>) or
-(<code class="docutils literal"><span class="pre">scale_</span></code> and <code class="docutils literal"><span class="pre">min_</span></code>) are not specified.</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">array-like</p>
 </td>
 </tr>
 </tbody>
 </table>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html#nnmnkwii.preprocessing.inv_minmax_scale" title="nnmnkwii.preprocessing.inv_minmax_scale"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_minmax_scale()</span></code></a>,
-<a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html#nnmnkwii.preprocessing.minmax_scale_params" title="nnmnkwii.preprocessing.minmax_scale_params"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.minmax_scale_params()</span></code></a></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to get quantized values of range [0, mu) (not [0, mu]),
+then you need to provide input signal of range [-1, 1).</p>
 </div>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">minmax</span><span class="p">,</span> <span class="n">minmax_scale</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data_min</span><span class="p">,</span> <span class="n">data_max</span> <span class="o">=</span> <span class="n">minmax</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">scaled_x</span> <span class="o">=</span> <span class="n">minmax_scale</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">data_min</span><span class="p">,</span> <span class="n">data_max</span><span class="p">)</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="k">import</span> <span class="n">wavfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pysptk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">preprocessing</span> <span class="k">as</span> <span class="n">P</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fs</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">pysptk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">example_audio_file</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">/</span> <span class="mf">32768.0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">mulaw_quantize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="go">15 246 int64</span>
 </pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw.html#nnmnkwii.preprocessing.mulaw" title="nnmnkwii.preprocessing.mulaw"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.mulaw()</span></code></a>
+<a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw.html#nnmnkwii.preprocessing.inv_mulaw" title="nnmnkwii.preprocessing.inv_mulaw"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_mulaw()</span></code></a>
+<a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw_quantize.html#nnmnkwii.preprocessing.inv_mulaw_quantize" title="nnmnkwii.preprocessing.inv_mulaw_quantize"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_mulaw_quantize()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -536,10 +536,10 @@ Those values can be computed by
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nnmnkwii.preprocessing.inv_minmax_scale.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.inv_minmax_scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nnmnkwii.preprocessing.inv_mulaw_quantize.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.inv_mulaw_quantize" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nnmnkwii.preprocessing.minmax_scale_params.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.minmax_scale_params" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nnmnkwii.preprocessing.inv_mulaw.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.inv_mulaw" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

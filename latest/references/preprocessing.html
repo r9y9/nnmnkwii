@@ -36,7 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.10+6f46c5d documentation" href="../index.html"/>
-        <link rel="next" title="nnmnkwii.preprocessing.preemphasis" href="generated/nnmnkwii.preprocessing.preemphasis.html"/>
+        <link rel="next" title="nnmnkwii.preprocessing.mulaw" href="generated/nnmnkwii.preprocessing.mulaw.html"/>
         <link rel="prev" title="nnmnkwii.postfilters.merlin_post_filter" href="generated/nnmnkwii.postfilters.merlin_post_filter.html"/> 
 
   
@@ -293,6 +293,10 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Pre-processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#generic">Generic</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
@@ -472,6 +476,18 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw.html#nnmnkwii.preprocessing.mulaw" title="nnmnkwii.preprocessing.mulaw"><code class="xref py py-obj docutils literal"><span class="pre">mulaw</span></code></a>(x[,&nbsp;mu])</td>
+<td>Mu-Law companding</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw.html#nnmnkwii.preprocessing.inv_mulaw" title="nnmnkwii.preprocessing.inv_mulaw"><code class="xref py py-obj docutils literal"><span class="pre">inv_mulaw</span></code></a>(y[,&nbsp;mu])</td>
+<td>Inverse of mu-law companding (mu-law expansion)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw_quantize.html#nnmnkwii.preprocessing.mulaw_quantize" title="nnmnkwii.preprocessing.mulaw_quantize"><code class="xref py py-obj docutils literal"><span class="pre">mulaw_quantize</span></code></a>(x[,&nbsp;mu])</td>
+<td>Mu-Law companding + quantize</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html#nnmnkwii.preprocessing.inv_mulaw_quantize" title="nnmnkwii.preprocessing.inv_mulaw_quantize"><code class="xref py py-obj docutils literal"><span class="pre">inv_mulaw_quantize</span></code></a>(y[,&nbsp;mu])</td>
+<td>Inverse of mu-law companding + quantize</td>
+</tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.preemphasis.html#nnmnkwii.preprocessing.preemphasis" title="nnmnkwii.preprocessing.preemphasis"><code class="xref py py-obj docutils literal"><span class="pre">preemphasis</span></code></a>(x[,&nbsp;coef])</td>
 <td>Pre-emphasis</td>
 </tr>
@@ -676,7 +692,7 @@ directly instead.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="generated/nnmnkwii.preprocessing.preemphasis.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.preemphasis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="generated/nnmnkwii.preprocessing.mulaw.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.mulaw" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="generated/nnmnkwii.postfilters.merlin_post_filter.html" class="btn btn-neutral" title="nnmnkwii.postfilters.merlin_post_filter" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

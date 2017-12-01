@@ -292,6 +292,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
@@ -434,6 +438,157 @@
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">signal</span>
 
 
+<span class="k">def</span> <span class="nf">_sign</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">isnumpy</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">isscalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="ow">or</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">sign</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_log1p</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">isnumpy</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">isscalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="ow">or</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">log1p</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_abs</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">isnumpy</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">isscalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="ow">or</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_asint</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1"># ugly wrapper to support torch/numpy arrays</span>
+    <span class="n">isnumpy</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">isscalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">long</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">_asfloat</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="c1"># ugly wrapper to support torch/numpy arrays</span>
+    <span class="n">isnumpy</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span>
+    <span class="n">isscalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="k">if</span> <span class="n">isnumpy</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="n">isscalar</span> <span class="k">else</span> <span class="n">x</span><span class="o">.</span><span class="n">float</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="mulaw"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.mulaw.html#nnmnkwii.preprocessing.mulaw">[docs]</a><span class="k">def</span> <span class="nf">mulaw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mu-Law companding</span>
+
+<span class="sd">    Method described in paper [1]_.</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f(x) = sign(x) \ln (1 + \mu |x|) / \ln (1 + \mu)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (array-like): Input signal. Each value of input signal must be in</span>
+<span class="sd">          range of [-1, 1].</span>
+<span class="sd">        mu (number): Compression parameter ``μ``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array-like: Compressed signal ([-1, 1])</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_mulaw`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.mulaw_quantize`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_mulaw_quantize`</span>
+
+<span class="sd">    .. [1] Brokish, Charles W., and Michele Lewis. &quot;A-law and mu-law companding</span>
+<span class="sd">        implementations using the tms320c54x.&quot; SPRA163 (1997).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_sign</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">_log1p</span><span class="p">(</span><span class="n">mu</span> <span class="o">*</span> <span class="n">_abs</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">_log1p</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="inv_mulaw"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw.html#nnmnkwii.preprocessing.inv_mulaw">[docs]</a><span class="k">def</span> <span class="nf">inv_mulaw</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inverse of mu-law companding (mu-law expansion)</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        f^{-1}(x) = sign(y) (1 / \mu) (1 + \mu)^{|y|} - 1)</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y (array-like): Compressed signal. Each value of input signal must be in</span>
+<span class="sd">          range of [-1, 1].</span>
+<span class="sd">        mu (number): Compression parameter ``μ``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array-like: Uncomprresed signal (-1 &lt;= x &lt;= 1)</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_mulaw`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.mulaw_quantize`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_mulaw_quantize`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_sign</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="n">mu</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="n">_abs</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">-</span> <span class="mf">1.0</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mulaw_quantize"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.mulaw_quantize.html#nnmnkwii.preprocessing.mulaw_quantize">[docs]</a><span class="k">def</span> <span class="nf">mulaw_quantize</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Mu-Law companding + quantize</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (array-like): Input signal. Each value of input signal must be in</span>
+<span class="sd">          range of [-1, 1].</span>
+<span class="sd">        mu (number): Compression parameter ``μ``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array-like: Quantized signal (dtype=int)</span>
+<span class="sd">          - y ∈ [0, mu] if x ∈ [-1, 1]</span>
+<span class="sd">          - y ∈ [0, mu) if x ∈ [-1, 1)</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        If you want to get quantized values of range [0, mu) (not [0, mu]),</span>
+<span class="sd">        then you need to provide input signal of range [-1, 1).</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from scipy.io import wavfile</span>
+<span class="sd">        &gt;&gt;&gt; import pysptk</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import preprocessing as P</span>
+<span class="sd">        &gt;&gt;&gt; fs, x = wavfile.read(pysptk.util.example_audio_file())</span>
+<span class="sd">        &gt;&gt;&gt; x = (x / 32768.0).astype(np.float32)</span>
+<span class="sd">        &gt;&gt;&gt; y = P.mulaw_quantize(x)</span>
+<span class="sd">        &gt;&gt;&gt; print(y.min(), y.max(), y.dtype)</span>
+<span class="sd">        15 246 int64</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.mulaw`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_mulaw`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_mulaw_quantize`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">mulaw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span>
+    <span class="c1"># scale [-1, 1] to [0, mu]</span>
+    <span class="k">return</span> <span class="n">_asint</span><span class="p">((</span><span class="n">y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">mu</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="inv_mulaw_quantize"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html#nnmnkwii.preprocessing.inv_mulaw_quantize">[docs]</a><span class="k">def</span> <span class="nf">inv_mulaw_quantize</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Inverse of mu-law companding + quantize</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y (array-like): Quantized signal (∈ [0, mu]).</span>
+<span class="sd">        mu (number): Compression parameter ``μ``.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        array-like: Uncompressed signal ([-1, 1])</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from scipy.io import wavfile</span>
+<span class="sd">        &gt;&gt;&gt; import pysptk</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import preprocessing as P</span>
+<span class="sd">        &gt;&gt;&gt; fs, x = wavfile.read(pysptk.util.example_audio_file())</span>
+<span class="sd">        &gt;&gt;&gt; x = (x / 32768.0).astype(np.float32)</span>
+<span class="sd">        &gt;&gt;&gt; x_hat = P.inv_mulaw_quantize(P.mulaw_quantize(x))</span>
+<span class="sd">        &gt;&gt;&gt; x_hat = (x_hat * 32768).astype(np.int16)</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.mulaw`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.inv_mulaw`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.mulaw_quantize`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># [0, m) to [-1, 1]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">_asfloat</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">/</span> <span class="n">mu</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">inv_mulaw</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mu</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="preemphasis"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html#nnmnkwii.preprocessing.preemphasis">[docs]</a><span class="k">def</span> <span class="nf">preemphasis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="mf">0.97</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Pre-emphasis</span>
 
@@ -568,7 +723,7 @@
     <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
-    <span class="k">return</span> <span class="n">x</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trim_zeros</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span></div>
+    <span class="k">return</span> <span class="n">x</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trim_zeros</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span></div>
 
 
 <div class="viewcode-block" id="remove_zeros_frames"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html#nnmnkwii.preprocessing.remove_zeros_frames">[docs]</a><span class="k">def</span> <span class="nf">remove_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">):</span>
