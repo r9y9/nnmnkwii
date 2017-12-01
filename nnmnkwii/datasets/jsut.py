@@ -36,11 +36,12 @@ class BaseDataSource(FileDataSource):
                     continue
                 name, transcription = line.strip().split(":")
 
-                # Hack
+                # Hack for jsut_ver1
                 if self.subset == "basic5000" and "BASIC4992" in name:
                     name = name.replace("BASIC4992", "BASIC5000")
                 elif self.subset == "voiceactress100":
-                    name = name[:12] + "100_" + name[12:]
+                    if len(name) == len("VOICEACTRESS073"):
+                        name = name[:12] + "100_" + name[12:]
 
                 names.append(name)
                 transcriptions.append(transcription)

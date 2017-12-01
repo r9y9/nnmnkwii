@@ -344,7 +344,7 @@ def test_vcc2016():
 @attr("require_local_data")
 @attr("require_jsut")
 def test_jsut():
-    DATA_DIR = join(expanduser("~"), "data", "jsut_ver1")
+    DATA_DIR = join(expanduser("~"), "data", "jsut_ver1.1")
     if not exists(DATA_DIR):
         warn("Data doesn't exist at {}".format(DATA_DIR))
         return
@@ -375,7 +375,7 @@ def test_jsut():
     X = FileSourceDataset(data_source)
     # As of 2017/11/2. There were 30 missing wav files.
     # This should be 7696
-    assert len(X) == 7666
+    assert len(X) == 7696
 
     class MyWavFileDataSource(jsut.WavFileDataSource):
         def __init__(self, data_root, subsets):
