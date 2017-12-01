@@ -4,6 +4,7 @@ Change log
 v0.0.10 <2017-xx-xx>
 --------------------
 
+- Add support for JSUT dataset ver 1.1
 - `#20`_: Support for mono phone labels and fix bug of ``silence_phone_indices()`` for non-state level alignment label files.
 
 v0.0.9 <2017-11-14>
