@@ -465,11 +465,12 @@
                     <span class="k">continue</span>
                 <span class="n">name</span><span class="p">,</span> <span class="n">transcription</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
 
-                <span class="c1"># Hack</span>
+                <span class="c1"># Hack for jsut_ver1</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">==</span> <span class="s2">&quot;basic5000&quot;</span> <span class="ow">and</span> <span class="s2">&quot;BASIC4992&quot;</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
                     <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;BASIC4992&quot;</span><span class="p">,</span> <span class="s2">&quot;BASIC5000&quot;</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">==</span> <span class="s2">&quot;voiceactress100&quot;</span><span class="p">:</span>
-                    <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;100_&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">12</span><span class="p">:]</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&quot;VOICEACTRESS073&quot;</span><span class="p">):</span>
+                        <span class="n">name</span> <span class="o">=</span> <span class="n">name</span><span class="p">[:</span><span class="mi">12</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;100_&quot;</span> <span class="o">+</span> <span class="n">name</span><span class="p">[</span><span class="mi">12</span><span class="p">:]</span>
 
                 <span class="n">names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
                 <span class="n">transcriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">transcription</span><span class="p">)</span>

@@ -905,8 +905,8 @@ speakers.</li>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="nnmnkwii.datasets.WavFileDataSource.labels">
-<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
 Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
@@ -964,16 +964,16 @@ speakers.</li>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="nnmnkwii.datasets.TranscriptionDataSource.speaker_info">
-<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.TranscriptionDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>dict</em> – Dict of speaker information dict. Keyes are speaker
 ids (str) and each value is speaker information consists of <code class="docutils literal"><span class="pre">AGE</span></code>,
 <code class="docutils literal"><span class="pre">GENDER</span></code> and <code class="docutils literal"><span class="pre">REGION</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="nnmnkwii.datasets.TranscriptionDataSource.labels">
-<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.TranscriptionDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
 Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
@@ -1006,16 +1006,16 @@ speakers.</li>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="nnmnkwii.datasets.WavFileDataSource.speaker_info">
-<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.WavFileDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.datasets.vctk.WavFileDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>dict</em> – Dict of speaker information dict. Keyes are speaker
 ids (str) and each value is speaker information consists of <code class="docutils literal"><span class="pre">AGE</span></code>,
 <code class="docutils literal"><span class="pre">GENDER</span></code> and <code class="docutils literal"><span class="pre">REGION</span></code>.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt>
-<code class="descname">labels</code></dt>
+<dt id="nnmnkwii.datasets.vctk.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
 Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
@@ -1043,8 +1043,8 @@ method, which defines how features are computed given a transcription.</p>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="nnmnkwii.datasets.TranscriptionDataSource.metadata">
-<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.TranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.datasets.ljspeech.TranscriptionDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – Metadata, shapeo (<code class="docutils literal"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
 </dd></dl>
 
@@ -1085,8 +1085,8 @@ transcriptions instead of raw ones.</p>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="nnmnkwii.datasets.NormalizedTranscriptionDataSource.metadata">
-<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.NormalizedTranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – Metadata, shape (<code class="docutils literal"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
 </dd></dl>
 
@@ -1124,8 +1124,8 @@ method, which defines how features are computed given a wav file path.</p>
 </tbody>
 </table>
 <dl class="attribute">
-<dt id="nnmnkwii.datasets.WavFileDataSource.metadata">
-<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.WavFileDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dt id="nnmnkwii.datasets.ljspeech.WavFileDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.WavFileDataSource.metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – Metadata, shape (<code class="docutils literal"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
 </dd></dl>
 
@@ -1218,8 +1218,8 @@ it collects evaluation data.</li>
 </tbody>
 </table>
 <dl class="attribute">
-<dt>
-<code class="descname">labels</code></dt>
+<dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
 Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
@@ -1275,8 +1275,8 @@ are <code class="docutils literal"><span class="pre">angry</span></code>, <code 
 </tbody>
 </table>
 <dl class="attribute">
-<dt>
-<code class="descname">labels</code></dt>
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>numpy.ndarray</em> – List of speaker identifiers determined by
 labelmap. Stored in <code class="docutils literal"><span class="pre">collect_files</span></code>.</p>
 </dd></dl>
@@ -1304,11 +1304,6 @@ labelmap. Stored in <code class="docutils literal"><span class="pre">collect_fil
 <h3>JSUT (jp)<a class="headerlink" href="#jsut-jp" title="Permalink to this headline">¶</a></h3>
 <p>JSUT (Japanese speech corpus of Saruwatari Lab, University of Tokyo).</p>
 <p>You can download data (2.7GB) from <a class="reference external" href="https://sites.google.com/site/shinnosuketakamichi/publication/jsut">https://sites.google.com/site/shinnosuketakamichi/publication/jsut</a>.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">As of Nov. 4, 2017, 30 wav files are missing in just_ver1, while transcriptions exist.
-Note that current data source implementations do ignore these missing files.</p>
-</div>
 <dl class="class">
 <dt id="nnmnkwii.datasets.jsut.TranscriptionDataSource">
 <em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
