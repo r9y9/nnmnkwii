@@ -14,6 +14,10 @@ Utterance-wise operations
 .. autosummary::
    :toctree: generated/
 
+   mulaw
+   inv_mulaw
+   mulaw_quantize
+   inv_mulaw_quantize
    preemphasis
    inv_preemphasis
    delta_features

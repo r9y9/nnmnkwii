@@ -4,6 +4,7 @@ Change log
 v0.0.10 <2017-xx-xx>
 --------------------
 
+- `#55`_: Add mu-law companding/expansion
 - Add support for JSUT dataset ver 1.1
 - `#20`_: Support for mono phone labels and fix bug of ``silence_phone_indices()`` for non-state level alignment label files.
 
@@ -98,3 +99,4 @@ v0.0.1 <2017-08-14>
 .. _#50: https://github.com/r9y9/nnmnkwii/issues/50
 .. _#51: https://github.com/r9y9/nnmnkwii/pull/51
 .. _#53: https://github.com/r9y9/nnmnkwii/issues/53
+.. _#55: https://github.com/r9y9/nnmnkwii/pull/55
