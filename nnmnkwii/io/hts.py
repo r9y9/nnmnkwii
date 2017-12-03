@@ -117,7 +117,9 @@ J:13+9-2[2]')
 
     def append(self, label):
         """Append a single alignment label
-        label (tuple): tuple of (start_time, end_time, context).
+
+        Args:
+            label (tuple): tuple of (start_time, end_time, context).
 
         Returns:
             self
