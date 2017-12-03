@@ -47,18 +47,21 @@ import re
 
 
 class HTSLabelFile(object):
-    """Memory representation for HTS-style context labels (a.k.a HTK labels).
+    """Memory representation for HTS-style context labels (a.k.a HTK alignment).
 
     Indexing is supported. It returns tuple of
     (``start_time``, ``end_time``, ``label``).
 
     Attributes:
-        frame_shift_in_ms (int): Frame shift in micro seconds
-        start_times (ndarray): Start times
-        end_times (ndarray): End times
-        contexts (nadarray): Contexts.
+        start_times (list): Start times in micro seconds.
+        end_times (list): End times in micro seconds.
+        contexts (list): Contexts. Each value should have either phone or
+          full-context annotation.
 
     Examples:
+
+        Load from file
+
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_label_file
         >>> labels = hts.load(example_label_file())
@@ -66,6 +69,8 @@ class HTSLabelFile(object):
         (0, 50000, 'x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&x-x#x-x$x-x!x-x;x-x|x\
 /C:1+1+2/D:0_0/E:x+x@x+x&x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/\
 J:13+9-2[2]')
+
+        Create memory representation of label
 
         >>> labels = hts.HTSLabelFile()
         >>> labels.append((0, 3125000, "silB"))
@@ -77,6 +82,14 @@ J:13+9-2[2]')
         0 3125000 silB
         3125000 3525000 m
         3525000 4325000 i
+
+        Save to file
+
+        >>> from tempfile import TemporaryFile
+        >>> with TemporaryFile("w") as f:
+        ...     f.write(str(labels))
+        50
+
     """
 
     def __init__(self, frame_shift_in_micro_sec=50000):
@@ -103,6 +116,16 @@ J:13+9-2[2]')
         return str(self)
 
     def append(self, label):
+        """Append a single alignment label
+        label (tuple): tuple of (start_time, end_time, context).
+
+        Returns:
+            self
+
+        Raises:
+            ValueError: if start_time >= end_time
+            ValueError: if last end time doesn't match start_time
+        """
         start_time, end_time, context = label
         start_time = int(start_time)
         end_time = int(end_time)
