@@ -47,7 +47,7 @@ import re
 
 
 class HTSLabelFile(object):
-    """Memory representation for HTS-style context labels file.
+    """Memory representation for HTS-style context labels (a.k.a HTK labels).
 
     Indexing is supported. It returns tuple of
     (``start_time``, ``end_time``, ``label``).
@@ -66,6 +66,17 @@ class HTSLabelFile(object):
         (0, 50000, 'x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&x-x#x-x$x-x!x-x;x-x|x\
 /C:1+1+2/D:0_0/E:x+x@x+x&x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/\
 J:13+9-2[2]')
+
+        >>> labels = hts.HTSLabelFile()
+        >>> labels.append((0, 3125000, "silB"))
+        0 3125000 silB
+        >>> labels.append((3125000, 3525000, "m"))
+        0 3125000 silB
+        3125000 3525000 m
+        >>> labels.append((3525000, 4325000, "i"))
+        0 3125000 silB
+        3125000 3525000 m
+        3525000 4325000 i
     """
 
     def __init__(self, frame_shift_in_micro_sec=50000):
@@ -82,12 +93,33 @@ J:13+9-2[2]')
 
     def __str__(self):
         ret = ""
+        if len(self.start_times) == 0:
+            return ret
         for s, e, context in self:
             ret += "{} {} {}\n".format(s, e, context)
-        return ret
+        return ret[:-1]
 
     def __repr__(self):
         return str(self)
+
+    def append(self, label):
+        start_time, end_time, context = label
+        start_time = int(start_time)
+        end_time = int(end_time)
+
+        if start_time >= end_time:
+            raise ValueError(
+                "end_time ({}) must be larger than start_time ({}).".format(
+                    end_time, start_time))
+        if len(self.end_times) > 0 and start_time != self.end_times[-1]:
+            raise ValueError(
+                "start_time ({}) must be equal to the last end_time ({}).".format(
+                    start_time, self.end_times[-1]))
+
+        self.start_times.append(start_time)
+        self.end_times.append(end_time)
+        self.contexts.append(context)
+        return self
 
     def set_durations(self, durations, frame_shift_in_micro_sec=50000):
         """Set start/end times from duration features

@@ -5,6 +5,7 @@ from os.path import dirname, join
 import copy
 from nnmnkwii.util import example_question_file
 import re
+from nose.tools import raises
 
 DATA_DIR = join(dirname(__file__), "data")
 
@@ -71,7 +72,9 @@ def test_state_alignment_label_file():
     input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
     with open(input_state_label) as f:
-        assert f.read() == str(labels)
+        l = f.read()
+        l = l[:-1] if l[-1] == "\n" else l
+        assert l == str(labels)
 
     print(labels.num_states())
     assert labels.num_states() == 5
@@ -99,7 +102,6 @@ def test_label_without_times():
 def test_mono():
     lab_path = join(DATA_DIR, "BASIC5000_0001.lab")
     labels = hts.load(lab_path)
-    print(labels)
     assert not labels.is_state_alignment_label()
 
     # Should detect begin/end sil regions
@@ -111,3 +113,36 @@ def test_mono():
         assert len(indices) == 2
         assert indices[0] == 0
         assert indices[1] == len(labels) - 1
+
+
+def test_hts_append():
+    lab_path = join(DATA_DIR, "BASIC5000_0001.lab")
+    test_labels = hts.load(lab_path)
+    print("\n{}".format(test_labels))
+
+    # should get same string representation
+    labels = hts.HTSLabelFile()
+    assert str(labels) == ""
+    for label in test_labels:
+        labels.append(label)
+    assert str(test_labels) == str(labels)
+
+    @raises(ValueError)
+    def test_invalid_start_time():
+        l = hts.HTSLabelFile()
+        l.append((100000, 0, "NG"))
+
+    def test_succeeding_times():
+        l = hts.HTSLabelFile()
+        l.append((0, 1000000, "OK"))
+        l.append((1000000, 2000000, "OK"))
+
+    @raises(ValueError)
+    def test_non_succeeding_times():
+        l = hts.HTSLabelFile()
+        l.append((0, 1000000, "OK"))
+        l.append((1500000, 2000000, "NG"))
+
+    test_invalid_start_time()
+    test_succeeding_times()
+    test_non_succeeding_times()
