@@ -72,7 +72,7 @@ J:13+9-2[2]')
         self.start_times = []
         self.end_times = []
         self.contexts = []
-        self.frame_shift_in_micro_sec = frame_shift_in_micro_sec
+        frame_shift_in_micro_sec = frame_shift_in_micro_sec
 
     def __len__(self):
         return len(self.start_times)
@@ -89,7 +89,7 @@ J:13+9-2[2]')
     def __repr__(self):
         return str(self)
 
-    def set_durations(self, durations):
+    def set_durations(self, durations, frame_shift_in_micro_sec=50000):
         """Set start/end times from duration features
 
         TODO:
@@ -97,7 +97,7 @@ J:13+9-2[2]')
         """
         # Unwrap state-axis
         end_times = np.cumsum(
-            durations.reshape(-1, 1) * self.frame_shift_in_micro_sec).astype(np.int)
+            durations.reshape(-1, 1) * frame_shift_in_micro_sec).astype(np.int)
         if len(end_times) != len(self.end_times):
             raise RuntimeError("Unexpected input, maybe")
         # Assuming first label starts with time `0`
@@ -165,7 +165,7 @@ J:13+9-2[2]')
             regex = re.compile(".*-sil+.*")
         return np.unique(self.silence_label_indices(regex) // self.num_states())
 
-    def silence_frame_indices(self, regex=None):
+    def silence_frame_indices(self, regex=None, frame_shift_in_micro_sec=50000):
         """Returns silence frame indices
 
         Similar to :func:`silence_label_indices`, but returns indices in frame-level.
@@ -181,8 +181,8 @@ J:13+9-2[2]')
         indices = self.silence_label_indices(regex)
         if len(indices) == 0:
             return np.empty(0)
-        s = self.start_times[indices] // self.frame_shift_in_micro_sec
-        e = self.end_times[indices] // self.frame_shift_in_micro_sec
+        s = self.start_times[indices] // frame_shift_in_micro_sec
+        e = self.end_times[indices] // frame_shift_in_micro_sec
         return np.unique(np.concatenate(
             [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int)
 
@@ -212,17 +212,15 @@ J:13+9-2[2]')
         else:
             return len(self)
 
-    def num_frames(self):
-        return self.end_times[-1] // self.frame_shift_in_micro_sec
+    def num_frames(self, frame_shift_in_micro_sec=50000):
+        return self.end_times[-1] // frame_shift_in_micro_sec
 
 
-def load(path, frame_shift_in_micro_sec=50000):
+def load(path):
     """Load HTS-style label file
 
     Args:
         path (str): Path of file.
-        frame_shift_in_micro_sec (optional[int]): Frame shift in micro seconds.
-            Default is 50000.
 
     Returns:
         labels (HTSLabelFile): Instance of HTSLabelFile.
@@ -232,7 +230,7 @@ def load(path, frame_shift_in_micro_sec=50000):
         >>> from nnmnkwii.util import example_label_file
         >>> labels = hts.load(example_label_file())
     """
-    labels = HTSLabelFile(frame_shift_in_micro_sec)
+    labels = HTSLabelFile()
     labels.load(path)
 
     return labels
