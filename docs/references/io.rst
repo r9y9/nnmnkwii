@@ -2,10 +2,9 @@ IO
 ==
 
 IO operations for some speech-specific file formats.
-As of now, it only supports read operations for:
 
+- HTS-style full-context label file (a.k.a. HTK alignment)
 - HTS-style question file
-- HTS-style full-context label file
 
 HTS IO
 ------

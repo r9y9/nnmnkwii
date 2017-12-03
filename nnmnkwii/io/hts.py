@@ -47,18 +47,21 @@ import re
 
 
 class HTSLabelFile(object):
-    """Memory representation for HTS-style context labels file.
+    """Memory representation for HTS-style context labels (a.k.a HTK alignment).
 
     Indexing is supported. It returns tuple of
     (``start_time``, ``end_time``, ``label``).
 
     Attributes:
-        frame_shift_in_ms (int): Frame shift in micro seconds
-        start_times (ndarray): Start times
-        end_times (ndarray): End times
-        contexts (nadarray): Contexts.
+        start_times (list): Start times in micro seconds.
+        end_times (list): End times in micro seconds.
+        contexts (list): Contexts. Each value should have either phone or
+          full-context annotation.
 
     Examples:
+
+        Load from file
+
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_label_file
         >>> labels = hts.load(example_label_file())
@@ -66,13 +69,34 @@ class HTSLabelFile(object):
         (0, 50000, 'x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&x-x#x-x$x-x!x-x;x-x|x\
 /C:1+1+2/D:0_0/E:x+x@x+x&x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/\
 J:13+9-2[2]')
+
+        Create memory representation of label
+
+        >>> labels = hts.HTSLabelFile()
+        >>> labels.append((0, 3125000, "silB"))
+        0 3125000 silB
+        >>> labels.append((3125000, 3525000, "m"))
+        0 3125000 silB
+        3125000 3525000 m
+        >>> labels.append((3525000, 4325000, "i"))
+        0 3125000 silB
+        3125000 3525000 m
+        3525000 4325000 i
+
+        Save to file
+
+        >>> from tempfile import TemporaryFile
+        >>> with TemporaryFile("w") as f:
+        ...     f.write(str(labels))
+        50
+
     """
 
     def __init__(self, frame_shift_in_micro_sec=50000):
         self.start_times = []
         self.end_times = []
         self.contexts = []
-        self.frame_shift_in_micro_sec = frame_shift_in_micro_sec
+        frame_shift_in_micro_sec = frame_shift_in_micro_sec
 
     def __len__(self):
         return len(self.start_times)
@@ -82,14 +106,47 @@ J:13+9-2[2]')
 
     def __str__(self):
         ret = ""
+        if len(self.start_times) == 0:
+            return ret
         for s, e, context in self:
             ret += "{} {} {}\n".format(s, e, context)
-        return ret
+        return ret[:-1]
 
     def __repr__(self):
         return str(self)
 
-    def set_durations(self, durations):
+    def append(self, label):
+        """Append a single alignment label
+
+        Args:
+            label (tuple): tuple of (start_time, end_time, context).
+
+        Returns:
+            self
+
+        Raises:
+            ValueError: if start_time >= end_time
+            ValueError: if last end time doesn't match start_time
+        """
+        start_time, end_time, context = label
+        start_time = int(start_time)
+        end_time = int(end_time)
+
+        if start_time >= end_time:
+            raise ValueError(
+                "end_time ({}) must be larger than start_time ({}).".format(
+                    end_time, start_time))
+        if len(self.end_times) > 0 and start_time != self.end_times[-1]:
+            raise ValueError(
+                "start_time ({}) must be equal to the last end_time ({}).".format(
+                    start_time, self.end_times[-1]))
+
+        self.start_times.append(start_time)
+        self.end_times.append(end_time)
+        self.contexts.append(context)
+        return self
+
+    def set_durations(self, durations, frame_shift_in_micro_sec=50000):
         """Set start/end times from duration features
 
         TODO:
@@ -97,7 +154,7 @@ J:13+9-2[2]')
         """
         # Unwrap state-axis
         end_times = np.cumsum(
-            durations.reshape(-1, 1) * self.frame_shift_in_micro_sec).astype(np.int)
+            durations.reshape(-1, 1) * frame_shift_in_micro_sec).astype(np.int)
         if len(end_times) != len(self.end_times):
             raise RuntimeError("Unexpected input, maybe")
         # Assuming first label starts with time `0`
@@ -114,11 +171,11 @@ J:13+9-2[2]')
         with open(path) as f:
             lines = f.readlines()
 
-        start_times = np.empty(len(lines), dtype=np.int)
-        end_times = np.empty(len(lines), dtype=np.int)
+        start_times = []
+        end_times = []
         contexts = []
         # TODO: consider comments?
-        for idx, line in enumerate(lines):
+        for line in lines:
             cols = line[:-1].split(" ")
             if len(cols) == 3:
                 start_time, end_time, context = cols
@@ -131,13 +188,13 @@ J:13+9-2[2]')
             else:
                 raise RuntimeError("Not supported for now")
 
-            start_times[idx] = start_time
-            end_times[idx] = end_time
+            start_times.append(start_time)
+            end_times.append(end_time)
             contexts.append(context)
 
         self.start_times = start_times
         self.end_times = end_times
-        self.contexts = np.array(contexts)
+        self.contexts = contexts
 
     def silence_label_indices(self, regex=None):
         """Returns silence label indices
@@ -165,7 +222,7 @@ J:13+9-2[2]')
             regex = re.compile(".*-sil+.*")
         return np.unique(self.silence_label_indices(regex) // self.num_states())
 
-    def silence_frame_indices(self, regex=None):
+    def silence_frame_indices(self, regex=None, frame_shift_in_micro_sec=50000):
         """Returns silence frame indices
 
         Similar to :func:`silence_label_indices`, but returns indices in frame-level.
@@ -181,8 +238,10 @@ J:13+9-2[2]')
         indices = self.silence_label_indices(regex)
         if len(indices) == 0:
             return np.empty(0)
-        s = self.start_times[indices] // self.frame_shift_in_micro_sec
-        e = self.end_times[indices] // self.frame_shift_in_micro_sec
+        start_times = np.array(self.start_times)
+        end_times = np.array(self.end_times)
+        s = start_times[indices] // frame_shift_in_micro_sec
+        e = end_times[indices] // frame_shift_in_micro_sec
         return np.unique(np.concatenate(
             [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int)
 
@@ -212,17 +271,15 @@ J:13+9-2[2]')
         else:
             return len(self)
 
-    def num_frames(self):
-        return self.end_times[-1] // self.frame_shift_in_micro_sec
+    def num_frames(self, frame_shift_in_micro_sec=50000):
+        return self.end_times[-1] // frame_shift_in_micro_sec
 
 
-def load(path, frame_shift_in_micro_sec=50000):
+def load(path):
     """Load HTS-style label file
 
     Args:
         path (str): Path of file.
-        frame_shift_in_micro_sec (optional[int]): Frame shift in micro seconds.
-            Default is 50000.
 
     Returns:
         labels (HTSLabelFile): Instance of HTSLabelFile.
@@ -232,7 +289,7 @@ def load(path, frame_shift_in_micro_sec=50000):
         >>> from nnmnkwii.util import example_label_file
         >>> labels = hts.load(example_label_file())
     """
-    labels = HTSLabelFile(frame_shift_in_micro_sec)
+    labels = HTSLabelFile()
     labels.load(path)
 
     return labels
