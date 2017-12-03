@@ -293,6 +293,10 @@
 <li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="preprocessing.html#generic">Generic</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
@@ -461,11 +465,10 @@
 </style>
 <div class="section" id="io">
 <h1>IO<a class="headerlink" href="#io" title="Permalink to this headline">¶</a></h1>
-<p>IO operations for some speech-specific file formats.
-As of now, it only supports read operations for:</p>
+<p>IO operations for some speech-specific file formats.</p>
 <ul class="simple">
+<li>HTS-style full-context label file (a.k.a. HTK alignment)</li>
 <li>HTS-style question file</li>
-<li>HTS-style full-context label file</li>
 </ul>
 <div class="section" id="module-nnmnkwii.io.hts">
 <span id="hts-io"></span><h2>HTS IO<a class="headerlink" href="#module-nnmnkwii.io.hts" title="Permalink to this headline">¶</a></h2>
@@ -475,7 +478,7 @@ As of now, it only supports read operations for:</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load" title="nnmnkwii.io.hts.load"><code class="xref py py-obj docutils literal"><span class="pre">load</span></code></a>(path[,&nbsp;frame_shift_in_micro_sec])</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load" title="nnmnkwii.io.hts.load"><code class="xref py py-obj docutils literal"><span class="pre">load</span></code></a>(path)</td>
 <td>Load HTS-style label file</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set" title="nnmnkwii.io.hts.load_question_set"><code class="xref py py-obj docutils literal"><span class="pre">load_question_set</span></code></a>(qs_file_name)</td>
@@ -486,34 +489,30 @@ As of now, it only supports read operations for:</p>
 <dl class="class">
 <dt id="nnmnkwii.io.hts.HTSLabelFile">
 <em class="property">class </em><code class="descclassname">nnmnkwii.io.hts.</code><code class="descname">HTSLabelFile</code><span class="sig-paren">(</span><em>frame_shift_in_micro_sec=50000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Memory representation for HTS-style context labels file.</p>
+<dd><p>Memory representation for HTS-style context labels (a.k.a HTK alignment).</p>
 <p>Indexing is supported. It returns tuple of
 (<code class="docutils literal"><span class="pre">start_time</span></code>, <code class="docutils literal"><span class="pre">end_time</span></code>, <code class="docutils literal"><span class="pre">label</span></code>).</p>
 <dl class="attribute">
-<dt id="nnmnkwii.io.hts.HTSLabelFile.frame_shift_in_ms">
-<code class="descname">frame_shift_in_ms</code><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.frame_shift_in_ms" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Frame shift in micro seconds</p>
-</dd></dl>
-
-<dl class="attribute">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.start_times">
 <code class="descname">start_times</code><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.start_times" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ndarray</em> – Start times</p>
+<dd><p><em>list</em> – Start times in micro seconds.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.end_times">
 <code class="descname">end_times</code><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.end_times" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ndarray</em> – End times</p>
+<dd><p><em>list</em> – End times in micro seconds.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.contexts">
 <code class="descname">contexts</code><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.contexts" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>nadarray</em> – Contexts.</p>
+<dd><p><em>list</em> – Contexts. Each value should have either phone or
+full-context annotation.</p>
 </dd></dl>
 
 <p class="rubric">Examples</p>
+<p>Load from file</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_label_file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">example_label_file</span><span class="p">())</span>
@@ -521,6 +520,50 @@ As of now, it only supports read operations for:</p>
 <span class="go">(0, 50000, &#39;x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&amp;x-x#x-x$x-x!x-x;x-x|x/C:1+1+2/D:0_0/E:x+x@x+x&amp;x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/J:13+9-2[2]&#39;)</span>
 </pre></div>
 </div>
+<p>Create memory representation of label</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">HTSLabelFile</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3125000</span><span class="p">,</span> <span class="s2">&quot;silB&quot;</span><span class="p">))</span>
+<span class="go">0 3125000 silB</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">3125000</span><span class="p">,</span> <span class="mi">3525000</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">))</span>
+<span class="go">0 3125000 silB</span>
+<span class="go">3125000 3525000 m</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">3525000</span><span class="p">,</span> <span class="mi">4325000</span><span class="p">,</span> <span class="s2">&quot;i&quot;</span><span class="p">))</span>
+<span class="go">0 3125000 silB</span>
+<span class="go">3125000 3525000 m</span>
+<span class="go">3525000 4325000 i</span>
+</pre></div>
+</div>
+<p>Save to file</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">TemporaryFile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TemporaryFile</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+<span class="go">50</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="nnmnkwii.io.hts.HTSLabelFile.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.append" title="Permalink to this definition">¶</a></dt>
+<dd><p>Append a single alignment label</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>label</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) – tuple of (start_time, end_time, context).</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">self</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – if start_time &gt;= end_time</li>
+<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – if last end time doesn’t match start_time</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.load">
 <code class="descname">load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.load" title="Permalink to this definition">¶</a></dt>
@@ -543,7 +586,7 @@ As of now, it only supports read operations for:</p>
 
 <dl class="method">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.set_durations">
-<code class="descname">set_durations</code><span class="sig-paren">(</span><em>durations</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.set_durations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.set_durations" title="Permalink to this definition">¶</a></dt>
+<code class="descname">set_durations</code><span class="sig-paren">(</span><em>durations</em>, <em>frame_shift_in_micro_sec=50000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.set_durations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.set_durations" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set start/end times from duration features</p>
 <div class="admonition-todo admonition" id="index-0">
 <p class="first admonition-title">Todo</p>
@@ -553,7 +596,7 @@ As of now, it only supports read operations for:</p>
 
 <dl class="method">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices">
-<code class="descname">silence_frame_indices</code><span class="sig-paren">(</span><em>regex=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.silence_frame_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices" title="Permalink to this definition">¶</a></dt>
+<code class="descname">silence_frame_indices</code><span class="sig-paren">(</span><em>regex=None</em>, <em>frame_shift_in_micro_sec=50000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.silence_frame_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns silence frame indices</p>
 <p>Similar to <a class="reference internal" href="#nnmnkwii.io.hts.HTSLabelFile.silence_label_indices" title="nnmnkwii.io.hts.HTSLabelFile.silence_label_indices"><code class="xref py py-func docutils literal"><span class="pre">silence_label_indices()</span></code></a>, but returns indices in frame-level.</p>
 <table class="docutils field-list" frame="void" rules="none">

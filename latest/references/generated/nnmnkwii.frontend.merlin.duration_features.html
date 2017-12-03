@@ -294,6 +294,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
@@ -486,6 +490,7 @@ for several typical settings.</p>
 phone-level alignment is <code class="docutils literal"><span class="pre">state</span></code> and <code class="docutils literal"><span class="pre">phoneme</span></code>, respectively.</li>
 <li><strong>feature_size</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – <code class="docutils literal"><span class="pre">frame</span></code> or <code class="docutils literal"><span class="pre">phoneme</span></code>. Default is <code class="docutils literal"><span class="pre">phoneme</span></code>.
 <code class="docutils literal"><span class="pre">frame</span></code> is only supported for state-level alignments.</li>
+<li><strong>frame_shift_in_micro_sec</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Frame shift of alignment in micro seconds.</li>
 </ul>
 </td>
 </tr>

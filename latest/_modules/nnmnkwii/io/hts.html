@@ -478,18 +478,21 @@
 
 
 <div class="viewcode-block" id="HTSLabelFile"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile">[docs]</a><span class="k">class</span> <span class="nc">HTSLabelFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Memory representation for HTS-style context labels file.</span>
+    <span class="sd">&quot;&quot;&quot;Memory representation for HTS-style context labels (a.k.a HTK alignment).</span>
 
 <span class="sd">    Indexing is supported. It returns tuple of</span>
 <span class="sd">    (``start_time``, ``end_time``, ``label``).</span>
 
 <span class="sd">    Attributes:</span>
-<span class="sd">        frame_shift_in_ms (int): Frame shift in micro seconds</span>
-<span class="sd">        start_times (ndarray): Start times</span>
-<span class="sd">        end_times (ndarray): End times</span>
-<span class="sd">        contexts (nadarray): Contexts.</span>
+<span class="sd">        start_times (list): Start times in micro seconds.</span>
+<span class="sd">        end_times (list): End times in micro seconds.</span>
+<span class="sd">        contexts (list): Contexts. Each value should have either phone or</span>
+<span class="sd">          full-context annotation.</span>
 
 <span class="sd">    Examples:</span>
+
+<span class="sd">        Load from file</span>
+
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
 <span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
@@ -497,13 +500,34 @@
 <span class="sd">        (0, 50000, &#39;x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&amp;x-x#x-x$x-x!x-x;x-x|x\</span>
 <span class="sd">/C:1+1+2/D:0_0/E:x+x@x+x&amp;x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/\</span>
 <span class="sd">J:13+9-2[2]&#39;)</span>
+
+<span class="sd">        Create memory representation of label</span>
+
+<span class="sd">        &gt;&gt;&gt; labels = hts.HTSLabelFile()</span>
+<span class="sd">        &gt;&gt;&gt; labels.append((0, 3125000, &quot;silB&quot;))</span>
+<span class="sd">        0 3125000 silB</span>
+<span class="sd">        &gt;&gt;&gt; labels.append((3125000, 3525000, &quot;m&quot;))</span>
+<span class="sd">        0 3125000 silB</span>
+<span class="sd">        3125000 3525000 m</span>
+<span class="sd">        &gt;&gt;&gt; labels.append((3525000, 4325000, &quot;i&quot;))</span>
+<span class="sd">        0 3125000 silB</span>
+<span class="sd">        3125000 3525000 m</span>
+<span class="sd">        3525000 4325000 i</span>
+
+<span class="sd">        Save to file</span>
+
+<span class="sd">        &gt;&gt;&gt; from tempfile import TemporaryFile</span>
+<span class="sd">        &gt;&gt;&gt; with TemporaryFile(&quot;w&quot;) as f:</span>
+<span class="sd">        ...     f.write(str(labels))</span>
+<span class="sd">        50</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">frame_shift_in_micro_sec</span>
+        <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">frame_shift_in_micro_sec</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span>
@@ -513,14 +537,47 @@
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ret</span>
         <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">context</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
             <span class="n">ret</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="HTSLabelFile.set_durations"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.set_durations">[docs]</a>    <span class="k">def</span> <span class="nf">set_durations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">durations</span><span class="p">):</span>
+<div class="viewcode-block" id="HTSLabelFile.append"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Append a single alignment label</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            label (tuple): tuple of (start_time, end_time, context).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if start_time &gt;= end_time</span>
+<span class="sd">            ValueError: if last end time doesn&#39;t match start_time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">end_time</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;end_time (</span><span class="si">{}</span><span class="s2">) must be larger than start_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">end_time</span><span class="p">,</span> <span class="n">start_time</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">start_time</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;start_time (</span><span class="si">{}</span><span class="s2">) must be equal to the last end_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="HTSLabelFile.set_durations"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.set_durations">[docs]</a>    <span class="k">def</span> <span class="nf">set_durations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set start/end times from duration features</span>
 
 <span class="sd">        TODO:</span>
@@ -528,7 +585,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Unwrap state-axis</span>
         <span class="n">end_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span>
-            <span class="n">durations</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+            <span class="n">durations</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">frame_shift_in_micro_sec</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">end_times</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unexpected input, maybe&quot;</span><span class="p">)</span>
         <span class="c1"># Assuming first label starts with time `0`</span>
@@ -545,11 +602,11 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
 
-        <span class="n">start_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
-        <span class="n">end_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">end_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># TODO: consider comments?</span>
-        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
             <span class="n">cols</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">cols</span>
@@ -562,13 +619,13 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not supported for now&quot;</span><span class="p">)</span>
 
-            <span class="n">start_times</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">start_time</span>
-            <span class="n">end_times</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">end_time</span>
+            <span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+            <span class="n">end_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
             <span class="n">contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="n">start_times</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="n">end_times</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">contexts</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="n">contexts</span></div>
 
 <div class="viewcode-block" id="HTSLabelFile.silence_label_indices"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.silence_label_indices">[docs]</a>    <span class="k">def</span> <span class="nf">silence_label_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns silence label indices</span>
@@ -596,7 +653,7 @@
             <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;.*-sil+.*&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">silence_label_indices</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_states</span><span class="p">())</span></div>
 
-<div class="viewcode-block" id="HTSLabelFile.silence_frame_indices"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices">[docs]</a>    <span class="k">def</span> <span class="nf">silence_frame_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="HTSLabelFile.silence_frame_indices"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices">[docs]</a>    <span class="k">def</span> <span class="nf">silence_frame_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Returns silence frame indices</span>
 
 <span class="sd">        Similar to :func:`silence_label_indices`, but returns indices in frame-level.</span>
@@ -612,8 +669,10 @@
         <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">silence_label_indices</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
-        <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+        <span class="n">start_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span>
+        <span class="n">end_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">start_times</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">end_times</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
             <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span></div>
 
@@ -643,17 +702,15 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">num_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span></div>
+    <span class="k">def</span> <span class="nf">num_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span></div>
 
 
-<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load HTS-style label file</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        path (str): Path of file.</span>
-<span class="sd">        frame_shift_in_micro_sec (optional[int]): Frame shift in micro seconds.</span>
-<span class="sd">            Default is 50000.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        labels (HTSLabelFile): Instance of HTSLabelFile.</span>
@@ -663,7 +720,7 @@
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
 <span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">HTSLabelFile</span><span class="p">(</span><span class="n">frame_shift_in_micro_sec</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">HTSLabelFile</span><span class="p">()</span>
     <span class="n">labels</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">labels</span></div>

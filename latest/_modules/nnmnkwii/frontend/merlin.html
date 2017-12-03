@@ -596,11 +596,11 @@
                                      <span class="n">binary_dict</span><span class="p">,</span>
                                      <span class="n">continuous_dict</span><span class="p">,</span>
                                      <span class="n">subphone_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                     <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
     <span class="n">dict_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">continuous_dict</span><span class="p">)</span>
     <span class="n">frame_feature_size</span> <span class="o">=</span> <span class="n">get_frame_feature_size</span><span class="p">(</span><span class="n">subphone_features</span><span class="p">)</span>
     <span class="n">dimension</span> <span class="o">=</span> <span class="n">frame_feature_size</span> <span class="o">+</span> <span class="n">dict_size</span>
-    <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
 
     <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span> <span class="n">hts</span><span class="o">.</span><span class="n">HTSLabelFile</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">add_frame_features</span><span class="p">:</span>
@@ -694,7 +694,8 @@
                                      <span class="n">binary_dict</span><span class="p">,</span>
                                      <span class="n">continuous_dict</span><span class="p">,</span>
                                      <span class="n">subphone_features</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                                     <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                     <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
     <span class="n">dict_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">continuous_dict</span><span class="p">)</span>
     <span class="n">frame_feature_size</span> <span class="o">=</span> <span class="n">get_frame_feature_size</span><span class="p">(</span><span class="n">subphone_features</span><span class="p">)</span>
     <span class="n">dimension</span> <span class="o">=</span> <span class="n">frame_feature_size</span> <span class="o">+</span> <span class="n">dict_size</span>
@@ -711,7 +712,6 @@
     <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
         <span class="n">cc_features</span> <span class="o">=</span> <span class="n">compute_coarse_coding_features</span><span class="p">()</span>
 
-    <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
     <span class="n">phone_duration</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">state_duration_base</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span>
@@ -897,6 +897,7 @@
 <span class="sd">          this library. Default is None.</span>
 <span class="sd">        add_frame_features (dict): Whether add frame-level features or not.</span>
 <span class="sd">          Default is False.</span>
+<span class="sd">        frame_shift_in_micro_sec (int) : Frame shift of alignment in micro seconds.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        numpy.ndarray: Numpy array representation of linguistic features.</span>
@@ -944,7 +945,8 @@
 <span class="k">def</span> <span class="nf">extract_dur_from_state_alignment_labels</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span>
                                             <span class="n">feature_type</span><span class="o">=</span><span class="s2">&quot;numerical&quot;</span><span class="p">,</span>
                                             <span class="n">unit_size</span><span class="o">=</span><span class="s2">&quot;state&quot;</span><span class="p">,</span>
-                                            <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">):</span>
+                                            <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span>
+                                            <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">feature_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">unit_size</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span> <span class="s2">&quot;state&quot;</span><span class="p">]:</span>
@@ -973,15 +975,14 @@
         <span class="n">state_index</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">state_index</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 
         <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">//</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+            <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
 
         <span class="k">if</span> <span class="n">state_index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">phone_duration</span> <span class="o">=</span> <span class="n">frame_number</span>
 
             <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">state_number</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">hts_labels</span><span class="p">[</span><span class="n">current_index</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-                <span class="n">phone_duration</span> <span class="o">+=</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span>
-                                   <span class="n">s</span><span class="p">)</span> <span class="o">//</span> <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+                <span class="n">phone_duration</span> <span class="o">+=</span> <span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span><span class="p">)</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
 
         <span class="k">if</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;binary&quot;</span><span class="p">:</span>
             <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">frame_number</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
@@ -1024,7 +1025,8 @@
 <span class="k">def</span> <span class="nf">extract_dur_from_phone_alignment_labels</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span>
                                             <span class="n">feature_type</span><span class="o">=</span><span class="s2">&quot;numerical&quot;</span><span class="p">,</span>
                                             <span class="n">unit_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span>
-                                            <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">):</span>
+                                            <span class="n">feature_size</span><span class="o">=</span><span class="s2">&quot;phoneme&quot;</span><span class="p">,</span>
+                                            <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">feature_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;binary&quot;</span><span class="p">,</span> <span class="s2">&quot;numerical&quot;</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not supported&quot;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">unit_size</span> <span class="o">!=</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
@@ -1039,8 +1041,7 @@
             <span class="p">(</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
     <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
-        <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> \
-            <span class="n">hts_labels</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+        <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">frame_shift_in_micro_sec</span>
 
         <span class="n">phone_duration</span> <span class="o">=</span> <span class="n">frame_number</span>
 
@@ -1085,6 +1086,7 @@
 <span class="sd">          phone-level alignment is ``state`` and ``phoneme``, respectively.</span>
 <span class="sd">        feature_size (str): ``frame`` or ``phoneme``. Default is ``phoneme``.</span>
 <span class="sd">          ``frame`` is only supported for state-level alignments.</span>
+<span class="sd">        frame_shift_in_micro_sec (int) : Frame shift of alignment in micro seconds.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        numpy.ndarray: numpy array representation of duration features.</span>
