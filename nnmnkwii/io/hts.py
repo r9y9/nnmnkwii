@@ -114,11 +114,11 @@ J:13+9-2[2]')
         with open(path) as f:
             lines = f.readlines()
 
-        start_times = np.empty(len(lines), dtype=np.int)
-        end_times = np.empty(len(lines), dtype=np.int)
+        start_times = []
+        end_times = []
         contexts = []
         # TODO: consider comments?
-        for idx, line in enumerate(lines):
+        for line in lines:
             cols = line[:-1].split(" ")
             if len(cols) == 3:
                 start_time, end_time, context = cols
@@ -131,13 +131,13 @@ J:13+9-2[2]')
             else:
                 raise RuntimeError("Not supported for now")
 
-            start_times[idx] = start_time
-            end_times[idx] = end_time
+            start_times.append(start_time)
+            end_times.append(end_time)
             contexts.append(context)
 
         self.start_times = start_times
         self.end_times = end_times
-        self.contexts = np.array(contexts)
+        self.contexts = contexts
 
     def silence_label_indices(self, regex=None):
         """Returns silence label indices
@@ -181,8 +181,10 @@ J:13+9-2[2]')
         indices = self.silence_label_indices(regex)
         if len(indices) == 0:
             return np.empty(0)
-        s = self.start_times[indices] // frame_shift_in_micro_sec
-        e = self.end_times[indices] // frame_shift_in_micro_sec
+        start_times = np.array(self.start_times)
+        end_times = np.array(self.end_times)
+        s = start_times[indices] // frame_shift_in_micro_sec
+        e = end_times[indices] // frame_shift_in_micro_sec
         return np.unique(np.concatenate(
             [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int)
 
