@@ -127,7 +127,7 @@ def _parse_speaker_info(data_root):
     speaker_info_path = join(data_root, "speaker-info.txt")
     if not exists(speaker_info_path):
         raise RuntimeError(
-            "speaker-info.txt doesn't exists at \"{}\"".format(speaker_info_path))
+            "speaker-info.txt doesn't exist at \"{}\"".format(speaker_info_path))
 
     speaker_info = OrderedDict()
     filed_names = ["ID", "AGE", "GENDER", "ACCENTS", "REGION"]
