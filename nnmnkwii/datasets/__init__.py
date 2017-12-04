@@ -109,8 +109,16 @@ class FileSourceDataset(Dataset):
                  file_data_source):
         self.file_data_source = file_data_source
         collected_files = self.file_data_source.collect_files()
+
+        # Multiple files
         if isinstance(collected_files, tuple):
             collected_files = np.asarray(collected_files).T
+            lengths = np.array([len(files) for files in collected_files])
+            if not (lengths == lengths[0]).all():
+                raise RuntimeError(
+                    """Mismatch of number of collected files {}.
+You must collect same number of files when you collect multiple pair of files.""".format(
+                        tuple(lengths)))
         else:
             collected_files = np.atleast_2d(collected_files).T
         if len(collected_files) == 0:
@@ -118,12 +126,24 @@ class FileSourceDataset(Dataset):
 
         self.collected_files = collected_files
 
+    def __collect_features(self, paths):
+        try:
+            return self.file_data_source.collect_features(*paths)
+        except TypeError as e:
+            warn("TypeError while iterating dataset.\n" +
+                 "Likely there's mismatch in number of pair of collected files and " +
+                 "expected number of arguments of `collect_features`.\n" +
+                 "Number of argments: {}\n".format(len(paths)) +
+                 "Arguments: {}".format(*paths))
+            raise e
+
     def __getitem__(self, idx):
         if isinstance(idx, slice):
             current, stop, step = idx.indices(len(self))
             return [self[i] for i in range(current, stop, step)]
-        return self.file_data_source.collect_features(
-            *self.collected_files[idx])
+
+        paths = self.collected_files[idx]
+        return self.__collect_features(paths)
 
     def __len__(self):
         return len(self.collected_files)
@@ -163,7 +183,7 @@ class FileSourceDataset(Dataset):
 
         for idx in custom_range(len(collected_files)):
             paths = collected_files[idx]
-            x = self.file_data_source.collect_features(*paths)
+            x = self.__collect_features(paths)
             lengths[idx] = len(x)
             if len(x) > T:
                 if padded_length is not None:
