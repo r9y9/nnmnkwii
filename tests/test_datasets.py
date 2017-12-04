@@ -32,7 +32,7 @@ def test_empty_dataset():
         def collect_files(self):
             return []
 
-        def collect_features(path):
+        def collect_features(self, path):
             pass
     X = FileSourceDataset(EmptyDataSource())
 
@@ -43,8 +43,35 @@ def test_empty_dataset():
     yield raises(IndexError)(__test_outof_range), X
 
 
-# verbose=1 triggers tqdm progress report
+def test_invalid_dataset():
+    class WrongNumberOfArgsDataSource(FileDataSource):
+        def collect_files(self):
+            return ["dummy.txt"]
+
+        def collect_features(self, path, this_is_not_needed):
+            pass
+
+    class WrongNumberOfCollectedFilesDataSource(FileDataSource):
+        def collect_files(self):
+            return ["dummy.txt"] * 1, ["dummy.txt"] * 2
+
+        def collect_features(self, path):
+            pass
+
+    def __test_wrong_num_args():
+        X = FileSourceDataset(WrongNumberOfArgsDataSource())
+        X[0]
+
+    def __test_wrong_num_collected_files():
+        X = FileSourceDataset(WrongNumberOfCollectedFilesDataSource())
+        X[0]
+
+    yield raises(TypeError)(__test_wrong_num_args)
+    yield raises(RuntimeError)(__test_wrong_num_collected_files)
+
+
 def test_asarray_tqdm():
+    # verbose=1 triggers tqdm progress report
     for padded in [True, False]:
         X, _ = _get_small_datasets(padded=False, duration=True)
         X.asarray(verbose=1)
