@@ -4,6 +4,7 @@ Change log
 v0.0.10 <2017-xx-xx>
 --------------------
 
+- `#57`_: FileSourceDataset: better descriptive error messages
 - `#57`_: Add ``append`` method to HTSLabelFile and simplify structure. ``frame_shift_in_micro_sec`` was removed from its property.
 - `#55`_: Add mu-law companding/expansion
 - Add support for JSUT dataset ver 1.1
@@ -102,3 +103,4 @@ v0.0.1 <2017-08-14>
 .. _#53: https://github.com/r9y9/nnmnkwii/issues/53
 .. _#55: https://github.com/r9y9/nnmnkwii/pull/55
 .. _#57: https://github.com/r9y9/nnmnkwii/pull/57
+.. _#60: https://github.com/r9y9/nnmnkwii/pull/60
