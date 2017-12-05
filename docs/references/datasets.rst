@@ -83,9 +83,6 @@ Dataset that supports frame-wise iteration
 Builtin data sources
 --------------------
 
-.. warning::
-    builtin data sources are experimental features. May change in future.
-
 There are a couple of builtin file data sources for typical datasets to make it
 easy to work on those. With the following data source implementation,
 you only need to implement ``collect_features``, which

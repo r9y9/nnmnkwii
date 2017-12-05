@@ -4,7 +4,9 @@ Change log
 v0.0.10 <2017-xx-xx>
 --------------------
 
-- `#57`_: FileSourceDataset: better descriptive error messages
+- `#61`_: Misc dataset improvements. Unified `max_files=None` from `max_files=50` and add `max_files` args for VCTK data sources.
+- `#59`_: Bug fix for memory re-allocations when num frames exceed padded_initial_guess
+- `#60`_: FileSourceDataset: better descriptive error messages
 - `#57`_: Add ``append`` method to HTSLabelFile and simplify structure. ``frame_shift_in_micro_sec`` was removed from its property.
 - `#55`_: Add mu-law companding/expansion
 - Add support for JSUT dataset ver 1.1
@@ -103,4 +105,6 @@ v0.0.1 <2017-08-14>
 .. _#53: https://github.com/r9y9/nnmnkwii/issues/53
 .. _#55: https://github.com/r9y9/nnmnkwii/pull/55
 .. _#57: https://github.com/r9y9/nnmnkwii/pull/57
+.. _#59: https://github.com/r9y9/nnmnkwii/issues/59
 .. _#60: https://github.com/r9y9/nnmnkwii/pull/60
+.. _#61: https://github.com/r9y9/nnmnkwii/pull/61
