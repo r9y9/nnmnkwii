@@ -833,10 +833,6 @@ give sufficient large number of cache size, to avoid many file re-loading.</p>
 </div>
 <div class="section" id="builtin-data-sources">
 <h2>Builtin data sources<a class="headerlink" href="#builtin-data-sources" title="Permalink to this headline">¶</a></h2>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">builtin data sources are experimental features. May change in future.</p>
-</div>
 <p>There are a couple of builtin file data sources for typical datasets to make it
 easy to work on those. With the following data source implementation,
 you only need to implement <code class="docutils literal"><span class="pre">collect_features</span></code>, which
@@ -886,7 +882,7 @@ tutorial notebooks in <a class="reference external" href="https://github.com/r9y
 <p>You can download data from <a class="reference external" href="http://festvox.org/cmu_arctic/">http://festvox.org/cmu_arctic/</a>.</p>
 <dl class="class">
 <dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.cmu_arctic.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=50</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/cmu_arctic.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.cmu_arctic.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/cmu_arctic.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wav file data source for CMU Arctic dataset.</p>
 <p>The data source collects wav files from CMU Arctic.
 Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
@@ -945,7 +941,7 @@ are no transcriptions available for <code class="docutils literal"><span class="
 </div>
 <dl class="class">
 <dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None, max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transcription data source for VCTK dataset.</p>
 <p>The data source collects text transcriptions from VCTK.
 Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
@@ -962,6 +958,7 @@ defined in the module.</li>
 <li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
 it’s assigned as incrementally (i.e., 0, 1, 2) for specified
 speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Total number of files to be collected.</li>
 </ul>
 </td>
 </tr>
@@ -987,7 +984,7 @@ models.</p>
 
 <dl class="class">
 <dt id="nnmnkwii.datasets.vctk.WavFileDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None, max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transcription data source for VCTK dataset.</p>
 <p>The data source collects text transcriptions from VCTK.
 Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
@@ -1004,6 +1001,7 @@ defined in the module.</li>
 <li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
 it’s assigned as incrementally (i.e., 0, 1, 2) for specified
 speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Total number of files to be collected.</li>
 </ul>
 </td>
 </tr>
@@ -1157,7 +1155,7 @@ method, which defines how features are computed given a wav file path.</p>
 <p>You can download training data (181MB) and evaluation data (~56 MB) from <a class="reference external" href="http://datashare.is.ed.ac.uk/handle/10283/2211">http://datashare.is.ed.ac.uk/handle/10283/2211</a>.</p>
 <dl class="class">
 <dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vcc2016.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=50</em>, <em>training_data_root=None</em>, <em>evaluation_data_root=None</em>, <em>training=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vcc2016.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vcc2016.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=None</em>, <em>training_data_root=None</em>, <em>evaluation_data_root=None</em>, <em>training=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vcc2016.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wav file data source for Voice Conversion Challenge (VCC) 2016 dataset.</p>
 <p>The data source collects wav files from VCC2016 dataset.
 Users are expected to inherit the class and implement <code class="docutils literal"><span class="pre">collect_features</span></code>
@@ -1253,7 +1251,7 @@ models.</p>
 <p>You can download data (~720MB) from <a class="reference external" href="https://voice-statistics.github.io/">https://voice-statistics.github.io/</a>.</p>
 <dl class="class">
 <dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource">
-<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.voice_statistics.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers, labelmap=None, max_files=50, emotions=['normal']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.voice_statistics.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers, labelmap=None, max_files=None, emotions=['normal']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wav file data source for Voice-statistics dataset.</p>
 <p>The data source collects wav files from voice-statistics.
 Users are expected to inherit the class and implement
