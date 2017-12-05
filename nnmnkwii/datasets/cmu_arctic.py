@@ -37,7 +37,7 @@ class WavFileDataSource(FileDataSource):
           models.
     """
 
-    def __init__(self, data_root, speakers, labelmap=None, max_files=50):
+    def __init__(self, data_root, speakers, labelmap=None, max_files=None):
         for speaker in speakers:
             if speaker not in available_speakers:
                 raise ValueError(
@@ -77,7 +77,7 @@ class WavFileDataSource(FileDataSource):
             files = list(filter(lambda x: splitext(x)[1] == ".wav", files))
             files = sorted(files)
             files = files[:max_files_per_speaker]
-            for f in files[:max_files_per_speaker]:
+            for f in files:
                 paths.append(f)
                 labels.append(self.labelmap[self.speakers[i]])
 
