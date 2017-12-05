@@ -78,7 +78,7 @@ class WavFileDataSource(FileDataSource):
           models.
     """
 
-    def __init__(self, data_root, speakers, labelmap=None, max_files=50,
+    def __init__(self, data_root, speakers, labelmap=None, max_files=None,
                  training_data_root=None,
                  evaluation_data_root=None,
                  training=True):

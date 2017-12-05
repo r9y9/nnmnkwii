@@ -151,7 +151,7 @@ def _parse_speaker_info(data_root):
 
 
 class _VCTKBaseDataSource(FileDataSource):
-    def __init__(self, data_root, speakers, labelmap):
+    def __init__(self, data_root, speakers, labelmap, max_files):
         self.data_root = data_root
         # accept both e.g., "225" and "p225"
         for idx in range(len(speakers)):
@@ -171,6 +171,7 @@ class _VCTKBaseDataSource(FileDataSource):
                 labelmap[speaker] = idx
         self.labelmap = labelmap
         self.labels = None
+        self.max_files = max_files
 
         self.speaker_info = _parse_speaker_info(data_root)
         self._validate()
@@ -197,9 +198,14 @@ class _VCTKBaseDataSource(FileDataSource):
         paths = []
         labels = []
 
+        if self.max_files is None:
+            max_files_per_speaker = None
+        else:
+            max_files_per_speaker = self.max_files // len(self.speakers)
         for idx, speaker in enumerate(self.speakers):
             speaker_dir = join(root, "p" + speaker)
             files = sorted(glob(join(speaker_dir, "p{}_*{}".format(speaker, ext))))
+            files = files[:max_files_per_speaker]
             if not is_wav:
                 files = list(map(lambda s: open(s, "rb").read().decode("utf-8")[:-1], files))
             for f in files:
@@ -225,6 +231,7 @@ class TranscriptionDataSource(_VCTKBaseDataSource):
         labelmap (dict[optional]): Dict of speaker labels. If None,
           it's assigned as incrementally (i.e., 0, 1, 2) for specified
           speakers.
+        max_files (int): Total number of files to be collected.
 
     Attributes:
         speaker_info (dict): Dict of speaker information dict. Keyes are speaker
@@ -235,9 +242,9 @@ class TranscriptionDataSource(_VCTKBaseDataSource):
           models.
     """
 
-    def __init__(self, data_root, speakers=available_speakers, labelmap=None):
+    def __init__(self, data_root, speakers=available_speakers, labelmap=None, max_files=None):
         super(TranscriptionDataSource, self).__init__(
-            data_root, speakers, labelmap)
+            data_root, speakers, labelmap, max_files)
 
     def collect_files(self):
         return super(TranscriptionDataSource, self).collect_files(False)
@@ -258,6 +265,7 @@ class WavFileDataSource(_VCTKBaseDataSource):
         labelmap (dict[optional]): Dict of speaker labels. If None,
           it's assigned as incrementally (i.e., 0, 1, 2) for specified
           speakers.
+        max_files (int): Total number of files to be collected.
 
     Attributes:
         speaker_info (dict): Dict of speaker information dict. Keyes are speaker
@@ -268,9 +276,9 @@ class WavFileDataSource(_VCTKBaseDataSource):
           models.
     """
 
-    def __init__(self, data_root, speakers=available_speakers, labelmap=None):
+    def __init__(self, data_root, speakers=available_speakers, labelmap=None, max_files=None):
         super(WavFileDataSource, self).__init__(
-            data_root, speakers, labelmap)
+            data_root, speakers, labelmap, max_files)
 
     def collect_files(self):
         return super(WavFileDataSource, self).collect_files(True)

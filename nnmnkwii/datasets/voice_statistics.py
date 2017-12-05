@@ -38,7 +38,7 @@ class WavFileDataSource(FileDataSource):
           labelmap. Stored in ``collect_files``.
     """
 
-    def __init__(self, data_root, speakers, labelmap=None, max_files=50,
+    def __init__(self, data_root, speakers, labelmap=None, max_files=None,
                  emotions=["normal"]):
         for speaker in speakers:
             if speaker not in available_speakers:

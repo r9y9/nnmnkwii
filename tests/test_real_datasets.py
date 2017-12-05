@@ -407,8 +407,8 @@ def test_vctk():
         return
 
     class MyTextDataSource(vctk.TranscriptionDataSource):
-        def __init__(self, data_root, speakers, labelmap=None):
-            super(MyTextDataSource, self).__init__(data_root, speakers, labelmap)
+        def __init__(self, data_root, speakers, labelmap=None, max_files=None):
+            super(MyTextDataSource, self).__init__(data_root, speakers, labelmap, max_files)
 
         def collect_features(self, text):
             return text
@@ -442,6 +442,15 @@ def test_vctk():
     assert len(X) == len(labels)
     assert (labels[:n_225] == 0).all()
     assert (labels[n_225:] == 1).all()
+
+    # max files
+    max_files = 16
+    data_source = MyTextDataSource(DATA_DIR, speakers=["225", "228"], max_files=max_files)
+    X = FileSourceDataset(data_source)
+    assert len(X) == max_files
+    Y = data_source.labels
+    assert np.all(Y[:max_files // 2] == 0)
+    assert np.all(Y[max_files // 2:] == 1)
 
     # Custum labelmap
     data_source = MyTextDataSource(DATA_DIR, speakers=["225", "228"],
