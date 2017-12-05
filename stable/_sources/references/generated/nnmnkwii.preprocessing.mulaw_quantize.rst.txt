@@ -1,0 +1,6 @@
+nnmnkwii\.preprocessing\.mulaw\_quantize
+========================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: mulaw_quantize
