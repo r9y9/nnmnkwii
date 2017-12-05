@@ -190,10 +190,15 @@ You must collect same number of files when you collect multiple pair of files.""
                     raise RuntimeError(
                         """Num frames {} exceeded: {}.
 Try larger value for padded_length, or set to None""".format(len(x), T))
+                warn("Reallocating array because num frames {} exceeded current guess {}.\n".format(
+                    len(x), T) +
+                    "To avoid memory re-allocations, try large `padded_length_guess` " +
+                    "or set `padded_length` explicitly.")
                 n = len(x) - T
                 # Padd zeros to end of time axis
                 X = np.pad(X, [(0, 0), (0, n), (0, 0)],
                            mode="constant", constant_values=0)
+                T = X.shape[1]
             X[idx][:len(x), :] = x
             lengths[idx] = len(x)
 
