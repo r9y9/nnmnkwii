@@ -174,9 +174,10 @@ J:13+9-2[2]')
         start_times = []
         end_times = []
         contexts = []
-        # TODO: consider comments?
         for line in lines:
-            cols = line[:-1].split(" ")
+            if line[0] == "#":
+                continue
+            cols = line[:-1].split()
             if len(cols) == 3:
                 start_time, end_time, context = cols
                 start_time = int(start_time)
