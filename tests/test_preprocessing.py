@@ -83,16 +83,14 @@ def test_mulaw():
 
     # torch array input
     from warnings import warn
-    warn("TODO: Tests disabled since these fail with pytorch v0.2.0. It should be ok with pytorch >= v0.3.0")
-    if False:
-        import torch
-        torch.manual_seed(1234)
-        for mu in [128, 256, 512]:
-            x = torch.rand(10)
-            y = P.mulaw(x, mu)
-            x_hat = P.inv_mulaw(y, mu)
-            assert np.allclose(x, x_hat)
-            P.inv_mulaw_quantize(P.mulaw_quantize(x))
+    import torch
+    torch.manual_seed(1234)
+    for mu in [128, 256, 512]:
+        x = torch.rand(10)
+        y = P.mulaw(x, mu)
+        x_hat = P.inv_mulaw(y, mu)
+        assert np.allclose(x, x_hat)
+        P.inv_mulaw_quantize(P.mulaw_quantize(x))
 
 
 def test_mulaw_real():
