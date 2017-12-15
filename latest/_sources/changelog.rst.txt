@@ -4,6 +4,7 @@ Change log
 v0.0.11 <xxxx-xx-xx>
 --------------------
 
+- Fix RuntimeError when HTS label file has white spaces between fields. Skip comments when reading HTS labels.
 
 v0.0.10 <2017-12-05>
 --------------------
