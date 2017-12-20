@@ -146,3 +146,10 @@ def test_hts_append():
     test_invalid_start_time()
     test_succeeding_times()
     test_non_succeeding_times()
+
+
+# shouldn't raise RuntimeError
+def test_hts_labels_contains_multiple_whitespaces():
+    lab_path = join(DATA_DIR, "p225_001.lab")
+    labels = hts.load(lab_path)
+    print(labels)
