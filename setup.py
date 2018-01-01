@@ -125,6 +125,7 @@ setup(
     url='https://github.com/r9y9/nnmnkwii',
     license='MIT',
     packages=find_packages(),
+    package_data={'': ['util/_example_data/*']},
     ext_modules=ext_modules,
     cmdclass=cmdclass,
     install_requires=[

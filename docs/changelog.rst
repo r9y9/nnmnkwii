@@ -4,6 +4,8 @@ Change log
 v0.0.12 <2018-xx-xx>
 --------------------
 
+- BUG FIX: example audio data is now included in the release tar.gz
+
 v0.0.11 <2017-12-22>
 --------------------
 
