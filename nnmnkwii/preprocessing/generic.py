@@ -319,21 +319,24 @@ def remove_zeros_frames(x, eps=1e-7):
     return x[s > eps]
 
 
-def adjast_frame_length(x, pad=True, divisible_by=1):
-    """Adjast frame length given a feature matrix.
+def adjast_frame_length(x, pad=True, divisible_by=1, **kwargs):
+    """Adjast frame length given a feature vector or matrix.
 
-    This adjast the number of frames of a given feature matrix to be divisible
-    by ``divisible_by`` by padding zeros to the end or removing the last frames.
+    This adjast the number of frames of a given feature vector or matrix to be
+    divisible by ``divisible_by`` by padding to the end or removing the last
+    few frames. Default uses zero-padding.
 
     Args:
-        x (numpy.ndarray): Input 2d feature matrix, shape (``T x D``).
-        pad (bool) : If True, pads zeros to the end, otherwise removes last few
+        x (numpy.ndarray): Input 1d or 2d array, shape (``T,`` or ``T x D``).
+        pad (bool) : If True, pads values to the end, otherwise removes last few
           frames to ensure same frame lengths.
         divisible_by (int) : If ``divisible_by`` > 0, number of frames will be
           adjasted to be divisible by ``divisible_by``.
+        kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is
+          mode = ``constant``, which means zero padding.
 
     Returns:
-        numpy.ndarray: Adjasted feature matrix, of each shape (``T' x D``).
+        numpy.ndarray: Adjasted array, of each shape (``T`` or ``T' x D``).
 
     Examples:
         >>> from nnmnkwii.preprocessing import adjast_frame_length
@@ -345,7 +348,10 @@ def adjast_frame_length(x, pad=True, divisible_by=1):
     See also:
         :func:`nnmnkwii.preprocessing.adjast_frame_lengths`
     """
-    Tx, D = x.shape
+    kwargs.setdefault("mode", "constant")
+
+    assert x.ndim == 2 or x.ndim == 1
+    Tx = x.shape[0]
 
     if divisible_by > 1:
         rem = Tx % divisible_by
@@ -361,19 +367,23 @@ def adjast_frame_length(x, pad=True, divisible_by=1):
 
     if Tx != T:
         if T > Tx:
-            x = np.vstack(
-                (x, np.zeros((T - Tx, D), dtype=x.dtype)))
+            if x.ndim == 1:
+                x = np.pad(x, (0, T - Tx), **kwargs)
+            elif x.ndim == 2:
+                x = np.pad(x, [(0, T - Tx), (0, 0)], **kwargs)
         else:
             x = x[:T]
 
     return x
 
 
-def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
-    """Adjast frame lengths given two feature matrices.
+def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1,
+                         **kwargs):
+    """Adjast frame lengths given two feature vectors or matrices.
 
-    This ensures that two feature matrices have same number of frames, by
-    padding zeros to the end or removing last frames.
+    This ensures that two feature vectors or matrices have same number of
+    frames, by padding to the end or removing the last few frames.
+    Default uses zero-padding.
 
     .. warning::
 
@@ -383,11 +393,12 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
     Args:
         x (numpy.ndarray): Input 2d feature matrix, shape (``T^1 x D``).
         y (numpy.ndarray): Input 2d feature matrix, shape (``T^2 x D``).
-        pad (bool) : If True, pads zeros to the end, otherwise removes last few
+        pad (bool) : If True, pads values to the end, otherwise removes last few
           frames to ensure same frame lengths.
-        ensure_even (bool) : If True, ensure number of frames to be even number.
         divisible_by (int) : If ``divisible_by`` > 0, number of frames will be
           adjasted to be divisible by ``divisible_by``.
+        kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is
+          mode = ``constant``, which means zero padding.
 
     Returns:
         Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).
@@ -403,9 +414,12 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
     See also:
         :func:`nnmnkwii.preprocessing.adjast_frame_length`
     """
-    Tx, Dx = x.shape
-    Ty, Dy = y.shape
-    assert Dx == Dy
+    assert x.ndim in [1, 2] and y.ndim in [1, 2]
+    kwargs.setdefault("mode", "constant")
+    Tx = x.shape[0]
+    Ty = y.shape[0]
+    if x.ndim == 2:
+        assert x.shape[-1] == y.shape[-1]
 
     if ensure_even:
         divisible_by = 2
@@ -424,15 +438,19 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1):
 
     if Tx != T:
         if Tx < T:
-            x = np.vstack(
-                (x, np.zeros((T - Tx, x.shape[-1]), dtype=x.dtype)))
+            if x.ndim == 1:
+                x = np.pad(x, (0, T - Tx), **kwargs)
+            elif x.ndim == 2:
+                x = np.pad(x, [(0, T - Tx), (0, 0)], **kwargs)
         else:
             x = x[:T]
 
     if Ty != T:
         if Ty < T:
-            y = np.vstack(
-                (y, np.zeros((T - Ty, y.shape[-1]), dtype=y.dtype)))
+            if y.ndim == 1:
+                y = np.pad(y, (0, T - Ty), **kwargs)
+            elif y.ndim == 2:
+                y = np.pad(y, [(0, T - Ty), (0, 0)], **kwargs)
         else:
             y = y[:T]
 
