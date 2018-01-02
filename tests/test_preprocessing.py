@@ -273,17 +273,25 @@ def test_adjast_frame_length_divisible():
     D = 5
     T = 10
 
-    x = np.random.rand(T, D)
-    assert T == adjast_frame_length(x, pad=True, divisible_by=1).shape[0]
-    assert T == adjast_frame_length(x, pad=True, divisible_by=2).shape[0]
-    print(adjast_frame_length(x, pad=True, divisible_by=3).shape[0])
-    assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=3).shape[0]
-    assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=4).shape[0]
+    # 1d and 2d padding
+    for x in [np.random.rand(T), np.random.rand(T, D)]:
+        assert T == adjast_frame_length(x, pad=True, divisible_by=1).shape[0]
+        assert T == adjast_frame_length(x, pad=True, divisible_by=2).shape[0]
+        print(adjast_frame_length(x, pad=True, divisible_by=3).shape[0])
+        assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=3).shape[0]
+        assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=4).shape[0]
 
-    assert T == adjast_frame_length(x, pad=False, divisible_by=1).shape[0]
-    assert T == adjast_frame_length(x, pad=False, divisible_by=2).shape[0]
-    assert T - 1 == adjast_frame_length(x, pad=False, divisible_by=3).shape[0]
-    assert T - 2 == adjast_frame_length(x, pad=False, divisible_by=4).shape[0]
+        assert T == adjast_frame_length(x, pad=False, divisible_by=1).shape[0]
+        assert T == adjast_frame_length(x, pad=False, divisible_by=2).shape[0]
+        assert T - 1 == adjast_frame_length(x, pad=False, divisible_by=3).shape[0]
+        assert T - 2 == adjast_frame_length(x, pad=False, divisible_by=4).shape[0]
+
+    # make sure we do zero padding
+    assert (adjast_frame_length(x, pad=True, divisible_by=3)[-1] == 0).all()
+
+    # make sure we passes extra kwargs to np.pad
+    assert (adjast_frame_length(x, pad=True, divisible_by=3,
+                                mode="constant", constant_values=1)[-1] == 1).all()
 
     # Should preserve dtype
     for dtype in [np.float32, np.float64]:
@@ -293,40 +301,52 @@ def test_adjast_frame_length_divisible():
 
 
 def test_adjast_frame_lengths():
-    D = 5
     T1 = 10
     T2 = 11
+    D = 5
 
-    x = np.random.rand(T1, D)
-    y = np.random.rand(T2, D)
-    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True)
-    assert x_hat.shape == y_hat.shape
-    assert x_hat.shape[0] == 11
+    # 1d and 2d padding
+    for (x, y) in [(np.random.rand(T1), np.random.rand(T2)),
+                   (np.random.rand(T1, D), np.random.rand(T2, D))]:
+        x_hat, y_hat = adjast_frame_lengths(x, y, pad=True)
+        assert x_hat.shape == y_hat.shape
+        assert x_hat.shape[0] == 11
 
-    x_hat, y_hat = adjast_frame_lengths(x, y, pad=False)
-    assert x_hat.shape == y_hat.shape
-    assert x_hat.shape[0] == 10
+        x_hat, y_hat = adjast_frame_lengths(x, y, pad=False)
+        assert x_hat.shape == y_hat.shape
+        assert x_hat.shape[0] == 10
 
-    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
-                                        divisible_by=2)
-    assert x_hat.shape == y_hat.shape
-    assert x_hat.shape[0] == 12
+        x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
+                                            divisible_by=2)
+        assert x_hat.shape == y_hat.shape
+        assert x_hat.shape[0] == 12
 
-    x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
-                                        divisible_by=2)
-    assert x_hat.shape == y_hat.shape
-    assert x_hat.shape[0] == 10
+        x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
+                                            divisible_by=2)
+        assert x_hat.shape == y_hat.shape
+        assert x_hat.shape[0] == 10
 
-    # Divisible
-    x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
-                                        divisible_by=3)
-    assert x_hat.shape == y_hat.shape
-    assert x_hat.shape[0] == 9
+        # Divisible
+        x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
+                                            divisible_by=3)
+        assert x_hat.shape == y_hat.shape
+        assert x_hat.shape[0] == 9
 
-    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
-                                        divisible_by=3)
-    assert x_hat.shape == y_hat.shape
-    assert x_hat.shape[0] == 12
+        x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
+                                            divisible_by=3)
+        assert x_hat.shape == y_hat.shape
+        assert x_hat.shape[0] == 12
+
+    # make sure we do zero padding
+    x = np.random.rand(T1)
+    y = np.random.rand(T2)
+    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True, divisible_by=3)
+    assert x_hat[-1] == 0 and y_hat[-1] == 0
+
+    # make sure we passes extra kwargs to np.pad
+    x_hat, y_hat = adjast_frame_lengths(
+        x, y, pad=True, divisible_by=3, mode="constant", constant_values=1)
+    assert x_hat[-1] == 1 and y_hat[-1] == 1
 
 
 def test_delta_features():
