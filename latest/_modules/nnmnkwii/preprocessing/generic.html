@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.12+2c47c93 documentation</title>
+  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.12+a5de132 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.12+2c47c93 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.12+a5de132 documentation" href="../../../index.html"/>
         <link rel="up" title="Module code" href="../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.12+2c47c93
+                0.0.12+a5de132
               </div>
             
           
@@ -752,21 +752,24 @@
     <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="adjast_frame_length"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html#nnmnkwii.preprocessing.adjast_frame_length">[docs]</a><span class="k">def</span> <span class="nf">adjast_frame_length</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adjast frame length given a feature matrix.</span>
+<div class="viewcode-block" id="adjast_frame_length"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html#nnmnkwii.preprocessing.adjast_frame_length">[docs]</a><span class="k">def</span> <span class="nf">adjast_frame_length</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adjast frame length given a feature vector or matrix.</span>
 
-<span class="sd">    This adjast the number of frames of a given feature matrix to be divisible</span>
-<span class="sd">    by ``divisible_by`` by padding zeros to the end or removing the last frames.</span>
+<span class="sd">    This adjast the number of frames of a given feature vector or matrix to be</span>
+<span class="sd">    divisible by ``divisible_by`` by padding to the end or removing the last</span>
+<span class="sd">    few frames. Default uses zero-padding.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        x (numpy.ndarray): Input 2d feature matrix, shape (``T x D``).</span>
-<span class="sd">        pad (bool) : If True, pads zeros to the end, otherwise removes last few</span>
+<span class="sd">        x (numpy.ndarray): Input 1d or 2d array, shape (``T,`` or ``T x D``).</span>
+<span class="sd">        pad (bool) : If True, pads values to the end, otherwise removes last few</span>
 <span class="sd">          frames to ensure same frame lengths.</span>
 <span class="sd">        divisible_by (int) : If ``divisible_by`` &gt; 0, number of frames will be</span>
 <span class="sd">          adjasted to be divisible by ``divisible_by``.</span>
+<span class="sd">        kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is</span>
+<span class="sd">          mode = ``constant``, which means zero padding.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        numpy.ndarray: Adjasted feature matrix, of each shape (``T&#39; x D``).</span>
+<span class="sd">        numpy.ndarray: Adjasted array, of each shape (``T`` or ``T&#39; x D``).</span>
 
 <span class="sd">    Examples:</span>
 <span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import adjast_frame_length</span>
@@ -778,7 +781,10 @@
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`nnmnkwii.preprocessing.adjast_frame_lengths`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">Tx</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;constant&quot;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="n">Tx</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">divisible_by</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">rem</span> <span class="o">=</span> <span class="n">Tx</span> <span class="o">%</span> <span class="n">divisible_by</span>
@@ -794,19 +800,23 @@
 
     <span class="k">if</span> <span class="n">Tx</span> <span class="o">!=</span> <span class="n">T</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">T</span> <span class="o">&gt;</span> <span class="n">Tx</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span> <span class="o">-</span> <span class="n">Tx</span><span class="p">,</span> <span class="n">D</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">-</span> <span class="n">Tx</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">-</span> <span class="n">Tx</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">T</span><span class="p">]</span>
 
     <span class="k">return</span> <span class="n">x</span></div>
 
 
-<div class="viewcode-block" id="adjast_frame_lengths"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html#nnmnkwii.preprocessing.adjast_frame_lengths">[docs]</a><span class="k">def</span> <span class="nf">adjast_frame_lengths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ensure_even</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adjast frame lengths given two feature matrices.</span>
+<div class="viewcode-block" id="adjast_frame_lengths"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html#nnmnkwii.preprocessing.adjast_frame_lengths">[docs]</a><span class="k">def</span> <span class="nf">adjast_frame_lengths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ensure_even</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                         <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adjast frame lengths given two feature vectors or matrices.</span>
 
-<span class="sd">    This ensures that two feature matrices have same number of frames, by</span>
-<span class="sd">    padding zeros to the end or removing last frames.</span>
+<span class="sd">    This ensures that two feature vectors or matrices have same number of</span>
+<span class="sd">    frames, by padding to the end or removing the last few frames.</span>
+<span class="sd">    Default uses zero-padding.</span>
 
 <span class="sd">    .. warning::</span>
 
@@ -816,11 +826,12 @@
 <span class="sd">    Args:</span>
 <span class="sd">        x (numpy.ndarray): Input 2d feature matrix, shape (``T^1 x D``).</span>
 <span class="sd">        y (numpy.ndarray): Input 2d feature matrix, shape (``T^2 x D``).</span>
-<span class="sd">        pad (bool) : If True, pads zeros to the end, otherwise removes last few</span>
+<span class="sd">        pad (bool) : If True, pads values to the end, otherwise removes last few</span>
 <span class="sd">          frames to ensure same frame lengths.</span>
-<span class="sd">        ensure_even (bool) : If True, ensure number of frames to be even number.</span>
 <span class="sd">        divisible_by (int) : If ``divisible_by`` &gt; 0, number of frames will be</span>
 <span class="sd">          adjasted to be divisible by ``divisible_by``.</span>
+<span class="sd">        kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is</span>
+<span class="sd">          mode = ``constant``, which means zero padding.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).</span>
@@ -836,9 +847,12 @@
 <span class="sd">    See also:</span>
 <span class="sd">        :func:`nnmnkwii.preprocessing.adjast_frame_length`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">Tx</span><span class="p">,</span> <span class="n">Dx</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">Ty</span><span class="p">,</span> <span class="n">Dy</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span>
-    <span class="k">assert</span> <span class="n">Dx</span> <span class="o">==</span> <span class="n">Dy</span>
+    <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;constant&quot;</span><span class="p">)</span>
+    <span class="n">Tx</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">Ty</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">ensure_even</span><span class="p">:</span>
         <span class="n">divisible_by</span> <span class="o">=</span> <span class="mi">2</span>
@@ -857,15 +871,19 @@
 
     <span class="k">if</span> <span class="n">Tx</span> <span class="o">!=</span> <span class="n">T</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">Tx</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">:</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span> <span class="o">-</span> <span class="n">Tx</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">dtype</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">-</span> <span class="n">Tx</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">-</span> <span class="n">Tx</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="n">T</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">Ty</span> <span class="o">!=</span> <span class="n">T</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">Ty</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">:</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
-                <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span> <span class="o">-</span> <span class="n">Ty</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">y</span><span class="o">.</span><span class="n">dtype</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">-</span> <span class="n">Ty</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T</span> <span class="o">-</span> <span class="n">Ty</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">T</span><span class="p">]</span>
 
@@ -1222,7 +1240,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.12+2c47c93',
+            VERSION:'0.0.12+a5de132',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

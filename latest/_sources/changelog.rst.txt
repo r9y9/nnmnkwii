@@ -4,6 +4,7 @@ Change log
 v0.0.12 <2018-xx-xx>
 --------------------
 
+- `#63`_: Improved support for :func:`nnmnkwii.preprocessing.adjast_frame_length` and :func:`nnmnkwii.preprocessing.adjast_frame_lengths`. Padding for 1d array is now supported.
 - BUG FIX: example audio data is now included in the release tar.gz
 
 v0.0.11 <2017-12-22>
@@ -118,3 +119,4 @@ v0.0.1 <2017-08-14>
 .. _#59: https://github.com/r9y9/nnmnkwii/issues/59
 .. _#60: https://github.com/r9y9/nnmnkwii/pull/60
 .. _#61: https://github.com/r9y9/nnmnkwii/pull/61
+.. _#63: https://github.com/r9y9/nnmnkwii/pull/63
