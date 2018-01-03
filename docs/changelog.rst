@@ -1,7 +1,7 @@
 Change log
 ==========
 
-v0.0.12 <2018-xx-xx>
+v0.0.12 <2018-01-04>
 --------------------
 
 - Fix typo: ``adjast_frame_length`` and ``adjast_frame_lengths`` are renamed to ``adjust_frame_length`` and ``adjust_frame_lengths``, respectively,
