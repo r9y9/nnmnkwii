@@ -319,10 +319,10 @@ def remove_zeros_frames(x, eps=1e-7):
     return x[s > eps]
 
 
-def adjast_frame_length(x, pad=True, divisible_by=1, **kwargs):
-    """Adjast frame length given a feature vector or matrix.
+def adjust_frame_length(x, pad=True, divisible_by=1, **kwargs):
+    """Adjust frame length given a feature vector or matrix.
 
-    This adjast the number of frames of a given feature vector or matrix to be
+    This adjust the number of frames of a given feature vector or matrix to be
     divisible by ``divisible_by`` by padding to the end or removing the last
     few frames. Default uses zero-padding.
 
@@ -331,22 +331,22 @@ def adjast_frame_length(x, pad=True, divisible_by=1, **kwargs):
         pad (bool) : If True, pads values to the end, otherwise removes last few
           frames to ensure same frame lengths.
         divisible_by (int) : If ``divisible_by`` > 0, number of frames will be
-          adjasted to be divisible by ``divisible_by``.
+          adjusted to be divisible by ``divisible_by``.
         kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is
           mode = ``constant``, which means zero padding.
 
     Returns:
-        numpy.ndarray: Adjasted array, of each shape (``T`` or ``T' x D``).
+        numpy.ndarray: adjusted array, of each shape (``T`` or ``T' x D``).
 
     Examples:
-        >>> from nnmnkwii.preprocessing import adjast_frame_length
+        >>> from nnmnkwii.preprocessing import adjust_frame_length
         >>> import numpy as np
         >>> x = np.zeros((10, 1))
-        >>> x = adjast_frame_length(x, pad=True, divisible_by=3)
+        >>> x = adjust_frame_length(x, pad=True, divisible_by=3)
         >>> assert x.shape[0] == 12
 
     See also:
-        :func:`nnmnkwii.preprocessing.adjast_frame_lengths`
+        :func:`nnmnkwii.preprocessing.adjust_frame_lengths`
     """
     kwargs.setdefault("mode", "constant")
 
@@ -377,9 +377,9 @@ def adjast_frame_length(x, pad=True, divisible_by=1, **kwargs):
     return x
 
 
-def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1,
+def adjust_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1,
                          **kwargs):
-    """Adjast frame lengths given two feature vectors or matrices.
+    """Adjust frame lengths given two feature vectors or matrices.
 
     This ensures that two feature vectors or matrices have same number of
     frames, by padding to the end or removing the last few frames.
@@ -396,23 +396,23 @@ def adjast_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1,
         pad (bool) : If True, pads values to the end, otherwise removes last few
           frames to ensure same frame lengths.
         divisible_by (int) : If ``divisible_by`` > 0, number of frames will be
-          adjasted to be divisible by ``divisible_by``.
+          adjusted to be divisible by ``divisible_by``.
         kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is
           mode = ``constant``, which means zero padding.
 
     Returns:
-        Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).
+        Tuple: Pair of adjusted feature matrices, of each shape (``T x D``).
 
     Examples:
-        >>> from nnmnkwii.preprocessing import adjast_frame_lengths
+        >>> from nnmnkwii.preprocessing import adjust_frame_lengths
         >>> import numpy as np
         >>> x = np.zeros((10, 1))
         >>> y = np.zeros((11, 1))
-        >>> x, y = adjast_frame_lengths(x, y)
+        >>> x, y = adjust_frame_lengths(x, y)
         >>> assert len(x) == len(y)
 
     See also:
-        :func:`nnmnkwii.preprocessing.adjast_frame_length`
+        :func:`nnmnkwii.preprocessing.adjust_frame_length`
     """
     assert x.ndim in [1, 2] and y.ndim in [1, 2]
     kwargs.setdefault("mode", "constant")

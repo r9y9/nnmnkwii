@@ -2,8 +2,8 @@ from __future__ import division, print_function, absolute_import
 
 from nnmnkwii.preprocessing.f0 import interp1d
 from nnmnkwii.preprocessing import trim_zeros_frames, remove_zeros_frames
-from nnmnkwii.preprocessing import adjast_frame_lengths, delta_features
-from nnmnkwii.preprocessing import adjast_frame_length
+from nnmnkwii.preprocessing import adjust_frame_lengths, delta_features
+from nnmnkwii.preprocessing import adjust_frame_length
 from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 from nnmnkwii.preprocessing import modspec, modphase
 from nnmnkwii.preprocessing import preemphasis, inv_preemphasis
@@ -269,38 +269,38 @@ def test_trim_remove_zeros_frames():
         assert trimmed.shape[1] == mat.shape[1]
 
 
-def test_adjast_frame_length_divisible():
+def test_adjust_frame_length_divisible():
     D = 5
     T = 10
 
     # 1d and 2d padding
     for x in [np.random.rand(T), np.random.rand(T, D)]:
-        assert T == adjast_frame_length(x, pad=True, divisible_by=1).shape[0]
-        assert T == adjast_frame_length(x, pad=True, divisible_by=2).shape[0]
-        print(adjast_frame_length(x, pad=True, divisible_by=3).shape[0])
-        assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=3).shape[0]
-        assert T + 2 == adjast_frame_length(x, pad=True, divisible_by=4).shape[0]
+        assert T == adjust_frame_length(x, pad=True, divisible_by=1).shape[0]
+        assert T == adjust_frame_length(x, pad=True, divisible_by=2).shape[0]
+        print(adjust_frame_length(x, pad=True, divisible_by=3).shape[0])
+        assert T + 2 == adjust_frame_length(x, pad=True, divisible_by=3).shape[0]
+        assert T + 2 == adjust_frame_length(x, pad=True, divisible_by=4).shape[0]
 
-        assert T == adjast_frame_length(x, pad=False, divisible_by=1).shape[0]
-        assert T == adjast_frame_length(x, pad=False, divisible_by=2).shape[0]
-        assert T - 1 == adjast_frame_length(x, pad=False, divisible_by=3).shape[0]
-        assert T - 2 == adjast_frame_length(x, pad=False, divisible_by=4).shape[0]
+        assert T == adjust_frame_length(x, pad=False, divisible_by=1).shape[0]
+        assert T == adjust_frame_length(x, pad=False, divisible_by=2).shape[0]
+        assert T - 1 == adjust_frame_length(x, pad=False, divisible_by=3).shape[0]
+        assert T - 2 == adjust_frame_length(x, pad=False, divisible_by=4).shape[0]
 
     # make sure we do zero padding
-    assert (adjast_frame_length(x, pad=True, divisible_by=3)[-1] == 0).all()
+    assert (adjust_frame_length(x, pad=True, divisible_by=3)[-1] == 0).all()
 
     # make sure we passes extra kwargs to np.pad
-    assert (adjast_frame_length(x, pad=True, divisible_by=3,
+    assert (adjust_frame_length(x, pad=True, divisible_by=3,
                                 mode="constant", constant_values=1)[-1] == 1).all()
 
     # Should preserve dtype
     for dtype in [np.float32, np.float64]:
         x = np.random.rand(T, D).astype(dtype)
-        assert x.dtype == adjast_frame_length(x, pad=True, divisible_by=3).dtype
-        assert x.dtype == adjast_frame_length(x, pad=False, divisible_by=3).dtype
+        assert x.dtype == adjust_frame_length(x, pad=True, divisible_by=3).dtype
+        assert x.dtype == adjust_frame_length(x, pad=False, divisible_by=3).dtype
 
 
-def test_adjast_frame_lengths():
+def test_adjust_frame_lengths():
     T1 = 10
     T2 = 11
     D = 5
@@ -308,31 +308,31 @@ def test_adjast_frame_lengths():
     # 1d and 2d padding
     for (x, y) in [(np.random.rand(T1), np.random.rand(T2)),
                    (np.random.rand(T1, D), np.random.rand(T2, D))]:
-        x_hat, y_hat = adjast_frame_lengths(x, y, pad=True)
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=True)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 11
 
-        x_hat, y_hat = adjast_frame_lengths(x, y, pad=False)
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=False)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 10
 
-        x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=True,
                                             divisible_by=2)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 12
 
-        x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=False,
                                             divisible_by=2)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 10
 
         # Divisible
-        x_hat, y_hat = adjast_frame_lengths(x, y, pad=False,
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=False,
                                             divisible_by=3)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 9
 
-        x_hat, y_hat = adjast_frame_lengths(x, y, pad=True,
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=True,
                                             divisible_by=3)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 12
@@ -340,11 +340,11 @@ def test_adjast_frame_lengths():
     # make sure we do zero padding
     x = np.random.rand(T1)
     y = np.random.rand(T2)
-    x_hat, y_hat = adjast_frame_lengths(x, y, pad=True, divisible_by=3)
+    x_hat, y_hat = adjust_frame_lengths(x, y, pad=True, divisible_by=3)
     assert x_hat[-1] == 0 and y_hat[-1] == 0
 
     # make sure we passes extra kwargs to np.pad
-    x_hat, y_hat = adjast_frame_lengths(
+    x_hat, y_hat = adjust_frame_lengths(
         x, y, pad=True, divisible_by=3, mode="constant", constant_values=1)
     assert x_hat[-1] == 1 and y_hat[-1] == 1
 
@@ -369,11 +369,11 @@ def _get_mcep(x, fs, frame_period=5, order=24):
     return mc
 
 
-def test_dtw_frame_length_adjastment():
+def test_dtw_frame_length_adjustment():
     _, X = example_file_data_sources_for_duration_model()
     X = FileSourceDataset(X)
     X_unaligned = X.asarray()
-    # This should trigger frame length adjastment
+    # This should trigger frame length adjustment
     Y_unaligned = np.pad(X_unaligned, [(0, 0), (5, 0), (0, 0)],
                          mode="constant", constant_values=0)
     Y_unaligned = Y_unaligned[:, :-5, :]
@@ -394,7 +394,7 @@ def test_dtw_aligner():
     D = X.shape[-1]
 
     # Create padded pair
-    X, Y = adjast_frame_lengths(X, Y, divisible_by=2)
+    X, Y = adjust_frame_lengths(X, Y, divisible_by=2)
 
     # Add utterance axis
     X = X.reshape(1, -1, D)
