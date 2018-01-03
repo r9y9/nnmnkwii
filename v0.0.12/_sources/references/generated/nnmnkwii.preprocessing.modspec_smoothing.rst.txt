@@ -1,0 +1,6 @@
+nnmnkwii\.preprocessing\.modspec\_smoothing
+===========================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: modspec_smoothing
