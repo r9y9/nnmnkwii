@@ -10,28 +10,10 @@ nnmnkwii (nanami) documentation
 
 Library to build speech synthesis systems designed for easy and fast prototyping.
 
-Github: https://github.com/r9y9/nnmnkwii
+- Github: https://github.com/r9y9/nnmnkwii
+- Tutorial notebooks: https://github.com/r9y9/nnmnkwii_gallery
 
-You can find tutorial notebooks in the document. Full code is available at `nnmnkwii_gallery`_.
-
-**External links**
-
-Some of text-to-speech and voice conversion implementations using nnmnkwii can be found at the following external links:
-
-- `deepvoice3_pytorch`_: PyTorch implementation of convolutional networks-based text-to-speech synthesis models. `[arXiv:1710.07654]`_ and `[arXiv:1710.08969]`_.　
-- `tacotron_pytorch`_: PyTorch implementation of `Tacotron`_ speech synthesis model. `[arXiv:1703.10135]`_.
-- `gantts`_: PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion (VC). `[arXiv:1709.08041]`_.
-
-.. _`[arXiv:1710.08969]`: https://arxiv.org/abs/1710.08969
-.. _`[arXiv:1709.08041]`: https://arxiv.org/abs/1709.08041
-.. _`[arXiv:1710.07654]`: https://arxiv.org/abs/1710.07654
-.. _`[arXiv:1703.10135]`: https://arxiv.org/abs/1703.10135
-.. _`deepvoice3_pytorch`: https://github.com/r9y9/deepvoice3_pytorch
-.. _`tacotron_pytorch`: https://github.com/r9y9/tacotron_pytorch
-.. _`gantts`: https://github.com/r9y9/gantts
-.. _`Tacotron`: https://arxiv.org/abs/1703.10135
-
-.. _nnmnkwii_gallery: https://github.com/r9y9/nnmnkwii_gallery
+For advanced applications using the library, see :ref:`external-links-label`.
 
 .. toctree::
   :maxdepth: 1
@@ -64,6 +46,30 @@ Some of text-to-speech and voice conversion implementations using nnmnkwii can b
 
 
 .. only:: html
+
+.. _external-links-label:
+
+External links
+--------------
+
+- `wavenet_vocoder`_: WaveNet vocoder [6]_ [7]_
+- `deepvoice3_pytorch`_: PyTorch implementation of convolutional networks-based text-to-speech synthesis models. [4]_ [5]_
+- `tacotron_pytorch`_: PyTorch implementation of `Tacotron`_ speech synthesis model. [3]_
+- `gantts`_: PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion (VC). [1]_  [2]_
+
+.. _`wavenet_vocoder`: https://github.com/r9y9/wavenet_vocoder
+.. _`deepvoice3_pytorch`: https://github.com/r9y9/deepvoice3_pytorch
+.. _`tacotron_pytorch`: https://github.com/r9y9/tacotron_pytorch
+.. _`gantts`: https://github.com/r9y9/gantts
+
+.. [1] Saito, Yuki, Shinnosuke Takamichi, and Hiroshi Saruwatari. "Statistical Parametric Speech Synthesis Incorporating Generative Adversarial Networks." IEEE/ACM Transactions on Audio, Speech, and Language Processing 26.1 (2018): 84-96.
+.. [2] Shan Yang, Lei Xie, Xiao Chen, Xiaoyan Lou, Xuan Zhu, Dongyan Huang, Haizhou Li, " Statistical Parametric Speech Synthesis Using Generative Adversarial Networks Under A Multi-task Learning Framework", arXiv:1707.01670, Jul 2017.
+.. [3] Yuxuan Wang, RJ Skerry-Ryan, Daisy Stanton et al, "Tacotron: Towards End-to-End Speech Synthesis", 	arXiv:1703.10135, Mar 2017.
+.. [4] Wei Ping, Kainan Peng, Andrew Gibiansky, et al, "Deep Voice 3: 2000-Speaker Neural Text-to-Speech", arXiv:1710.07654, Oct. 2017.
+.. [5] Hideyuki Tachibana, Katsuya Uenoyama, Shunsuke Aihara, “Efficiently Trainable Text-to-Speech System Based on Deep Convolutional Networks with Guided Attention”. arXiv:1710.08969, Oct 2017.
+.. [6] Aaron van den Oord, Sander Dieleman, Heiga Zen, et al, "WaveNet: A Generative Model for Raw Audio", arXiv:1609.03499, Sep 2016.
+.. [7] Tamamori Akira, Tomoki Hayashi, Kazuhiro Kobayashi, et al. "Speaker-dependent WaveNet vocoder." Proceedings of Interspeech. 2017.
+
 
 Indices and tables
 ==================
