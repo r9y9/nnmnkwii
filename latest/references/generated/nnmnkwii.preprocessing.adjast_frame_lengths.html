@@ -35,10 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.12+a5de132 documentation" href="../../index.html"/>
-        <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
-        <link rel="next" title="nnmnkwii.preprocessing.scale" href="nnmnkwii.preprocessing.scale.html"/>
-        <link rel="prev" title="nnmnkwii.preprocessing.adjast_frame_length" href="nnmnkwii.preprocessing.adjast_frame_length.html"/> 
+    <link rel="top" title="nnmnkwii 0.0.12+a5de132 documentation" href="../../index.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -219,7 +216,7 @@
 </li>
 </ul>
 <p class="caption"><span class="caption-text">Package references</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../autograd.html">Autograd</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../autograd.html#functional-interface">Functional interface</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
@@ -291,9 +288,9 @@
 <li class="toctree-l2"><a class="reference internal" href="nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul class="current">
-<li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
@@ -303,8 +300,8 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
@@ -413,8 +410,6 @@
     
       <li><a href="../../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../preprocessing.html">Pre-processing</a> &raquo;</li>
-        
       <li>nnmnkwii.preprocessing.adjast_frame_lengths</li>
     
     
@@ -470,57 +465,6 @@
 </style>
 <div class="section" id="nnmnkwii-preprocessing-adjast-frame-lengths">
 <h1>nnmnkwii.preprocessing.adjast_frame_lengths<a class="headerlink" href="#nnmnkwii-preprocessing-adjast-frame-lengths" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
-<dt id="nnmnkwii.preprocessing.adjast_frame_lengths">
-<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">adjast_frame_lengths</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>pad=True</em>, <em>ensure_even=False</em>, <em>divisible_by=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#adjast_frame_lengths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.adjast_frame_lengths" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adjast frame lengths given two feature vectors or matrices.</p>
-<p>This ensures that two feature vectors or matrices have same number of
-frames, by padding to the end or removing the last few frames.
-Default uses zero-padding.</p>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last"><code class="docutils literal"><span class="pre">ensure_even</span></code> is deprecated and will be removed in v0.1.0.
-Use <code class="docutils literal"><span class="pre">divisible_by=2</span></code> instead.</p>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal"><span class="pre">T^1</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
-<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal"><span class="pre">T^2</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
-<li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
-frames to ensure same frame lengths.</li>
-<li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – If <code class="docutils literal"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
-adjasted to be divisible by <code class="docutils literal"><span class="pre">divisible_by</span></code>.</li>
-<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.13)"><code class="xref py py-func docutils literal"><span class="pre">numpy.pad()</span></code></a>. Default is
-mode = <code class="docutils literal"><span class="pre">constant</span></code>, which means zero padding.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Pair of adjasted feature matrices, of each shape (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>).</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tuple</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">adjast_frame_lengths</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">adjast_frame_lengths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.adjast_frame_length.html#nnmnkwii.preprocessing.adjast_frame_length" title="nnmnkwii.preprocessing.adjast_frame_length"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.adjast_frame_length()</span></code></a></p>
-</div>
-</dd></dl>
-
 </div>
 
 
@@ -530,15 +474,6 @@ mode = <code class="docutils literal"><span class="pre">constant</span></code>, 
            </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="nnmnkwii.preprocessing.scale.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="nnmnkwii.preprocessing.adjast_frame_length.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.adjast_frame_length" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

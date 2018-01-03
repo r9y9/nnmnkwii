@@ -301,8 +301,8 @@
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
@@ -752,10 +752,10 @@
     <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="n">s</span> <span class="o">&gt;</span> <span class="n">eps</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="adjast_frame_length"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_length.html#nnmnkwii.preprocessing.adjast_frame_length">[docs]</a><span class="k">def</span> <span class="nf">adjast_frame_length</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adjast frame length given a feature vector or matrix.</span>
+<div class="viewcode-block" id="adjust_frame_length"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_length.html#nnmnkwii.preprocessing.adjust_frame_length">[docs]</a><span class="k">def</span> <span class="nf">adjust_frame_length</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Adjust frame length given a feature vector or matrix.</span>
 
-<span class="sd">    This adjast the number of frames of a given feature vector or matrix to be</span>
+<span class="sd">    This adjust the number of frames of a given feature vector or matrix to be</span>
 <span class="sd">    divisible by ``divisible_by`` by padding to the end or removing the last</span>
 <span class="sd">    few frames. Default uses zero-padding.</span>
 
@@ -764,22 +764,22 @@
 <span class="sd">        pad (bool) : If True, pads values to the end, otherwise removes last few</span>
 <span class="sd">          frames to ensure same frame lengths.</span>
 <span class="sd">        divisible_by (int) : If ``divisible_by`` &gt; 0, number of frames will be</span>
-<span class="sd">          adjasted to be divisible by ``divisible_by``.</span>
+<span class="sd">          adjusted to be divisible by ``divisible_by``.</span>
 <span class="sd">        kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is</span>
 <span class="sd">          mode = ``constant``, which means zero padding.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        numpy.ndarray: Adjasted array, of each shape (``T`` or ``T&#39; x D``).</span>
+<span class="sd">        numpy.ndarray: adjusted array, of each shape (``T`` or ``T&#39; x D``).</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import adjast_frame_length</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import adjust_frame_length</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; x = np.zeros((10, 1))</span>
-<span class="sd">        &gt;&gt;&gt; x = adjast_frame_length(x, pad=True, divisible_by=3)</span>
+<span class="sd">        &gt;&gt;&gt; x = adjust_frame_length(x, pad=True, divisible_by=3)</span>
 <span class="sd">        &gt;&gt;&gt; assert x.shape[0] == 12</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        :func:`nnmnkwii.preprocessing.adjast_frame_lengths`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.adjust_frame_lengths`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;constant&quot;</span><span class="p">)</span>
 
@@ -810,9 +810,9 @@
     <span class="k">return</span> <span class="n">x</span></div>
 
 
-<div class="viewcode-block" id="adjast_frame_lengths"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html#nnmnkwii.preprocessing.adjast_frame_lengths">[docs]</a><span class="k">def</span> <span class="nf">adjast_frame_lengths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ensure_even</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<div class="viewcode-block" id="adjust_frame_lengths"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_lengths.html#nnmnkwii.preprocessing.adjust_frame_lengths">[docs]</a><span class="k">def</span> <span class="nf">adjust_frame_lengths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ensure_even</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">divisible_by</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                          <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adjast frame lengths given two feature vectors or matrices.</span>
+    <span class="sd">&quot;&quot;&quot;Adjust frame lengths given two feature vectors or matrices.</span>
 
 <span class="sd">    This ensures that two feature vectors or matrices have same number of</span>
 <span class="sd">    frames, by padding to the end or removing the last few frames.</span>
@@ -829,23 +829,23 @@
 <span class="sd">        pad (bool) : If True, pads values to the end, otherwise removes last few</span>
 <span class="sd">          frames to ensure same frame lengths.</span>
 <span class="sd">        divisible_by (int) : If ``divisible_by`` &gt; 0, number of frames will be</span>
-<span class="sd">          adjasted to be divisible by ``divisible_by``.</span>
+<span class="sd">          adjusted to be divisible by ``divisible_by``.</span>
 <span class="sd">        kwargs (dict): Keyword argments passed to :func:`numpy.pad`. Default is</span>
 <span class="sd">          mode = ``constant``, which means zero padding.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        Tuple: Pair of adjasted feature matrices, of each shape (``T x D``).</span>
+<span class="sd">        Tuple: Pair of adjusted feature matrices, of each shape (``T x D``).</span>
 
 <span class="sd">    Examples:</span>
-<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import adjast_frame_lengths</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.preprocessing import adjust_frame_lengths</span>
 <span class="sd">        &gt;&gt;&gt; import numpy as np</span>
 <span class="sd">        &gt;&gt;&gt; x = np.zeros((10, 1))</span>
 <span class="sd">        &gt;&gt;&gt; y = np.zeros((11, 1))</span>
-<span class="sd">        &gt;&gt;&gt; x, y = adjast_frame_lengths(x, y)</span>
+<span class="sd">        &gt;&gt;&gt; x, y = adjust_frame_lengths(x, y)</span>
 <span class="sd">        &gt;&gt;&gt; assert len(x) == len(y)</span>
 
 <span class="sd">    See also:</span>
-<span class="sd">        :func:`nnmnkwii.preprocessing.adjast_frame_length`</span>
+<span class="sd">        :func:`nnmnkwii.preprocessing.adjust_frame_length`</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">assert</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="ow">and</span> <span class="n">y</span><span class="o">.</span><span class="n">ndim</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
     <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;mode&quot;</span><span class="p">,</span> <span class="s2">&quot;constant&quot;</span><span class="p">)</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.meanvar &mdash; nnmnkwii 0.0.12+a5de132 documentation</title>
+  <title>nnmnkwii.preprocessing.adjust_frame_lengths &mdash; nnmnkwii 0.0.12+a5de132 documentation</title>
   
 
   
@@ -37,8 +37,8 @@
         <link rel="search" title="Search" href="../../search.html"/>
     <link rel="top" title="nnmnkwii 0.0.12+a5de132 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
-        <link rel="next" title="nnmnkwii.preprocessing.meanstd" href="nnmnkwii.preprocessing.meanstd.html"/>
-        <link rel="prev" title="nnmnkwii.preprocessing.modspec_smoothing" href="nnmnkwii.preprocessing.modspec_smoothing.html"/> 
+        <link rel="next" title="nnmnkwii.preprocessing.scale" href="nnmnkwii.preprocessing.scale.html"/>
+        <link rel="prev" title="nnmnkwii.preprocessing.adjust_frame_length" href="nnmnkwii.preprocessing.adjust_frame_length.html"/> 
 
   
   <script src="../../_static/js/modernizr.min.js"></script>
@@ -293,7 +293,7 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="../preprocessing.html">Pre-processing</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="../preprocessing.html#generic">Generic</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
@@ -304,7 +304,7 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
-<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
@@ -315,8 +315,8 @@
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
 </ul>
 </li>
-<li class="toctree-l3 current"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
 <li class="toctree-l4"><a class="reference internal" href="nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
 </ul>
@@ -415,13 +415,13 @@
         
           <li><a href="../preprocessing.html">Pre-processing</a> &raquo;</li>
         
-      <li>nnmnkwii.preprocessing.meanvar</li>
+      <li>nnmnkwii.preprocessing.adjust_frame_lengths</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/references/generated/nnmnkwii.preprocessing.meanvar.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/references/generated/nnmnkwii.preprocessing.adjust_frame_lengths.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -468,58 +468,56 @@
     margin-right: 4px;  /* make room for the exclamation icon */
 }
 </style>
-<div class="section" id="nnmnkwii-preprocessing-meanvar">
-<h1>nnmnkwii.preprocessing.meanvar<a class="headerlink" href="#nnmnkwii-preprocessing-meanvar" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nnmnkwii-preprocessing-adjust-frame-lengths">
+<h1>nnmnkwii.preprocessing.adjust_frame_lengths<a class="headerlink" href="#nnmnkwii-preprocessing-adjust-frame-lengths" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="nnmnkwii.preprocessing.meanvar">
-<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">meanvar</code><span class="sig-paren">(</span><em>dataset</em>, <em>lengths=None</em>, <em>mean_=0.0</em>, <em>var_=0.0</em>, <em>last_sample_count=0</em>, <em>return_last_sample_count=False</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#meanvar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.meanvar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Mean/variance computation given a iterable dataset</p>
-<p>Dataset can have variable length samples. In that cases, you need to
-explicitly specify lengths for all the samples.</p>
+<dt id="nnmnkwii.preprocessing.adjust_frame_lengths">
+<code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">adjust_frame_lengths</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>pad=True</em>, <em>ensure_even=False</em>, <em>divisible_by=1</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#adjust_frame_lengths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.adjust_frame_lengths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adjust frame lengths given two feature vectors or matrices.</p>
+<p>This ensures that two feature vectors or matrices have same number of
+frames, by padding to the end or removing the last few frames.
+Default uses zero-padding.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><code class="docutils literal"><span class="pre">ensure_even</span></code> is deprecated and will be removed in v0.1.0.
+Use <code class="docutils literal"><span class="pre">divisible_by=2</span></code> instead.</p>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>dataset</strong> (<a class="reference internal" href="../datasets.html#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><em>nnmnkwii.datasets.Dataset</em></a>) – Dataset</li>
-<li><strong>lengths</strong> – (list): Frame lengths for each dataset sample.</li>
-<li><strong>mean_</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scalar</em>) – Initial value for mean vector.</li>
-<li><strong>var_</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a><em> or </em><em>scaler</em>) – Initial value for variance vector.</li>
-<li><strong>last_sample_count</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Last sample count. Default is 0. If you set
-non-default <code class="docutils literal"><span class="pre">mean_</span></code> and <code class="docutils literal"><span class="pre">var_</span></code>, you need to set
-<code class="docutils literal"><span class="pre">last_sample_count</span></code> property. Typically this will be the number of
-time frames ever seen.</li>
-<li><strong>return_last_sample_count</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – Return <code class="docutils literal"><span class="pre">last_sample_count</span></code> if True.</li>
+<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal"><span class="pre">T^1</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal"><span class="pre">T^2</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
+frames to ensure same frame lengths.</li>
+<li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – If <code class="docutils literal"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
+adjusted to be divisible by <code class="docutils literal"><span class="pre">divisible_by</span></code>.</li>
+<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.13)"><code class="xref py py-func docutils literal"><span class="pre">numpy.pad()</span></code></a>. Default is
+mode = <code class="docutils literal"><span class="pre">constant</span></code>, which means zero padding.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><dl class="docutils">
-<dt>Mean and variance for each dimention. If</dt>
-<dd><p class="first last"><code class="docutils literal"><span class="pre">return_last_sample_count</span></code> is True, returns <code class="docutils literal"><span class="pre">last_sample_count</span></code>
-as well.</p>
-</dd>
-</dl>
-</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Pair of adjusted feature matrices, of each shape (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>).</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)">tuple</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">Tuple</p>
 </td>
 </tr>
 </tbody>
 </table>
+<p class="rubric">Examples</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">adjust_frame_lengths</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">adjust_frame_lengths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.meanstd.html#nnmnkwii.preprocessing.meanstd" title="nnmnkwii.preprocessing.meanstd"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.meanstd()</span></code></a>, <a class="reference internal" href="nnmnkwii.preprocessing.scale.html#nnmnkwii.preprocessing.scale" title="nnmnkwii.preprocessing.scale"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.scale()</span></code></a></p>
-</div>
-<p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">meanvar</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">Y</span><span class="p">]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">data_mean</span><span class="p">,</span> <span class="n">data_var</span> <span class="o">=</span> <span class="n">meanvar</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
-</pre></div>
+<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.adjust_frame_length.html#nnmnkwii.preprocessing.adjust_frame_length" title="nnmnkwii.preprocessing.adjust_frame_length"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.adjust_frame_length()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -535,10 +533,10 @@ as well.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="nnmnkwii.preprocessing.meanstd.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.meanstd" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="nnmnkwii.preprocessing.scale.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nnmnkwii.preprocessing.modspec_smoothing.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.modspec_smoothing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nnmnkwii.preprocessing.adjust_frame_length.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.adjust_frame_length" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -4,6 +4,7 @@ Change log
 v0.0.12 <2018-xx-xx>
 --------------------
 
+- Fix typo: ``adjast_frame_length`` and ``adjast_frame_lengths`` are renamed to ``adjust_frame_length`` and ``adjust_frame_lengths``, respectively,
 - `#63`_: Improved support for :func:`nnmnkwii.preprocessing.adjast_frame_length` and :func:`nnmnkwii.preprocessing.adjast_frame_lengths`. Padding for 1d array is now supported.
 - BUG FIX: example audio data is now included in the release tar.gz
 

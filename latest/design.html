@@ -302,8 +302,8 @@
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
-<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.adjast_frame_length.html">nnmnkwii.preprocessing.adjast_frame_length</a></li>
-<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.adjast_frame_lengths.html">nnmnkwii.preprocessing.adjast_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
 <li class="toctree-l4"><a class="reference internal" href="references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
@@ -513,7 +513,7 @@ I think we should provide a library which bridges generic computational backends
 <li>We use in-memory IO as possible, except for loading dataset from files.</li>
 <li>We don’t provide duration/acoustic models, opposite to Merlin. Users are expected to implement their own ones. For generic models may go in <code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.baseline</span></code> module, but it’s not meant to cover all the models.</li>
 <li>We don’t provide linguistic feature extraction frontend, except for utilities to convert structural linguistic information (e.g., HTS full-context labels ) to its numeric forms.</li>
-<li>We don’t provide speech analysis/synthesis backend. Users are expected to use another packages for this purpose. e.g., <a class="reference external" href="https://pysptk.readthedocs.io/en/latest/index.html#module-pysptk" title="(in pysptk v0.1.9+1db3a0d)"><code class="xref py py-obj docutils literal"><span class="pre">pysptk</span></code></a>, <code class="xref py py-obj docutils literal"><span class="pre">pyworld</span></code> and <code class="xref py py-obj docutils literal"><span class="pre">librosa</span></code>.</li>
+<li>We don’t provide speech analysis/synthesis backend. Users are expected to use another packages for this purpose. e.g., <a class="reference external" href="https://pysptk.readthedocs.io/en/latest/index.html#module-pysptk" title="(in pysptk v0.1.11+be6fc83)"><code class="xref py py-obj docutils literal"><span class="pre">pysptk</span></code></a>, <code class="xref py py-obj docutils literal"><span class="pre">pyworld</span></code> and <code class="xref py py-obj docutils literal"><span class="pre">librosa</span></code>.</li>
 </ol>
 <p>We will try to keep the library to be modular, easy to understand and reusable.</p>
 </div>

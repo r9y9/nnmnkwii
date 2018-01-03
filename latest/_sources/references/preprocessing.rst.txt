@@ -23,8 +23,8 @@ Utterance-wise operations
    delta_features
    trim_zeros_frames
    remove_zeros_frames
-   adjast_frame_length
-   adjast_frame_lengths
+   adjust_frame_length
+   adjust_frame_lengths
    scale
    inv_scale
    minmax_scale_params
