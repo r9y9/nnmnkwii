@@ -54,7 +54,7 @@ External links
 
 - `wavenet_vocoder`_: WaveNet vocoder [6]_ [7]_
 - `deepvoice3_pytorch`_: PyTorch implementation of convolutional networks-based text-to-speech synthesis models. [4]_ [5]_
-- `tacotron_pytorch`_: PyTorch implementation of `Tacotron`_ speech synthesis model. [3]_
+- `tacotron_pytorch`_: PyTorch implementation of Tacotron speech synthesis model. [3]_
 - `gantts`_: PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion (VC). [1]_  [2]_
 
 .. _`wavenet_vocoder`: https://github.com/r9y9/wavenet_vocoder
