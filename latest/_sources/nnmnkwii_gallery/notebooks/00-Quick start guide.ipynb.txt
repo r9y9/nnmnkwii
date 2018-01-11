@@ -97,7 +97,7 @@
     "fs, x = wavfile.read(example_audio_file())\n",
     "assert fs == 16000\n",
     "\n",
-    "librosa.display.waveplot(x, sr=fs)\n",
+    "librosa.display.waveplot(x.astype(np.float32), sr=fs)\n",
     "Audio(x, rate=fs)"
    ]
   },

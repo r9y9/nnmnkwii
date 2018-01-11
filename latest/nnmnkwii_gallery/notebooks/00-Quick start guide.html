@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>A quick start guide &mdash; nnmnkwii 0.0.13+4a3e746 documentation</title>
+  <title>A quick start guide &mdash; nnmnkwii 0.0.13+89084ae documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13+4a3e746 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.13+89084ae documentation" href="../../index.html"/>
         <link rel="next" title="DNN text-to-speech synthesis (en)" href="tts/01-DNN-based statistical speech synthesis (en).html"/>
         <link rel="prev" title="設計ドキュメント (Japanese)" href="../../design_jp.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.13+4a3e746
+                0.0.13+89084ae
               </div>
             
           
@@ -685,7 +685,7 @@ acoustic models.</p>
 <span class="n">fs</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">example_audio_file</span><span class="p">())</span>
 <span class="k">assert</span> <span class="n">fs</span> <span class="o">==</span> <span class="mi">16000</span>
 
-<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveplot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
+<span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveplot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span> <span class="n">sr</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">Audio</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1367,7 +1367,7 @@ systems and how to build voice conversion systems.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.13+4a3e746',
+            VERSION:'0.0.13+89084ae',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
