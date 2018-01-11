@@ -115,6 +115,18 @@ if exists('README.rst'):
 else:
     README = ''
 
+
+def package_files(directory):
+    # https://stackoverflow.com/questions/27664504/
+    paths = []
+    for (path, directories, filenames) in os.walk(directory):
+        for filename in filenames:
+            paths.append(os.path.join('..', path, filename))
+    return paths
+
+
+package_data = package_files("./nnmnkwii/util/_example_data")
+
 setup(
     name='nnmnkwii',
     version=version,
@@ -125,7 +137,7 @@ setup(
     url='https://github.com/r9y9/nnmnkwii',
     license='MIT',
     packages=find_packages(),
-    package_data={'': ['util/_example_data/*']},
+    package_data={'': package_data},
     ext_modules=ext_modules,
     cmdclass=cmdclass,
     install_requires=[

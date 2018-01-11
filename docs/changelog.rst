@@ -4,6 +4,8 @@ Change log
 v0.0.13 <2018-xx-xx>
 --------------------
 
+- `#65`_: Part of example data was not installed by setuptools. Fixed.
+
 v0.0.12 <2018-01-04>
 --------------------
 
@@ -124,3 +126,4 @@ v0.0.1 <2017-08-14>
 .. _#60: https://github.com/r9y9/nnmnkwii/pull/60
 .. _#61: https://github.com/r9y9/nnmnkwii/pull/61
 .. _#63: https://github.com/r9y9/nnmnkwii/pull/63
+.. _#65: https://github.com/r9y9/nnmnkwii/issues/65
