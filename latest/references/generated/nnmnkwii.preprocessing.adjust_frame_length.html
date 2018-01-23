@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.adjust_frame_length &mdash; nnmnkwii 0.0.13+89084ae documentation</title>
+  <title>nnmnkwii.preprocessing.adjust_frame_length &mdash; nnmnkwii 0.0.14+b522659 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13+89084ae documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14+b522659 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="nnmnkwii.preprocessing.adjust_frame_lengths" href="nnmnkwii.preprocessing.adjust_frame_lengths.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.remove_zeros_frames" href="nnmnkwii.preprocessing.remove_zeros_frames.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.13+89084ae
+                0.0.14+b522659
               </div>
             
           
@@ -355,7 +355,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-xx-xx">v0.0.13 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-xx-xx">v0.0.14 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-10-2017-12-05">v0.0.10 &lt;2017-12-05&gt;</a></li>
@@ -483,12 +484,12 @@ few frames. Default uses zero-padding.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)"><em>numpy.ndarray</em></a>) – Input 1d or 2d array, shape (<code class="docutils literal"><span class="pre">T,</span></code> or <code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><em>numpy.ndarray</em></a>) – Input 1d or 2d array, shape (<code class="docutils literal"><span class="pre">T,</span></code> or <code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
 <li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
 frames to ensure same frame lengths.</li>
 <li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – If <code class="docutils literal"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
 adjusted to be divisible by <code class="docutils literal"><span class="pre">divisible_by</span></code>.</li>
-<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.13)"><code class="xref py py-func docutils literal"><span class="pre">numpy.pad()</span></code></a>. Default is
+<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.14)"><code class="xref py py-func docutils literal"><span class="pre">numpy.pad()</span></code></a>. Default is
 mode = <code class="docutils literal"><span class="pre">constant</span></code>, which means zero padding.</li>
 </ul>
 </td>
@@ -496,7 +497,7 @@ mode = <code class="docutils literal"><span class="pre">constant</span></code>, 
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">adjusted array, of each shape (<code class="docutils literal"><span class="pre">T</span></code> or <code class="docutils literal"><span class="pre">T'</span> <span class="pre">x</span> <span class="pre">D</span></code>).</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.13)">numpy.ndarray</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)">numpy.ndarray</a></p>
 </td>
 </tr>
 </tbody>
@@ -561,7 +562,7 @@ mode = <code class="docutils literal"><span class="pre">constant</span></code>, 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.13+89084ae',
+            VERSION:'0.0.14+b522659',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

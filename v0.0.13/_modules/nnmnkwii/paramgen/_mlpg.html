@@ -1,0 +1,878 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.13 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.13
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../design.html">General design documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design_jp.html">設計ドキュメント (Japanese)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Cut-silence-frames">Cut silence frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Linguistic-features">Linguistic features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-datasets">Playing with datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Get-example-file-sources">Get example file sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-data">Load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Utterance-wise-iteration">Utterance-wise iteration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Memory-cache-iteration">Memory cache iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Frame-wise-iteration">Frame-wise iteration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html">DNN text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-loop">Training loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html">Bidirectional-LSTM based RNNs for text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Trainining-loop">Trainining loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html">GMM-based voice conversion (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Convert-dataset-to-arrays">Convert dataset to arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Align-source-and-target-features">Align source and target features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-parallel-data-look-like?">How parallel data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Append-delta-features">Append delta features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Finally,-we-get-joint-feature-matrix">Finally, we get joint feature matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Model">Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Visualize-model">Visualize model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Means">Means</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Covariances">Covariances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Listen-results">Listen results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-different?">How different?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Package references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/autograd.html">Autograd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#functional-interface">Functional interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#function-classes">Function classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/baseline.html">Baseline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/baseline.html#module-nnmnkwii.baseline.gmm">GMM voice conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/datasets.html">Datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#implementation">Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-utterance-wise-iteration">Dataset that supports utterance-wise iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#builtin-data-sources">Builtin data sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#vctk-en">VCTK (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#jsut-jp">JSUT (jp)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.duration_features.html">nnmnkwii.frontend.merlin.duration_features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/io.html">IO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load_question_set.html">nnmnkwii.io.hts.load_question_set</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/metrics.html">Evaluation metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/postfilters.html">Post-filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#f0">F0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#alignment">Alignment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/util.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#files">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_label_file.html">nnmnkwii.util.example_label_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_audio_file.html">nnmnkwii.util.example_audio_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-10-2017-12-05">v0.0.10 &lt;2017-12-05&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-9-2017-11-14">v0.0.9 &lt;2017-11-14&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-8-2017-10-25">v0.0.8 &lt;2017-10-25&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">nnmnkwii</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nnmnkwii.paramgen._mlpg</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nnmnkwii.paramgen._mlpg</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">bandmat</span> <span class="k">as</span> <span class="nn">bm</span>
+<span class="kn">import</span> <span class="nn">bandmat.linalg</span> <span class="k">as</span> <span class="nn">bla</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="k">import</span> <span class="n">solve_banded</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.util.linalg</span> <span class="k">import</span> <span class="n">cholesky_inv_banded</span>
+<span class="kn">from</span> <span class="nn">.mlpg_helper</span> <span class="k">import</span> <span class="n">full_window_mat</span> <span class="k">as</span> <span class="n">_full_window_mat</span>
+
+<span class="c1"># https://github.com/MattShannon/bandmat/blob/master/example_spg.py</span>
+<span class="c1"># Copied from the above link. Thanks to Matt shannon!</span>
+
+
+<div class="viewcode-block" id="build_win_mats"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html#nnmnkwii.paramgen.build_win_mats">[docs]</a><span class="k">def</span> <span class="nf">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Builds a window matrix of a given size for each window in a collection.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        windows(list): specifies the collection of windows as a sequence of</span>
+<span class="sd">        ``(l, u, win_coeff)`` triples, where ``l`` and ``u`` are non-negative</span>
+<span class="sd">        integers pecifying the left and right extents of the window and</span>
+<span class="sd">        ``win_coeff`` is an array specifying the window coefficients.</span>
+<span class="sd">        T (int): Number of frames.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The returned value is a list of window matrices, one for each of</span>
+<span class="sd">        the windows specified in ``windows``. Each window matrix is a</span>
+<span class="sd">        ``T`` by ``T`` Toeplitz matrix with lower bandwidth ``l`` and upper</span>
+<span class="sd">        bandwidth ``u``. The non-zero coefficients in each row of this Toeplitz</span>
+<span class="sd">        matrix are given by ``win_coeff``.</span>
+<span class="sd">        The returned window matrices are stored as BandMats, i.e. using a</span>
+<span class="sd">        banded representation.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; windows = [</span>
+<span class="sd">        ...     (0, 0, np.array([1.0])),            # static</span>
+<span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
+<span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
+<span class="sd">        ... ]</span>
+<span class="sd">        &gt;&gt;&gt; win_mats = G.build_win_mats(windows, 3)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">win_mats</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">win_coeff</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">u</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">)</span> <span class="o">==</span> <span class="n">l</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">win_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">,</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">win_mat</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">band_c_bm</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">win_coeffs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">win_mats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">win_mat</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">win_mats</span></div>
+
+
+<span class="k">def</span> <span class="nf">build_poe</span><span class="p">(</span><span class="n">b_frames</span><span class="p">,</span> <span class="n">tau_frames</span><span class="p">,</span> <span class="n">win_mats</span><span class="p">,</span> <span class="n">sdw</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Computes natural parameters for a Gaussian product-of-experts model.</span>
+
+<span class="sd">    The natural parameters (b-value vector and precision matrix) are returned.</span>
+<span class="sd">    The returned precision matrix is stored as a BandMat.</span>
+<span class="sd">    Mathematically the b-value vector is given as:</span>
+
+<span class="sd">        b = \sum_d \transpose{W_d} \tilde{b}_d</span>
+
+<span class="sd">    and the precision matrix is given as:</span>
+
+<span class="sd">        P = \sum_d \transpose{W_d} \text{diag}(\tilde{tau}_d) W_d</span>
+
+<span class="sd">    where $W_d$ is the window matrix for window $d$ as specified by an element</span>
+<span class="sd">    of `win_mats`, $\tilde{b}_d$ is the sequence over time of b-value</span>
+<span class="sd">    parameters for window $d$ as given by a column of `b_frames`, and</span>
+<span class="sd">    $\tilde{\tau}_d$ is the sequence over time of precision parameters for</span>
+<span class="sd">    window $d$ as given by a column of `tau_frames`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">sdw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">sdw</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">win_mat</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">win_mat</span><span class="o">.</span><span class="n">u</span> <span class="k">for</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="n">win_mats</span><span class="p">])</span>
+    <span class="n">num_windows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">win_mats</span><span class="p">)</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">b_frames</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">b_frames</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">num_windows</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">tau_frames</span><span class="p">)</span> <span class="o">==</span> <span class="p">(</span><span class="n">frames</span><span class="p">,</span> <span class="n">num_windows</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">all</span><span class="p">([</span><span class="n">win_mat</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">win_mat</span><span class="o">.</span><span class="n">u</span> <span class="o">&lt;=</span> <span class="n">sdw</span> <span class="k">for</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="n">win_mats</span><span class="p">])</span>
+
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">frames</span><span class="p">,))</span>
+    <span class="n">prec</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sdw</span><span class="p">,</span> <span class="n">sdw</span><span class="p">,</span> <span class="n">frames</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">win_index</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
+        <span class="n">bm</span><span class="o">.</span><span class="n">dot_mv_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">b_frames</span><span class="p">[:,</span> <span class="n">win_index</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span> <span class="n">target_bm</span><span class="o">=</span><span class="n">prec</span><span class="p">,</span>
+                              <span class="n">diag</span><span class="o">=</span><span class="n">tau_frames</span><span class="p">[:,</span> <span class="n">win_index</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">prec</span>
+
+
+<div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Maximum Parameter Likelihood Generation (MLPG)</span>
+
+<span class="sd">    Function ``f: (T, D) -&gt; (T, static_dim)``.</span>
+
+<span class="sd">    It peforms Maximum Likelihood Parameter Generation (MLPG) algorithm</span>
+<span class="sd">    to generate static features from static + dynamic features over</span>
+<span class="sd">    time frames dimension-by-dimension.</span>
+
+<span class="sd">    Let :math:`\mu` (``T x 1``) is the input mean sequence of a particular</span>
+<span class="sd">    dimension and :math:`y` (``T x 1``) is the static</span>
+<span class="sd">    feature sequence we want to compute, the formula of MLPG is written as:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        y = A^{-1} b</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        A = \sum_{l} W_{l}^{T}P_{l}W_{l}</span>
+
+<span class="sd">    ,</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        b = P\mu</span>
+
+<span class="sd">    :math:`W_{l}` is the ``l``-th window matrix (``T x T``) and :math:`P`</span>
+<span class="sd">    (``T x T``) is the precision matrix which is given by the inverse of</span>
+<span class="sd">    variance matrix.</span>
+
+<span class="sd">    The implementation was heavily inspired by [1]_ and</span>
+<span class="sd">    using bandmat_ for efficient computation.</span>
+
+<span class="sd">    .. _bandmat: https://github.com/MattShannon/bandmat</span>
+
+<span class="sd">    .. [1] M. Shannon, supervised by W. Byrne (2014),</span>
+<span class="sd">      Probabilistic acoustic modelling for parametric speech synthesis</span>
+<span class="sd">      PhD thesis, University of Cambridge, UK</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        mean_frames (2darray): The input features (static + delta).</span>
+<span class="sd">            In statistical speech synthesis, these are means of gaussian</span>
+<span class="sd">            distributions predicted by neural networks or decision trees.</span>
+<span class="sd">        variance_frames (2d or 1darray): Variances (static + delta ) of gaussian</span>
+<span class="sd">            distributions over time frames (2d) or global variances (1d).</span>
+<span class="sd">            If global variances are given, these will get expanded over frames.</span>
+<span class="sd">        windows (list): A sequence of ``(l, u, win_coeff)`` triples, where</span>
+<span class="sd">            ``l`` and ``u`` are non-negative integers specifying the left</span>
+<span class="sd">            and right extents of the window and `win_coeff` is an array</span>
+<span class="sd">            specifying the window coefficients.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Generated static features over time</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
+<span class="sd">        &gt;&gt;&gt; windows = [</span>
+<span class="sd">        ...         (0, 0, np.array([1.0])),            # static</span>
+<span class="sd">        ...         (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
+<span class="sd">        ...         (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
+<span class="sd">        ...     ]</span>
+<span class="sd">        &gt;&gt;&gt; T, static_dim = 10, 24</span>
+<span class="sd">        &gt;&gt;&gt; mean_frames = np.random.rand(T, static_dim * len(windows))</span>
+<span class="sd">        &gt;&gt;&gt; variance_frames = np.random.rand(T, static_dim * len(windows))</span>
+<span class="sd">        &gt;&gt;&gt; static_features = G.mlpg(mean_frames, variance_frames, windows)</span>
+<span class="sd">        &gt;&gt;&gt; assert static_features.shape == (T, static_dim)</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.autograd.mlpg`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dtype</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">dtype</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">shape</span>
+    <span class="c1"># expand variances over frames</span>
+    <span class="k">if</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">D</span><span class="p">:</span>
+        <span class="n">variance_frames</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">variance_frames</span><span class="p">,</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">assert</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">variance_frames</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">static_dim</span> <span class="o">=</span> <span class="n">D</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span>
+
+    <span class="n">num_windows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span>
+    <span class="n">win_mats</span> <span class="o">=</span> <span class="n">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+    <span class="c1"># workspaces; those will be updated in the following generation loop</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">num_windows</span><span class="p">))</span>
+    <span class="n">precisions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">num_windows</span><span class="p">))</span>
+    <span class="c1"># Perform dimension-wise generation</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">static_dim</span><span class="p">):</span>
+
+        <span class="k">for</span> <span class="n">win_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_windows</span><span class="p">):</span>
+            <span class="n">means</span><span class="p">[:,</span> <span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
+            <span class="n">precisions</span><span class="p">[:,</span> <span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> \
+                <span class="n">variance_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
+
+        <span class="n">bs</span> <span class="o">=</span> <span class="n">precisions</span> <span class="o">*</span> <span class="n">means</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">P</span> <span class="o">=</span> <span class="n">build_poe</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="n">precisions</span><span class="p">,</span> <span class="n">win_mats</span><span class="p">)</span>
+        <span class="n">y</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">bla</span><span class="o">.</span><span class="n">solveh</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">y</span></div>
+
+
+<div class="viewcode-block" id="mlpg_grad"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html#nnmnkwii.paramgen.mlpg_grad">[docs]</a><span class="k">def</span> <span class="nf">mlpg_grad</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;MLPG gradient computation</span>
+
+<span class="sd">    Parameters are same as :func:`nnmnkwii.paramgen.mlpg` except for</span>
+<span class="sd">    ``grad_output``. See the function docmenent for what the parameters mean.</span>
+
+<span class="sd">    Let :math:`d` is the index of static features, :math:`l` is the index</span>
+<span class="sd">    of windows, gradients :math:`g_{d,l}` can be computed by:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        g_{d,l} = (\sum_{l} W_{l}^{T}P_{d,l}W_{l})^{-1} W_{l}^{T}P_{d,l}</span>
+
+<span class="sd">    where :math:`W_{l}` is a banded window matrix and :math:`P_{d,l}` is a</span>
+<span class="sd">    diagonal precision matrix.</span>
+
+<span class="sd">    Assuming the variances are diagonals, MLPG can be performed in</span>
+<span class="sd">    dimention-by-dimention efficiently.</span>
+
+<span class="sd">    Let :math:`o_{d}` be ``T`` dimentional back-propagated gradients, the</span>
+<span class="sd">    resulting gradients :math:`g&#39;_{l,d}` to be propagated are</span>
+<span class="sd">    computed as follows:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        g&#39;_{d,l} = o_{d}^{T} g_{d,l}</span>
+
+
+<span class="sd">    Args:</span>
+<span class="sd">        mean_frames (numpy.ndarray): Means.</span>
+<span class="sd">        variance_frames (numpy.ndarray): Variances.</span>
+<span class="sd">        windows (list): Windows.</span>
+<span class="sd">        grad_output: Backpropagated output gradient, shape (``T x static_dim``)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Gradients to be back propagated, shape: (``T x D``)</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.autograd.mlpg`, :class:`nnmnkwii.autograd.MLPG`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">win_mats</span> <span class="o">=</span> <span class="n">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">static_dim</span> <span class="o">=</span> <span class="n">D</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">)</span>
+
+    <span class="n">grads</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">T</span><span class="p">,</span> <span class="n">D</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">static_dim</span><span class="p">):</span>
+        <span class="n">sdw</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">win_mat</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">win_mat</span><span class="o">.</span><span class="n">u</span> <span class="k">for</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="n">win_mats</span><span class="p">])</span>
+
+        <span class="c1"># R: \sum_{l} W_{l}^{T}P_{d,l}W_{l}</span>
+        <span class="n">R</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sdw</span><span class="p">,</span> <span class="n">sdw</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>  <span class="c1"># overwritten in the loop</span>
+
+        <span class="c1"># dtype = np.float64 for bandmat</span>
+        <span class="n">precisions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">),</span> <span class="n">T</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
+            <span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> \
+                <span class="n">variance_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
+
+            <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span>
+                                  <span class="n">target_bm</span><span class="o">=</span><span class="n">R</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
+            <span class="c1"># r: W_{l}^{T}P_{d,l}</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">bm</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">]))</span>
+
+            <span class="c1"># grad_{d, l} = R^{-1r}</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="n">solve_banded</span><span class="p">((</span><span class="n">R</span><span class="o">.</span><span class="n">l</span><span class="p">,</span> <span class="n">R</span><span class="o">.</span><span class="n">u</span><span class="p">),</span> <span class="n">R</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">full</span><span class="p">())</span>
+            <span class="k">assert</span> <span class="n">grad</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+            <span class="c1"># Finally we get grad for a particular dimension</span>
+            <span class="n">grads</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">grad_output</span><span class="p">[:,</span> <span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">grad</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">grads</span></div>
+
+
+<span class="k">def</span> <span class="nf">full_window_mat</span><span class="p">(</span><span class="n">win_mats</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given banded window matrices, compute cocatenated full window matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        win_mats (list): List of windows matrices given by :func:`build_win_mats`.</span>
+<span class="sd">        T (int): Number of frames.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Cocatenated windows matrix (``T*num_windows x T``).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_full_window_mat</span><span class="p">(</span><span class="n">win_mats</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="unit_variance_mlpg_matrix"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.paramgen.unit_variance_mlpg_matrix">[docs]</a><span class="k">def</span> <span class="nf">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute MLPG matrix assuming input is normalized to have unit-variances.</span>
+
+<span class="sd">    Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),</span>
+<span class="sd">    :math:`W` is a window matrix ``(T x num_windows*T)``, assuming input is</span>
+<span class="sd">    normalized to have unit-variances, MLPG can be written as follows:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        y = R \mu</span>
+
+<span class="sd">    where</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        R = (W^{T} W)^{-1} W^{T}</span>
+
+<span class="sd">    Here we call :math:`R` as the MLPG matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        windows: (list): List of windows.</span>
+<span class="sd">        T (int): Number of frames.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: MLPG matrix (``T x nun_windows*T``).</span>
+
+<span class="sd">    See also:</span>
+<span class="sd">        :func:`nnmnkwii.autograd.UnitVarianceMLPG`,</span>
+<span class="sd">        :func:`nnmnkwii.paramgen.mlpg`.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; windows = [</span>
+<span class="sd">        ...         (0, 0, np.array([1.0])),</span>
+<span class="sd">        ...         (1, 1, np.array([-0.5, 0.0, 0.5])),</span>
+<span class="sd">        ...         (1, 1, np.array([1.0, -2.0, 1.0])),</span>
+<span class="sd">        ...     ]</span>
+<span class="sd">        &gt;&gt;&gt; G.unit_variance_mlpg_matrix(windows, 3)</span>
+<span class="sd">        array([[  2.73835927e-01,   1.95121944e-01,   9.20177400e-02,</span>
+<span class="sd">                  9.75609720e-02,  -9.09090936e-02,  -9.75609720e-02,</span>
+<span class="sd">                 -3.52549881e-01,  -2.43902430e-02,   1.10864742e-02],</span>
+<span class="sd">               [  1.95121944e-01,   3.41463417e-01,   1.95121944e-01,</span>
+<span class="sd">                  1.70731708e-01,  -5.55111512e-17,  -1.70731708e-01,</span>
+<span class="sd">                 -4.87804860e-02,  -2.92682916e-01,  -4.87804860e-02],</span>
+<span class="sd">               [  9.20177400e-02,   1.95121944e-01,   2.73835927e-01,</span>
+<span class="sd">                  9.75609720e-02,   9.09090936e-02,  -9.75609720e-02,</span>
+<span class="sd">                  1.10864742e-02,  -2.43902430e-02,  -3.52549881e-01]], dtype=float32)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">win_mats</span> <span class="o">=</span> <span class="n">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="n">sdw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">win_mat</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">win_mat</span><span class="o">.</span><span class="n">u</span> <span class="k">for</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="n">win_mats</span><span class="p">])</span>
+
+    <span class="n">P</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">sdw</span><span class="p">,</span> <span class="n">sdw</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">win_index</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
+        <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span> <span class="n">target_bm</span><span class="o">=</span><span class="n">P</span><span class="p">)</span>
+    <span class="n">chol_bm</span> <span class="o">=</span> <span class="n">bla</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">lower</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">Pinv</span> <span class="o">=</span> <span class="n">cholesky_inv_banded</span><span class="p">(</span><span class="n">chol_bm</span><span class="o">.</span><span class="n">full</span><span class="p">(),</span> <span class="n">width</span><span class="o">=</span><span class="n">chol_bm</span><span class="o">.</span><span class="n">l</span> <span class="o">+</span> <span class="n">chol_bm</span><span class="o">.</span><span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">cocatenated_window</span> <span class="o">=</span> <span class="n">full_window_mat</span><span class="p">(</span><span class="n">win_mats</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Pinv</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">cocatenated_window</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="reshape_means"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html#nnmnkwii.paramgen.reshape_means">[docs]</a><span class="k">def</span> <span class="nf">reshape_means</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reshape means (``T x D``) to (``T*num_windows x static_dim``).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        means (numpy.ndarray): Means</span>
+<span class="sd">        num_windows (int): Number of windows.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        numpy.ndarray: Reshaped means (``T*num_windows x static_dim``).</span>
+<span class="sd">        No-op if already reshaped.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii import paramgen as G</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; T, static_dim = 2, 2</span>
+<span class="sd">        &gt;&gt;&gt; windows = [</span>
+<span class="sd">        ...     (0, 0, np.array([1.0])),            # static</span>
+<span class="sd">        ...     (1, 1, np.array([-0.5, 0.0, 0.5])), # delta</span>
+<span class="sd">        ...     (1, 1, np.array([1.0, -2.0, 1.0])), # delta-delta</span>
+<span class="sd">        ... ]</span>
+<span class="sd">        &gt;&gt;&gt; means = np.random.rand(T, static_dim * len(windows))</span>
+<span class="sd">        &gt;&gt;&gt; reshaped_means = G.reshape_means(means, static_dim)</span>
+<span class="sd">        &gt;&gt;&gt; assert reshaped_means.shape == (T*len(windows), static_dim)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">D</span> <span class="o">==</span> <span class="n">static_dim</span><span class="p">:</span>
+        <span class="c1"># already reshaped case</span>
+        <span class="k">return</span> <span class="n">means</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
+        <span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">means</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ryuichi Yamamoto.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.13',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

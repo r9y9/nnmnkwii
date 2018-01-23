@@ -1,10 +1,15 @@
 Change log
 ==========
 
-v0.0.13 <2018-xx-xx>
+v0.0.14 <2018-xx-xx>
+--------------------
+
+
+v0.0.13 <2018-01-24>
 --------------------
 
 - `#65`_: Part of example data was not installed by setuptools. Fixed.
+- `#63`_: Windows CI
 
 v0.0.12 <2018-01-04>
 --------------------
@@ -127,3 +132,4 @@ v0.0.1 <2017-08-14>
 .. _#61: https://github.com/r9y9/nnmnkwii/pull/61
 .. _#63: https://github.com/r9y9/nnmnkwii/pull/63
 .. _#65: https://github.com/r9y9/nnmnkwii/issues/65
+.. _#68: https://github.com/r9y9/nnmnkwii/pull/68

@@ -1,0 +1,6 @@
+nnmnkwii\.preprocessing\.preemphasis
+====================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: preemphasis
