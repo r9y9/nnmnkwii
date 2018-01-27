@@ -6,7 +6,7 @@ import numpy as np
 # Compat
 from nnmnkwii.preprocessing import (
     delta_features, trim_zeros_frames, remove_zeros_frames,
-    adjast_frame_length, scale, minmax_scale, meanvar,
+    adjust_frame_length, scale, minmax_scale, meanvar,
     meanstd, minmax)
 
 apply_delta_windows = delta_features

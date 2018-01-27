@@ -13,7 +13,7 @@ from .modspec import modspec, modphase, inv_modspec, modspec_smoothing
 
 # to be removed at v0.1.0
 adjast_frame_length = adjust_frame_length
-adjast_frame_length = adjust_frame_lengths
+adjast_frame_lengths = adjust_frame_lengths
 
 __all__ = ['mulaw', 'inv_mulaw', 'mulaw_quantize', 'inv_mulaw_quantize',
            'preemphasis', 'inv_preemphasis', 'delta_features',
