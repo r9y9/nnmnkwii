@@ -7,8 +7,8 @@ from scipy import interpolate
 def interp1d(f0, kind="slinear"):
     """Coutinuous F0 interpolation from discontinuous F0 trajectory
 
-    This function generates continuous f0 from discontinuous f0 trajecoty
-    based on :func:`scipy.interpolate.interp1d`. This is meat to be used for
+    This function generates continuous f0 from discontinuous f0 trajectory
+    based on :func:`scipy.interpolate.interp1d`. This is meant to be used for
     continuous f0 modeling in statistical speech synthesis
     (e.g., see [1]_, [2]_).
 
