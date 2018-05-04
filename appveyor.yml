@@ -40,7 +40,7 @@ build_script:
   - pip install -e ".[test]"
 
 test_script:
-  - nosetests -v tests/test_io.py -a '!require_local_data'
+  - nosetests -v tests/test_io.py -a "!require_local_data"
 
 after_test:
   - python setup.py bdist_wheel
