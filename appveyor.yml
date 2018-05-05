@@ -36,7 +36,7 @@ build_script:
   - pip install -e ".[test]"
 
 test_script:
-  - nosetests -v tests/ -a "!require_local_data"
+  - nosetests -v tests/ -a "!require_local_data,!modspec,!pickle"
 
 after_test:
   - python setup.py bdist_wheel

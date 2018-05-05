@@ -12,6 +12,8 @@ import torch
 import numpy as np
 from warnings import warn
 
+from nose.plugins.attrib import attr
+
 
 def _get_windows_set():
     windows_set = [
@@ -223,6 +225,7 @@ def test_mlpg_variance_expand():
         assert np.allclose(y.data.numpy(), y_hat.data.numpy())
 
 
+@attr("modspec")
 def test_modspec_gradcheck():
     static_dim = 12
     T = 16
@@ -234,6 +237,7 @@ def test_modspec_gradcheck():
         assert gradcheck(ModSpec(n=n, norm=norm), inputs, eps=1e-4, atol=1e-4)
 
 
+@attr("modspec")
 def test_modspec_gradcheck_large_n():
     static_dim = 12
     T = 16
