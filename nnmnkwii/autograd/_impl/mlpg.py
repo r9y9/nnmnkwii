@@ -55,8 +55,8 @@ class MLPG(Function):
         T, D = means.size()
         assert means.size() == variances.size()
 
-        means_np = means.numpy()
-        variances_np = variances.numpy()
+        means_np = means.detach().numpy()
+        variances_np = variances.detach().numpy()
         y = G.mlpg(means_np, variances_np, self.windows)
         y = torch.from_numpy(y.astype(np.float32))
         return y
@@ -67,9 +67,9 @@ class MLPG(Function):
 
         T, D = means.size()
 
-        grad_output_numpy = grad_output.numpy()
-        means_numpy = means.numpy()
-        variances_numpy = variances.numpy()
+        grad_output_numpy = grad_output.detach().numpy()
+        means_numpy = means.detach().numpy()
+        variances_numpy = variances.detach().numpy()
         grads_numpy = G.mlpg_grad(
             means_numpy, variances_numpy, self.windows,
             grad_output_numpy)

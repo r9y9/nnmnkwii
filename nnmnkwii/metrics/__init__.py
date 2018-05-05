@@ -55,7 +55,7 @@ def melcd(X, Y, lengths=None):
         r = _sqrt((z * z).sum(-1))
         if not np.isscalar(r):
             r = r.mean()
-        return _logdb_const * r
+        return _logdb_const * float(r)
 
     # Case for 1-dim features.
     if len(X.shape) == 2:
@@ -69,7 +69,7 @@ def melcd(X, Y, lengths=None):
         z = x - y
         s += _sqrt((z * z).sum(-1)).sum()
 
-    return _logdb_const * s / T
+    return _logdb_const * float(s) / float(T)
 
 
 def mean_squared_error(X, Y, lengths=None):
@@ -95,7 +95,7 @@ def mean_squared_error(X, Y, lengths=None):
     """
     if lengths is None:
         z = X - Y
-        return math.sqrt((z * z).mean())
+        return math.sqrt(float((z * z).mean()))
 
     T = _sum(lengths) * X.shape[-1]
     s = 0.0
@@ -104,7 +104,7 @@ def mean_squared_error(X, Y, lengths=None):
         z = x - y
         s += (z * z).sum()
 
-    return math.sqrt(s / T)
+    return math.sqrt(float(s) / float(T))
 
 
 def lf0_mean_squared_error(src_f0, src_vuv, tgt_f0, tgt_vuv,
@@ -155,7 +155,7 @@ def lf0_mean_squared_error(src_f0, src_vuv, tgt_f0, tgt_vuv,
         z = x - y
         s += (z * z).sum()
 
-    return math.sqrt(s / T)
+    return math.sqrt(float(s) / float(T))
 
 
 def vuv_error(src_vuv, tgt_vuv, lengths=None):
@@ -174,11 +174,11 @@ def vuv_error(src_vuv, tgt_vuv, lengths=None):
     """
     if lengths is None:
         T = np.prod(src_vuv.shape)
-        return (src_vuv != tgt_vuv).sum() / float(T)
+        return float((src_vuv != tgt_vuv).sum()) / float(T)
 
     T = _sum(lengths)
     s = 0.0
     for x, y, length in zip(src_vuv, tgt_vuv, lengths):
         x, y = x[:length], y[:length]
         s += (x != y).sum()
-    return s / T
+    return float(s) / float(T)

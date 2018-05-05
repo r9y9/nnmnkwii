@@ -23,7 +23,7 @@ class ModSpec(Function):
         assert y.dim() == 2
         self.save_for_backward(y)
 
-        y_np = y.numpy()
+        y_np = y.detach().numpy()
         ms = torch.from_numpy(_modspec(y_np, n=self.n, norm=self.norm))
 
         return ms
@@ -33,7 +33,7 @@ class ModSpec(Function):
         T, D = y.size()
         assert grad_output.size() == torch.Size((self.n // 2 + 1, D))
 
-        y_np = y.numpy()
+        y_np = y.detach().numpy()
         kt = -2 * np.pi / self.n * np.arange(self.n // 2 +
                                              1)[:, None] * np.arange(T)
 
