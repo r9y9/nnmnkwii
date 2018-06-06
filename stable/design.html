@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>General design documentation &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>General design documentation &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="index.html"/>
         <link rel="next" title="設計ドキュメント (Japanese)" href="design_jp.html"/>
         <link rel="prev" title="nnmnkwii (nanami) documentation" href="index.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -114,7 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -354,6 +354,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -501,20 +502,20 @@
 <p>From the success of deep learning, many computational backends (e.g., tensorflow, PyTorch, etc) have been created to help research.
 I think we should provide a library which bridges generic computational backends and speech data. Hence, in this library, we provide</p>
 <ul class="simple">
-<li>Dataset and data iteration abstractions, considering arbitrary large datasets. <a class="reference internal" href="references/datasets.html#module-nnmnkwii.datasets" title="nnmnkwii.datasets"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.datasets</span></code></a></li>
-<li>Generic functions for speech synthesis. <a class="reference internal" href="references/autograd.html#module-nnmnkwii.autograd" title="nnmnkwii.autograd"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.autograd</span></code></a></li>
-<li>Pre-processsing, parameter generation and post-processsing utilities. <a class="reference internal" href="references/preprocessing.html#module-nnmnkwii.preprocessing" title="nnmnkwii.preprocessing"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.preprocessing</span></code></a>, <a class="reference internal" href="references/paramgen.html#module-nnmnkwii.paramgen" title="nnmnkwii.paramgen"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.paramgen</span></code></a>, <a class="reference internal" href="references/postfilters.html#module-nnmnkwii.postfilters" title="nnmnkwii.postfilters"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.postfilters</span></code></a></li>
+<li>Dataset and data iteration abstractions, considering arbitrary large datasets. <a class="reference internal" href="references/datasets.html#module-nnmnkwii.datasets" title="nnmnkwii.datasets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.datasets</span></code></a></li>
+<li>Generic functions for speech synthesis. <a class="reference internal" href="references/autograd.html#module-nnmnkwii.autograd" title="nnmnkwii.autograd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.autograd</span></code></a></li>
+<li>Pre-processsing, parameter generation and post-processsing utilities. <a class="reference internal" href="references/preprocessing.html#module-nnmnkwii.preprocessing" title="nnmnkwii.preprocessing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing</span></code></a>, <a class="reference internal" href="references/paramgen.html#module-nnmnkwii.paramgen" title="nnmnkwii.paramgen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.paramgen</span></code></a>, <a class="reference internal" href="references/postfilters.html#module-nnmnkwii.postfilters" title="nnmnkwii.postfilters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.postfilters</span></code></a></li>
 </ul>
-<p>As I believe visualization is important to understand what happens, I plan to provide visualization package (<a class="reference internal" href="references/display.html#module-nnmnkwii.display" title="nnmnkwii.display"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.display</span></code></a>) in the near future.</p>
+<p>As I believe visualization is important to understand what happens, I plan to provide visualization package (<a class="reference internal" href="references/display.html#module-nnmnkwii.display" title="nnmnkwii.display"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.display</span></code></a>) in the near future.</p>
 </div>
 <div class="section" id="design-decisions">
 <h2>Design decisions<a class="headerlink" href="#design-decisions" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li>We provide our library as python packages that can be used in REPL. Command line tools, which would be useful for batch processing, are not included. Users are expected to create their own command line tools if necessary.</li>
 <li>We use in-memory IO as possible, except for loading dataset from files.</li>
-<li>We don’t provide duration/acoustic models, opposite to Merlin. Users are expected to implement their own ones. For generic models may go in <code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.baseline</span></code> module, but it’s not meant to cover all the models.</li>
+<li>We don’t provide duration/acoustic models, opposite to Merlin. Users are expected to implement their own ones. For generic models may go in <code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.baseline</span></code> module, but it’s not meant to cover all the models.</li>
 <li>We don’t provide linguistic feature extraction frontend, except for utilities to convert structural linguistic information (e.g., HTS full-context labels ) to its numeric forms.</li>
-<li>We don’t provide speech analysis/synthesis backend. Users are expected to use another packages for this purpose. e.g., <a class="reference external" href="https://pysptk.readthedocs.io/en/latest/index.html#module-pysptk" title="(in pysptk v0.1.11+2096bb4)"><code class="xref py py-obj docutils literal"><span class="pre">pysptk</span></code></a>, <code class="xref py py-obj docutils literal"><span class="pre">pyworld</span></code> and <code class="xref py py-obj docutils literal"><span class="pre">librosa</span></code>.</li>
+<li>We don’t provide speech analysis/synthesis backend. Users are expected to use another packages for this purpose. e.g., <a class="reference external" href="https://pysptk.readthedocs.io/en/latest/index.html#module-pysptk" title="(in pysptk v0.1.12+abdad49)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pysptk</span></code></a>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">pyworld</span></code> and <code class="xref py py-obj docutils literal notranslate"><span class="pre">librosa</span></code>.</li>
 </ol>
 <p>We will try to keep the library to be modular, easy to understand and reusable.</p>
 </div>
@@ -572,7 +573,7 @@ I think we should provide a library which bridges generic computational backends
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

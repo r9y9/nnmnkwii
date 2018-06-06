@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.autograd.unit_variance_mlpg &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>nnmnkwii.autograd.unit_variance_mlpg &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../index.html"/>
         <link rel="up" title="Autograd" href="../autograd.html"/>
         <link rel="next" title="nnmnkwii.autograd.modspec" href="nnmnkwii.autograd.modspec.html"/>
         <link rel="prev" title="nnmnkwii.autograd.mlpg" href="nnmnkwii.autograd.mlpg.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -355,6 +355,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -480,10 +481,10 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>means</strong> (<a class="reference external" href="http://pytorch.org/docs/master/autograd.html#torch.autograd.Variable" title="(in PyTorch vmaster (0.4.0a0+c6a64f1 ))"><em>torch.autograd.Variable</em></a>) – Means, of shape (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>) or
-(<code class="docutils literal"><span class="pre">T*num_windows</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>). See
-<a class="reference internal" href="nnmnkwii.paramgen.reshape_means.html#nnmnkwii.paramgen.reshape_means" title="nnmnkwii.paramgen.reshape_means"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.paramgen.reshape_means()</span></code></a> to reshape means from
-(<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>) to (<code class="docutils literal"><span class="pre">T*num_windows</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>).</li>
+<li><strong>means</strong> (<em>torch.autograd.Variable</em>) – Means, of shape (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>) or
+(<code class="docutils literal notranslate"><span class="pre">T*num_windows</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>). See
+<a class="reference internal" href="nnmnkwii.paramgen.reshape_means.html#nnmnkwii.paramgen.reshape_means" title="nnmnkwii.paramgen.reshape_means"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.reshape_means()</span></code></a> to reshape means from
+(<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>) to (<code class="docutils literal notranslate"><span class="pre">T*num_windows</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>).</li>
 <li><strong>R</strong> (<em>torch.FloatTensor</em>) – MLPG matrix.</li>
 </ul>
 </td>
@@ -492,9 +493,9 @@
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="../autograd.html#nnmnkwii.autograd.UnitVarianceMLPG" title="nnmnkwii.autograd.UnitVarianceMLPG"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.autograd.UnitVarianceMLPG</span></code></a>,
-<a class="reference internal" href="nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.paramgen.unit_variance_mlpg_matrix" title="nnmnkwii.paramgen.unit_variance_mlpg_matrix"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.paramgen.unit_variance_mlpg_matrix()</span></code></a>,
-<code class="xref py py-func docutils literal"><span class="pre">reshape_means()</span></code>.</p>
+<p class="last"><a class="reference internal" href="../autograd.html#nnmnkwii.autograd.UnitVarianceMLPG" title="nnmnkwii.autograd.UnitVarianceMLPG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.autograd.UnitVarianceMLPG</span></code></a>,
+<a class="reference internal" href="nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.paramgen.unit_variance_mlpg_matrix" title="nnmnkwii.paramgen.unit_variance_mlpg_matrix"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.unit_variance_mlpg_matrix()</span></code></a>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">reshape_means()</span></code>.</p>
 </div>
 </dd></dl>
 
@@ -544,7 +545,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>A quick start guide &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>A quick start guide &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../index.html"/>
         <link rel="next" title="DNN text-to-speech synthesis (en)" href="tts/01-DNN-based statistical speech synthesis (en).html"/>
         <link rel="prev" title="設計ドキュメント (Japanese)" href="../../design_jp.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -114,7 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Load-aligment-file">Load aligment file</a></li>
@@ -354,6 +354,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -644,11 +645,11 @@ will need the following packages:</p>
 example data sources (i.e., collection of features). Let’s see how we
 can process them through the guide.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%</span><span class="k">pylab</span> inline
 <span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">Audio</span>
@@ -664,21 +665,21 @@ can process them through the guide.</p>
 Populating the interactive namespace from numpy and matplotlib
 </pre></div></div>
 </div>
-<div class="section" id="Playing-with-audio-and-it's-alignment-file">
-<h2>Playing with audio and it’s alignment file<a class="headerlink" href="#Playing-with-audio-and-it's-alignment-file" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="Playing-with-audio-and-it’s-alignment-file">
+<h2>Playing with audio and it’s alignment file<a class="headerlink" href="#Playing-with-audio-and-it’s-alignment-file" title="Permalink to this headline">¶</a></h2>
 <p>In this section, you will learn how to prepare time-aligned
 linguistic/acoustic features pair, which is typically needed to train
 acoustic models.</p>
 <div class="section" id="Load-wav-file">
 <h3>Load wav file<a class="headerlink" href="#Load-wav-file" title="Permalink to this headline">¶</a></h3>
-<p>You can get an example file path by <code class="docutils literal"><span class="pre">example_audio_file</span></code>. Load it with
-<code class="docutils literal"><span class="pre">scipy.io.wavfile</span></code>. Let’s see how it looks like.</p>
+<p>You can get an example file path by <code class="docutils literal notranslate"><span class="pre">example_audio_file</span></code>. Load it with
+<code class="docutils literal notranslate"><span class="pre">scipy.io.wavfile</span></code>. Let’s see how it looks like.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_audio_file</span>
 <span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">wavfile</span>
 
@@ -691,7 +692,7 @@ acoustic models.</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[2]:
 </pre></div>
 </div>
@@ -715,13 +716,13 @@ acoustic models.</p>
 <a class="reference external" href="https://github.com/mmorise/World">WORLD</a>, A high-quality speech
 analysis, manipulation and synthesis system for acoustic feature
 extraction purpose. In the notebook we use its python wrapper
-<code class="docutils literal"><span class="pre">pyworld</span></code>.</p>
+<code class="docutils literal notranslate"><span class="pre">pyworld</span></code>.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">pyworld</span>
 
 <span class="n">frame_period</span> <span class="o">=</span> <span class="mi">5</span> <span class="c1"># ms</span>
@@ -745,11 +746,11 @@ extraction purpose. In the notebook we use its python wrapper
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[3]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f99e7bab4a8&gt;
 </pre></div>
 </div>
@@ -768,11 +769,11 @@ extraction purpose. In the notebook we use its python wrapper
 label file, which is aligned with example audio. The label file was
 taken from Merlin’s demo.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_label_file</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="kn">import</span> <span class="n">hts</span>
 
@@ -797,11 +798,11 @@ taken from Merlin’s demo.</p>
 cut silence frames from acousotic features. This can be used for
 pre-processing.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">silence_indices</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">silence_frame_indices</span><span class="p">()</span>
 <span class="n">trimmed_spectrogram</span> <span class="o">=</span> <span class="n">spectrogram</span><span class="p">[:</span><span class="n">labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">()]</span>
 <span class="n">silence_removed_spectrogram</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">trimmed_spectrogram</span><span class="p">,</span> <span class="n">silence_indices</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -814,11 +815,11 @@ pre-processing.</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[5]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f99e5c1cba8&gt;
 </pre></div>
 </div>
@@ -831,11 +832,11 @@ pre-processing.</p>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">silence_removed_f0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">f0</span><span class="p">[:</span><span class="n">labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">()],</span> <span class="n">silence_indices</span><span class="p">)</span>
 <span class="n">silence_removed_aperiodicity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">aperiodicity</span><span class="p">[:</span><span class="n">labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">()],</span>
                                          <span class="n">silence_indices</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -846,11 +847,11 @@ pre-processing.</p>
 <p>Let’s see how it looks like in time domain. You will see that start/end
 silences are trimmed.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">y</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">synthesize</span><span class="p">(</span><span class="n">silence_removed_f0</span><span class="p">,</span> <span class="n">silence_removed_spectrogram</span><span class="p">,</span> <span class="n">silence_removed_aperiodicity</span><span class="p">,</span>
                       <span class="n">fs</span><span class="p">,</span> <span class="n">frame_period</span><span class="p">)</span>
 <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveplot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">fs</span><span class="p">)</span>
@@ -859,7 +860,7 @@ silences are trimmed.</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[7]:
 </pre></div>
 </div>
@@ -882,14 +883,14 @@ silences are trimmed.</p>
 <p>Assuming we have linguistic contexts, in this case, full-context labels.
 We can convert them to its numerical form. The part of linguistic
 feature extraction from full-context labels were adapted from Merlin.
-You can use <code class="docutils literal"><span class="pre">nnmnkwii.frontend.merlin</span></code> and
-<code class="docutils literal"><span class="pre">nnmnkwii.util.example_question_file</span></code> for the purpose.</p>
+You can use <code class="docutils literal notranslate"><span class="pre">nnmnkwii.frontend.merlin</span></code> and
+<code class="docutils literal notranslate"><span class="pre">nnmnkwii.util.example_question_file</span></code> for the purpose.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.frontend</span> <span class="kn">import</span> <span class="n">merlin</span> <span class="k">as</span> <span class="n">fe</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_question_file</span>
 
@@ -904,11 +905,11 @@ You can use <code class="docutils literal"><span class="pre">nnmnkwii.frontend.m
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[8]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f99e5ae76a0&gt;
 </pre></div>
 </div>
@@ -922,21 +923,21 @@ You can use <code class="docutils literal"><span class="pre">nnmnkwii.frontend.m
 </div>
 <p>We can do same thing as we cut silences for acoustic features.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">silence_removed_linguistic_features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">linguistic_features</span><span class="p">,</span> <span class="n">silence_indices</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">print</span><span class="p">(</span><span class="n">silence_removed_spectrogram</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">silence_removed_linguistic_features</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
@@ -967,15 +968,15 @@ the documentation.</p>
 <div class="section" id="Get-example-file-sources">
 <h3>Get example file sources<a class="headerlink" href="#Get-example-file-sources" title="Permalink to this headline">¶</a></h3>
 <p>We use pre-computed linguistic/acoustic features from CMU ARCTIC
-dataset. <code class="docutils literal"><span class="pre">example_file_data_sources_for_acoustic_model</span></code> returns data
+dataset. <code class="docutils literal notranslate"><span class="pre">example_file_data_sources_for_acoustic_model</span></code> returns data
 sources that defines 1) where we can find example data and 2) how we
 load them.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
@@ -986,14 +987,14 @@ load them.</p>
 <div class="section" id="Load-data">
 <h3>Load data<a class="headerlink" href="#Load-data" title="Permalink to this headline">¶</a></h3>
 <p>To load data, you can use our dataset implementations. In this example,
-we will show how the most basic <code class="docutils literal"><span class="pre">FileSourceDataset</span></code> works, which loads
+we will show how the most basic <code class="docutils literal notranslate"><span class="pre">FileSourceDataset</span></code> works, which loads
 data on-demand while iteration or indexing.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileSourceDataset</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
@@ -1003,21 +1004,21 @@ data on-demand while iteration or indexing.</p>
 <p>Note that at the moment no data is actually loaded. It just collect
 files to be processed according to the data source.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X</span><span class="o">.</span><span class="n">collected_files</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[13]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>array([[ &#39;/home/ryuichi/Dropbox/sp/nnmnkwii/nnmnkwii/util/_example_data/slt_arctic_demo_data/X_acoustic/arctic_a0001.npz&#39;],
        [ &#39;/home/ryuichi/Dropbox/sp/nnmnkwii/nnmnkwii/util/_example_data/slt_arctic_demo_data/X_acoustic/arctic_a0002.npz&#39;],
        [ &#39;/home/ryuichi/Dropbox/sp/nnmnkwii/nnmnkwii/util/_example_data/slt_arctic_demo_data/X_acoustic/arctic_a0003.npz&#39;]],
@@ -1026,21 +1027,21 @@ files to be processed according to the data source.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">Y</span><span class="o">.</span><span class="n">collected_files</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[14]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>array([[ &#39;/home/ryuichi/Dropbox/sp/nnmnkwii/nnmnkwii/util/_example_data/slt_arctic_demo_data/Y_acoustic/arctic_a0001.npz&#39;],
        [ &#39;/home/ryuichi/Dropbox/sp/nnmnkwii/nnmnkwii/util/_example_data/slt_arctic_demo_data/Y_acoustic/arctic_a0002.npz&#39;],
        [ &#39;/home/ryuichi/Dropbox/sp/nnmnkwii/nnmnkwii/util/_example_data/slt_arctic_demo_data/Y_acoustic/arctic_a0003.npz&#39;]],
@@ -1052,14 +1053,14 @@ files to be processed according to the data source.</p>
 <div class="section" id="Utterance-wise-iteration">
 <h3>Utterance-wise iteration<a class="headerlink" href="#Utterance-wise-iteration" title="Permalink to this headline">¶</a></h3>
 <p>Since typically speech features are saved per utterance. It is nartual
-to support utterance-wise dataset itearation with <code class="docutils literal"><span class="pre">FileSourceDataset</span></code>.
+to support utterance-wise dataset itearation with <code class="docutils literal notranslate"><span class="pre">FileSourceDataset</span></code>.
 Let’s try it.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature shape (T, D): {}, Acoustic feature shape (T, D): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
@@ -1079,68 +1080,68 @@ Linguistic feature shape (T, D): (606, 425), Acoustic feature shape (T, D): (606
 the previous section.</p>
 <div class="section" id="Memory-cache-iteration">
 <h4>Memory cache iteration<a class="headerlink" href="#Memory-cache-iteration" title="Permalink to this headline">¶</a></h4>
-<p>One of the extension of <code class="docutils literal"><span class="pre">FileSourceDataset</span></code> is that
-<code class="docutils literal"><span class="pre">MemoryCacheDataset</span></code>, which has cache functionality.</p>
+<p>One of the extension of <code class="docutils literal notranslate"><span class="pre">FileSourceDataset</span></code> is that
+<code class="docutils literal notranslate"><span class="pre">MemoryCacheDataset</span></code>, which has cache functionality.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">MemoryCacheDataset</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">MemoryCacheDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">MemoryCacheDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-<p>As same in the <code class="docutils literal"><span class="pre">FileSourceDataset</span></code>, at the moment no data is loaded.
+<p>As same in the <code class="docutils literal notranslate"><span class="pre">FileSourceDataset</span></code>, at the moment no data is loaded.
 It means no cached data we have so far.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X</span><span class="o">.</span><span class="n">cached_utterances</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[17]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>OrderedDict()
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">Y</span><span class="o">.</span><span class="n">cached_utterances</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[18]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>OrderedDict()
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature shape (T, D): {}, Acoustic feature shape (T, D): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
@@ -1157,41 +1158,41 @@ Linguistic feature shape (T, D): (606, 425), Acoustic feature shape (T, D): (606
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">cached_utterances</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[20]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>3
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">cached_utterances</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[21]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>3
 </pre></div>
 </div>
@@ -1204,18 +1205,18 @@ multiple times.</p>
 <div class="section" id="Frame-wise-iteration">
 <h3>Frame-wise iteration<a class="headerlink" href="#Frame-wise-iteration" title="Permalink to this headline">¶</a></h3>
 <p>The last step of the section shows how to iterate dataset by frame-wise
-manner. Similar to <code class="docutils literal"><span class="pre">MemoryCacheDataset</span></code>, we provide
-<code class="docutils literal"><span class="pre">MemoryCacheFramewiseDataset</span></code>. One thing I should note is that we need
+manner. Similar to <code class="docutils literal notranslate"><span class="pre">MemoryCacheDataset</span></code>, we provide
+<code class="docutils literal notranslate"><span class="pre">MemoryCacheFramewiseDataset</span></code>. One thing I should note is that we need
 to give utterance lengths at dataset construction time. This is because
 by design, a dataset represents <em>fixed</em> sized set of features. Without
-utterance lengths (i.e. number of time frames for each utterance), we
+utterance lengths (i.e.&nbsp;number of time frames for each utterance), we
 cannot compute size of dataset.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
 
 <span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
@@ -1224,11 +1225,11 @@ cannot compute size of dataset.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">utt_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]</span>
 <span class="k">print</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">)</span>
 </pre></div>
@@ -1243,11 +1244,11 @@ cannot compute size of dataset.</p>
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">MemoryCacheFramewiseDataset</span>
 
 <span class="n">X</span> <span class="o">=</span> <span class="n">MemoryCacheFramewiseDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">utt_lengths</span><span class="p">)</span>
@@ -1256,51 +1257,51 @@ cannot compute size of dataset.</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[25]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>1859
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [26]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="nb">len</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[26]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>1859
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [27]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">Y</span><span class="p">[:</span><span class="mi">3</span><span class="p">]):</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature dimention (D,): {}, Acoustic feature dimention (D,): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
@@ -1367,7 +1368,7 @@ systems and how to build voice conversion systems.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

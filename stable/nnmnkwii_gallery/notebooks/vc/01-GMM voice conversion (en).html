@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GMM-based voice conversion (en) &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>GMM-based voice conversion (en) &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../../index.html"/>
         <link rel="next" title="Autograd" href="../../../references/autograd.html"/>
         <link rel="prev" title="Bidirectional-LSTM based RNNs for text-to-speech synthesis (en)" href="../tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -114,7 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -354,6 +354,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -636,8 +637,8 @@ found at:</p>
 <ul class="simple">
 <li>T. Toda, A. W. Black, and K. Tokuda, “Voice conversion based on
 maximum likelihood estimation of spectral parameter trajectory,”
-IEEETrans. Audio, Speech, Lang. Process, vol. 15, no. 8, pp.
-2222–2235, Nov. 2007.</li>
+IEEETrans. Audio, Speech, Lang. Process, vol.&nbsp;15, no. 8,
+pp.&nbsp;2222–2235, Nov.&nbsp;2007.</li>
 </ul>
 <p>In this demo, we use differencial spectrum modification technique to get
 high speech quality described in the following paper:</p>
@@ -659,18 +660,18 @@ dependencies, you will need the following packages:</p>
 </ul>
 <p>Please make sure that you have all dependneices if you are trying to run
 the notebook locally.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pysptk</span> <span class="n">pyworld</span> <span class="n">librosa</span> <span class="n">tqdm</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pysptk</span> <span class="n">pyworld</span> <span class="n">librosa</span> <span class="n">tqdm</span>
 </pre></div>
 </div>
 <p>Also, please download <a class="reference external" href="http://www.festvox.org/cmu_arctic/">CMU ARCTIC
 dataset</a> and configure
-<code class="docutils literal"><span class="pre">DATA_ROOT</span></code> to point where you have data.</p>
+<code class="docutils literal notranslate"><span class="pre">DATA_ROOT</span></code> to point where you have data.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">expanduser</span>
 <span class="n">DATA_ROOT</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="s2">&quot;cmu_arctic&quot;</span><span class="p">)</span>
 <span class="o">!</span>ls <span class="nv">$DATA_ROOT</span>
@@ -686,13 +687,13 @@ cmu_us_awb_arctic  cmu_us_clb_arctic  cmu_us_ksp_arctic  cmu_us_slt_arctic
 cmu_us_bdl_arctic  cmu_us_jmk_arctic  cmu_us_rms_arctic
 </pre></div></div>
 </div>
-<p>Each sub directiory inside <code class="docutils literal"><span class="pre">DATA_ROOT</span></code> must have <code class="docutils literal"><span class="pre">wav</span></code> directory.</p>
+<p>Each sub directiory inside <code class="docutils literal notranslate"><span class="pre">DATA_ROOT</span></code> must have <code class="docutils literal notranslate"><span class="pre">wav</span></code> directory.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%</span><span class="k">pylab</span> inline
 <span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 
@@ -747,11 +748,11 @@ dataset are:</p>
 <div class="section" id="Data-specification">
 <h3>Data specification<a class="headerlink" href="#Data-specification" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">fs</span> <span class="o">=</span> <span class="mi">16000</span>
 <span class="n">fftlen</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">get_cheaptrick_fft_size</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
 <span class="n">alpha</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">mcepalpha</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
@@ -781,19 +782,19 @@ dataset are:</p>
 <p>We need to specify 1) where to find source files and 2) how to process
 them. In this case,</p>
 <ol class="arabic simple">
-<li><code class="docutils literal"><span class="pre">collect_files</span></code> : Collects <code class="docutils literal"><span class="pre">.wav</span></code> files. Also we split the files
+<li><code class="docutils literal notranslate"><span class="pre">collect_files</span></code> : Collects <code class="docutils literal notranslate"><span class="pre">.wav</span></code> files. Also we split the files
 into train/test set.</li>
-<li><code class="docutils literal"><span class="pre">collect_features</span></code> : Loads wav file and compute mel-cepstrum.</li>
+<li><code class="docutils literal notranslate"><span class="pre">collect_features</span></code> : Loads wav file and compute mel-cepstrum.</li>
 </ol>
 <p>For CMU ARCTIC case, we can use built-in data source
-<code class="docutils literal"><span class="pre">CMUArcticWavFileDataSource</span></code> to collects wav files. However, you can
+<code class="docutils literal notranslate"><span class="pre">CMUArcticWavFileDataSource</span></code> to collects wav files. However, you can
 do it manually pretty easily.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">class</span> <span class="nc">MyFileDataSource</span><span class="p">(</span><span class="n">CMUArcticWavFileDataSource</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -822,15 +823,15 @@ do it manually pretty easily.</p>
 </pre></div>
 </div>
 </div>
-<p>We choose <code class="docutils literal"><span class="pre">clb</span></code> as source speaker and <code class="docutils literal"><span class="pre">slt</span></code> as target speaker,
+<p>We choose <code class="docutils literal notranslate"><span class="pre">clb</span></code> as source speaker and <code class="docutils literal notranslate"><span class="pre">slt</span></code> as target speaker,
 respectively. To align source and target datasets later, define data
 sources separetely.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">clb_source</span> <span class="o">=</span> <span class="n">MyFileDataSource</span><span class="p">(</span><span class="n">data_root</span><span class="o">=</span><span class="n">DATA_ROOT</span><span class="p">,</span>
                                          <span class="n">speakers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;clb&quot;</span><span class="p">],</span> <span class="n">max_files</span><span class="o">=</span><span class="n">max_files</span><span class="p">)</span>
 <span class="n">slt_source</span> <span class="o">=</span> <span class="n">MyFileDataSource</span><span class="p">(</span><span class="n">data_root</span><span class="o">=</span><span class="n">DATA_ROOT</span><span class="p">,</span>
@@ -843,13 +844,13 @@ sources separetely.</p>
 <h3>Convert dataset to arrays<a class="headerlink" href="#Convert-dataset-to-arrays" title="Permalink to this headline">¶</a></h3>
 <p>Since we are using small dataset, it’s enough to load entire dataset
 into memory at once. To handle varaible-length frame lengths, we use
-<code class="docutils literal"><span class="pre">PaddedFileSourceDataset</span></code> here.</p>
+<code class="docutils literal notranslate"><span class="pre">PaddedFileSourceDataset</span></code> here.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X</span> <span class="o">=</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">clb_source</span><span class="p">,</span> <span class="mi">1200</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">slt_source</span><span class="p">,</span> <span class="mi">1200</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="k">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -871,11 +872,11 @@ into memory at once. To handle varaible-length frame lengths, we use
 <h3>How data look like?<a class="headerlink" href="#How-data-look-like?" title="Permalink to this headline">¶</a></h3>
 <p>Pick an utterance pair and visualize features.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Plotting util</span>
 <span class="k">def</span> <span class="nf">plot_parallel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
     <span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
@@ -889,11 +890,11 @@ into memory at once. To handle varaible-length frame lengths, we use
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">22</span> <span class="c1"># any</span>
 <span class="n">plot_parallel</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span><span class="n">Y</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 </pre></div>
@@ -909,13 +910,13 @@ into memory at once. To handle varaible-length frame lengths, we use
 </div>
 <div class="section" id="Align-source-and-target-features">
 <h3>Align source and target features<a class="headerlink" href="#Align-source-and-target-features" title="Permalink to this headline">¶</a></h3>
-<p>We can use <code class="docutils literal"><span class="pre">nnmnkwii.preprocessing.DTWAligner</span></code></p>
+<p>We can use <code class="docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing.DTWAligner</span></code></p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Alignment</span>
 <span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">DTWAligner</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="n">melcd</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">((</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">))</span>
 </pre></div>
@@ -925,11 +926,11 @@ into memory at once. To handle varaible-length frame lengths, we use
 <div class="section" id="How-parallel-data-look-like?">
 <h3>How parallel data look like?<a class="headerlink" href="#How-parallel-data-look-like?" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">plot_parallel</span><span class="p">(</span><span class="n">X_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span><span class="n">Y_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -945,11 +946,11 @@ into memory at once. To handle varaible-length frame lengths, we use
 focus on spectral charactaristics, drop 1-st dimention from aligned
 features.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="c1"># Drop 1st (power) dimention</span>
 <span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">X_aligned</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">Y_aligned</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
 </pre></div>
@@ -962,11 +963,11 @@ features.</p>
 Later we can use the delta features to sequence-wise parameter
 generation; a.k.a Maximum Likelihood Parameter Generation (MLPG).</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">static_dim</span> <span class="o">=</span> <span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="k">if</span> <span class="n">use_delta</span><span class="p">:</span>
     <span class="n">X_aligned</span> <span class="o">=</span> <span class="n">apply_each2d_trim</span><span class="p">(</span><span class="n">delta_features</span><span class="p">,</span> <span class="n">X_aligned</span><span class="p">,</span> <span class="n">windows</span><span class="p">)</span>
@@ -975,11 +976,11 @@ generation; a.k.a Maximum Likelihood Parameter Generation (MLPG).</p>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">plot_parallel</span><span class="p">(</span><span class="n">X_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span><span class="n">Y_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
 </pre></div>
 </div>
@@ -997,11 +998,11 @@ generation; a.k.a Maximum Likelihood Parameter Generation (MLPG).</p>
 <p>As we represent features in numpy arrays, it’s very easy to combine
 them.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">XY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">XY</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
@@ -1018,11 +1019,11 @@ them.</p>
 <p>Note that we padded zeros to data. Removes zeros frames to speed-up
 training.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">XY</span> <span class="o">=</span> <span class="n">remove_zeros_frames</span><span class="p">(</span><span class="n">XY</span><span class="p">)</span>
 <span class="k">print</span><span class="p">(</span><span class="n">XY</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
@@ -1040,15 +1041,15 @@ training.</p>
 </div>
 <div class="section" id="Model">
 <h2>Model<a class="headerlink" href="#Model" title="Permalink to this headline">¶</a></h2>
-<p>We use <code class="docutils literal"><span class="pre">sklearn.mixture.GaussianMixture</span></code>.
-<code class="docutils literal"><span class="pre">sklearn.mixture.BayesianGaussianMixture</span></code> can also be used as an
+<p>We use <code class="docutils literal notranslate"><span class="pre">sklearn.mixture.GaussianMixture</span></code>.
+<code class="docutils literal notranslate"><span class="pre">sklearn.mixture.BayesianGaussianMixture</span></code> can also be used as an
 drop-in replacement.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span>
     <span class="n">n_components</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">covariance_type</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
@@ -1075,11 +1076,11 @@ Wall time: 10min 32s
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[16]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>GaussianMixture(covariance_type=&#39;full&#39;, init_params=&#39;kmeans&#39;, max_iter=100,
         means_init=None, n_components=64, n_init=1, precisions_init=None,
         random_state=None, reg_covar=1e-06, tol=0.001, verbose=1,
@@ -1093,11 +1094,11 @@ Wall time: 10min 32s
 <div class="section" id="Means">
 <h4>Means<a class="headerlink" href="#Means" title="Permalink to this headline">¶</a></h4>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">plot</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean of mixture {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>
@@ -1105,11 +1106,11 @@ Wall time: 10min 32s
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[17]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.legend.Legend at 0x7f6c670898d0&gt;
 </pre></div>
 </div>
@@ -1125,22 +1126,22 @@ Wall time: 10min 32s
 <div class="section" id="Covariances">
 <h4>Covariances<a class="headerlink" href="#Covariances" title="Permalink to this headline">¶</a></h4>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">imshow</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;bottom left&quot;</span><span class="p">)</span>
 <span class="n">colorbar</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[18]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f6c67210e80&gt;
 </pre></div>
 </div>
@@ -1154,11 +1155,11 @@ Wall time: 10min 32s
 </div>
 <p>Digonal part of covariance matrix, which is expected to be dominant.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
          <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Diagonal part of covariance matrix, mixture {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
@@ -1167,11 +1168,11 @@ Wall time: 10min 32s
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[19]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.legend.Legend at 0x7f6c64beff28&gt;
 </pre></div>
 </div>
@@ -1190,11 +1191,11 @@ Wall time: 10min 32s
 <h2>Test<a class="headerlink" href="#Test" title="Permalink to this headline">¶</a></h2>
 <p>Once we trained GMMs, we can perform parameter generation using MLPG.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">def</span> <span class="nf">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">diffvc</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
     <span class="c1"># GMM-based parameter generation is provided by the library in `baseline` module</span>
     <span class="k">if</span> <span class="n">disable_mlpg</span><span class="p">:</span>
@@ -1246,11 +1247,11 @@ sequence and can produce less-noisy speech.</p>
 <li>Converted speech (w/ MLPG)</li>
 </ul>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">clb_source</span><span class="o">.</span><span class="n">test_paths</span><span class="p">,</span> <span class="n">slt_source</span><span class="o">.</span><span class="n">test_paths</span><span class="p">)):</span>
     <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{}-th sample&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
     <span class="n">wo_MLPG</span> <span class="o">=</span> <span class="n">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
@@ -1480,11 +1481,11 @@ w/ MLPG
 <div class="section" id="How-different?">
 <h3>How different?<a class="headerlink" href="#How-different?" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">def</span> <span class="nf">vis_difference</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">which_dims</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">T_max</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">static_paramgen</span> <span class="o">=</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]))],</span> <span class="n">diff</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     <span class="n">paramgen</span> <span class="o">=</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="n">windows</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
@@ -1509,11 +1510,11 @@ w/ MLPG
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">which_dims</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">vis_difference</span><span class="p">(</span><span class="n">X_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">Y_aligned</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">T_max</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">which_dims</span><span class="o">=</span><span class="n">which_dims</span><span class="p">)</span>
@@ -1575,7 +1576,7 @@ w/ MLPG
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

@@ -1,6 +1,13 @@
 Change log
 ==========
 
+v0.0.14 <2018-06-06>
+--------------------
+
+- `#67`_: Windows support (experimental)
+- `#66`_: Fixed window installation issue
+- `#71`_: Bump bandmat version to v0.7
+
 v0.0.13 <2018-01-24>
 --------------------
 
@@ -128,4 +135,7 @@ v0.0.1 <2017-08-14>
 .. _#61: https://github.com/r9y9/nnmnkwii/pull/61
 .. _#63: https://github.com/r9y9/nnmnkwii/pull/63
 .. _#65: https://github.com/r9y9/nnmnkwii/issues/65
+.. _#66: https://github.com/r9y9/nnmnkwii/issues/66
+.. _#67: https://github.com/r9y9/nnmnkwii/issues/67
 .. _#68: https://github.com/r9y9/nnmnkwii/pull/68
+.. _#71: https://github.com/r9y9/nnmnkwii/pull/71

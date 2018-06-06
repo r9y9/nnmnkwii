@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.paramgen.mlpg &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>nnmnkwii.paramgen.mlpg &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../index.html"/>
         <link rel="up" title="Parameter generation" href="../paramgen.html"/>
         <link rel="next" title="nnmnkwii.paramgen.mlpg_grad" href="nnmnkwii.paramgen.mlpg_grad.html"/>
         <link rel="prev" title="nnmnkwii.paramgen.build_win_mats" href="nnmnkwii.paramgen.build_win_mats.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -355,6 +355,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -475,30 +476,30 @@
 <dt id="nnmnkwii.paramgen.mlpg">
 <code class="descclassname">nnmnkwii.paramgen.</code><code class="descname">mlpg</code><span class="sig-paren">(</span><em>mean_frames</em>, <em>variance_frames</em>, <em>windows</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/paramgen/_mlpg.html#mlpg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.paramgen.mlpg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Maximum Parameter Likelihood Generation (MLPG)</p>
-<p>Function <code class="docutils literal"><span class="pre">f:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>.</p>
+<p>Function <code class="docutils literal notranslate"><span class="pre">f:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>.</p>
 <p>It peforms Maximum Likelihood Parameter Generation (MLPG) algorithm
 to generate static features from static + dynamic features over
 time frames dimension-by-dimension.</p>
-<p>Let <span class="math">\(\mu\)</span> (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">1</span></code>) is the input mean sequence of a particular
-dimension and <span class="math">\(y\)</span> (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">1</span></code>) is the static
+<p>Let <span class="math notranslate nohighlight">\(\mu\)</span> (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">1</span></code>) is the input mean sequence of a particular
+dimension and <span class="math notranslate nohighlight">\(y\)</span> (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">1</span></code>) is the static
 feature sequence we want to compute, the formula of MLPG is written as:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[y = A^{-1} b\]</div>
 <p>where</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[A = \sum_{l} W_{l}^{T}P_{l}W_{l}\]</div>
 <p>,</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[b = P\mu\]</div>
-<p><span class="math">\(W_{l}\)</span> is the <code class="docutils literal"><span class="pre">l</span></code>-th window matrix (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">T</span></code>) and <span class="math">\(P\)</span>
-(<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">T</span></code>) is the precision matrix which is given by the inverse of
+<p><span class="math notranslate nohighlight">\(W_{l}\)</span> is the <code class="docutils literal notranslate"><span class="pre">l</span></code>-th window matrix (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">T</span></code>) and <span class="math notranslate nohighlight">\(P\)</span>
+(<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">T</span></code>) is the precision matrix which is given by the inverse of
 variance matrix.</p>
-<p>The implementation was heavily inspired by <a class="reference internal" href="#r4" id="id1">[R4]</a> and
+<p>The implementation was heavily inspired by <a class="reference internal" href="#r30a4c119ab1e-1" id="id1">[1]</a> and
 using <a class="reference external" href="https://github.com/MattShannon/bandmat">bandmat</a> for efficient computation.</p>
-<table class="docutils citation" frame="void" id="r4" rules="none">
+<table class="docutils citation" frame="void" id="r30a4c119ab1e-1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
-<tr><td class="label"><a class="fn-backref" href="#id1">[R4]</a></td><td>M. Shannon, supervised by W. Byrne (2014),
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>M. Shannon, supervised by W. Byrne (2014),
 Probabilistic acoustic modelling for parametric speech synthesis
 PhD thesis, University of Cambridge, UK</td></tr>
 </tbody>
@@ -514,8 +515,8 @@ distributions predicted by neural networks or decision trees.</li>
 <li><strong>variance_frames</strong> (<em>2d</em><em> or </em><em>1darray</em>) – Variances (static + delta ) of gaussian
 distributions over time frames (2d) or global variances (1d).
 If global variances are given, these will get expanded over frames.</li>
-<li><strong>windows</strong> (<em>list</em>) – A sequence of <code class="docutils literal"><span class="pre">(l,</span> <span class="pre">u,</span> <span class="pre">win_coeff)</span></code> triples, where
-<code class="docutils literal"><span class="pre">l</span></code> and <code class="docutils literal"><span class="pre">u</span></code> are non-negative integers specifying the left
+<li><strong>windows</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.6)"><em>list</em></a>) – A sequence of <code class="docutils literal notranslate"><span class="pre">(l,</span> <span class="pre">u,</span> <span class="pre">win_coeff)</span></code> triples, where
+<code class="docutils literal notranslate"><span class="pre">l</span></code> and <code class="docutils literal notranslate"><span class="pre">u</span></code> are non-negative integers specifying the left
 and right extents of the window and <cite>win_coeff</cite> is an array
 specifying the window coefficients.</li>
 </ul>
@@ -527,7 +528,7 @@ specifying the window coefficients.</li>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>            <span class="c1"># static</span>
 <span class="gp">... </span>        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">])),</span> <span class="c1"># delta</span>
@@ -542,7 +543,7 @@ specifying the window coefficients.</li>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg" title="nnmnkwii.autograd.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.autograd.mlpg()</span></code></a></p>
+<p class="last"><a class="reference internal" href="nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg" title="nnmnkwii.autograd.mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.autograd.mlpg()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -592,7 +593,7 @@ specifying the window coefficients.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

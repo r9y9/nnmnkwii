@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.minmax_scale_params &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>nnmnkwii.preprocessing.minmax_scale_params &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="nnmnkwii.preprocessing.minmax_scale" href="nnmnkwii.preprocessing.minmax_scale.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.inv_scale" href="nnmnkwii.preprocessing.inv_scale.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -355,6 +355,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -477,7 +478,7 @@
 <dd><p>Compute parameters required to perform min/max scaling.</p>
 <p>Given data min, max and feature range, computes scalining factor and
 minimum value. Min/max scaling can be done as follows:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x_scaled</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">scale_</span> <span class="o">+</span> <span class="n">min_</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_scaled</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">scale_</span> <span class="o">+</span> <span class="n">min_</span>
 </pre></div>
 </div>
 <table class="docutils field-list" frame="void" rules="none">
@@ -485,9 +486,9 @@ minimum value. Min/max scaling can be done as follows:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Input data</li>
-<li><strong>data_min</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Data min for each feature dimention.</li>
-<li><strong>data_max</strong> (<a class="reference external" href="https://docs.python.org/2/library/array.html#module-array" title="(in Python v2.7)"><em>array</em></a>) – Data max for each feature dimention.</li>
+<li><strong>x</strong> (<em>array</em>) – Input data</li>
+<li><strong>data_min</strong> (<em>array</em>) – Data min for each feature dimention.</li>
+<li><strong>data_max</strong> (<em>array</em>) – Data max for each feature dimention.</li>
 <li><strong>feature_range</strong> (<em>array like</em>) – Feature range.</li>
 </ul>
 </td>
@@ -495,13 +496,13 @@ minimum value. Min/max scaling can be done as follows:</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Minimum value and scaling factor for scaled data.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)">tuple</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)">tuple</a></p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">minmax</span><span class="p">,</span> <span class="n">minmax_scale</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">minmax</span><span class="p">,</span> <span class="n">minmax_scale</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">minmax_scale_params</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
@@ -514,8 +515,8 @@ minimum value. Min/max scaling can be done as follows:</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html#nnmnkwii.preprocessing.minmax_scale" title="nnmnkwii.preprocessing.minmax_scale"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.minmax_scale()</span></code></a>,
-<a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html#nnmnkwii.preprocessing.inv_minmax_scale" title="nnmnkwii.preprocessing.inv_minmax_scale"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_minmax_scale()</span></code></a></p>
+<p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.minmax_scale.html#nnmnkwii.preprocessing.minmax_scale" title="nnmnkwii.preprocessing.minmax_scale"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing.minmax_scale()</span></code></a>,
+<a class="reference internal" href="nnmnkwii.preprocessing.inv_minmax_scale.html#nnmnkwii.preprocessing.inv_minmax_scale" title="nnmnkwii.preprocessing.inv_minmax_scale"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing.inv_minmax_scale()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -565,7 +566,7 @@ minimum value. Min/max scaling can be done as follows:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

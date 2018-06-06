@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utilities &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>Utilities &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../index.html"/>
         <link rel="next" title="nnmnkwii.util.apply_each2d_padded" href="generated/nnmnkwii.util.apply_each2d_padded.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.f0.interp1d" href="generated/nnmnkwii.preprocessing.f0.interp1d.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -114,7 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -354,6 +354,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -470,8 +471,8 @@
 <span id="utilities"></span><h1>Utilities<a class="headerlink" href="#module-nnmnkwii.util" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="function-utilities">
 <h2>Function utilities<a class="headerlink" href="#function-utilities" title="Permalink to this headline">¶</a></h2>
-<p>Most of the feature transformation in <a class="reference internal" href="preprocessing.html#module-nnmnkwii.preprocessing" title="nnmnkwii.preprocessing"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.preprocessing</span></code></a> module is 2d functions
-<code class="docutils literal"><span class="pre">f:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">D')</span></code>. The following utilities can be used for
+<p>Most of the feature transformation in <a class="reference internal" href="preprocessing.html#module-nnmnkwii.preprocessing" title="nnmnkwii.preprocessing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing</span></code></a> module is 2d functions
+<code class="docutils literal notranslate"><span class="pre">f:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">D')</span></code>. The following utilities can be used for
 extending 2d functions to 3d by applying 2d function to each 2d slice.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -479,10 +480,10 @@ extending 2d functions to 3d by applying 2d function to each 2d slice.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_padded.html#nnmnkwii.util.apply_each2d_padded" title="nnmnkwii.util.apply_each2d_padded"><code class="xref py py-obj docutils literal"><span class="pre">apply_each2d_padded</span></code></a>(func2d,&nbsp;X,&nbsp;lengths,&nbsp;…)</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_padded.html#nnmnkwii.util.apply_each2d_padded" title="nnmnkwii.util.apply_each2d_padded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_each2d_padded</span></code></a>(func2d,&nbsp;X,&nbsp;lengths,&nbsp;…)</td>
 <td>Apply function for each padded 2d slice.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_trim.html#nnmnkwii.util.apply_each2d_trim" title="nnmnkwii.util.apply_each2d_trim"><code class="xref py py-obj docutils literal"><span class="pre">apply_each2d_trim</span></code></a>(func2d,&nbsp;X,&nbsp;*args,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_trim.html#nnmnkwii.util.apply_each2d_trim" title="nnmnkwii.util.apply_each2d_trim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">apply_each2d_trim</span></code></a>(func2d,&nbsp;X,&nbsp;*args,&nbsp;**kwargs)</td>
 <td>Apply function for each trimmed 2d slice.</td>
 </tr>
 </tbody>
@@ -498,19 +499,19 @@ Example quetsion file was taken from <a class="reference external" href="https:/
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_label_file.html#nnmnkwii.util.example_label_file" title="nnmnkwii.util.example_label_file"><code class="xref py py-obj docutils literal"><span class="pre">example_label_file</span></code></a>([phone_level])</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_label_file.html#nnmnkwii.util.example_label_file" title="nnmnkwii.util.example_label_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">example_label_file</span></code></a>([phone_level])</td>
 <td>Get path of example HTS-style full-context lable file.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.example_audio_file.html#nnmnkwii.util.example_audio_file" title="nnmnkwii.util.example_audio_file"><code class="xref py py-obj docutils literal"><span class="pre">example_audio_file</span></code></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.example_audio_file.html#nnmnkwii.util.example_audio_file" title="nnmnkwii.util.example_audio_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">example_audio_file</span></code></a>()</td>
 <td>Get path of audio file.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_question_file.html#nnmnkwii.util.example_question_file" title="nnmnkwii.util.example_question_file"><code class="xref py py-obj docutils literal"><span class="pre">example_question_file</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_question_file.html#nnmnkwii.util.example_question_file" title="nnmnkwii.util.example_question_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">example_question_file</span></code></a>()</td>
 <td>Get path of example question file.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html#nnmnkwii.util.example_file_data_sources_for_duration_model" title="nnmnkwii.util.example_file_data_sources_for_duration_model"><code class="xref py py-obj docutils literal"><span class="pre">example_file_data_sources_for_duration_model</span></code></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html#nnmnkwii.util.example_file_data_sources_for_duration_model" title="nnmnkwii.util.example_file_data_sources_for_duration_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">example_file_data_sources_for_duration_model</span></code></a>()</td>
 <td>Get file data sources for duration model training.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html#nnmnkwii.util.example_file_data_sources_for_acoustic_model" title="nnmnkwii.util.example_file_data_sources_for_acoustic_model"><code class="xref py py-obj docutils literal"><span class="pre">example_file_data_sources_for_acoustic_model</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html#nnmnkwii.util.example_file_data_sources_for_acoustic_model" title="nnmnkwii.util.example_file_data_sources_for_acoustic_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">example_file_data_sources_for_acoustic_model</span></code></a>()</td>
 <td>Get file data sources for acoustic model training</td>
 </tr>
 </tbody>
@@ -524,10 +525,10 @@ Example quetsion file was taken from <a class="reference external" href="https:/
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv.html#nnmnkwii.util.linalg.cholesky_inv" title="nnmnkwii.util.linalg.cholesky_inv"><code class="xref py py-obj docutils literal"><span class="pre">cholesky_inv</span></code></a>(L[,&nbsp;lower])</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv.html#nnmnkwii.util.linalg.cholesky_inv" title="nnmnkwii.util.linalg.cholesky_inv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cholesky_inv</span></code></a>(L[,&nbsp;lower])</td>
 <td>Compute inverse matrix of real symmetric positive definite matrix using choleskey factorization.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv_banded.html#nnmnkwii.util.linalg.cholesky_inv_banded" title="nnmnkwii.util.linalg.cholesky_inv_banded"><code class="xref py py-obj docutils literal"><span class="pre">cholesky_inv_banded</span></code></a>(L[,&nbsp;width])</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv_banded.html#nnmnkwii.util.linalg.cholesky_inv_banded" title="nnmnkwii.util.linalg.cholesky_inv_banded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cholesky_inv_banded</span></code></a>(L[,&nbsp;width])</td>
 <td></td>
 </tr>
 </tbody>
@@ -579,7 +580,7 @@ Example quetsion file was taken from <a class="reference external" href="https:/
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

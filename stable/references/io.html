@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IO &mdash; nnmnkwii 0.0.13 documentation</title>
+  <title>IO &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.13 documentation" href="../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../index.html"/>
         <link rel="next" title="nnmnkwii.io.hts.load" href="generated/nnmnkwii.io.hts.load.html"/>
         <link rel="prev" title="Functions" href="functions.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.13
+                0.0.14
               </div>
             
           
@@ -114,7 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -354,6 +354,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -481,10 +482,10 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load" title="nnmnkwii.io.hts.load"><code class="xref py py-obj docutils literal"><span class="pre">load</span></code></a>(path)</td>
+<tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load" title="nnmnkwii.io.hts.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></a>(path)</td>
 <td>Load HTS-style label file</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set" title="nnmnkwii.io.hts.load_question_set"><code class="xref py py-obj docutils literal"><span class="pre">load_question_set</span></code></a>(qs_file_name)</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set" title="nnmnkwii.io.hts.load_question_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_question_set</span></code></a>(qs_file_name)</td>
 <td>Load HTS-style question and convert it to binary/continuous feature extraction regexes.</td>
 </tr>
 </tbody>
@@ -494,7 +495,7 @@
 <em class="property">class </em><code class="descclassname">nnmnkwii.io.hts.</code><code class="descname">HTSLabelFile</code><span class="sig-paren">(</span><em>frame_shift_in_micro_sec=50000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile" title="Permalink to this definition">¶</a></dt>
 <dd><p>Memory representation for HTS-style context labels (a.k.a HTK alignment).</p>
 <p>Indexing is supported. It returns tuple of
-(<code class="docutils literal"><span class="pre">start_time</span></code>, <code class="docutils literal"><span class="pre">end_time</span></code>, <code class="docutils literal"><span class="pre">label</span></code>).</p>
+(<code class="docutils literal notranslate"><span class="pre">start_time</span></code>, <code class="docutils literal notranslate"><span class="pre">end_time</span></code>, <code class="docutils literal notranslate"><span class="pre">label</span></code>).</p>
 <dl class="attribute">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.start_times">
 <code class="descname">start_times</code><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.start_times" title="Permalink to this definition">¶</a></dt>
@@ -516,7 +517,7 @@ full-context annotation.</p>
 
 <p class="rubric">Examples</p>
 <p>Load from file</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_label_file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">example_label_file</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
@@ -524,7 +525,7 @@ full-context annotation.</p>
 </pre></div>
 </div>
 <p>Create memory representation of label</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">HTSLabelFile</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">HTSLabelFile</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3125000</span><span class="p">,</span> <span class="s2">&quot;silB&quot;</span><span class="p">))</span>
 <span class="go">0 3125000 silB</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">3125000</span><span class="p">,</span> <span class="mi">3525000</span><span class="p">,</span> <span class="s2">&quot;m&quot;</span><span class="p">))</span>
@@ -537,7 +538,7 @@ full-context annotation.</p>
 </pre></div>
 </div>
 <p>Save to file</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">TemporaryFile</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">TemporaryFile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TemporaryFile</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
 <span class="go">50</span>
@@ -551,15 +552,15 @@ full-context annotation.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>label</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#tuple" title="(in Python v2.7)"><em>tuple</em></a>) – tuple of (start_time, end_time, context).</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.6)"><em>tuple</em></a>) – tuple of (start_time, end_time, context).</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">self</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – if start_time &gt;= end_time</li>
-<li><code class="xref py py-exc docutils literal"><span class="pre">ValueError</span></code> – if last end time doesn’t match start_time</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if start_time &gt;= end_time</li>
+<li><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#ValueError" title="(in Python v3.6)"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> – if last end time doesn’t match start_time</li>
 </ul>
 </td>
 </tr>
@@ -575,7 +576,7 @@ full-context annotation.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – File path</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – File path</td>
 </tr>
 </tbody>
 </table>
@@ -601,12 +602,12 @@ full-context annotation.</p>
 <dt id="nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices">
 <code class="descname">silence_frame_indices</code><span class="sig-paren">(</span><em>regex=None</em>, <em>frame_shift_in_micro_sec=50000</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.silence_frame_indices"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns silence frame indices</p>
-<p>Similar to <a class="reference internal" href="#nnmnkwii.io.hts.HTSLabelFile.silence_label_indices" title="nnmnkwii.io.hts.HTSLabelFile.silence_label_indices"><code class="xref py py-func docutils literal"><span class="pre">silence_label_indices()</span></code></a>, but returns indices in frame-level.</p>
+<p>Similar to <a class="reference internal" href="#nnmnkwii.io.hts.HTSLabelFile.silence_label_indices" title="nnmnkwii.io.hts.HTSLabelFile.silence_label_indices"><code class="xref py py-func docutils literal notranslate"><span class="pre">silence_label_indices()</span></code></a>, but returns indices in frame-level.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regex</strong> (<a class="reference external" href="https://docs.python.org/2/library/re.html#module-re" title="(in Python v2.7)"><em>re</em></a><em>(</em><em>optional</em><em>)</em>) – Compiled regex to find silence labels.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regex</strong> (<em>re</em><em>(</em><em>optional</em><em>)</em>) – Compiled regex to find silence labels.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Silence frame indices</td>
 </tr>
@@ -624,7 +625,7 @@ full-context annotation.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regex</strong> (<a class="reference external" href="https://docs.python.org/2/library/re.html#module-re" title="(in Python v2.7)"><em>re</em></a><em>(</em><em>optional</em><em>)</em>) – Compiled regex to find silence labels.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regex</strong> (<em>re</em><em>(</em><em>optional</em><em>)</em>) – Compiled regex to find silence labels.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Silence label indices</td>
 </tr>
@@ -642,7 +643,7 @@ full-context annotation.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regex</strong> (<a class="reference external" href="https://docs.python.org/2/library/re.html#module-re" title="(in Python v2.7)"><em>re</em></a><em>(</em><em>optional</em><em>)</em>) – Compiled regex to find silence labels.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>regex</strong> (<em>re</em><em>(</em><em>optional</em><em>)</em>) – Compiled regex to find silence labels.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Silence label indices</td>
 </tr>
@@ -701,7 +702,7 @@ full-context annotation.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.0.13',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
