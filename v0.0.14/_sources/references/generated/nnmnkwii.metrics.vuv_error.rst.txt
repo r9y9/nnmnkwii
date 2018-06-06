@@ -1,0 +1,6 @@
+nnmnkwii\.metrics\.vuv\_error
+=============================
+
+.. currentmodule:: nnmnkwii.metrics
+
+.. autofunction:: vuv_error

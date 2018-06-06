@@ -1,0 +1,892 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.14+b522659 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14+b522659 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.14+b522659
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../design.html">General design documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design_jp.html">設計ドキュメント (Japanese)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Cut-silence-frames">Cut silence frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Linguistic-features">Linguistic features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-datasets">Playing with datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Get-example-file-sources">Get example file sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-data">Load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Utterance-wise-iteration">Utterance-wise iteration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Memory-cache-iteration">Memory cache iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Frame-wise-iteration">Frame-wise iteration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html">DNN text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-loop">Training loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html">Bidirectional-LSTM based RNNs for text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Trainining-loop">Trainining loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html">GMM-based voice conversion (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Convert-dataset-to-arrays">Convert dataset to arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Align-source-and-target-features">Align source and target features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-parallel-data-look-like?">How parallel data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Append-delta-features">Append delta features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Finally,-we-get-joint-feature-matrix">Finally, we get joint feature matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Model">Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Visualize-model">Visualize model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Means">Means</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Covariances">Covariances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Listen-results">Listen results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-different?">How different?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Package references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/autograd.html">Autograd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#functional-interface">Functional interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#function-classes">Function classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/baseline.html">Baseline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/baseline.html#module-nnmnkwii.baseline.gmm">GMM voice conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/datasets.html">Datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#implementation">Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-utterance-wise-iteration">Dataset that supports utterance-wise iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#builtin-data-sources">Builtin data sources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#vctk-en">VCTK (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#voice-statistics-jp">Voice statistics (jp)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#jsut-jp">JSUT (jp)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.duration_features.html">nnmnkwii.frontend.merlin.duration_features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/io.html">IO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load_question_set.html">nnmnkwii.io.hts.load_question_set</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/metrics.html">Evaluation metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/postfilters.html">Post-filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#f0">F0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#alignment">Alignment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/util.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#files">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_label_file.html">nnmnkwii.util.example_label_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_audio_file.html">nnmnkwii.util.example_audio_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-14-2018-xx-xx">v0.0.14 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-10-2017-12-05">v0.0.10 &lt;2017-12-05&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-9-2017-11-14">v0.0.9 &lt;2017-11-14&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-8-2017-10-25">v0.0.8 &lt;2017-10-25&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">nnmnkwii</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>nnmnkwii.io.hts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nnmnkwii.io.hts</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Part of code here is adapted from Merlin. Their license follows:</span>
+<span class="c1">##########################################################################</span>
+<span class="c1">#           The Neural Network (NN) based Speech Synthesis System</span>
+<span class="c1">#                https://github.com/CSTR-Edinburgh/merlin</span>
+<span class="c1">#</span>
+<span class="c1">#                Centre for Speech Technology Research</span>
+<span class="c1">#                     University of Edinburgh, UK</span>
+<span class="c1">#                      Copyright (c) 2014-2015</span>
+<span class="c1">#                        All Rights Reserved.</span>
+<span class="c1">#</span>
+<span class="c1"># The system as a whole and most of the files in it are distributed</span>
+<span class="c1"># under the following copyright and conditions</span>
+<span class="c1">#</span>
+<span class="c1">#  Permission is hereby granted, free of charge, to use and distribute</span>
+<span class="c1">#  this software and its documentation without restriction, including</span>
+<span class="c1">#  without limitation the rights to use, copy, modify, merge, publish,</span>
+<span class="c1">#  distribute, sublicense, and/or sell copies of this work, and to</span>
+<span class="c1">#  permit persons to whom this work is furnished to do so, subject to</span>
+<span class="c1">#  the following conditions:</span>
+<span class="c1">#</span>
+<span class="c1">#   - Redistributions of source code must retain the above copyright</span>
+<span class="c1">#     notice, this list of conditions and the following disclaimer.</span>
+<span class="c1">#   - Redistributions in binary form must reproduce the above</span>
+<span class="c1">#     copyright notice, this list of conditions and the following</span>
+<span class="c1">#     disclaimer in the documentation and/or other materials provided</span>
+<span class="c1">#     with the distribution.</span>
+<span class="c1">#   - The authors&#39; names may not be used to endorse or promote products derived</span>
+<span class="c1">#     from this software without specific prior written permission.</span>
+<span class="c1">#</span>
+<span class="c1">#  THE UNIVERSITY OF EDINBURGH AND THE CONTRIBUTORS TO THIS WORK</span>
+<span class="c1">#  DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING</span>
+<span class="c1">#  ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT</span>
+<span class="c1">#  SHALL THE UNIVERSITY OF EDINBURGH NOR THE CONTRIBUTORS BE LIABLE</span>
+<span class="c1">#  FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES</span>
+<span class="c1">#  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN</span>
+<span class="c1">#  AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,</span>
+<span class="c1">#  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF</span>
+<span class="c1">#  THIS SOFTWARE.</span>
+<span class="c1">##########################################################################</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># TODO: consider two label alignmetn format</span>
+
+
+<div class="viewcode-block" id="HTSLabelFile"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile">[docs]</a><span class="k">class</span> <span class="nc">HTSLabelFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Memory representation for HTS-style context labels (a.k.a HTK alignment).</span>
+
+<span class="sd">    Indexing is supported. It returns tuple of</span>
+<span class="sd">    (``start_time``, ``end_time``, ``label``).</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        start_times (list): Start times in micro seconds.</span>
+<span class="sd">        end_times (list): End times in micro seconds.</span>
+<span class="sd">        contexts (list): Contexts. Each value should have either phone or</span>
+<span class="sd">          full-context annotation.</span>
+
+<span class="sd">    Examples:</span>
+
+<span class="sd">        Load from file</span>
+
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
+<span class="sd">        &gt;&gt;&gt; print(labels[0])</span>
+<span class="sd">        (0, 50000, &#39;x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&amp;x-x#x-x$x-x!x-x;x-x|x\</span>
+<span class="sd">/C:1+1+2/D:0_0/E:x+x@x+x&amp;x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/\</span>
+<span class="sd">J:13+9-2[2]&#39;)</span>
+
+<span class="sd">        Create memory representation of label</span>
+
+<span class="sd">        &gt;&gt;&gt; labels = hts.HTSLabelFile()</span>
+<span class="sd">        &gt;&gt;&gt; labels.append((0, 3125000, &quot;silB&quot;))</span>
+<span class="sd">        0 3125000 silB</span>
+<span class="sd">        &gt;&gt;&gt; labels.append((3125000, 3525000, &quot;m&quot;))</span>
+<span class="sd">        0 3125000 silB</span>
+<span class="sd">        3125000 3525000 m</span>
+<span class="sd">        &gt;&gt;&gt; labels.append((3525000, 4325000, &quot;i&quot;))</span>
+<span class="sd">        0 3125000 silB</span>
+<span class="sd">        3125000 3525000 m</span>
+<span class="sd">        3525000 4325000 i</span>
+
+<span class="sd">        Save to file</span>
+
+<span class="sd">        &gt;&gt;&gt; from tempfile import TemporaryFile</span>
+<span class="sd">        &gt;&gt;&gt; with TemporaryFile(&quot;w&quot;) as f:</span>
+<span class="sd">        ...     f.write(str(labels))</span>
+<span class="sd">        50</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">frame_shift_in_micro_sec</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">context</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="HTSLabelFile.append"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Append a single alignment label</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            label (tuple): tuple of (start_time, end_time, context).</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            self</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if start_time &gt;= end_time</span>
+<span class="sd">            ValueError: if last end time doesn&#39;t match start_time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">end_time</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;end_time (</span><span class="si">{}</span><span class="s2">) must be larger than start_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">end_time</span><span class="p">,</span> <span class="n">start_time</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">start_time</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;start_time (</span><span class="si">{}</span><span class="s2">) must be equal to the last end_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="HTSLabelFile.set_durations"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.set_durations">[docs]</a>    <span class="k">def</span> <span class="nf">set_durations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">durations</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set start/end times from duration features</span>
+
+<span class="sd">        TODO:</span>
+<span class="sd">            this should be refactored</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Unwrap state-axis</span>
+        <span class="n">end_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span>
+            <span class="n">durations</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">frame_shift_in_micro_sec</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">end_times</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unexpected input, maybe&quot;</span><span class="p">)</span>
+        <span class="c1"># Assuming first label starts with time `0`</span>
+        <span class="c1"># Is this really true? probably no</span>
+        <span class="n">start_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_times</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">end_times</span></div>
+
+<div class="viewcode-block" id="HTSLabelFile.load"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load labels from file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path (str): File path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+
+        <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">end_times</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;#&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">cols</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+                <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">start_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="n">end_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+                <span class="n">context</span> <span class="o">=</span> <span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not supported for now&quot;</span><span class="p">)</span>
+
+            <span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+            <span class="n">end_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+            <span class="n">contexts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="n">start_times</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="n">end_times</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="n">contexts</span></div>
+
+<div class="viewcode-block" id="HTSLabelFile.silence_label_indices"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.silence_label_indices">[docs]</a>    <span class="k">def</span> <span class="nf">silence_label_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns silence label indices</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            regex (re(optional)): Compiled regex to find silence labels.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            1darray: Silence label indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">regex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;.*-sil+.*&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">regex</span><span class="o">.</span><span class="n">match</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">)))[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="HTSLabelFile.silence_phone_indices"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.silence_phone_indices">[docs]</a>    <span class="k">def</span> <span class="nf">silence_phone_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns phone-level frame indices</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            regex (re(optional)): Compiled regex to find silence labels.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            1darray: Silence label indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">regex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;.*-sil+.*&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">silence_label_indices</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_states</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="HTSLabelFile.silence_frame_indices"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.silence_frame_indices">[docs]</a>    <span class="k">def</span> <span class="nf">silence_frame_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns silence frame indices</span>
+
+<span class="sd">        Similar to :func:`silence_label_indices`, but returns indices in frame-level.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            regex (re(optional)): Compiled regex to find silence labels.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            1darray: Silence frame indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">regex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;.*-sil+.*&quot;</span><span class="p">)</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">silence_label_indices</span><span class="p">(</span><span class="n">regex</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">start_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span>
+        <span class="n">end_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">start_times</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">end_times</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">is_state_alignment_label</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;]&#39;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;[&#39;</span>
+
+<div class="viewcode-block" id="HTSLabelFile.num_states"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.num_states">[docs]</a>    <span class="k">def</span> <span class="nf">num_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returnes number of states exclusing special begin/end states.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_state_alignment_label</span><span class="p">():</span>
+            <span class="k">return</span> <span class="mi">1</span>
+
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">initial_state_num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">largest_state_num</span> <span class="o">=</span> <span class="n">initial_state_num</span>
+        <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">label</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="n">largest_state_num</span><span class="p">:</span>
+                <span class="n">largest_state_num</span> <span class="o">=</span> <span class="n">n</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">largest_state_num</span> <span class="o">-</span> <span class="n">initial_state_num</span> <span class="o">+</span> <span class="mi">1</span></div>
+
+    <span class="k">def</span> <span class="nf">num_phones</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_state_alignment_label</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">//</span> <span class="bp">self</span><span class="o">.</span><span class="n">num_states</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">num_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">frame_shift_in_micro_sec</span></div>
+
+
+<div class="viewcode-block" id="load"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load">[docs]</a><span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load HTS-style label file</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        path (str): Path of file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        labels (HTSLabelFile): Instance of HTSLabelFile.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_label_file</span>
+<span class="sd">        &gt;&gt;&gt; labels = hts.load(example_label_file())</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">HTSLabelFile</span><span class="p">()</span>
+    <span class="n">labels</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">labels</span></div>
+
+
+<span class="k">def</span> <span class="nf">wildcards2regex</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">convert_number_pattern</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;subphone_features</span>
+<span class="sd">    Convert HTK-style question into regular expression for searching labels.</span>
+<span class="sd">    If convert_number_pattern, keep the following sequences unescaped for</span>
+<span class="sd">    extracting continuous values):</span>
+<span class="sd">    (\d+)       -- handles digit without decimal point</span>
+<span class="sd">    ([\d\.]+)   -- handles digits with and without decimal point</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># handle HTK wildcards (and lack of them) at ends of label:</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;*&#39;</span> <span class="ow">in</span> <span class="n">question</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">question</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">):</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;\A&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">question</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">):</span>
+            <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;\Z&quot;</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;*&#39;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    <span class="c1"># convert remaining HTK wildcards * and ? to equivalent regex:</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">*&#39;</span><span class="p">,</span> <span class="s1">&#39;.*&#39;</span><span class="p">)</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">question</span> <span class="o">+</span> <span class="n">postfix</span>
+
+    <span class="k">if</span> <span class="n">convert_number_pattern</span><span class="p">:</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(</span><span class="se">\\\\</span><span class="s1">d</span><span class="se">\\</span><span class="s1">+</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;(\d+)&#39;</span><span class="p">)</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(</span><span class="se">\\</span><span class="s1">[</span><span class="se">\\\\</span><span class="s1">d</span><span class="se">\\\\\\</span><span class="s1">.</span><span class="se">\\</span><span class="s1">]</span><span class="se">\\</span><span class="s1">+</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;([\d\.]+)&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">question</span>
+
+
+<div class="viewcode-block" id="load_question_set"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set">[docs]</a><span class="k">def</span> <span class="nf">load_question_set</span><span class="p">(</span><span class="n">qs_file_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load HTS-style question and convert it to binary/continuous feature</span>
+<span class="sd">    extraction regexes.</span>
+
+<span class="sd">    This code was taken from Merlin.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        qs_file_name (str): Input HTS-style question file path</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        (binary_dict, continuous_dict): Binary/continuous feature extraction</span>
+<span class="sd">        regexes.</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.io import hts</span>
+<span class="sd">        &gt;&gt;&gt; from nnmnkwii.util import example_question_file</span>
+<span class="sd">        &gt;&gt;&gt; binary_dict, continuous_dict = hts.load_question_set(example_question_file())</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">qs_file_name</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="n">binary_qs_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">binary_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">continuous_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># I guess `LL` means Left-left, but it doesn&#39;t seem to be docmented</span>
+    <span class="c1"># anywhere</span>
+    <span class="n">LL</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="s1">&#39;LL-&#39;</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;{&#39;</span><span class="p">)</span>
+        <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span>
+        <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">temp_line</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">question_list</span> <span class="o">=</span> <span class="n">temp_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+        <span class="n">temp_list</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">question_key</span> <span class="o">=</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;CQS&#39;</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">question_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+            <span class="n">processed_question</span> <span class="o">=</span> <span class="n">wildcards2regex</span><span class="p">(</span>
+                <span class="n">question_list</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">convert_number_pattern</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">continuous_dict</span><span class="p">[</span><span class="n">continuous_qs_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+                <span class="n">processed_question</span><span class="p">)</span>  <span class="c1"># save pre-compiled regular expression</span>
+            <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="n">continuous_qs_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;QS&#39;</span><span class="p">:</span>
+            <span class="n">re_list</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># import ipdb; ipdb.set_trace()</span>
+            <span class="k">for</span> <span class="n">temp_question</span> <span class="ow">in</span> <span class="n">question_list</span><span class="p">:</span>
+                <span class="n">processed_question</span> <span class="o">=</span> <span class="n">wildcards2regex</span><span class="p">(</span><span class="n">temp_question</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">LL</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">question_key</span><span class="p">)</span> <span class="ow">and</span> <span class="n">processed_question</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                    <span class="n">processed_question</span> <span class="o">=</span> <span class="s1">&#39;^&#39;</span> <span class="o">+</span> <span class="n">processed_question</span>
+                <span class="n">re_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">processed_question</span><span class="p">))</span>
+
+            <span class="n">binary_dict</span><span class="p">[</span><span class="n">binary_qs_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">re_list</span>
+            <span class="n">binary_qs_index</span> <span class="o">=</span> <span class="n">binary_qs_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Not supported question format&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span></div>
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ryuichi Yamamoto.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.0.14+b522659',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
