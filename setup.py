@@ -146,7 +146,7 @@ setup(
         'numpy >= 1.11.0',
         'scipy',
         'cython >= ' + min_cython_ver,
-        'bandmat',
+        'bandmat >= 0.7',
         'fastdtw',
         'sklearn',
         'pysptk >= 0.1.7',
