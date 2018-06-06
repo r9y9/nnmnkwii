@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.paramgen.unit_variance_mlpg_matrix &mdash; nnmnkwii 0.0.14+b522659 documentation</title>
+  <title>nnmnkwii.paramgen.unit_variance_mlpg_matrix &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.14+b522659 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../index.html"/>
         <link rel="up" title="Parameter generation" href="../paramgen.html"/>
         <link rel="next" title="nnmnkwii.paramgen.reshape_means" href="nnmnkwii.paramgen.reshape_means.html"/>
         <link rel="prev" title="nnmnkwii.paramgen.mlpg_grad" href="nnmnkwii.paramgen.mlpg_grad.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.14+b522659
+                0.0.14
               </div>
             
           
@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -355,7 +355,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-xx-xx">v0.0.14 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-15-2018-xx-xx">v0.0.15 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -476,26 +477,26 @@
 <dt id="nnmnkwii.paramgen.unit_variance_mlpg_matrix">
 <code class="descclassname">nnmnkwii.paramgen.</code><code class="descname">unit_variance_mlpg_matrix</code><span class="sig-paren">(</span><em>windows</em>, <em>T</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/paramgen/_mlpg.html#unit_variance_mlpg_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.paramgen.unit_variance_mlpg_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute MLPG matrix assuming input is normalized to have unit-variances.</p>
-<p>Let <span class="math">\(\mu\)</span> is the input mean sequence (<code class="docutils literal"><span class="pre">num_windows*T</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>),
-<span class="math">\(W\)</span> is a window matrix <code class="docutils literal"><span class="pre">(T</span> <span class="pre">x</span> <span class="pre">num_windows*T)</span></code>, assuming input is
+<p>Let <span class="math notranslate nohighlight">\(\mu\)</span> is the input mean sequence (<code class="docutils literal notranslate"><span class="pre">num_windows*T</span> <span class="pre">x</span> <span class="pre">static_dim</span></code>),
+<span class="math notranslate nohighlight">\(W\)</span> is a window matrix <code class="docutils literal notranslate"><span class="pre">(T</span> <span class="pre">x</span> <span class="pre">num_windows*T)</span></code>, assuming input is
 normalized to have unit-variances, MLPG can be written as follows:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[y = R \mu\]</div>
 <p>where</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[R = (W^{T} W)^{-1} W^{T}\]</div>
-<p>Here we call <span class="math">\(R\)</span> as the MLPG matrix.</p>
+<p>Here we call <span class="math notranslate nohighlight">\(R\)</span> as the MLPG matrix.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>windows</strong> – (list): List of windows.</li>
-<li><strong>T</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – Number of frames.</li>
+<li><strong>T</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Number of frames.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">MLPG matrix (<code class="docutils literal"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">nun_windows*T</span></code>).</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">MLPG matrix (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">nun_windows*T</span></code>).</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)">numpy.ndarray</a></p>
@@ -505,11 +506,11 @@ normalized to have unit-variances, MLPG can be written as follows:</p>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="../autograd.html#nnmnkwii.autograd.UnitVarianceMLPG" title="nnmnkwii.autograd.UnitVarianceMLPG"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.autograd.UnitVarianceMLPG()</span></code></a>,
-<a class="reference internal" href="nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>.</p>
+<p class="last"><a class="reference internal" href="../autograd.html#nnmnkwii.autograd.UnitVarianceMLPG" title="nnmnkwii.autograd.UnitVarianceMLPG"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.autograd.UnitVarianceMLPG()</span></code></a>,
+<a class="reference internal" href="nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>.</p>
 </div>
 <p class="rubric">Examples</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
 <span class="gp">... </span>        <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">])),</span>
@@ -576,7 +577,7 @@ normalized to have unit-variances, MLPG can be written as follows:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.14+b522659',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

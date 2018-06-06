@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>設計ドキュメント (Japanese) &mdash; nnmnkwii 0.0.14+b522659 documentation</title>
+  <title>設計ドキュメント (Japanese) &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="genindex.html"/>
         <link rel="search" title="Search" href="search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.14+b522659 documentation" href="index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="index.html"/>
         <link rel="next" title="A quick start guide" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html"/>
         <link rel="prev" title="General design documentation" href="design.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.14+b522659
+                0.0.14
               </div>
             
           
@@ -114,7 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -354,7 +354,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-14-2018-xx-xx">v0.0.14 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-15-2018-xx-xx">v0.0.15 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -505,11 +506,11 @@ caffe, mxnet,
 chainer等に代表されるように、CUDAを活用した多次元配列上の数値演算、自動微分をサポートしたフレームワークが必須になってきている。音声、画像、言語など、データを多次元配列として表現できる場合は多くあり、ドメインを問わず多くの分野で使われている。
 本ライブラリは、そういった汎用的な自動微分フレームワークと併せて使用されることを想定し、</p>
 <ul class="simple">
-<li>大規模データを想定したデータセットの構築、データアクセスの抽象化 <a class="reference internal" href="references/datasets.html#module-nnmnkwii.datasets" title="nnmnkwii.datasets"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.datasets</span></code></a></li>
-<li>音声に特化した汎用的な関数 <a class="reference internal" href="references/autograd.html#module-nnmnkwii.autograd" title="nnmnkwii.autograd"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.autograd</span></code></a></li>
-<li>パラメータ生成、前処理/後処理アルゴリズム <a class="reference internal" href="references/preprocessing.html#module-nnmnkwii.preprocessing" title="nnmnkwii.preprocessing"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.preprocessing</span></code></a>, <a class="reference internal" href="references/paramgen.html#module-nnmnkwii.paramgen" title="nnmnkwii.paramgen"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.paramgen</span></code></a>, <a class="reference internal" href="references/postfilters.html#module-nnmnkwii.postfilters" title="nnmnkwii.postfilters"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.postfilters</span></code></a></li>
+<li>大規模データを想定したデータセットの構築、データアクセスの抽象化 <a class="reference internal" href="references/datasets.html#module-nnmnkwii.datasets" title="nnmnkwii.datasets"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.datasets</span></code></a></li>
+<li>音声に特化した汎用的な関数 <a class="reference internal" href="references/autograd.html#module-nnmnkwii.autograd" title="nnmnkwii.autograd"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.autograd</span></code></a></li>
+<li>パラメータ生成、前処理/後処理アルゴリズム <a class="reference internal" href="references/preprocessing.html#module-nnmnkwii.preprocessing" title="nnmnkwii.preprocessing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing</span></code></a>, <a class="reference internal" href="references/paramgen.html#module-nnmnkwii.paramgen" title="nnmnkwii.paramgen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.paramgen</span></code></a>, <a class="reference internal" href="references/postfilters.html#module-nnmnkwii.postfilters" title="nnmnkwii.postfilters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.postfilters</span></code></a></li>
 </ul>
-<p>に注目し、機能を提供すればよいと考える。また、可視化が重要であるという信念のもと、言語特徴量、音響特徴量の可視化ツール (<a class="reference internal" href="references/display.html#module-nnmnkwii.display" title="nnmnkwii.display"><code class="xref py py-obj docutils literal"><span class="pre">nnmnkwii.display</span></code></a>) も提供する（予定）。</p>
+<p>に注目し、機能を提供すればよいと考える。また、可視化が重要であるという信念のもと、言語特徴量、音響特徴量の可視化ツール (<a class="reference internal" href="references/display.html#module-nnmnkwii.display" title="nnmnkwii.display"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nnmnkwii.display</span></code></a>) も提供する（予定）。</p>
 </div>
 <div class="section" id="design-decisions">
 <h2>Design decisions<a class="headerlink" href="#design-decisions" title="Permalink to this headline">¶</a></h2>
@@ -520,8 +521,8 @@ chainer等に代表されるように、CUDAを活用した多次元配列上の
 <li>音響モデルの提供は、ライブラリの範囲外とする。もっともユーザが自分で考えて設定したい部分と考えられるためである。Merlinとは異なり、音響モデルを提供するのではなく、音響モデルを構築するための要素を提供する。</li>
 <li>言語特徴量の抽出 (i.e. frontend)
 は、基本的にHTSやMerlinと同様にライブラリの範囲外とする。</li>
-<li>音響特徴量の抽出は、ライブラリの範囲外とする。 <code class="docutils literal"><span class="pre">pysptk</span></code>,
-<code class="docutils literal"><span class="pre">pyworld</span></code>, <code class="docutils literal"><span class="pre">librosa</span></code> など別パッケージを使用すればよい。</li>
+<li>音響特徴量の抽出は、ライブラリの範囲外とする。 <code class="docutils literal notranslate"><span class="pre">pysptk</span></code>,
+<code class="docutils literal notranslate"><span class="pre">pyworld</span></code>, <code class="docutils literal notranslate"><span class="pre">librosa</span></code> など別パッケージを使用すればよい。</li>
 </ol>
 <p>HTSのデモスクリプトのように、音声合成システム全体が複雑になってしまうのは、避けられない問題であると考える。本ライブラリでは、構成要素がシンプルで小さく、要素同士が疎結合であることを目指し、理解しやすい、再利用しやすいソフトウェアを目指す。</p>
 </div>
@@ -587,7 +588,7 @@ chainer等に代表されるように、CUDAを活用した多次元配列上の
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'0.0.14+b522659',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

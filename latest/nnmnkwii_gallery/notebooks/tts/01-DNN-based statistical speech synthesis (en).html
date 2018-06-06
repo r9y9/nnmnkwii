@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DNN text-to-speech synthesis (en) &mdash; nnmnkwii 0.0.14+b522659 documentation</title>
+  <title>DNN text-to-speech synthesis (en) &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.14+b522659 documentation" href="../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../../index.html"/>
         <link rel="next" title="Bidirectional-LSTM based RNNs for text-to-speech synthesis (en)" href="02-Bidirectional-LSTM based RNNs for speech synthesis (en).html"/>
         <link rel="prev" title="A quick start guide" href="../00-Quick start guide.html"/> 
 
@@ -69,7 +69,7 @@
             
             
               <div class="version">
-                0.0.14+b522659
+                0.0.14
               </div>
             
           
@@ -114,7 +114,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -354,7 +354,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-14-2018-xx-xx">v0.0.14 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-15-2018-xx-xx">v0.0.15 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -654,7 +655,7 @@ and its dependencies, you will need the following packages:</p>
 </ul>
 <p>Please make sure that you have all dependneices if you are trying to run
 the notebook locally.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pysptk</span> <span class="n">pyworld</span> <span class="n">librosa</span> <span class="n">tqdm</span> <span class="n">docopt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">pysptk</span> <span class="n">pyworld</span> <span class="n">librosa</span> <span class="n">tqdm</span> <span class="n">docopt</span>
 </pre></div>
 </div>
 <p>Part of code is adapted from
@@ -665,11 +666,11 @@ visualize features. PyTorch is used to build DNN models.</p>
 lablel files. You can download the necessary files by the following
 script.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">!</span> ./scripts/download_data.sh slt_arctic_full_data
 </pre></div>
 </div>
@@ -683,11 +684,11 @@ slt_arctic_full_data already downloaded
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">%</span><span class="k">pylab</span> inline
 <span class="n">rcParams</span><span class="p">[</span><span class="s2">&quot;figure.figsize&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
 
@@ -731,11 +732,11 @@ wav/label files on-demand are peformance heavy, particulary for acoustic
 features. See the following python script if you are interested in how
 we extract features.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="o">!</span> python ./scripts/prepare_features.py ./data/slt_arctic_full_data
 </pre></div>
 </div>
@@ -750,11 +751,11 @@ Features for acousic model training found, skipping feature extraction.
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">DATA_ROOT</span> <span class="o">=</span> <span class="s2">&quot;./data/slt_arctic_full_data&quot;</span>
 <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.112</span> <span class="c1"># This means 1000 utterances for training data</span>
 <span class="n">random_state</span> <span class="o">=</span> <span class="mi">1234</span>
@@ -764,15 +765,15 @@ Features for acousic model training found, skipping feature extraction.
 <div class="section" id="Data-specification">
 <h3>Data specification<a class="headerlink" href="#Data-specification" title="Permalink to this headline">¶</a></h3>
 <p>Almost same as Merlin’s slt_arctic demo. The only difference is that
-frequency warping paramter <code class="docutils literal"><span class="pre">alpha</span></code> is set to 0.41, instead of 0.58. As
+frequency warping paramter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> is set to 0.41, instead of 0.58. As
 far as I know 0.41 is the best parameter approximating mel-frequency
 axis for 16kHz-sampled audio signals.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">mgc_dim</span> <span class="o">=</span> <span class="mi">180</span>
 <span class="n">lf0_dim</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">vuv_dim</span> <span class="o">=</span> <span class="mi">1</span>
@@ -808,17 +809,17 @@ axis for 16kHz-sampled audio signals.</p>
 <p>We need to specify 1) where to find pre-computed features and 2) how to
 process them. In this case,</p>
 <ol class="arabic simple">
-<li><code class="docutils literal"><span class="pre">collect_files</span></code> : Collects <code class="docutils literal"><span class="pre">.bin</span></code> files. External python script
+<li><code class="docutils literal notranslate"><span class="pre">collect_files</span></code> : Collects <code class="docutils literal notranslate"><span class="pre">.bin</span></code> files. External python script
 writes files in binary format. Also we split the files into
 train/test set.</li>
-<li><code class="docutils literal"><span class="pre">collect_features</span></code> : Just load from file by <code class="docutils literal"><span class="pre">np.fromfile</span></code>.</li>
+<li><code class="docutils literal notranslate"><span class="pre">collect_features</span></code> : Just load from file by <code class="docutils literal notranslate"><span class="pre">np.fromfile</span></code>.</li>
 </ol>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">class</span> <span class="nc">BinaryFileSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">train</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
@@ -847,11 +848,11 @@ have</p>
 <p>Note that dataset itself doesn’t keep features in memory. It loads
 features on-demand while iteration or indexing.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;duration&quot;</span><span class="p">:{},</span> <span class="s2">&quot;acoustic&quot;</span><span class="p">:</span> <span class="p">{}}</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;duration&quot;</span><span class="p">:{},</span> <span class="s2">&quot;acoustic&quot;</span><span class="p">:</span> <span class="p">{}}</span>
 <span class="n">utt_lengths</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;duration&quot;</span><span class="p">:{},</span> <span class="s2">&quot;acoustic&quot;</span><span class="p">:</span> <span class="p">{}}</span>
@@ -876,11 +877,11 @@ features on-demand while iteration or indexing.</p>
 <h3>Utterance lengths<a class="headerlink" href="#Utterance-lengths" title="Permalink to this headline">¶</a></h3>
 <p>Let’s see utterance lengths histrogram.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of utterances:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of frames:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
 <span class="n">hist</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">64</span><span class="p">);</span>
@@ -904,11 +905,11 @@ Total number of frames: 32006
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of utterances:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
 <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of frames:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
 <span class="n">hist</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">64</span><span class="p">);</span>
@@ -936,11 +937,11 @@ Total number of frames: 534363
 <h3>How data look like?<a class="headerlink" href="#How-data-look-like?" title="Permalink to this headline">¶</a></h3>
 <p>Pick an utterance from training data and visualize its features.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">def</span> <span class="nf">vis_utterance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Visualize the following features:</span>
 
@@ -977,11 +978,11 @@ Total number of frames: 534363
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># any</span>
 <span class="n">vis_utterance</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">Y</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">idx</span><span class="p">)</span>
 </pre></div>
@@ -1003,15 +1004,15 @@ dimention. This will be clear after normalization.</p>
 <p>Before training neural networks, we need to normalize data. Following
 Merlin’s demo script, we will apply min/max normalization for linguistic
 features and mean/variance normalization to duration/acoustic features.
-You can compute necessary statistics using <code class="docutils literal"><span class="pre">nnmnkwii.util.minmax</span></code> and
-<code class="docutils literal"><span class="pre">nnmnkwii.util.meanvar</span></code>. The comptuation is online, so we can use the
+You can compute necessary statistics using <code class="docutils literal notranslate"><span class="pre">nnmnkwii.util.minmax</span></code> and
+<code class="docutils literal notranslate"><span class="pre">nnmnkwii.util.meanvar</span></code>. The comptuation is online, so we can use the
 functionality for any large dataset.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X_min</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">X_max</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="n">Y_mean</span> <span class="o">=</span> <span class="p">{}</span>
@@ -1027,11 +1028,11 @@ functionality for any large dataset.</p>
 </div>
 <p>Linguistic features should be clear with normalization as shown below.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [13]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">idx</span> <span class="o">=</span> <span class="mi">0</span>
 <span class="n">typ</span> <span class="o">=</span> <span class="s2">&quot;acoustic&quot;</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">typ</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">][:</span><span class="n">utt_lengths</span><span class="p">[</span><span class="n">typ</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="n">idx</span><span class="p">]]</span>
@@ -1042,11 +1043,11 @@ functionality for any large dataset.</p>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[13]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.colorbar.Colorbar at 0x7f739e34beb8&gt;
 </pre></div>
 </div>
@@ -1061,14 +1062,14 @@ functionality for any large dataset.</p>
 </div>
 <div class="section" id="Combine-datasets-and-normalization.">
 <h3>Combine datasets and normalization.<a class="headerlink" href="#Combine-datasets-and-normalization." title="Permalink to this headline">¶</a></h3>
-<p>In this demo we use PyTorch to build DNNs. <code class="docutils literal"><span class="pre">PyTorchDataset</span></code> is just a
+<p>In this demo we use PyTorch to build DNNs. <code class="docutils literal notranslate"><span class="pre">PyTorchDataset</span></code> is just a
 glue Dataset wrapper, which combines our dataset and normalization.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">torch.utils</span> <span class="kn">import</span> <span class="n">data</span> <span class="k">as</span> <span class="n">data_utils</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 
@@ -1100,11 +1101,11 @@ glue Dataset wrapper, which combines our dataset and normalization.</p>
 <h2>Model<a class="headerlink" href="#Model" title="Permalink to this headline">¶</a></h2>
 <p>We use pretty simple deep feed forward neural networks.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
 <span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
@@ -1117,11 +1118,11 @@ glue Dataset wrapper, which combines our dataset and normalization.</p>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [16]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">class</span> <span class="nc">MyNet</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Very simple deep neural networks.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1149,11 +1150,11 @@ glue Dataset wrapper, which combines our dataset and normalization.</p>
 <p>Network hyper parameters and training configurations (learning rate,
 weight decay, etc).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [17]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">num_hidden_layers</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="n">hidden_size</span> <span class="o">=</span> <span class="mi">256</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">256</span>
@@ -1182,14 +1183,14 @@ True
 <h3>Training loop<a class="headerlink" href="#Training-loop" title="Permalink to this headline">¶</a></h3>
 <p>Our network predicts output features frame-by-frame, so we need to
 convert our datasets to support frame-wise iteration.
-<code class="docutils literal"><span class="pre">MemoryCacheFramewiseDataset</span></code> can do this with cache functionality.
+<code class="docutils literal notranslate"><span class="pre">MemoryCacheFramewiseDataset</span></code> can do this with cache functionality.
 The training loop is pretty simple.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [18]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">functions</span> <span class="k">as</span> <span class="n">Fdef</span> <span class="n">train</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">X_min</span><span class="p">,</span> <span class="n">X_max</span><span class="p">,</span> <span class="n">Y_mean</span><span class="p">,</span> <span class="n">Y_scale</span><span class="p">,</span>
           <span class="n">utt_lengths</span><span class="p">,</span> <span class="n">cache_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">use_cuda</span><span class="p">:</span>
@@ -1258,11 +1259,11 @@ The training loop is pretty simple.</p>
 <div class="section" id="Define-models">
 <h3>Define models<a class="headerlink" href="#Define-models" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [19]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">models</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">typ</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">,</span> <span class="s2">&quot;acoustic&quot;</span><span class="p">]:</span>
     <span class="n">models</span><span class="p">[</span><span class="n">typ</span><span class="p">]</span> <span class="o">=</span> <span class="n">MyNet</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">typ</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
@@ -1305,11 +1306,11 @@ Model for acoustic
 <div class="section" id="Training-Duration-model">
 <h3>Training Duration model<a class="headerlink" href="#Training-Duration-model" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [20]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">ty</span> <span class="o">=</span> <span class="s2">&quot;duration&quot;</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="n">ty</span><span class="p">]</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weight_decay</span><span class="p">)</span>
 <span class="n">loss_history</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="n">ty</span><span class="p">],</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">ty</span><span class="p">],</span> <span class="n">Y</span><span class="p">[</span><span class="n">ty</span><span class="p">],</span>
@@ -1342,11 +1343,11 @@ Start frame-wise training...
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [21]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train loss&quot;</span><span class="p">)</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test loss&quot;</span><span class="p">)</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>
@@ -1354,11 +1355,11 @@ Start frame-wise training...
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[21]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.legend.Legend at 0x7f7390288c50&gt;
 </pre></div>
 </div>
@@ -1374,11 +1375,11 @@ Start frame-wise training...
 <div class="section" id="Training-acoustic-model">
 <h3>Training acoustic model<a class="headerlink" href="#Training-acoustic-model" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [22]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">ty</span> <span class="o">=</span> <span class="s2">&quot;acoustic&quot;</span>
 <span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="n">ty</span><span class="p">]</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">,</span> <span class="n">weight_decay</span><span class="o">=</span><span class="n">weight_decay</span><span class="p">)</span>
 <span class="n">loss_history</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">models</span><span class="p">[</span><span class="n">ty</span><span class="p">],</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">ty</span><span class="p">],</span> <span class="n">Y</span><span class="p">[</span><span class="n">ty</span><span class="p">],</span>
@@ -1411,11 +1412,11 @@ Start frame-wise training...
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [23]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Train loss&quot;</span><span class="p">)</span>
 <span class="n">plot</span><span class="p">(</span><span class="n">loss_history</span><span class="p">[</span><span class="s2">&quot;test&quot;</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Test loss&quot;</span><span class="p">)</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>
@@ -1423,11 +1424,11 @@ Start frame-wise training...
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Out[23]:
 </pre></div>
 </div>
-<div class="output_area highlight-none"><div class="highlight"><pre>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>&lt;matplotlib.legend.Legend at 0x7f73901b7ba8&gt;
 </pre></div>
 </div>
@@ -1448,14 +1449,14 @@ Start frame-wise training...
 <h3>Parameter generation utilities<a class="headerlink" href="#Parameter-generation-utilities" title="Permalink to this headline">¶</a></h3>
 <p>Not going to explain in details, but I think it’s fairly simple and easy
 to understand. One thing I should note that is we are using
-<code class="docutils literal"><span class="pre">nnmnkwii.postfilters.merlin_post_filter</span></code>, which does same thing in
+<code class="docutils literal notranslate"><span class="pre">nnmnkwii.postfilters.merlin_post_filter</span></code>, which does same thing in
 Merlin’s default post filter.</p>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [24]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load_question_set</span><span class="p">(</span>
     <span class="n">join</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">,</span> <span class="s2">&quot;questions-radio_dnn_416.hed&quot;</span><span class="p">))</span>
 
@@ -1568,11 +1569,11 @@ Merlin’s default post filter.</p>
 <p>Generated audio samples with Merlin’s slt_full_demo are attached. You
 can compare them below.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none"><div class="highlight"><pre>
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [25]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3"><div class="highlight"><pre>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">test_label_paths</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">,</span> <span class="s2">&quot;label_state_align/&quot;</span><span class="p">,</span> <span class="s2">&quot;*.lab&quot;</span><span class="p">)))[::</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="mi">5</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">merlin_generated_wav_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;./generated/merlin_slt_arctic_full/*.wav&quot;</span><span class="p">)))</span>
 
@@ -1811,7 +1812,7 @@ Merlin (slt_arctic_full, generated with default configurations)
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../',
-            VERSION:'0.0.14+b522659',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

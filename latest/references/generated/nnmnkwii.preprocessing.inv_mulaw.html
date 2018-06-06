@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.inv_mulaw &mdash; nnmnkwii 0.0.14+b522659 documentation</title>
+  <title>nnmnkwii.preprocessing.inv_mulaw &mdash; nnmnkwii 0.0.14 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.14+b522659 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.14 documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="nnmnkwii.preprocessing.mulaw_quantize" href="nnmnkwii.preprocessing.mulaw_quantize.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.mulaw" href="nnmnkwii.preprocessing.mulaw.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.14+b522659
+                0.0.14
               </div>
             
           
@@ -115,7 +115,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -355,7 +355,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-xx-xx">v0.0.14 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-15-2018-xx-xx">v0.0.15 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -476,7 +477,7 @@
 <dt id="nnmnkwii.preprocessing.inv_mulaw">
 <code class="descclassname">nnmnkwii.preprocessing.</code><code class="descname">inv_mulaw</code><span class="sig-paren">(</span><em>y</em>, <em>mu=256</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/preprocessing/generic.html#inv_mulaw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.preprocessing.inv_mulaw" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inverse of mu-law companding (mu-law expansion)</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[f^{-1}(x) = sign(y) (1 / \mu) (1 + \mu)^{|y|} - 1)\]</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -485,7 +486,7 @@
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>y</strong> (<em>array-like</em>) – Compressed signal. Each value of input signal must be in
 range of [-1, 1].</li>
-<li><strong>mu</strong> (<em>number</em>) – Compression parameter <code class="docutils literal"><span class="pre">μ</span></code>.</li>
+<li><strong>mu</strong> (<em>number</em>) – Compression parameter <code class="docutils literal notranslate"><span class="pre">μ</span></code>.</li>
 </ul>
 </td>
 </tr>
@@ -499,9 +500,9 @@ range of [-1, 1].</li>
 </table>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last"><a class="reference internal" href="#nnmnkwii.preprocessing.inv_mulaw" title="nnmnkwii.preprocessing.inv_mulaw"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_mulaw()</span></code></a>
-<a class="reference internal" href="nnmnkwii.preprocessing.mulaw_quantize.html#nnmnkwii.preprocessing.mulaw_quantize" title="nnmnkwii.preprocessing.mulaw_quantize"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.mulaw_quantize()</span></code></a>
-<a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw_quantize.html#nnmnkwii.preprocessing.inv_mulaw_quantize" title="nnmnkwii.preprocessing.inv_mulaw_quantize"><code class="xref py py-func docutils literal"><span class="pre">nnmnkwii.preprocessing.inv_mulaw_quantize()</span></code></a></p>
+<p class="last"><a class="reference internal" href="#nnmnkwii.preprocessing.inv_mulaw" title="nnmnkwii.preprocessing.inv_mulaw"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing.inv_mulaw()</span></code></a>
+<a class="reference internal" href="nnmnkwii.preprocessing.mulaw_quantize.html#nnmnkwii.preprocessing.mulaw_quantize" title="nnmnkwii.preprocessing.mulaw_quantize"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing.mulaw_quantize()</span></code></a>
+<a class="reference internal" href="nnmnkwii.preprocessing.inv_mulaw_quantize.html#nnmnkwii.preprocessing.inv_mulaw_quantize" title="nnmnkwii.preprocessing.inv_mulaw_quantize"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.preprocessing.inv_mulaw_quantize()</span></code></a></p>
 </div>
 </dd></dl>
 
@@ -551,7 +552,7 @@ range of [-1, 1].</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.14+b522659',
+            VERSION:'0.0.14',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
