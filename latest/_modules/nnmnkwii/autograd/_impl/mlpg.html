@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.0.14+b522659 documentation</title>
+  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.0.15+e9f07a3 documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../../../genindex.html"/>
         <link rel="search" title="Search" href="../../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.14+b522659 documentation" href="../../../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.15+e9f07a3 documentation" href="../../../../index.html"/>
         <link rel="up" title="Module code" href="../../../index.html"/> 
 
   
@@ -68,7 +68,7 @@
             
             
               <div class="version">
-                0.0.14+b522659
+                0.0.15+e9f07a3
               </div>
             
           
@@ -113,7 +113,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it's-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
@@ -353,7 +353,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-14-2018-xx-xx">v0.0.14 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-15-2018-xx-xx">v0.0.15 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
@@ -482,7 +483,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">windows</span> <span class="o">=</span> <span class="n">windows</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">variances</span> <span class="o">=</span> <span class="n">variances</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
+<div class="viewcode-block" id="MLPG.forward"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.MLPG.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">means</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span> <span class="o">==</span> <span class="mi">2</span>  <span class="c1"># we cannot do MLPG on minibatch</span>
         <span class="n">variances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variances</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
@@ -490,26 +491,26 @@
         <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">variances</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 
-        <span class="n">means_np</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">variances_np</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">means_np</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">variances_np</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">mlpg</span><span class="p">(</span><span class="n">means_np</span><span class="p">,</span> <span class="n">variances_np</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">)</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">y</span>
+        <span class="k">return</span> <span class="n">y</span></div>
 
-    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+<div class="viewcode-block" id="MLPG.backward"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.MLPG.backward">[docs]</a>    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
         <span class="n">means</span><span class="p">,</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_tensors</span>
         <span class="n">variances</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">variances</span>
 
         <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 
-        <span class="n">grad_output_numpy</span> <span class="o">=</span> <span class="n">grad_output</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">means_numpy</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
-        <span class="n">variances_numpy</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">grad_output_numpy</span> <span class="o">=</span> <span class="n">grad_output</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">means_numpy</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
+        <span class="n">variances_numpy</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">grads_numpy</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">mlpg_grad</span><span class="p">(</span>
             <span class="n">means_numpy</span><span class="p">,</span> <span class="n">variances_numpy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">windows</span><span class="p">,</span>
             <span class="n">grad_output_numpy</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grads_numpy</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grads_numpy</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="UnitVarianceMLPG"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG">[docs]</a><span class="k">class</span> <span class="nc">UnitVarianceMLPG</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
@@ -559,7 +560,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">R</span> <span class="o">=</span> <span class="n">R</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">num_windows</span> <span class="o">=</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
+<div class="viewcode-block" id="UnitVarianceMLPG.forward"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG.forward">[docs]</a>    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">means</span><span class="p">):</span>
         <span class="c1"># TODO: remove this</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
         <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -588,9 +589,9 @@
         <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">out</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">out</span>
+        <span class="k">return</span> <span class="n">out</span></div>
 
-    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
+<div class="viewcode-block" id="UnitVarianceMLPG.backward"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG.backward">[docs]</a>    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
         <span class="n">means</span><span class="p">,</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">saved_tensors</span>
         <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">R</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">dim</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">dim</span><span class="p">()</span>
@@ -613,7 +614,7 @@
         <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">grad</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">grad</span></div>
+        <span class="k">return</span> <span class="n">grad</span></div></div>
 
 
 <div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../../references/generated/nnmnkwii.autograd.mlpg.html#nnmnkwii.autograd.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">variances</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
@@ -695,7 +696,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../../../',
-            VERSION:'0.0.14+b522659',
+            VERSION:'0.0.15+e9f07a3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
