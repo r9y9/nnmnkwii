@@ -19,4 +19,4 @@ echo "*** Ready to release! nnmnkwii $TAG ***"
 echo "Please make sure that release verion is correct."
 cat nnmnkwii/version.py
 echo "Please run the following command manually:"
-echo twine upload dist/nnmnkwii-${VERSION}.tar.gz
+echo twine upload dist/nnmnkwii-${VERSION}.tar.gz --repository-url https://upload.pypi.org/legacy/
