@@ -1,0 +1,6 @@
+nnmnkwii\.preprocessing\.meanstd
+================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: meanstd

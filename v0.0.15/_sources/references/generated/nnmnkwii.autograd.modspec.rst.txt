@@ -1,0 +1,6 @@
+nnmnkwii\.autograd\.modspec
+===========================
+
+.. currentmodule:: nnmnkwii.autograd
+
+.. autofunction:: modspec

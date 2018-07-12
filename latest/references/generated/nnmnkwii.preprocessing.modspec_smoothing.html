@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.modspec_smoothing &mdash; nnmnkwii 0.0.15+e9f07a3 documentation</title>
+  <title>nnmnkwii.preprocessing.modspec_smoothing &mdash; nnmnkwii 0.0.16+6861bbb documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.15+e9f07a3 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.16+6861bbb documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="nnmnkwii.preprocessing.meanvar" href="nnmnkwii.preprocessing.meanvar.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.inv_modspec" href="nnmnkwii.preprocessing.inv_modspec.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.15+e9f07a3
+                0.0.16+6861bbb
               </div>
             
           
@@ -355,7 +355,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-15-2018-xx-xx">v0.0.15 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-16-2018-xx-xx">v0.0.16 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
@@ -480,12 +481,12 @@ the Blizzard Challenge 2015.” Proc. Blizzard Challenge workshop. 2015.</td></t
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><em>numpy.ndarray</em></a>) – Parameter trajectory, shape (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
-<li><strong>modfs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – Sampling frequency in modulation spectrum domain. In
+<li><strong>modfs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Sampling frequency in modulation spectrum domain. In
 frame-based processing, this will be <code class="docutils literal notranslate"><span class="pre">fs</span> <span class="pre">/</span> <span class="pre">hop_length</span></code>.</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – DFT length</li>
-<li><strong>norm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.6)"><em>str</em></a>) – Normalization mode. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.fft.fft()</span></code></a>.</li>
-<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.6)"><em>float</em></a>) – Cut-off frequency in Hz.</li>
-<li><strong>log_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – Whether it performs high frequency band removal on
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – DFT length</li>
+<li><strong>norm</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Normalization mode. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.fft.fft()</span></code></a>.</li>
+<li><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.7)"><em>float</em></a>) – Cut-off frequency in Hz.</li>
+<li><strong>log_domain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether it performs high frequency band removal on
 log modulation spectrum domain or not.</li>
 </ul>
 </td>
@@ -555,7 +556,7 @@ log modulation spectrum domain or not.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.15+e9f07a3',
+            VERSION:'0.0.16+6861bbb',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,

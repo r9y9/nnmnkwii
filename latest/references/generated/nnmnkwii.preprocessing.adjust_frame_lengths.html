@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.adjust_frame_lengths &mdash; nnmnkwii 0.0.15+e9f07a3 documentation</title>
+  <title>nnmnkwii.preprocessing.adjust_frame_lengths &mdash; nnmnkwii 0.0.16+6861bbb documentation</title>
   
 
   
@@ -35,7 +35,7 @@
         <link rel="index" title="Index"
               href="../../genindex.html"/>
         <link rel="search" title="Search" href="../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.15+e9f07a3 documentation" href="../../index.html"/>
+    <link rel="top" title="nnmnkwii 0.0.16+6861bbb documentation" href="../../index.html"/>
         <link rel="up" title="Pre-processing" href="../preprocessing.html"/>
         <link rel="next" title="nnmnkwii.preprocessing.scale" href="nnmnkwii.preprocessing.scale.html"/>
         <link rel="prev" title="nnmnkwii.preprocessing.adjust_frame_length" href="nnmnkwii.preprocessing.adjust_frame_length.html"/> 
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                0.0.15+e9f07a3
+                0.0.16+6861bbb
               </div>
             
           
@@ -355,7 +355,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-15-2018-xx-xx">v0.0.15 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-16-2018-xx-xx">v0.0.16 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
@@ -477,11 +478,11 @@ Use <code class="docutils literal notranslate"><span class="pre">divisible_by=2<
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^1</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
 <li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.14)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^2</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
-<li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.6)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
+<li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
 frames to ensure same frame lengths.</li>
-<li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.6)"><em>int</em></a>) – If <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
+<li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – If <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
 adjusted to be divisible by <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code>.</li>
-<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.6)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.pad()</span></code></a>. Default is
+<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.pad()</span></code></a>. Default is
 mode = <code class="docutils literal notranslate"><span class="pre">constant</span></code>, which means zero padding.</li>
 </ul>
 </td>
@@ -555,7 +556,7 @@ mode = <code class="docutils literal notranslate"><span class="pre">constant</sp
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.0.15+e9f07a3',
+            VERSION:'0.0.16+6861bbb',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true,
