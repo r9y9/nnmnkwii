@@ -11,7 +11,7 @@ import subprocess
 import os
 import numpy as np
 
-version = '0.0.15'
+version = '0.0.16'
 
 # Adapted from https://github.com/pytorch/pytorch
 cwd = os.path.dirname(os.path.abspath(__file__))
