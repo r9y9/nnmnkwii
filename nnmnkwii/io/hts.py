@@ -162,14 +162,18 @@ J:13+9-2[2]')
         start_times = np.hstack((0, end_times[:-1])).astype(np.int)
         self.start_times, self.end_times = start_times, end_times
 
-    def load(self, path):
+    def load(self, path=None, lines=None):
         """Load labels from file
 
         Args:
             path (str): File path
+            lines (list): Content of label file. If not None, construct HTSLabelFile
+                directry from it instead of loading a file.
         """
-        with open(path) as f:
-            lines = f.readlines()
+        assert path is not None or lines is not None
+        if lines is None:
+            with open(path) as f:
+                lines = f.readlines()
 
         start_times = []
         end_times = []
