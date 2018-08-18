@@ -3,7 +3,7 @@ from __future__ import with_statement, print_function, absolute_import
 from nnmnkwii.datasets import FileDataSource
 
 import numpy as np
-from os.path import join, splitext, isdir
+from os.path import join, splitext, isdir, exists
 from os import listdir
 
 available_speakers = ["fujitou", "tsuchiya", "uemura"]
@@ -12,6 +12,58 @@ available_emotions = ["angry", "happy", "normal"]
 
 def _get_dir(speaker, emotion):
     return "{}_{}".format(speaker, emotion)
+
+
+class TranscriptionDataSource(FileDataSource):
+    """Transcription data source for VoiceStatistics dataset
+
+    Users are expected to inherit the class and implement ``collect_features``
+    method, which defines how features are computed given a transcription.
+
+    Args:
+        data_root (str): Data root.
+        column (str): ``sentense``, ``yomi`` or ``monophone``.
+        max_files (int): Total number of files to be collected.
+
+    Atributes:
+        transcriptions (list): Transcriptions.
+    """
+    column_map = {"sentence_id": 0, "sentence": 1, "yomi": 2, "monophone": 3}
+
+    def __init__(self, data_root, column="sentence", max_files=None):
+        path = join(data_root, "balance_sentences.txt")
+        if not exists(path):
+            raise RuntimeError(
+                "balance_sentences.txt doesn't exist at \"{}\"".format(path))
+
+        self.transcriptions = []
+        self.max_files = max_files
+        if column not in self.column_map:
+            raise ValueError(
+                "Not supported column {}. It should be one of 'sentense', 'yomi' or 'monophone'.".format(column))
+        with open(path) as f:
+            for l in f:
+                # header
+                if l.startswith("sentence_id"):
+                    continue
+                v = l.split("\t")[self.column_map[column]].strip()
+                self.transcriptions.append(v)
+        assert len(self.transcriptions) == 100
+
+    def collect_files(self):
+        """Collect text transcriptions.
+
+        .. warning::
+
+            Note that it returns list of transcriptions (str), not file paths.
+
+        Returns:
+            list: List of text transcription.
+        """
+        if self.max_files is None:
+            return self.transcriptions
+        else:
+            return self.transcriptions[:self.max_files]
 
 
 class WavFileDataSource(FileDataSource):

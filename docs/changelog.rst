@@ -4,6 +4,8 @@ Change log
 v0.0.16 <2018-xx-xx>
 --------------------
 
+- `#72`_: Add TranscriptionDataSource for VoiceStatistics (ja) dataset
+- `#72`_: Deprecate NormalizedTranscriptionDataSource for LJSpeech dataset.
 
 v0.0.15 <2018-07-12>
 --------------------
@@ -148,3 +150,4 @@ v0.0.1 <2017-08-14>
 .. _#67: https://github.com/r9y9/nnmnkwii/issues/67
 .. _#68: https://github.com/r9y9/nnmnkwii/pull/68
 .. _#71: https://github.com/r9y9/nnmnkwii/pull/71
+.. _#72: https://github.com/r9y9/nnmnkwii/pull/72
