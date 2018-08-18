@@ -32,13 +32,15 @@ class TranscriptionDataSource(LJSpeechDataSource):
 
     Args:
         data_root (str): Data root.
+        normalized (bool): Collect normalized transcriptions or not.
 
     Attributes:
         metadata (numpy.ndarray): Metadata, shapeo (``num_files x 3``).
     """
 
-    def __init__(self, data_root):
+    def __init__(self, data_root, normalized=False):
         super(TranscriptionDataSource, self).__init__(data_root)
+        self.normalized = normalized
 
     def collect_files(self):
         """Collect text transcriptions.
@@ -50,11 +52,15 @@ class TranscriptionDataSource(LJSpeechDataSource):
         Returns:
             list: List of text transcription.
         """
-        return list(self.metadata[:, 1])
+        idx = 2 if self.normalized else 1
+        return list(self.metadata[:, idx])
 
 
-class NormalizedTranscriptionDataSource(LJSpeechDataSource):
+class NormalizedTranscriptionDataSource(TranscriptionDataSource):
     """Normalized transcription data source for LJSpeech dataset.
+
+    .. warn::
+        Deprecated. Use TranscriptionDataSource with ``normalized=True`` instead.
 
     Similar to ``LJSpeechTranscriptionDataSource``, but this collect normalized
     transcriptions instead of raw ones.
@@ -67,15 +73,7 @@ class NormalizedTranscriptionDataSource(LJSpeechDataSource):
     """
 
     def __init__(self, data_root):
-        super(NormalizedTranscriptionDataSource, self).__init__(data_root)
-
-    def collect_files(self):
-        """Collect normalized text transcriptions.
-
-        Returns:
-            list: List of normalized text transcription.
-        """
-        return list(self.metadata[:, 2])
+        super(NormalizedTranscriptionDataSource, self).__init__(data_root, normalized=True)
 
 
 class WavFileDataSource(LJSpeechDataSource):

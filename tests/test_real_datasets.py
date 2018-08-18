@@ -274,9 +274,9 @@ def test_ljspeech():
         def collect_features(self, text):
             return text
 
-    class MyNormalizedTextDataSource(ljspeech.NormalizedTranscriptionDataSource):
+    class MyNormalizedTextDataSource(ljspeech.TranscriptionDataSource):
         def __init__(self, data_root):
-            super(MyNormalizedTextDataSource, self).__init__(data_root)
+            super(MyNormalizedTextDataSource, self).__init__(data_root, normalized=True)
 
         def collect_features(self, text):
             return text
