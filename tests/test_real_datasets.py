@@ -52,9 +52,14 @@ def test_voice_statistics_dummy():
     def __test_nodir(data_source):
         data_source.collect_files()
 
+    @raises(RuntimeError)
+    def __test_no_trans():
+        voice_statistics.TranscriptionDataSource("dummy")
+
     __test_invalid_speaker()
     __test_invalid_emotion()
     __test_nodir(data_source)
+    __test_no_trans()
 
 
 def test_ljspeech_dummy():
@@ -230,6 +235,28 @@ def test_voice_statistics():
         DATA_DIR, speakers=["fujitou", "tsuchiya"], max_files=None)
     X = FileSourceDataset(data_source)
     assert len(X) == 100 * 2
+
+    # Transcriptions
+    source = voice_statistics.TranscriptionDataSource(DATA_DIR)
+    texts = source.collect_files()
+    assert len(texts) == 100
+    assert texts[0] == "また東寺のように五大明王と呼ばれる主要な明王の中央に配されることも多い"
+
+    source = voice_statistics.TranscriptionDataSource(DATA_DIR, column="yomi")
+    texts = source.collect_files()
+    assert len(texts) == 100
+    assert texts[0] == "マタトージノヨーニゴダイミョウオートヨバレルシュヨーナミョーオーノチューオーニハイサレルコトモオーイ"
+
+    source = voice_statistics.TranscriptionDataSource(DATA_DIR, column="monophone")
+    texts = source.collect_files()
+    assert len(texts) == 100
+    s = "s/u,m/a:,t/o,f/o,N,k/a,r/a,f/i:,ch/a:,f/o,N,m/a,d/e,m/a,r/u,ch/i,d/e,b/a,i,s/u,n/i,t/a,i,o:"
+    assert texts[9] == s
+
+    source = voice_statistics.TranscriptionDataSource(DATA_DIR, max_files=10)
+    texts = source.collect_files()
+    assert len(texts) == 10
+    assert texts[0] == "また東寺のように五大明王と呼ばれる主要な明王の中央に配されることも多い"
 
 
 @attr("require_local_data")
