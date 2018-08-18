@@ -471,13 +471,15 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        normalized (bool): Collect normalized transcriptions or not.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        metadata (numpy.ndarray): Metadata, shapeo (``num_files x 3``).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">normalized</span> <span class="o">=</span> <span class="n">normalized</span>
 
 <div class="viewcode-block" id="TranscriptionDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Collect text transcriptions.</span>
@@ -489,11 +491,15 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: List of text transcription.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span></div></div>
+        <span class="n">idx</span> <span class="o">=</span> <span class="mi">2</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">normalized</span> <span class="k">else</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">])</span></div></div>
 
 
-<div class="viewcode-block" id="NormalizedTranscriptionDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource">[docs]</a><span class="k">class</span> <span class="nc">NormalizedTranscriptionDataSource</span><span class="p">(</span><span class="n">LJSpeechDataSource</span><span class="p">):</span>
+<div class="viewcode-block" id="NormalizedTranscriptionDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource">[docs]</a><span class="k">class</span> <span class="nc">NormalizedTranscriptionDataSource</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Normalized transcription data source for LJSpeech dataset.</span>
+
+<span class="sd">    .. warn::</span>
+<span class="sd">        Deprecated. Use TranscriptionDataSource with ``normalized=True`` instead.</span>
 
 <span class="sd">    Similar to ``LJSpeechTranscriptionDataSource``, but this collect normalized</span>
 <span class="sd">    transcriptions instead of raw ones.</span>
@@ -506,15 +512,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">NormalizedTranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">)</span>
-
-<div class="viewcode-block" id="NormalizedTranscriptionDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Collect normalized text transcriptions.</span>
-
-<span class="sd">        Returns:</span>
-<span class="sd">            list: List of normalized text transcription.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span></div></div>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NormalizedTranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="WavFileDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.ljspeech.WavFileDataSource">[docs]</a><span class="k">class</span> <span class="nc">WavFileDataSource</span><span class="p">(</span><span class="n">LJSpeechDataSource</span><span class="p">):</span>

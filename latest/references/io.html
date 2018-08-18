@@ -557,13 +557,18 @@ full-context annotation.</p>
 
 <dl class="method">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.load">
-<code class="descname">load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.load" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load</code><span class="sig-paren">(</span><em>path=None</em>, <em>lines=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.load"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.load" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load labels from file</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – File path</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – File path</li>
+<li><strong>lines</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Content of label file. If not None, construct HTSLabelFile
+directry from it instead of loading a file.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

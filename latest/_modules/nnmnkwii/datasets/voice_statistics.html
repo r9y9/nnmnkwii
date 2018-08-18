@@ -442,7 +442,7 @@
 <span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
 
 <span class="n">available_speakers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fujitou&quot;</span><span class="p">,</span> <span class="s2">&quot;tsuchiya&quot;</span><span class="p">,</span> <span class="s2">&quot;uemura&quot;</span><span class="p">]</span>
@@ -451,6 +451,58 @@
 
 <span class="k">def</span> <span class="nf">_get_dir</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">emotion</span><span class="p">):</span>
     <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">emotion</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TranscriptionDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.voice_statistics.TranscriptionDataSource">[docs]</a><span class="k">class</span> <span class="nc">TranscriptionDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transcription data source for VoiceStatistics dataset</span>
+
+<span class="sd">    Users are expected to inherit the class and implement ``collect_features``</span>
+<span class="sd">    method, which defines how features are computed given a transcription.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        column (str): ``sentense``, ``yomi`` or ``monophone``.</span>
+<span class="sd">        max_files (int): Total number of files to be collected.</span>
+
+<span class="sd">    Atributes:</span>
+<span class="sd">        transcriptions (list): Transcriptions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">column_map</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;sentence_id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;sentence&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;yomi&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;monophone&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s2">&quot;sentence&quot;</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;balance_sentences.txt&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;balance_sentences.txt doesn&#39;t exist at </span><span class="se">\&quot;</span><span class="si">{}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="o">=</span> <span class="n">max_files</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">column_map</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Not supported column </span><span class="si">{}</span><span class="s2">. It should be one of &#39;sentense&#39;, &#39;yomi&#39; or &#39;monophone&#39;.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                <span class="c1"># header</span>
+                <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;sentence_id&quot;</span><span class="p">):</span>
+                    <span class="k">continue</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="p">)[</span><span class="bp">self</span><span class="o">.</span><span class="n">column_map</span><span class="p">[</span><span class="n">column</span><span class="p">]]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
+
+<div class="viewcode-block" id="TranscriptionDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.voice_statistics.TranscriptionDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Collect text transcriptions.</span>
+
+<span class="sd">        .. warning::</span>
+
+<span class="sd">            Note that it returns list of transcriptions (str), not file paths.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            list: List of text transcription.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span><span class="p">[:</span><span class="bp">self</span><span class="o">.</span><span class="n">max_files</span><span class="p">]</span></div></div>
 
 
 <div class="viewcode-block" id="WavFileDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.voice_statistics.WavFileDataSource">[docs]</a><span class="k">class</span> <span class="nc">WavFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>

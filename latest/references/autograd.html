@@ -535,13 +535,17 @@ differenciable MLPG, see <a class="reference internal" href="#nnmnkwii.autograd.
 <code class="descname">backward</code><span class="sig-paren">(</span><em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a formula for differentiating the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
-<p>It must accept a context ctx as the first argument, followed by as many
-outputs did <a class="reference internal" href="#nnmnkwii.autograd.MLPG.forward" title="nnmnkwii.autograd.MLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
+<p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
+as many outputs did <a class="reference internal" href="#nnmnkwii.autograd.MLPG.forward" title="nnmnkwii.autograd.MLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
 tensors, as there were inputs to <a class="reference internal" href="#nnmnkwii.autograd.MLPG.forward" title="nnmnkwii.autograd.MLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a>. Each argument is the
 gradient w.r.t the given output, and each returned value should be the
 gradient w.r.t. the corresponding input.</p>
 <p>The context can be used to retrieve tensors saved during the forward
-pass.</p>
+pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
+of booleans representing whether each input needs gradient. E.g.,
+<a class="reference internal" href="#nnmnkwii.autograd.MLPG.backward" title="nnmnkwii.autograd.MLPG.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
+first input to <a class="reference internal" href="#nnmnkwii.autograd.MLPG.forward" title="nnmnkwii.autograd.MLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+output.</p>
 </dd></dl>
 
 <dl class="method">
@@ -603,13 +607,17 @@ should be created with
 <code class="descname">backward</code><span class="sig-paren">(</span><em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a formula for differentiating the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
-<p>It must accept a context ctx as the first argument, followed by as many
-outputs did <a class="reference internal" href="#nnmnkwii.autograd.UnitVarianceMLPG.forward" title="nnmnkwii.autograd.UnitVarianceMLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
+<p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
+as many outputs did <a class="reference internal" href="#nnmnkwii.autograd.UnitVarianceMLPG.forward" title="nnmnkwii.autograd.UnitVarianceMLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
 tensors, as there were inputs to <a class="reference internal" href="#nnmnkwii.autograd.UnitVarianceMLPG.forward" title="nnmnkwii.autograd.UnitVarianceMLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a>. Each argument is the
 gradient w.r.t the given output, and each returned value should be the
 gradient w.r.t. the corresponding input.</p>
 <p>The context can be used to retrieve tensors saved during the forward
-pass.</p>
+pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
+of booleans representing whether each input needs gradient. E.g.,
+<a class="reference internal" href="#nnmnkwii.autograd.UnitVarianceMLPG.backward" title="nnmnkwii.autograd.UnitVarianceMLPG.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
+first input to <a class="reference internal" href="#nnmnkwii.autograd.UnitVarianceMLPG.forward" title="nnmnkwii.autograd.UnitVarianceMLPG.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+output.</p>
 </dd></dl>
 
 <dl class="method">
@@ -638,7 +646,7 @@ during the backward pass.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.autograd.ModSpec.norm">
 <code class="descname">norm</code><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.norm" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – Normalize DFT output or not. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.fft.fft</span></code></a>.</p>
+<dd><p><em>bool</em> – Normalize DFT output or not. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.fft.fft</span></code></a>.</p>
 </dd></dl>
 
 <dl class="method">
@@ -646,13 +654,17 @@ during the backward pass.</p>
 <code class="descname">backward</code><span class="sig-paren">(</span><em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/modspec.html#ModSpec.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a formula for differentiating the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
-<p>It must accept a context ctx as the first argument, followed by as many
-outputs did <a class="reference internal" href="#nnmnkwii.autograd.ModSpec.forward" title="nnmnkwii.autograd.ModSpec.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
+<p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
+as many outputs did <a class="reference internal" href="#nnmnkwii.autograd.ModSpec.forward" title="nnmnkwii.autograd.ModSpec.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> return, and it should return as many
 tensors, as there were inputs to <a class="reference internal" href="#nnmnkwii.autograd.ModSpec.forward" title="nnmnkwii.autograd.ModSpec.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a>. Each argument is the
 gradient w.r.t the given output, and each returned value should be the
 gradient w.r.t. the corresponding input.</p>
 <p>The context can be used to retrieve tensors saved during the forward
-pass.</p>
+pass. It also has an attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx.needs_input_grad</span></code> as a tuple
+of booleans representing whether each input needs gradient. E.g.,
+<a class="reference internal" href="#nnmnkwii.autograd.ModSpec.backward" title="nnmnkwii.autograd.ModSpec.backward"><code class="xref py py-func docutils literal notranslate"><span class="pre">backward()</span></code></a> will have <code class="docutils literal notranslate"><span class="pre">ctx.needs_input_grad[0]</span> <span class="pre">=</span> <span class="pre">True</span></code> if the
+first input to <a class="reference internal" href="#nnmnkwii.autograd.ModSpec.forward" title="nnmnkwii.autograd.ModSpec.forward"><code class="xref py py-func docutils literal notranslate"><span class="pre">forward()</span></code></a> needs gradient computated w.r.t. the
+output.</p>
 </dd></dl>
 
 <dl class="method">
