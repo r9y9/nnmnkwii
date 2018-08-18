@@ -6,7 +6,7 @@ import numpy as np
 from os.path import join, splitext, isdir, exists
 from os import listdir
 
-available_speakers = ["fujitou", "tsuchiya", "uemura"]
+available_speakers = ["fujitou", "tsuchiya", "uemura", "hiroshiba"]
 available_emotions = ["angry", "happy", "normal"]
 
 
