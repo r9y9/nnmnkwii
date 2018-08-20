@@ -4,6 +4,7 @@ Change log
 v0.0.16 <2018-xx-xx>
 --------------------
 
+- `#73`_: Add Japanese TTS demo to docs and fix some typos.
 - `#72`_: Add TranscriptionDataSource for VoiceStatistics (ja) dataset
 - `#72`_: Deprecate NormalizedTranscriptionDataSource for LJSpeech dataset.
 
@@ -151,3 +152,4 @@ v0.0.1 <2017-08-14>
 .. _#68: https://github.com/r9y9/nnmnkwii/pull/68
 .. _#71: https://github.com/r9y9/nnmnkwii/pull/71
 .. _#72: https://github.com/r9y9/nnmnkwii/pull/72
+.. _#73: https://github.com/r9y9/nnmnkwii/pull/73
