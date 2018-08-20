@@ -201,6 +201,8 @@ J:13+9-2[2]')
         self.end_times = end_times
         self.contexts = contexts
 
+        return self
+
     def silence_label_indices(self, regex=None):
         """Returns silence label indices
 
@@ -280,11 +282,13 @@ J:13+9-2[2]')
         return self.end_times[-1] // frame_shift_in_micro_sec
 
 
-def load(path):
+def load(path=None, lines=None):
     """Load HTS-style label file
 
     Args:
         path (str): Path of file.
+        lines (list): Content of label file. If not None, construct HTSLabelFile
+            directry from it instead of loading a file.
 
     Returns:
         labels (HTSLabelFile): Instance of HTSLabelFile.
@@ -295,9 +299,7 @@ def load(path):
         >>> labels = hts.load(example_label_file())
     """
     labels = HTSLabelFile()
-    labels.load(path)
-
-    return labels
+    return labels.load(path, lines)
 
 
 def wildcards2regex(question, convert_number_pattern=False):
