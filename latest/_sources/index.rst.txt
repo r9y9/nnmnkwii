@@ -29,6 +29,7 @@ For advanced applications using the library, see :ref:`external-links-label`.
 
    nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).ipynb
    nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).ipynb
+   nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).ipynb
    nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).ipynb
 
 .. toctree::
