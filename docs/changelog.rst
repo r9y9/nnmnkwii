@@ -1,12 +1,13 @@
 Change log
 ==========
 
-v0.0.16 <2018-xx-xx>
+v0.0.16 <2018-08-23>
 --------------------
 
 - `#73`_: Add Japanese TTS demo to docs and fix some typos.
 - `#72`_: Add TranscriptionDataSource for VoiceStatistics (ja) dataset
 - `#72`_: Deprecate NormalizedTranscriptionDataSource for LJSpeech dataset.
+- ``hts.load`` now accepts ``lines`` argment.
 
 v0.0.15 <2018-07-12>
 --------------------
