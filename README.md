@@ -1,4 +1,4 @@
-# nnmnkwii (nanami)
+# nnmnkwii ([nanamin kawaii])
 [![][docs-stable-img]][docs-stable-url]
 [![][docs-latest-img]][docs-latest-url]
 [![PyPI](https://img.shields.io/pypi/v/nnmnkwii.svg)](https://pypi.python.org/pypi/nnmnkwii)
