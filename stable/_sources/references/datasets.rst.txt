@@ -90,8 +90,8 @@ defines what features you want from wav file or text (depends on data source).
 If you want maximum flexibility to access dataset, you may want to implement your
 own data source, instead of using bulitin ones.
 
-Suppose we are trying to extract acoustic features from wav files from
-CMU Arctic, then you can write for example:
+e.g. If we are trying to extract acoustic features from wav files from
+CMU Arctic, then you can write:
 
 .. code-block:: python
 
@@ -135,7 +135,7 @@ tutorial notebooks in `nnmnkwii_gallery`_.
 .. _`nnmnkwii_gallery`: https://github.com/r9y9/nnmnkwii_gallery
 
 CMU Arctic (en)
-^^^^^^^^^^^^^^^
+---------------
 
 You can download data from http://festvox.org/cmu_arctic/.
 
@@ -143,7 +143,7 @@ You can download data from http://festvox.org/cmu_arctic/.
     :members:
 
 VCTK (en)
-^^^^^^^^^
+---------
 
 You can download data (15GB) from http://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html.
 
@@ -160,38 +160,38 @@ You can download data (15GB) from http://homepages.inf.ed.ac.uk/jyamagis/page3/p
 
 
 LJ-Speech (en)
-^^^^^^^^^^^^^^
+--------------
 
 You can download data (2.6GB) from https://keithito.com/LJ-Speech-Dataset/.
 
 .. autoclass:: nnmnkwii.datasets.ljspeech.TranscriptionDataSource
     :members:
 
-.. autoclass:: nnmnkwii.datasets.ljspeech.NormalizedTranscriptionDataSource
-    :members:
-
 .. autoclass:: nnmnkwii.datasets.ljspeech.WavFileDataSource
     :members:
 
 Voice Conversion Challenge (VCC) 2016 (en)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+------------------------------------------
 
 You can download training data (181MB) and evaluation data (~56 MB) from http://datashare.is.ed.ac.uk/handle/10283/2211.
 
 .. autoclass:: nnmnkwii.datasets.vcc2016.WavFileDataSource
     :members:
 
-Voice statistics (jp)
-^^^^^^^^^^^^^^^^^^^^^
+Voice statistics (ja)
+---------------------
 
 You can download data (~720MB) from https://voice-statistics.github.io/.
+
+.. autoclass:: nnmnkwii.datasets.voice_statistics.TranscriptionDataSource
+    :members:
 
 .. autoclass:: nnmnkwii.datasets.voice_statistics.WavFileDataSource
     :members:
 
 
-JSUT (jp)
-^^^^^^^^^
+JSUT (ja)
+---------
 
 JSUT (Japanese speech corpus of Saruwatari Lab, University of Tokyo).
 

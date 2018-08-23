@@ -432,7 +432,7 @@
    "source": [
     "### Statistics\n",
     "\n",
-    "Before training neural networks, we need to normalize data. Following Merlin's demo script, we will apply min/max normalization for linguistic features and mean/variance normalization to duration/acoustic features. You can compute necessary statistics using `nnmnkwii.util.minmax` and `nnmnkwii.util.meanvar`. The comptuation is online, so we can use the functionality for any large dataset."
+    "Before training neural networks, we need to normalize data. Following Merlin's demo script, we will apply min/max normalization for linguistic features and mean/variance normalization to duration/acoustic features. You can compute necessary statistics using `nnmnkwii.preprocessing.minmax` and `nnmnkwii.preprocessing.meanvar`. The comptuation is online, so we can use the functionality for any large dataset."
    ]
   },
   {
@@ -726,7 +726,7 @@
     "                if phase == \"train\":\n",
     "                    loss.backward()\n",
     "                    optimizer.step()\n",
-    "                running_loss += loss.data[0]\n",
+    "                running_loss += loss.item()\n",
     "            loss_history[phase].append(running_loss / (len(dataset_loaders[phase])))\n",
     "        \n",
     "    return loss_history"
@@ -1489,7 +1489,7 @@
    "name": "python",
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
-   "version": "3.6.1"
+   "version": "3.6.5"
   }
  },
  "nbformat": 4,
