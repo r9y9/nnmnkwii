@@ -4,6 +4,7 @@ nnmnkwii/paramgen/mlpg_helper.c
 nnmnkwii/util/_linalg.c
 examples
 docs/references/generated
+docs/.doctrees
 
 # Created by https://www.gitignore.io
 
