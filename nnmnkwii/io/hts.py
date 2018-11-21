@@ -181,7 +181,7 @@ J:13+9-2[2]')
         for line in lines:
             if line[0] == "#":
                 continue
-            cols = line[:-1].split()
+            cols = line.strip().split()
             if len(cols) == 3:
                 start_time, end_time, context = cols
                 start_time = int(start_time)
