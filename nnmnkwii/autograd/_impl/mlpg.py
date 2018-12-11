@@ -102,8 +102,7 @@ class UnitVarianceMLPG(Function):
 
         R = (W^{T} W)^{-1} W^{T}
 
-    To avoid dupulicate computations in forward and backward, the function
-    takes ``R`` at construction time. The matrix ``R`` can be computed by
+    The matrix ``R`` can be computed by
     :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.
 
     Args:
@@ -111,23 +110,16 @@ class UnitVarianceMLPG(Function):
           should be created with
           :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.
 
-
-    Attributes:
-        R: Unit-variance MLPG matrix (``T x num_windows*T``).
-
     See also:
         :func:`nnmnkwii.autograd.unit_variance_mlpg`.
     """
 
-    def __init__(self, R):
-        super(UnitVarianceMLPG, self).__init__()
-        self.R = R
-        self.num_windows = R.shape[-1] // R.shape[0]
-
-    def forward(self, means):
+    @staticmethod
+    def forward(ctx, means, R):
         # TODO: remove this
-        self.save_for_backward(means)
-        T = self.R.shape[0]
+        ctx.save_for_backward(means, R)
+        ctx.num_windows = R.shape[-1] // R.shape[0]
+        T = R.shape[0]
         dim = means.dim()
 
         # Add batch axis if necessary
@@ -141,23 +133,24 @@ class UnitVarianceMLPG(Function):
         # Check if means has proper shape
         reshaped = not (T == T_)
         if not reshaped:
-            static_dim = means.shape[-1] // self.num_windows
+            static_dim = means.shape[-1] // ctx.num_windows
             reshaped_means = means.contiguous().view(
-                B, T, self.num_windows, -1).transpose(
+                B, T, ctx.num_windows, -1).transpose(
                     1, 2).contiguous().view(B, -1, static_dim)
         else:
             static_dim = means.shape[-1]
             reshaped_means = means
 
-        out = torch.matmul(self.R, reshaped_means)
+        out = torch.matmul(R, reshaped_means)
         if dim == 2:
             return out.view(-1, static_dim)
 
         return out
 
-    def backward(self, grad_output):
-        means, = self.saved_tensors
-        T = self.R.shape[0]
+    @staticmethod
+    def backward(ctx, grad_output):
+        means, R = ctx.saved_tensors
+        T = R.shape[0]
         dim = means.dim()
 
         # Add batch axis if necessary
@@ -168,17 +161,17 @@ class UnitVarianceMLPG(Function):
         else:
             B, T_, D = means.shape
 
-        grad = torch.matmul(self.R.transpose(0, 1), grad_output)
+        grad = torch.matmul(R.transpose(0, 1), grad_output)
 
         reshaped = not (T == T_)
         if not reshaped:
-            grad = grad.view(B, self.num_windows, T, -1).transpose(
+            grad = grad.view(B, ctx.num_windows, T, -1).transpose(
                 1, 2).contiguous().view(B, T, D)
 
         if dim == 2:
-            return grad.view(-1, D)
+            return grad.view(-1, D), None
 
-        return grad
+        return grad, None
 
 
 def mlpg(means, variances, windows):
@@ -223,4 +216,4 @@ def unit_variance_mlpg(R, means):
         :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`,
         :func:`reshape_means`.
     """
-    return UnitVarianceMLPG(R)(means)
+    return UnitVarianceMLPG.apply(means, R)
