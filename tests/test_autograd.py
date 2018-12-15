@@ -93,8 +93,8 @@ def test_unit_variance_mlpg_gradcheck():
         R = torch.from_numpy(R)
 
         # UnitVarianceMLPG can take input with both means and reshaped_means
-        y1 = UnitVarianceMLPG(R)(means)
-        y2 = UnitVarianceMLPG(R)(reshaped_means)
+        y1 = UnitVarianceMLPG.apply(means, R)
+        y2 = UnitVarianceMLPG.apply(reshaped_means, R)
 
         # Unit variances
         variances = torch.ones(static_dim * len(windows)
@@ -107,12 +107,12 @@ def test_unit_variance_mlpg_gradcheck():
             assert np.allclose(y.data.numpy(), y_hat.data.numpy())
 
         # Grad check
-        inputs = (reshaped_means,)
-        assert gradcheck(UnitVarianceMLPG(R),
+        inputs = (reshaped_means, R)
+        assert gradcheck(UnitVarianceMLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
-        inputs = (means,)
-        assert gradcheck(UnitVarianceMLPG(R),
+        inputs = (means, R)
+        assert gradcheck(UnitVarianceMLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
 
