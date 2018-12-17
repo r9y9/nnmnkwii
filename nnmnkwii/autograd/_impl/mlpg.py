@@ -27,7 +27,7 @@ class MLPG(Function):
        neural network for voice conversion." Fifteenth Annual Conference of the
        International Speech Communication Association. 2014.
 
-    Attributes:
+    Args:
         variances (torch.FloatTensor): Variances same as in
             :func:`nnmnkwii.paramgen.mlpg`.
         windows (list): same as in :func:`nnmnkwii.paramgen.mlpg`.
@@ -42,28 +42,24 @@ class MLPG(Function):
         :func:`nnmnkwii.paramgen.mlpg_grad`.
     """
 
-    def __init__(self, variances, windows):
-        super(MLPG, self).__init__()
-        self.windows = windows
-        self.variances = variances
-
-    def forward(self, means):
+    @staticmethod
+    def forward(ctx, means, variances, windows):
         assert means.dim() == 2  # we cannot do MLPG on minibatch
-        variances = self.variances
-        self.save_for_backward(means)
+        ctx.windows = windows
+        ctx.save_for_backward(means, variances)
 
         T, D = means.size()
         assert means.size() == variances.size()
 
         means_np = means.detach().numpy()
         variances_np = variances.detach().numpy()
-        y = G.mlpg(means_np, variances_np, self.windows)
+        y = G.mlpg(means_np, variances_np, ctx.windows)
         y = torch.from_numpy(y.astype(np.float32))
         return y
 
-    def backward(self, grad_output):
-        means, = self.saved_tensors
-        variances = self.variances
+    @staticmethod
+    def backward(ctx, grad_output):
+        means, variances = ctx.saved_tensors
 
         T, D = means.size()
 
@@ -71,10 +67,10 @@ class MLPG(Function):
         means_numpy = means.detach().numpy()
         variances_numpy = variances.detach().numpy()
         grads_numpy = G.mlpg_grad(
-            means_numpy, variances_numpy, self.windows,
+            means_numpy, variances_numpy, ctx.windows,
             grad_output_numpy)
 
-        return torch.from_numpy(grads_numpy).clone()
+        return torch.from_numpy(grads_numpy).clone(), None, None
 
 
 class UnitVarianceMLPG(Function):
@@ -198,7 +194,7 @@ def mlpg(means, variances, windows):
     if variances.dim() == 1 and variances.shape[0] == D:
         variances = variances.expand(T, D)
     assert means.size() == variances.size()
-    return MLPG(variances, windows)(means)
+    return MLPG.apply(means, variances, windows)
 
 
 def unit_variance_mlpg(R, means):
