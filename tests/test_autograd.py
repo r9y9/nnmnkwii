@@ -99,7 +99,7 @@ def test_unit_variance_mlpg_gradcheck():
         # Unit variances
         variances = torch.ones(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
-        y_hat = MLPG(variances, windows)(means)
+        y_hat = MLPG.apply(means, variances, windows)
 
         # Make sure UnitVarianceMLPG and MLPG can get same result
         # if we use unit variances
@@ -193,20 +193,21 @@ def test_mlpg_gradcheck():
         torch.manual_seed(1234)
         means = Variable(torch.rand(T, static_dim * len(windows)),
                          requires_grad=True)
-        inputs = (means,)
 
         # Unit variances case
         variances = torch.ones(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
+        inputs = (means, variances, windows)
 
-        assert gradcheck(MLPG(variances, windows),
+        assert gradcheck(MLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
         # Rand variances case
         variances = torch.rand(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
+        inputs = (means, variances, windows)
 
-        assert gradcheck(MLPG(variances, windows),
+        assert gradcheck(MLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
 
