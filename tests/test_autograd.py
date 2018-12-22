@@ -161,7 +161,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
         for i in range(batch_size):
             grad1 = reshaped_means.grad.data.numpy()
             grad2 = reshaped_means_expanded.grad[i].data.numpy()
-            assert np.allclose(grad1, grad2)
+            assert np.allclose(grad1, grad2, atol=1.05e-08)
 
         # Case 3: 2d with non-reshaped input
         y_hat3 = AF.unit_variance_mlpg(R, means)
@@ -180,7 +180,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
         for i in range(batch_size):
             grad1 = means.grad.data.numpy()
             grad2 = means_expanded.grad[i].data.numpy()
-            assert np.allclose(grad1, grad2)
+            assert np.allclose(grad1, grad2, atol=1.05e-08)
 
 
 def test_mlpg_gradcheck():
