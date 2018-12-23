@@ -93,13 +93,13 @@ def test_unit_variance_mlpg_gradcheck():
         R = torch.from_numpy(R)
 
         # UnitVarianceMLPG can take input with both means and reshaped_means
-        y1 = UnitVarianceMLPG(R)(means)
-        y2 = UnitVarianceMLPG(R)(reshaped_means)
+        y1 = UnitVarianceMLPG.apply(means, R)
+        y2 = UnitVarianceMLPG.apply(reshaped_means, R)
 
         # Unit variances
         variances = torch.ones(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
-        y_hat = MLPG(variances, windows)(means)
+        y_hat = MLPG.apply(means, variances, windows)
 
         # Make sure UnitVarianceMLPG and MLPG can get same result
         # if we use unit variances
@@ -107,12 +107,12 @@ def test_unit_variance_mlpg_gradcheck():
             assert np.allclose(y.data.numpy(), y_hat.data.numpy())
 
         # Grad check
-        inputs = (reshaped_means,)
-        assert gradcheck(UnitVarianceMLPG(R),
+        inputs = (reshaped_means, R)
+        assert gradcheck(UnitVarianceMLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
-        inputs = (means,)
-        assert gradcheck(UnitVarianceMLPG(R),
+        inputs = (means, R)
+        assert gradcheck(UnitVarianceMLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
 
@@ -161,7 +161,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
         for i in range(batch_size):
             grad1 = reshaped_means.grad.data.numpy()
             grad2 = reshaped_means_expanded.grad[i].data.numpy()
-            assert np.allclose(grad1, grad2)
+            assert np.allclose(grad1, grad2, atol=1.05e-08)
 
         # Case 3: 2d with non-reshaped input
         y_hat3 = AF.unit_variance_mlpg(R, means)
@@ -180,7 +180,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
         for i in range(batch_size):
             grad1 = means.grad.data.numpy()
             grad2 = means_expanded.grad[i].data.numpy()
-            assert np.allclose(grad1, grad2)
+            assert np.allclose(grad1, grad2, atol=1.05e-08)
 
 
 def test_mlpg_gradcheck():
@@ -193,20 +193,21 @@ def test_mlpg_gradcheck():
         torch.manual_seed(1234)
         means = Variable(torch.rand(T, static_dim * len(windows)),
                          requires_grad=True)
-        inputs = (means,)
 
         # Unit variances case
         variances = torch.ones(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
+        inputs = (means, variances, windows)
 
-        assert gradcheck(MLPG(variances, windows),
+        assert gradcheck(MLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
         # Rand variances case
         variances = torch.rand(static_dim * len(windows)
                                ).expand(T, static_dim * len(windows))
+        inputs = (means, variances, windows)
 
-        assert gradcheck(MLPG(variances, windows),
+        assert gradcheck(MLPG.apply,
                          inputs, eps=1e-3, atol=1e-3)
 
 

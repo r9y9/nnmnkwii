@@ -26,6 +26,7 @@ before_install:
   - conda create -q -n test-environment "python=$TRAVIS_PYTHON_VERSION" $deps -c pytorch
   - source activate test-environment
   - pip install codecov flake8
+  - pip install scikit-learn==0.20.0
 
 install:
   - pip install -e ".[test]"

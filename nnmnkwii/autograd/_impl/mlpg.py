@@ -27,7 +27,7 @@ class MLPG(Function):
        neural network for voice conversion." Fifteenth Annual Conference of the
        International Speech Communication Association. 2014.
 
-    Attributes:
+    Args:
         variances (torch.FloatTensor): Variances same as in
             :func:`nnmnkwii.paramgen.mlpg`.
         windows (list): same as in :func:`nnmnkwii.paramgen.mlpg`.
@@ -42,28 +42,24 @@ class MLPG(Function):
         :func:`nnmnkwii.paramgen.mlpg_grad`.
     """
 
-    def __init__(self, variances, windows):
-        super(MLPG, self).__init__()
-        self.windows = windows
-        self.variances = variances
-
-    def forward(self, means):
+    @staticmethod
+    def forward(ctx, means, variances, windows):
         assert means.dim() == 2  # we cannot do MLPG on minibatch
-        variances = self.variances
-        self.save_for_backward(means)
+        ctx.windows = windows
+        ctx.save_for_backward(means, variances)
 
         T, D = means.size()
         assert means.size() == variances.size()
 
         means_np = means.detach().numpy()
         variances_np = variances.detach().numpy()
-        y = G.mlpg(means_np, variances_np, self.windows)
+        y = G.mlpg(means_np, variances_np, ctx.windows)
         y = torch.from_numpy(y.astype(np.float32))
         return y
 
-    def backward(self, grad_output):
-        means, = self.saved_tensors
-        variances = self.variances
+    @staticmethod
+    def backward(ctx, grad_output):
+        means, variances = ctx.saved_tensors
 
         T, D = means.size()
 
@@ -71,10 +67,10 @@ class MLPG(Function):
         means_numpy = means.detach().numpy()
         variances_numpy = variances.detach().numpy()
         grads_numpy = G.mlpg_grad(
-            means_numpy, variances_numpy, self.windows,
+            means_numpy, variances_numpy, ctx.windows,
             grad_output_numpy)
 
-        return torch.from_numpy(grads_numpy).clone()
+        return torch.from_numpy(grads_numpy).clone(), None, None
 
 
 class UnitVarianceMLPG(Function):
@@ -102,8 +98,7 @@ class UnitVarianceMLPG(Function):
 
         R = (W^{T} W)^{-1} W^{T}
 
-    To avoid dupulicate computations in forward and backward, the function
-    takes ``R`` at construction time. The matrix ``R`` can be computed by
+    The matrix ``R`` can be computed by
     :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.
 
     Args:
@@ -111,23 +106,16 @@ class UnitVarianceMLPG(Function):
           should be created with
           :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`.
 
-
-    Attributes:
-        R: Unit-variance MLPG matrix (``T x num_windows*T``).
-
     See also:
         :func:`nnmnkwii.autograd.unit_variance_mlpg`.
     """
 
-    def __init__(self, R):
-        super(UnitVarianceMLPG, self).__init__()
-        self.R = R
-        self.num_windows = R.shape[-1] // R.shape[0]
-
-    def forward(self, means):
+    @staticmethod
+    def forward(ctx, means, R):
         # TODO: remove this
-        self.save_for_backward(means)
-        T = self.R.shape[0]
+        ctx.save_for_backward(means, R)
+        ctx.num_windows = R.shape[-1] // R.shape[0]
+        T = R.shape[0]
         dim = means.dim()
 
         # Add batch axis if necessary
@@ -141,23 +129,24 @@ class UnitVarianceMLPG(Function):
         # Check if means has proper shape
         reshaped = not (T == T_)
         if not reshaped:
-            static_dim = means.shape[-1] // self.num_windows
+            static_dim = means.shape[-1] // ctx.num_windows
             reshaped_means = means.contiguous().view(
-                B, T, self.num_windows, -1).transpose(
+                B, T, ctx.num_windows, -1).transpose(
                     1, 2).contiguous().view(B, -1, static_dim)
         else:
             static_dim = means.shape[-1]
             reshaped_means = means
 
-        out = torch.matmul(self.R, reshaped_means)
+        out = torch.matmul(R, reshaped_means)
         if dim == 2:
             return out.view(-1, static_dim)
 
         return out
 
-    def backward(self, grad_output):
-        means, = self.saved_tensors
-        T = self.R.shape[0]
+    @staticmethod
+    def backward(ctx, grad_output):
+        means, R = ctx.saved_tensors
+        T = R.shape[0]
         dim = means.dim()
 
         # Add batch axis if necessary
@@ -168,17 +157,17 @@ class UnitVarianceMLPG(Function):
         else:
             B, T_, D = means.shape
 
-        grad = torch.matmul(self.R.transpose(0, 1), grad_output)
+        grad = torch.matmul(R.transpose(0, 1), grad_output)
 
         reshaped = not (T == T_)
         if not reshaped:
-            grad = grad.view(B, self.num_windows, T, -1).transpose(
+            grad = grad.view(B, ctx.num_windows, T, -1).transpose(
                 1, 2).contiguous().view(B, T, D)
 
         if dim == 2:
-            return grad.view(-1, D)
+            return grad.view(-1, D), None
 
-        return grad
+        return grad, None
 
 
 def mlpg(means, variances, windows):
@@ -205,7 +194,7 @@ def mlpg(means, variances, windows):
     if variances.dim() == 1 and variances.shape[0] == D:
         variances = variances.expand(T, D)
     assert means.size() == variances.size()
-    return MLPG(variances, windows)(means)
+    return MLPG.apply(means, variances, windows)
 
 
 def unit_variance_mlpg(R, means):
@@ -223,4 +212,4 @@ def unit_variance_mlpg(R, means):
         :func:`nnmnkwii.paramgen.unit_variance_mlpg_matrix`,
         :func:`reshape_means`.
     """
-    return UnitVarianceMLPG(R)(means)
+    return UnitVarianceMLPG.apply(means, R)
