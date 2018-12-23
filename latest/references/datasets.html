@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.17+34befbd documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.17+81b22c6 documentation</title>
   
 
   
@@ -24,27 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.17+34befbd documentation" href="../index.html"/>
-        <link rel="next" title="Display" href="display.html"/>
-        <link rel="prev" title="Baseline" href="baseline.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Display" href="display.html" />
+    <link rel="prev" title="Baseline" href="baseline.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -61,7 +53,7 @@
 
           
             
-            <img src="../_static/logo.png" class="logo" />
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -69,7 +61,7 @@
             
             
               <div class="version">
-                0.0.17+34befbd
+                0.0.17+81b22c6
               </div>
             
           
@@ -409,7 +401,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">nnmnkwii</a>
@@ -417,9 +409,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -597,14 +590,30 @@ an array, and then do whatever with numpy/scipy functionalities.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.FileSourceDataset.file_data_source">
 <code class="descname">file_data_source</code><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.file_data_source" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>FileDataSource</em> – Data source to specify 1) where to
+<dd><p>Data source to specify 1) where to
 find data to be loaded and 2) how to collect features from them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource">FileDataSource</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.FileSourceDataset.collected_files">
 <code class="descname">collected_files</code><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.collected_files" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>ndarray</em> – Collected files are stored.</p>
+<dd><p>Collected files are stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <table class="docutils field-list" frame="void" rules="none">
@@ -688,13 +697,27 @@ padded features as <code class="docutils literal notranslate"><span class="pre">
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.PaddedFileSourceDataset.file_data_source">
 <code class="descname">file_data_source</code><a class="headerlink" href="#nnmnkwii.datasets.PaddedFileSourceDataset.file_data_source" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>FileDataSource</em></p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource">FileDataSource</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.PaddedFileSourceDataset.padded_length">
 <code class="descname">padded_length</code><a class="headerlink" href="#nnmnkwii.datasets.PaddedFileSourceDataset.padded_length" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em></p>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p class="rubric">Examples</p>
@@ -767,20 +790,44 @@ utterance-wise iteration.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.MemoryCacheDataset.dataset">
 <code class="descname">dataset</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheDataset.dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Dataset</em> – Dataset</p>
+<dd><p>Dataset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.MemoryCacheDataset.cached_utterances">
 <code class="descname">cached_utterances</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheDataset.cached_utterances" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>OrderedDict</em> – Loaded utterances. Keys are utterance
+<dd><p>Loaded utterances. Keys are utterance
 indices and values are numpy arrays.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">OrderedDict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.MemoryCacheDataset.cache_size">
 <code class="descname">cache_size</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheDataset.cache_size" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Cache size.</p>
+<dd><p>Cache size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p class="rubric">Examples</p>
@@ -836,19 +883,43 @@ give sufficient large number of cache size, to avoid many file re-loading.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.MemoryCacheFramewiseDataset.dataset">
 <code class="descname">dataset</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheFramewiseDataset.dataset" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>Dataset</em> – Dataset</p>
+<dd><p>Dataset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.MemoryCacheFramewiseDataset.cached_utterances">
 <code class="descname">cached_utterances</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheFramewiseDataset.cached_utterances" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>OrderedDict</em> – Loaded utterances.</p>
+<dd><p>Loaded utterances.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">OrderedDict</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.MemoryCacheFramewiseDataset.cache_size">
 <code class="descname">cache_size</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheFramewiseDataset.cache_size" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Cache size.</p>
+<dd><p>Cache size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="docutils">
@@ -954,9 +1025,17 @@ speakers.</li>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource.labels">
 <code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+<dd><p>Speaker labels paired with collected files.
 Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1014,17 +1093,33 @@ speakers.</li>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource.speaker_info">
 <code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Dict of speaker information dict. Keyes are speaker
+<dd><p>Dict of speaker information dict. Keyes are speaker
 ids (str) and each value is speaker information consists of <code class="docutils literal notranslate"><span class="pre">AGE</span></code>,
 <code class="docutils literal notranslate"><span class="pre">GENDER</span></code> and <code class="docutils literal notranslate"><span class="pre">REGION</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource.labels">
 <code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource.labels" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+<dd><p>Speaker labels paired with collected files.
 Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1074,17 +1169,33 @@ speakers.</li>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.vctk.WavFileDataSource.speaker_info">
 <code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>dict</em> – Dict of speaker information dict. Keyes are speaker
+<dd><p>Dict of speaker information dict. Keyes are speaker
 ids (str) and each value is speaker information consists of <code class="docutils literal notranslate"><span class="pre">AGE</span></code>,
 <code class="docutils literal notranslate"><span class="pre">GENDER</span></code> and <code class="docutils literal notranslate"><span class="pre">REGION</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.vctk.WavFileDataSource.labels">
 <code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+<dd><p>Speaker labels paired with collected files.
 Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1132,7 +1243,15 @@ method, which defines how features are computed given a transcription.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.ljspeech.TranscriptionDataSource.metadata">
 <code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>numpy.ndarray</em> – Metadata, shapeo (<code class="docutils literal notranslate"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+<dd><p>Metadata, shapeo (<code class="docutils literal notranslate"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1175,7 +1294,15 @@ method, which defines how features are computed given a wav file path.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.ljspeech.WavFileDataSource.metadata">
 <code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.WavFileDataSource.metadata" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>numpy.ndarray</em> – Metadata, shape (<code class="docutils literal notranslate"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+<dd><p>Metadata, shape (<code class="docutils literal notranslate"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1269,9 +1396,17 @@ it collects evaluation data.</li>
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource.labels">
 <code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>numpy.ndarray</em> – Speaker labels paired with collected files.
+<dd><p>Speaker labels paired with collected files.
 Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
 models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1371,8 +1506,16 @@ are <code class="docutils literal notranslate"><span class="pre">angry</span></c
 <dl class="attribute">
 <dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource.labels">
 <code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>numpy.ndarray</em> – List of speaker identifiers determined by
+<dd><p>List of speaker identifiers determined by
 labelmap. Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1451,9 +1594,7 @@ and <code class="docutils literal notranslate"><span class="pre">voiceactress100
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1471,11 +1612,11 @@ and <code class="docutils literal notranslate"><span class="pre">voiceactress100
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ryuichi Yamamoto.
+        &copy; Copyright 2017, Ryuichi Yamamoto
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1490,36 +1631,24 @@ and <code class="docutils literal notranslate"><span class="pre">voiceactress100
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0.0.17+34befbd',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

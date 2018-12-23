@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Autograd &mdash; nnmnkwii 0.0.17+34befbd documentation</title>
+  <title>Autograd &mdash; nnmnkwii 0.0.17+81b22c6 documentation</title>
   
 
   
@@ -24,27 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.17+34befbd documentation" href="../index.html"/>
-        <link rel="next" title="nnmnkwii.autograd.mlpg" href="generated/nnmnkwii.autograd.mlpg.html"/>
-        <link rel="prev" title="GMM-based voice conversion (en)" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nnmnkwii.autograd.mlpg" href="generated/nnmnkwii.autograd.mlpg.html" />
+    <link rel="prev" title="GMM-based voice conversion (en)" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -61,7 +53,7 @@
 
           
             
-            <img src="../_static/logo.png" class="logo" />
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -69,7 +61,7 @@
             
             
               <div class="version">
-                0.0.17+34befbd
+                0.0.17+81b22c6
               </div>
             
           
@@ -409,7 +401,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">nnmnkwii</a>
@@ -417,9 +409,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -508,7 +501,7 @@ to support other autograd frameworks.</p>
 <h2>Function classes<a class="headerlink" href="#function-classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="nnmnkwii.autograd.MLPG">
-<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">MLPG</code><span class="sig-paren">(</span><em>variances</em>, <em>windows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">MLPG</code><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generic MLPG as an autograd function.</p>
 <p><code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>.</p>
 <p>This is meant to be used for Minimum Geneartion Error (MGE) training for
@@ -532,19 +525,19 @@ neural network for voice conversion.” Fifteenth Annual Conference of the
 International Speech Communication Association. 2014.</td></tr>
 </tbody>
 </table>
-<dl class="attribute">
-<dt id="nnmnkwii.autograd.MLPG.variances">
-<code class="descname">variances</code><a class="headerlink" href="#nnmnkwii.autograd.MLPG.variances" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>torch.FloatTensor</em> – Variances same as in
-<a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>.</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nnmnkwii.autograd.MLPG.windows">
-<code class="descname">windows</code><a class="headerlink" href="#nnmnkwii.autograd.MLPG.windows" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>list</em> – same as in <a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>.</p>
-</dd></dl>
-
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>variances</strong> (<em>torch.FloatTensor</em>) – Variances same as in
+<a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>.</li>
+<li><strong>windows</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – same as in <a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The function is generic but cannot run on CUDA. For faster
@@ -556,9 +549,9 @@ differenciable MLPG, see <a class="reference internal" href="#nnmnkwii.autograd.
 <a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg" title="nnmnkwii.paramgen.mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.mlpg()</span></code></a>,
 <a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg_grad.html#nnmnkwii.paramgen.mlpg_grad" title="nnmnkwii.paramgen.mlpg_grad"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.mlpg_grad()</span></code></a>.</p>
 </div>
-<dl class="method">
+<dl class="staticmethod">
 <dt id="nnmnkwii.autograd.MLPG.backward">
-<code class="descname">backward</code><span class="sig-paren">(</span><em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG.backward" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">backward</code><span class="sig-paren">(</span><em>ctx</em>, <em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a formula for differentiating the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
 <p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
@@ -574,9 +567,9 @@ first input to <a class="reference internal" href="#nnmnkwii.autograd.MLPG.forwa
 output.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="staticmethod">
 <dt id="nnmnkwii.autograd.MLPG.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>means</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG.forward" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">forward</code><span class="sig-paren">(</span><em>ctx</em>, <em>means</em>, <em>variances</em>, <em>windows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#MLPG.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.MLPG.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
 <p>It must accept a context ctx as the first argument, followed by any
@@ -589,7 +582,7 @@ during the backward pass.</p>
 
 <dl class="class">
 <dt id="nnmnkwii.autograd.UnitVarianceMLPG">
-<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">UnitVarianceMLPG</code><span class="sig-paren">(</span><em>R</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">UnitVarianceMLPG</code><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG" title="Permalink to this definition">¶</a></dt>
 <dd><p>Special case of MLPG assuming data is normalized to have unit variance.</p>
 <p><code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T</span> <span class="pre">x</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>. or
 <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T*num_windows,</span> <span class="pre">static_dim)</span> <span class="pre">-&gt;</span> <span class="pre">(T,</span> <span class="pre">static_dim)</span></code>.</p>
@@ -605,8 +598,7 @@ as follows:</p>
 <p>where</p>
 <div class="math notranslate nohighlight">
 \[R = (W^{T} W)^{-1} W^{T}\]</div>
-<p>To avoid dupulicate computations in forward and backward, the function
-takes <code class="docutils literal notranslate"><span class="pre">R</span></code> at construction time. The matrix <code class="docutils literal notranslate"><span class="pre">R</span></code> can be computed by
+<p>The matrix <code class="docutils literal notranslate"><span class="pre">R</span></code> can be computed by
 <a class="reference internal" href="generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.paramgen.unit_variance_mlpg_matrix" title="nnmnkwii.paramgen.unit_variance_mlpg_matrix"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.paramgen.unit_variance_mlpg_matrix()</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -618,19 +610,13 @@ should be created with
 </tr>
 </tbody>
 </table>
-<dl class="attribute">
-<dt id="nnmnkwii.autograd.UnitVarianceMLPG.R">
-<code class="descname">R</code><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG.R" title="Permalink to this definition">¶</a></dt>
-<dd><p>Unit-variance MLPG matrix (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">num_windows*T</span></code>).</p>
-</dd></dl>
-
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last"><a class="reference internal" href="generated/nnmnkwii.autograd.unit_variance_mlpg.html#nnmnkwii.autograd.unit_variance_mlpg" title="nnmnkwii.autograd.unit_variance_mlpg"><code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.autograd.unit_variance_mlpg()</span></code></a>.</p>
 </div>
-<dl class="method">
+<dl class="staticmethod">
 <dt id="nnmnkwii.autograd.UnitVarianceMLPG.backward">
-<code class="descname">backward</code><span class="sig-paren">(</span><em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG.backward" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">backward</code><span class="sig-paren">(</span><em>ctx</em>, <em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a formula for differentiating the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
 <p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
@@ -646,9 +632,9 @@ first input to <a class="reference internal" href="#nnmnkwii.autograd.UnitVarian
 output.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="staticmethod">
 <dt id="nnmnkwii.autograd.UnitVarianceMLPG.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>means</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG.forward" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">forward</code><span class="sig-paren">(</span><em>ctx</em>, <em>means</em>, <em>R</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/mlpg.html#UnitVarianceMLPG.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.UnitVarianceMLPG.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
 <p>It must accept a context ctx as the first argument, followed by any
@@ -666,13 +652,29 @@ during the backward pass.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.autograd.ModSpec.n">
 <code class="descname">n</code><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.n" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – DFT length.</p>
+<dd><p>DFT length.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.autograd.ModSpec.norm">
 <code class="descname">norm</code><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.norm" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – Normalize DFT output or not. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.fft.fft</span></code></a>.</p>
+<dd><p>Normalize DFT output or not. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.fft.fft</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -711,9 +713,7 @@ during the backward pass.</p>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -731,11 +731,11 @@ during the backward pass.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ryuichi Yamamoto.
+        &copy; Copyright 2017, Ryuichi Yamamoto
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -750,36 +750,24 @@ during the backward pass.</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0.0.17+34befbd',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

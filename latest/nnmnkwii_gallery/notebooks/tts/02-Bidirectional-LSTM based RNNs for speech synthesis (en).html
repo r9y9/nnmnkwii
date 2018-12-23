@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Bidirectional-LSTM based RNNs for text-to-speech synthesis (en) &mdash; nnmnkwii 0.0.17+34befbd documentation</title>
+  <title>Bidirectional-LSTM based RNNs for text-to-speech synthesis (en) &mdash; nnmnkwii 0.0.17+81b22c6 documentation</title>
   
 
   
@@ -24,27 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../../../genindex.html"/>
-        <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.17+34befbd documentation" href="../../../index.html"/>
-        <link rel="next" title="Bidirectional-LSTM based RNNs for text-to-speech synthesis with OpenJTalk (ja)" href="02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html"/>
-        <link rel="prev" title="DNN text-to-speech synthesis (en)" href="01-DNN-based statistical speech synthesis (en).html"/> 
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Bidirectional-LSTM based RNNs for text-to-speech synthesis with OpenJTalk (ja)" href="02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html" />
+    <link rel="prev" title="DNN text-to-speech synthesis (en)" href="01-DNN-based statistical speech synthesis (en).html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -61,7 +53,7 @@
 
           
             
-            <img src="../../../_static/logo.png" class="logo" />
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -69,7 +61,7 @@
             
             
               <div class="version">
-                0.0.17+34befbd
+                0.0.17+81b22c6
               </div>
             
           
@@ -409,7 +401,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">nnmnkwii</a>
@@ -417,9 +409,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -876,7 +869,7 @@ train/test set.</li>
 </pre></div>
 </div>
 </div>
-<p>Then we can construct datasets for duraton and acoustic models. We wil
+<p>Then we can construct datasets for duration and acoustic models. We wil
 have</p>
 <ul class="simple">
 <li>X: Input (duration, acoustic) datasets</li>
@@ -1036,8 +1029,8 @@ Total number of frames: 534363
 </div>
 </div>
 <p>As you can see the top of the images, linguistic features are not clear.
-This is because linguistic features have very differnt scale for each
-dimention. This will be clear after normalization.</p>
+This is because linguistic features have very different scale for each
+dimension. This will be clear after normalization.</p>
 </div>
 <div class="section" id="Statistics">
 <h3>Statistics<a class="headerlink" href="#Statistics" title="Permalink to this headline">¶</a></h3>
@@ -1491,7 +1484,7 @@ Start utterance-wise training...
 <p>Let’s see how our network works.</p>
 <div class="section" id="Parameter-generation-utilities">
 <h3>Parameter generation utilities<a class="headerlink" href="#Parameter-generation-utilities" title="Permalink to this headline">¶</a></h3>
-<p>Almost same as DNN text-to-speech syntheiss. The difference is that we
+<p>Almost same as DNN text-to-speech synthesis. The difference is that we
 need to give initial hidden states explicitly.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
@@ -1919,9 +1912,7 @@ Merlin (slt_arctic_full, generated with default configurations)
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1939,11 +1930,11 @@ Merlin (slt_arctic_full, generated with default configurations)
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ryuichi Yamamoto.
+        &copy; Copyright 2017, Ryuichi Yamamoto
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1958,36 +1949,24 @@ Merlin (slt_arctic_full, generated with default configurations)
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0.0.17+34befbd',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

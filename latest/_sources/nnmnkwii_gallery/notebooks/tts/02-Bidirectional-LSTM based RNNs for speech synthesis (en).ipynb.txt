@@ -239,7 +239,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "Then we can construct datasets for duraton and acoustic models. We wil have\n",
+    "Then we can construct datasets for duration and acoustic models. We wil have\n",
     "\n",
     "- X: Input (duration, acoustic) datasets\n",
     "- Y: Target (duration, acoustic) datasets\n",
@@ -423,7 +423,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "As you can see the top of the images, linguistic features are not clear. This is because linguistic features have very differnt scale for each dimention. This will be clear after normalization."
+    "As you can see the top of the images, linguistic features are not clear. This is because linguistic features have very different scale for each dimension. This will be clear after normalization."
    ]
   },
   {
@@ -937,7 +937,7 @@
    "source": [
     "### Parameter generation utilities\n",
     "\n",
-    "Almost same as DNN text-to-speech syntheiss. The difference is that we need to give initial hidden states explicitly."
+    "Almost same as DNN text-to-speech synthesis. The difference is that we need to give initial hidden states explicitly."
    ]
   },
   {

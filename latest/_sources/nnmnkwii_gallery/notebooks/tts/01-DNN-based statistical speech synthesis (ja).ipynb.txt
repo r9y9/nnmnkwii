@@ -413,7 +413,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "As you can see the top of the images, linguistic features are not clear. This is because linguistic features have very differnt scale for each dimention. This will be clear after normalization."
+    "As you can see the top of the images, linguistic features are not clear. This is because linguistic features have very different scale for each dimension. This will be clear after normalization."
    ]
   },
   {

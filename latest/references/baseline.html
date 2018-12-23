@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Baseline &mdash; nnmnkwii 0.0.17+34befbd documentation</title>
+  <title>Baseline &mdash; nnmnkwii 0.0.17+81b22c6 documentation</title>
   
 
   
@@ -24,27 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../genindex.html"/>
-        <link rel="search" title="Search" href="../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.17+34befbd documentation" href="../index.html"/>
-        <link rel="next" title="Datasets" href="datasets.html"/>
-        <link rel="prev" title="nnmnkwii.autograd.modspec" href="generated/nnmnkwii.autograd.modspec.html"/> 
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Datasets" href="datasets.html" />
+    <link rel="prev" title="nnmnkwii.autograd.modspec" href="generated/nnmnkwii.autograd.modspec.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -61,7 +53,7 @@
 
           
             
-            <img src="../_static/logo.png" class="logo" />
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -69,7 +61,7 @@
             
             
               <div class="version">
-                0.0.17+34befbd
+                0.0.17+81b22c6
               </div>
             
           
@@ -409,7 +401,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">nnmnkwii</a>
@@ -417,9 +409,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -503,7 +496,7 @@ conversion <a class="reference internal" href="#ra06d78ad6cd7-1" id="id1">[1]</a
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>gmm</strong> (<a class="reference external" href="http://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" title="(in scikit-learn v0.19.2)"><em>sklearn.mixture.GaussianMixture</em></a>) – Gaussian Mixture Models of
+<li><strong>gmm</strong> (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" title="(in scikit-learn v0.20.2)"><em>sklearn.mixture.GaussianMixture</em></a>) – Gaussian Mixture Models of
 source and target joint features.</li>
 <li><strong>windows</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of windows. See <code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.functions.mlpg()</span></code> for
 details.</li>
@@ -517,74 +510,154 @@ details.</li>
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.num_mixtures">
 <code class="descname">num_mixtures</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.num_mixtures" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – The number of Gaussian mixtures</p>
+<dd><p>The number of Gaussian mixtures</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.weights">
 <code class="descname">weights</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.weights" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>), weights for each gaussian</p>
+<dd><p>shape (<cite>num_mixtures</cite>), weights for each gaussian</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.src_means">
 <code class="descname">src_means</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.src_means" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>)
+<dd><p>shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>)
 means of GMM for a source speaker</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.tgt_means">
 <code class="descname">tgt_means</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.tgt_means" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>)
+<dd><p>shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>)
 means of GMM for a target speaker</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.covarXX">
 <code class="descname">covarXX</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.covarXX" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
+<dd><p>shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
 <cite>order of spectral feature</cite>)
 variance matrix of source speaker’s spectral feature</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.covarXY">
 <code class="descname">covarXY</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.covarXY" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
+<dd><p>shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
 <cite>order of spectral feature</cite>)
 covariance matrix of source and target speaker’s spectral feature</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.covarYX">
 <code class="descname">covarYX</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.covarYX" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
+<dd><p>shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
 <cite>order of spectral feature</cite>)
 covariance matrix of target and source speaker’s spectral feature</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.covarYY">
 <code class="descname">covarYY</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.covarYY" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
+<dd><p>shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
 <cite>order of spectral feature</cite>) variance matrix of target speaker’s
 spectral feature</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.D">
 <code class="descname">D</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.D" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
+<dd><p>shape (<cite>num_mixtures</cite>, <cite>order of spectral feature</cite>,
 <cite>order of spectral feature</cite>) covariance matrices of target static
 spectral features</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="nnmnkwii.baseline.gmm.MLPG.px">
 <code class="descname">px</code><a class="headerlink" href="#nnmnkwii.baseline.gmm.MLPG.px" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>sklearn.mixture.GaussianMixture</em> – Gaussian Mixture Models of source
+<dd><p>Gaussian Mixture Models of source
 speaker’s features</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" title="(in scikit-learn v0.20.2)">sklearn.mixture.GaussianMixture</a></td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <p class="rubric">Examples</p>
@@ -646,9 +719,7 @@ will be transformed.</td>
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -666,11 +737,11 @@ will be transformed.</td>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ryuichi Yamamoto.
+        &copy; Copyright 2017, Ryuichi Yamamoto
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -685,36 +756,24 @@ will be transformed.</td>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0.0.17+34befbd',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

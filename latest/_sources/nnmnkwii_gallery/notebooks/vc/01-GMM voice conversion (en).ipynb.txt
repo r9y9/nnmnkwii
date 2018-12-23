@@ -115,7 +115,7 @@
     "\n",
     "In typical one-to-one voice conversion, we need time-aligned source and target speaker's features. In the demo, we use mel-cepstrum as spectral feature representation and try to convert source speaker's feature to that of target speaker. \n",
     "\n",
-    "For GMM-based conversion, we need joint feature matirx, which is composed of time-aligned source and target features. Steps to prepare dataset are:\n",
+    "For GMM-based conversion, we need joint feature matrix, which is composed of time-aligned source and target features. Steps to prepare dataset are:\n",
     "\n",
     "- Compute features for each speaker\n",
     "- Align features by Dynamic time warping (DTW) for each utterance.\n",
@@ -212,7 +212,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "We choose `clb` as source speaker and `slt` as target speaker, respectively. To align source and target datasets later, define data sources separetely."
+    "We choose `clb` as source speaker and `slt` as target speaker, respectively. To align source and target datasets later, define data sources separately."
    ]
   },
   {
@@ -235,7 +235,7 @@
    "source": [
     "### Convert dataset to arrays\n",
     "\n",
-    "Since we are using small dataset, it's enough to load entire dataset into memory at once. To handle varaible-length frame lengths, we use `PaddedFileSourceDataset` here."
+    "Since we are using small dataset, it's enough to load entire dataset into memory at once. To handle variable-length frame lengths, we use `PaddedFileSourceDataset` here."
    ]
   },
   {
@@ -360,7 +360,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "0-th mel-cesptrum is a power coefficient by definition. Since we want to focus on spectral charactaristics, drop 1-st dimention from aligned features."
+    "0-th mel-cesptrum is a power coefficient by definition. Since we want to focus on spectral characteristics, drop 1-st dimension from aligned features."
    ]
   },
   {
@@ -371,7 +371,7 @@
    },
    "outputs": [],
    "source": [
-    "# Drop 1st (power) dimention\n",
+    "# Drop 1st (power) dimension\n",
     "X_aligned, Y_aligned = X_aligned[:, :, 1:], Y_aligned[:, :, 1:]"
    ]
   },

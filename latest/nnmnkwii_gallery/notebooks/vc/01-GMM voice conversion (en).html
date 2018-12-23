@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GMM-based voice conversion (en) &mdash; nnmnkwii 0.0.17+34befbd documentation</title>
+  <title>GMM-based voice conversion (en) &mdash; nnmnkwii 0.0.17+81b22c6 documentation</title>
   
 
   
@@ -24,27 +24,19 @@
 
   
 
-  
-  
-    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  
-
-  
-
-  
-        <link rel="index" title="Index"
-              href="../../../genindex.html"/>
-        <link rel="search" title="Search" href="../../../search.html"/>
-    <link rel="top" title="nnmnkwii 0.0.17+34befbd documentation" href="../../../index.html"/>
-        <link rel="next" title="Autograd" href="../../../references/autograd.html"/>
-        <link rel="prev" title="Bidirectional-LSTM based RNNs for text-to-speech synthesis with OpenJTalk (ja)" href="../tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html"/> 
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Autograd" href="../../../references/autograd.html" />
+    <link rel="prev" title="Bidirectional-LSTM based RNNs for text-to-speech synthesis with OpenJTalk (ja)" href="../tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html" /> 
 
   
   <script src="../../../_static/js/modernizr.min.js"></script>
 
 </head>
 
-<body class="wy-body-for-nav" role="document">
+<body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
@@ -61,7 +53,7 @@
 
           
             
-            <img src="../../../_static/logo.png" class="logo" />
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -69,7 +61,7 @@
             
             
               <div class="version">
-                0.0.17+34befbd
+                0.0.17+81b22c6
               </div>
             
           
@@ -409,7 +401,7 @@
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
       
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+      <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">nnmnkwii</a>
@@ -417,9 +409,10 @@
       </nav>
 
 
-      
       <div class="wy-nav-content">
+        
         <div class="rst-content">
+        
           
 
 
@@ -754,7 +747,7 @@ Populating the interactive namespace from numpy and matplotlib
 target speaker’s features. In the demo, we use mel-cepstrum as spectral
 feature representation and try to convert source speaker’s feature to
 that of target speaker.</p>
-<p>For GMM-based conversion, we need joint feature matirx, which is
+<p>For GMM-based conversion, we need joint feature matrix, which is
 composed of time-aligned source and target features. Steps to prepare
 dataset are:</p>
 <ul class="simple">
@@ -842,7 +835,7 @@ do it manually pretty easily.</p>
 </div>
 <p>We choose <code class="docutils literal notranslate"><span class="pre">clb</span></code> as source speaker and <code class="docutils literal notranslate"><span class="pre">slt</span></code> as target speaker,
 respectively. To align source and target datasets later, define data
-sources separetely.</p>
+sources separately.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
 <span></span>In [5]:
@@ -860,7 +853,7 @@ sources separetely.</p>
 <div class="section" id="Convert-dataset-to-arrays">
 <h3>Convert dataset to arrays<a class="headerlink" href="#Convert-dataset-to-arrays" title="Permalink to this headline">¶</a></h3>
 <p>Since we are using small dataset, it’s enough to load entire dataset
-into memory at once. To handle varaible-length frame lengths, we use
+into memory at once. To handle variable-length frame lengths, we use
 <code class="docutils literal notranslate"><span class="pre">PaddedFileSourceDataset</span></code> here.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
@@ -960,7 +953,7 @@ into memory at once. To handle varaible-length frame lengths, we use
 </div>
 </div>
 <p>0-th mel-cesptrum is a power coefficient by definition. Since we want to
-focus on spectral charactaristics, drop 1-st dimention from aligned
+focus on spectral characteristics, drop 1-st dimension from aligned
 features.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre>
@@ -968,7 +961,7 @@ features.</p>
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="c1"># Drop 1st (power) dimention</span>
+<span></span><span class="c1"># Drop 1st (power) dimension</span>
 <span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span> <span class="o">=</span> <span class="n">X_aligned</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:],</span> <span class="n">Y_aligned</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">:]</span>
 </pre></div>
 </div>
@@ -1551,9 +1544,7 @@ w/ MLPG
 
 
            </div>
-           <div class="articleComments">
-            
-           </div>
+           
           </div>
           <footer>
   
@@ -1571,11 +1562,11 @@ w/ MLPG
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2017, Ryuichi Yamamoto.
+        &copy; Copyright 2017, Ryuichi Yamamoto
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1590,36 +1581,24 @@ w/ MLPG
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../../../',
-            VERSION:'0.0.17+34befbd',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="../../../_static/jquery.js"></script>
-      <script type="text/javascript" src="../../../_static/underscore.js"></script>
-      <script type="text/javascript" src="../../../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
 
   
 
-  
-  
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-  
+  <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
-  
-  
   <script type="text/javascript">
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-   
+  </script> 
 
 </body>
 </html>

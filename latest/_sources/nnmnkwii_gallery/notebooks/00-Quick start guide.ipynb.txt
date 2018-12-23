@@ -13,7 +13,7 @@
    "source": [
     "Source code: https://github.com/r9y9/nnmnkwii_gallery\n",
     "\n",
-    "In this guide, I will try to show basic usages of the library. I'd recommend that readers try this notebook locally to understatnd what the notebook does. Advanced usages can be found at the tutorials section in the documentation.\n",
+    "In this guide, I will try to show basic usages of the library. I'd recommend that readers try this notebook locally to understand what the notebook does. Advanced usages can be found at the tutorials section in the documentation.\n",
     "\n",
     "To run the notebook, in addition to nnmnkwii and its dependencies, you will need the following packages:\n",
     "\n",
@@ -388,7 +388,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "The first axis of the feature is frame (time) and second axis is the dimenton. Finally we get time-aligned frame-level linguistic/acoustic features pair. This is what we typically do to prepare data for acoustic modeing."
+    "The first axis of the feature is frame (time) and second axis is the dimension. Finally we get time-aligned frame-level linguistic/acoustic features pair. This is what we typically do to prepare data for acoustic modeing."
    ]
   },
   {
@@ -402,7 +402,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "Data preparetion is the hard part for many machine learning applications. In this section, you will learn how to create datasets, and how to iterate them in utterance-wise manner, as well as frame-wise manner. For details about dataset abstraction, see Dataset section in the documentation."
+    "Data preparation is the hard part for many machine learning applications. In this section, you will learn how to create datasets, and how to iterate them in utterance-wise manner, as well as frame-wise manner. For details about dataset abstraction, see Dataset section in the documentation."
    ]
   },
   {
@@ -802,15 +802,15 @@
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Linguistic feature dimention (D,): (425,), Acoustic feature dimention (D,): (187,)\n",
-      "Linguistic feature dimention (D,): (425,), Acoustic feature dimention (D,): (187,)\n",
-      "Linguistic feature dimention (D,): (425,), Acoustic feature dimention (D,): (187,)\n"
+      "Linguistic feature dimension (D,): (425,), Acoustic feature dimension (D,): (187,)\n",
+      "Linguistic feature dimension (D,): (425,), Acoustic feature dimension (D,): (187,)\n",
+      "Linguistic feature dimension (D,): (425,), Acoustic feature dimension (D,): (187,)\n"
      ]
     }
    ],
    "source": [
     "for (x, y) in zip(X[:3], Y[:3]):\n",
-    "    print(\"Linguistic feature dimention (D,): {}, Acoustic feature dimention (D,): {}\".format(x.shape, y.shape))"
+    "    print(\"Linguistic feature dimension (D,): {}, Acoustic feature dimension (D,): {}\".format(x.shape, y.shape))"
    ]
   },
   {
