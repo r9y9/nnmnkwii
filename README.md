@@ -52,3 +52,5 @@ The library is inspired by the following open source projects:
 
 [docs-stable-img]: https://img.shields.io/badge/docs-stable-blue.svg
 [docs-stable-url]: https://r9y9.github.io/nnmnkwii/stable
+
+Logo was created by Gloomy Ghost([@740291272](https://github.com/740291272)) ([#40](https://github.com/r9y9/nnmnkwii/issues/40))
