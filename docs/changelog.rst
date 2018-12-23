@@ -4,6 +4,9 @@ Change log
 v0.0.17 <2018-xx-xx>
 --------------------
 
+- `#40`_: Add logo
+- `#76`_: MLPG update for PyTorch 1.0.0.
+
 v0.0.16 <2018-08-23>
 --------------------
 
@@ -138,6 +141,7 @@ v0.0.1 <2017-08-14>
 .. _#34: https://github.com/r9y9/nnmnkwii/pull/34
 .. _#37: https://github.com/r9y9/nnmnkwii/pull/37
 .. _#38: https://github.com/r9y9/nnmnkwii/issues/38
+.. _#40: https://github.com/r9y9/nnmnkwii/issues/40
 .. _#42: https://github.com/r9y9/nnmnkwii/issues/42
 .. _#46: https://github.com/r9y9/nnmnkwii/pull/46
 .. _#49: https://github.com/r9y9/nnmnkwii/issues/49
@@ -157,3 +161,4 @@ v0.0.1 <2017-08-14>
 .. _#71: https://github.com/r9y9/nnmnkwii/pull/71
 .. _#72: https://github.com/r9y9/nnmnkwii/pull/72
 .. _#73: https://github.com/r9y9/nnmnkwii/pull/73
+.. _#76: https://github.com/r9y9/nnmnkwii/pull/76

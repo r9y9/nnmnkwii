@@ -5,7 +5,7 @@
 
 :github_url: https://github.com/r9y9/nnmnkwii
 
-nnmnkwii (nanami) documentation
+nnmnkwii (nanamin kawaii) documentation
 ================================
 
 Library to build speech synthesis systems designed for easy and fast prototyping.
