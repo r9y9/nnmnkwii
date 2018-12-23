@@ -1,3 +1,5 @@
+![alt text](assets/logo_wide.png)
+
 # nnmnkwii ([nanamin kawaii])
 [![][docs-stable-img]][docs-stable-url]
 [![][docs-latest-img]][docs-latest-url]
