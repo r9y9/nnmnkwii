@@ -1,0 +1,6 @@
+nnmnkwii\.preprocessing\.mulaw
+==============================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: mulaw
