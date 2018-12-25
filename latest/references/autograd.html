@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Autograd &mdash; nnmnkwii 0.0.17+81b22c6 documentation</title>
+  <title>Autograd &mdash; nnmnkwii 0.0.18+3162967 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.17+81b22c6
+                0.0.18+3162967
               </div>
             
           
@@ -371,7 +371,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-17-2018-xx-xx">v0.0.17 &lt;2018-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-18-2019-xx-xx">v0.0.18 &lt;2019-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-16-2018-08-23">v0.0.16 &lt;2018-08-23&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
@@ -647,39 +648,23 @@ during the backward pass.</p>
 
 <dl class="class">
 <dt id="nnmnkwii.autograd.ModSpec">
-<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">ModSpec</code><span class="sig-paren">(</span><em>n=2048</em>, <em>norm=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/modspec.html#ModSpec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.ModSpec" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">nnmnkwii.autograd.</code><code class="descname">ModSpec</code><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/modspec.html#ModSpec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.ModSpec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Modulation spectrum computation <code class="docutils literal notranslate"><span class="pre">f</span> <span class="pre">:</span> <span class="pre">(T,</span> <span class="pre">D)</span> <span class="pre">-&gt;</span> <span class="pre">(N//2+1,</span> <span class="pre">D)</span></code>.</p>
-<dl class="attribute">
-<dt id="nnmnkwii.autograd.ModSpec.n">
-<code class="descname">n</code><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.n" title="Permalink to this definition">¶</a></dt>
-<dd><p>DFT length.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – DFT length.</li>
+<li><strong>norm</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Normalize DFT output or not. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.fft.fft</span></code></a>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="nnmnkwii.autograd.ModSpec.norm">
-<code class="descname">norm</code><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.norm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Normalize DFT output or not. See <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.fft.fft.html#numpy.fft.fft" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.fft.fft</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)">bool</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
+<dl class="staticmethod">
 <dt id="nnmnkwii.autograd.ModSpec.backward">
-<code class="descname">backward</code><span class="sig-paren">(</span><em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/modspec.html#ModSpec.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.backward" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">backward</code><span class="sig-paren">(</span><em>ctx</em>, <em>grad_output</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/modspec.html#ModSpec.backward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.backward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Defines a formula for differentiating the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
 <p>It must accept a context <code class="xref py py-attr docutils literal notranslate"><span class="pre">ctx</span></code> as the first argument, followed by
@@ -695,9 +680,9 @@ first input to <a class="reference internal" href="#nnmnkwii.autograd.ModSpec.fo
 output.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="staticmethod">
 <dt id="nnmnkwii.autograd.ModSpec.forward">
-<code class="descname">forward</code><span class="sig-paren">(</span><em>y</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/modspec.html#ModSpec.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.forward" title="Permalink to this definition">¶</a></dt>
+<em class="property">static </em><code class="descname">forward</code><span class="sig-paren">(</span><em>ctx</em>, <em>y</em>, <em>n</em>, <em>norm</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/autograd/_impl/modspec.html#ModSpec.forward"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.autograd.ModSpec.forward" title="Permalink to this definition">¶</a></dt>
 <dd><p>Performs the operation.</p>
 <p>This function is to be overridden by all subclasses.</p>
 <p>It must accept a context ctx as the first argument, followed by any
