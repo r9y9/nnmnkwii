@@ -173,7 +173,7 @@ def test_meanvar():
     # Inverse transform
     x = X[0]
     x_hat = P.inv_scale(P.scale(x, X_mean, X_std), X_mean, X_std)
-    assert np.allclose(x, x_hat, atol=1e-7)
+    assert np.allclose(x, x_hat, atol=1e-5)
 
 
 def test_minmax():
