@@ -6,7 +6,6 @@ from nnmnkwii import paramgen as G
 from nnmnkwii import autograd as AF
 
 from torch.autograd import gradcheck
-from torch.autograd import Variable
 from torch import nn
 import torch
 import numpy as np
@@ -46,9 +45,10 @@ def test_functional_mlpg():
         variances = torch.ones(static_dim * len(windows))
 
         y = G.mlpg(means.numpy(), variances.numpy(), windows)
-        y = Variable(torch.from_numpy(y), requires_grad=False)
+        y = torch.from_numpy(y)
 
-        means = Variable(means, requires_grad=True)
+        means = means.clone()
+        means.requires_grad = True
 
         # mlpg
         y_hat = AF.mlpg(means, variances, windows)
@@ -79,14 +79,13 @@ def test_unit_variance_mlpg_gradcheck():
     for windows in _get_windows_set():
         torch.manual_seed(1234)
         # Meens, input for MLPG
-        means = Variable(torch.rand(T, static_dim * len(windows)),
-                         requires_grad=True)
+        means = torch.rand(T, static_dim * len(windows), requires_grad=True)
 
         # Input for UnitVarianceMLPG
         reshaped_means = G.reshape_means(
             means.data.clone().numpy(), static_dim)
-        reshaped_means = Variable(torch.from_numpy(reshaped_means),
-                                  requires_grad=True)
+        reshaped_means = torch.from_numpy(reshaped_means)
+        reshaped_means.requires_grad = True
 
         # Compute MLPG matrix
         R = G.unit_variance_mlpg_matrix(windows, T).astype(np.float32)
@@ -135,15 +134,13 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
 
         # Target
         y = G.mlpg(means.numpy(), np.ones(static_dim * len(windows)), windows)
-        y = Variable(torch.from_numpy(y), requires_grad=False)
+        y = torch.from_numpy(y)
         y_expanded = y.expand(batch_size, y.size(0), y.size(1))
 
-        # Pack into variables
-        means = Variable(means, requires_grad=True)
-        means_expanded = Variable(means_expanded, requires_grad=True)
-        reshaped_means = Variable(reshaped_means, requires_grad=True)
-        reshaped_means_expanded = Variable(
-            reshaped_means_expanded, requires_grad=True)
+        means.requires_grad = True
+        means_expanded.requires_grad = True
+        reshaped_means.requires_grad = True
+        reshaped_means_expanded.requires_grad = True
 
         # Case 1: 2d with reshaped means
         R = torch.from_numpy(G.unit_variance_mlpg_matrix(windows, T))
@@ -191,8 +188,7 @@ def test_mlpg_gradcheck():
 
     for windows in _get_windows_set():
         torch.manual_seed(1234)
-        means = Variable(torch.rand(T, static_dim * len(windows)),
-                         requires_grad=True)
+        means = torch.rand(T, static_dim * len(windows), requires_grad=True)
 
         # Unit variances case
         variances = torch.ones(static_dim * len(windows)
@@ -217,8 +213,7 @@ def test_mlpg_variance_expand():
 
     for windows in _get_windows_set():
         torch.manual_seed(1234)
-        means = Variable(torch.rand(T, static_dim * len(windows)),
-                         requires_grad=True)
+        means = torch.rand(T, static_dim * len(windows), requires_grad=True)
         variances = torch.rand(static_dim * len(windows))
         variances_expanded = variances.expand(T, static_dim * len(windows))
         y = AF.mlpg(means, variances, windows)
@@ -231,11 +226,10 @@ def test_modspec_gradcheck():
     static_dim = 12
     T = 16
     torch.manual_seed(1234)
-    inputs = (Variable(torch.rand(T, static_dim), requires_grad=True),)
     n = 16
-
     for norm in [None, "ortho"]:
-        assert gradcheck(ModSpec(n=n, norm=norm), inputs, eps=1e-4, atol=1e-4)
+        inputs = (torch.rand(T, static_dim, requires_grad=True), n, norm)
+        assert gradcheck(ModSpec.apply, inputs, eps=1e-4, atol=1e-4)
 
 
 @attr("modspec")
@@ -243,9 +237,7 @@ def test_modspec_gradcheck_large_n():
     static_dim = 12
     T = 16
     torch.manual_seed(1234)
-    inputs = (Variable(torch.rand(T, static_dim), requires_grad=True),)
-
     for n in [16, 32]:
         for norm in [None, "ortho"]:
-            assert gradcheck(ModSpec(n=n, norm=norm),
-                             inputs, eps=1e-4, atol=1e-4)
+            inputs = (torch.rand(T, static_dim, requires_grad=True), n, norm)
+            assert gradcheck(ModSpec.apply, inputs, eps=1e-4, atol=1e-4)
