@@ -6,10 +6,10 @@ from setuptools import setup, find_packages, Extension
 import setuptools.command.develop
 import setuptools.command.build_py
 from distutils.version import LooseVersion
+from setuptools.command.build_ext import build_ext as _build_ext
 from os.path import join, exists
 import subprocess
 import os
-import numpy as np
 
 version = '0.0.18'
 
@@ -26,6 +26,16 @@ else:
         pass
     except IOError:  # FileNotFoundError for python 3
         pass
+
+
+class build_ext(_build_ext):
+    # https://stackoverflow.com/questions/19919905/how-to-bootstrap-numpy-installation-in-setup-py
+    def finalize_options(self):
+        _build_ext.finalize_options(self)
+        # Prevent numpy from thinking it is still in its setup process:
+        __builtins__.__NUMPY_SETUP__ = False
+        import numpy
+        self.include_dirs.append(numpy.get_include())
 
 
 class build_py(setuptools.command.build_py.build_py):
@@ -49,6 +59,7 @@ class develop(setuptools.command.develop.develop):
         build_py.create_version_file()
         setuptools.command.develop.develop.run(self)
 
+cmdclass = {"build_py": build_py, "develop": develop}
 
 min_cython_ver = '0.21.0'
 try:
@@ -66,12 +77,14 @@ try:
 except ImportError:
     cython = False
 
+include_dirs = []
+cmdclass['build_ext'] = build_ext
 if cython:
     ext = '.pyx'
-    cmdclass = {'build_ext': build_ext}
+    import numpy as np
+    include_dirs.insert(0, np.get_include())
 else:
     ext = '.c'
-    cmdclass = {}
     print("Building extentions from pre-generated C source")
     if not os.path.exists(join("nnmnkwii", "paramgen", "mlpg_helper" + ext)):
         raise RuntimeError("Cython is required to generate C code.")
@@ -80,21 +93,18 @@ ext_modules = [
     Extension(
         name="nnmnkwii.util._linalg",
         sources=[join("nnmnkwii", "util", "_linalg" + ext)],
-        include_dirs=[np.get_include()],
+        include_dirs=include_dirs,
         language="c",
         extra_compile_args=["-std=c99"],
     ),
     Extension(
         name="nnmnkwii.paramgen.mlpg_helper",
         sources=[join("nnmnkwii", "paramgen", "mlpg_helper" + ext)],
-        include_dirs=[np.get_include()],
+        include_dirs=include_dirs,
         language="c",
         extra_compile_args=["-std=c99"]
     ),
 ]
-
-cmdclass['build_py'] = build_py
-cmdclass['develop'] = develop
 
 
 def package_files(directory):
@@ -122,14 +132,14 @@ setup(
     package_data={'': package_data},
     ext_modules=ext_modules,
     cmdclass=cmdclass,
+    setup_requires=["numpy >= 1.11.0"],
     install_requires=[
-        'numpy >= 1.11.0',
         'scipy',
         'cython >= ' + min_cython_ver,
         'bandmat >= 0.7',
         'fastdtw',
         'sklearn',
-        'pysptk >= 0.1.7',
+        'pysptk >= 0.1.15',
         'tqdm',
     ],
     tests_require=['nose', 'coverage'],
