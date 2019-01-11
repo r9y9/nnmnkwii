@@ -5,6 +5,7 @@ nnmnkwii/util/_linalg.c
 examples
 docs/references/generated
 docs/.doctrees
+.eggs
 
 # Created by https://www.gitignore.io
 
