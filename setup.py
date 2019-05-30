@@ -61,7 +61,7 @@ class develop(setuptools.command.develop.develop):
 
 cmdclass = {"build_py": build_py, "develop": develop}
 
-min_cython_ver = '0.21.0'
+min_cython_ver = '0.28.0'
 try:
     import Cython
     ver = Cython.__version__
@@ -139,7 +139,7 @@ setup(
         'bandmat >= 0.7',
         'fastdtw',
         'sklearn',
-        'pysptk >= 0.1.15',
+        'pysptk >= 0.1.17',
         'tqdm',
     ],
     tests_require=['nose', 'coverage'],
