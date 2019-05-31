@@ -1,6 +1,7 @@
 # coding: utf-8
 # cython: wraparound = False
 # cython: boundscheck = False
+# cython: language_level=3
 
 cimport cython
 from scipy.linalg.cython_lapack cimport dpotri

@@ -11,7 +11,7 @@ from os.path import join, exists
 import subprocess
 import os
 
-version = '0.0.18'
+version = '0.0.19'
 
 # Adapted from https://github.com/pytorch/pytorch
 cwd = os.path.dirname(os.path.abspath(__file__))
