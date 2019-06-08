@@ -4,6 +4,8 @@ Change log
 v0.0.19 <2019-xx-xx>
 --------------------
 
+- `#85`_: Fixed rounding error in caluculating number of frames.
+
 v0.0.18 <2019-05-31>
 --------------------
 
@@ -172,3 +174,4 @@ v0.0.1 <2017-08-14>
 .. _#73: https://github.com/r9y9/nnmnkwii/pull/73
 .. _#76: https://github.com/r9y9/nnmnkwii/pull/76
 .. _#79: https://github.com/r9y9/nnmnkwii/pull/79
+.. _#85: https://github.com/r9y9/nnmnkwii/issues/85
