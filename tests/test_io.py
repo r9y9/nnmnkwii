@@ -10,6 +10,16 @@ from nose.tools import raises
 DATA_DIR = join(dirname(__file__), "data")
 
 
+def test_labels_number_of_frames():
+    # https://github.com/r9y9/nnmnkwii/issues/85
+    binary_dict, continuous_dict = hts.load_question_set(
+        join(DATA_DIR, "jp.hed"))
+    labels = hts.load(join(DATA_DIR, "BASIC5000_0619.lab"))
+    linguistic_features = fe.linguistic_features(
+        labels, binary_dict, continuous_dict, add_frame_features=True)
+    assert labels.num_frames() == linguistic_features.shape[0]
+
+
 def test_load_question_set():
     binary_dict, continuous_dict = hts.load_question_set(
         example_question_file())

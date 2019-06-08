@@ -183,7 +183,7 @@ def load_labels_with_phone_alignment(hts_labels,
         cc_features = compute_coarse_coding_features()
 
     for idx, (start_time, end_time, full_label) in enumerate(hts_labels):
-        frame_number = int((end_time - start_time) / frame_shift_in_micro_sec)
+        frame_number = int(end_time / frame_shift_in_micro_sec) - int(start_time / frame_shift_in_micro_sec)
 
         label_binary_vector = pattern_matching_binary(
             binary_dict, full_label)
