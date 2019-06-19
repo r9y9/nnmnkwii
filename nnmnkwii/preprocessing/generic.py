@@ -271,7 +271,7 @@ def delta_features(x, windows):
 
 
 def trim_zeros_frames(x, eps=1e-7):
-    """Remove trailling zeros frames.
+    """Remove trailing zeros frames.
 
     Similar to :func:`numpy.trim_zeros`, trimming trailing zeros features.
 
@@ -292,7 +292,7 @@ def trim_zeros_frames(x, eps=1e-7):
     T, D = x.shape
     s = np.sum(np.abs(x), axis=1)
     s[s < eps] = 0.
-    return x[: len(np.trim_zeros(s))]
+    return x[: len(np.trim_zeros(s, trim='b'))]
 
 
 def remove_zeros_frames(x, eps=1e-7):
