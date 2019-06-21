@@ -271,11 +271,17 @@ def test_trim_remove_zeros_frames():
 
 def test_trim_zeros_frames():
     arr = np.array(((0, 0), (0, 0), (1, 1), (2, 2), (0, 0)))
-    desired = np.array(((0, 0), (0, 0), (1, 1), (2, 2)))
-    actual = trim_zeros_frames(arr)
+    desired_fb = np.array(((0, 0), (0, 0)))
+    actual_fb = trim_zeros_frames(arr)
 
-    assert desired.shape[1] == actual.shape[1]
-    np.testing.assert_array_equal(actual, desired)
+    assert desired_fb.shape[1] == actual_fb.shape[1]
+    np.testing.assert_array_equal(actual_fb, desired_fb)
+
+    desired_b = np.array(((0, 0), (0, 0), (1, 1), (2, 2)))
+    actual_b = trim_zeros_frames(arr, trim='b')
+
+    assert desired_b.shape[1] == actual_b.shape[1]
+    np.testing.assert_array_equal(actual_b, desired_b)
 
 
 def test_adjust_frame_length_divisible():
