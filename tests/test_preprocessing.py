@@ -295,6 +295,14 @@ def test_trim_zeros_frames():
     assert desired_fb.shape[1] == actual_fb.shape[1]
     np.testing.assert_array_equal(actual_fb, desired_fb)
 
+    non_zeros = np.array(((1, 1), (2, 2), (3, 3), (4, 4), (5, 5)))
+    desired_b_or_fb_non_zeros = np.array(((1, 1), (2, 2), (3, 3), (4, 4), (5, 5)))
+    actual_b = trim_zeros_frames(non_zeros, trim='b')
+    np.testing.assert_array_equal(actual_b, desired_b_or_fb_non_zeros)
+
+    actual_fb = trim_zeros_frames(non_zeros, trim='fb')
+    np.testing.assert_array_equal(actual_fb, desired_b_or_fb_non_zeros)
+
 
 def test_adjust_frame_length_divisible():
     D = 5
