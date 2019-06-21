@@ -270,8 +270,8 @@ def test_trim_remove_zeros_frames():
 
 
 def test_trim_zeros_frames():
-    arr = np.array(((0, 0), (1, 1), (1, 1), (0, 0)))
-    desired = np.array(((0, 0), (1, 1), (1, 1)))
+    arr = np.array(((0, 0), (0, 0), (1, 1), (2, 2), (0, 0)))
+    desired = np.array(((0, 0), (0, 0), (1, 1), (2, 2)))
     actual = trim_zeros_frames(arr)
 
     assert desired.shape[1] == actual.shape[1]
