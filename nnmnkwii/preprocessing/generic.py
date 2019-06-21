@@ -299,11 +299,19 @@ def trim_zeros_frames(x, eps=1e-7, trim=None):
     if trim == 'f':
         return x[len(x) - len(np.trim_zeros(s, trim=trim)):]
     elif trim == 'b':
-        return x[: len(np.trim_zeros(s, trim=trim))]
+        end = len(np.trim_zeros(s, trim=trim)) - len(x)
+        if end == 0:
+            return x
+        else:
+            return x[: end]
     elif trim == 'fb':
         f = len(np.trim_zeros(s, trim='f'))
         b = len(np.trim_zeros(s, trim='b'))
-        return x[len(x) - f: b - len(x)]
+        end = b - len(x)
+        if end == 0:
+            return x[len(x) - f:]
+        else:
+            return x[len(x) - f: end]
     else:
         return x[: len(np.trim_zeros(s))]
 
