@@ -5,6 +5,7 @@ v0.0.19 <2019-xx-xx>
 --------------------
 
 - `#85`_: Fixed rounding error in caluculating number of frames.
+- `#87`_: Fixed :func:`nnmnkwii.preprocessing.trim_zeros_frames` issue. Support passing ``trim`` argument.
 
 v0.0.18 <2019-05-31>
 --------------------
@@ -175,3 +176,4 @@ v0.0.1 <2017-08-14>
 .. _#76: https://github.com/r9y9/nnmnkwii/pull/76
 .. _#79: https://github.com/r9y9/nnmnkwii/pull/79
 .. _#85: https://github.com/r9y9/nnmnkwii/issues/85
+.. _#87: https://github.com/r9y9/nnmnkwii/pull/87
