@@ -270,14 +270,15 @@ def delta_features(x, windows):
     return combined_features
 
 
-def trim_zeros_frames(x, eps=1e-7):
-    """Remove trailling zeros frames.
+def trim_zeros_frames(x, eps=1e-7, trim='b'):
+    """Remove leading and/or trailing zeros frames.
 
     Similar to :func:`numpy.trim_zeros`, trimming trailing zeros features.
 
     Args:
         x (numpy.ndarray): Feature matrix, shape (``T x D``)
         eps (float): Values smaller than ``eps`` considered as zeros.
+        trim (string): Representing trim from where.
 
     Returns:
         numpy.ndarray: Trimmed 2d feature matrix, shape (``T' x D``)
@@ -289,10 +290,28 @@ def trim_zeros_frames(x, eps=1e-7):
         >>> y = trim_zeros_frames(x)
     """
 
+    assert trim in {'f', 'b', 'fb'}
+
     T, D = x.shape
     s = np.sum(np.abs(x), axis=1)
     s[s < eps] = 0.
-    return x[: len(np.trim_zeros(s))]
+
+    if trim == 'f':
+        return x[len(x) - len(np.trim_zeros(s, trim=trim)):]
+    elif trim == 'b':
+        end = len(np.trim_zeros(s, trim=trim)) - len(x)
+        if end == 0:
+            return x
+        else:
+            return x[: end]
+    elif trim == 'fb':
+        f = len(np.trim_zeros(s, trim='f'))
+        b = len(np.trim_zeros(s, trim='b'))
+        end = b - len(x)
+        if end == 0:
+            return x[len(x) - f:]
+        else:
+            return x[len(x) - f: end]
 
 
 def remove_zeros_frames(x, eps=1e-7):
