@@ -271,7 +271,7 @@ def test_trim_remove_zeros_frames():
 
 def test_trim_zeros_frames():
     arr = np.array(((0, 0), (0, 0), (1, 1), (2, 2), (0, 0)))
-    desired_default = np.array(((0, 0), (0, 0)))
+    desired_default = np.array(((0, 0), (0, 0), (1, 1), (2, 2)))
     actual_default = trim_zeros_frames(arr)
 
     assert desired_default.shape[1] == actual_default.shape[1]
