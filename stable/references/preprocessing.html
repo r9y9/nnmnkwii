@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pre-processing &mdash; nnmnkwii 0.0.17 documentation</title>
+  <title>Pre-processing &mdash; nnmnkwii 0.0.19 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.17
+                0.0.19
               </div>
             
           
@@ -371,7 +371,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-18-2019-xx-xx">v0.0.18 &lt;2019-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-16-2018-08-23">v0.0.16 &lt;2018-08-23&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
@@ -508,8 +509,8 @@
 <tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.delta_features.html#nnmnkwii.preprocessing.delta_features" title="nnmnkwii.preprocessing.delta_features"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delta_features</span></code></a>(x,&nbsp;windows)</td>
 <td>Compute delta features and combine them.</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.trim_zeros_frames.html#nnmnkwii.preprocessing.trim_zeros_frames" title="nnmnkwii.preprocessing.trim_zeros_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trim_zeros_frames</span></code></a>(x[,&nbsp;eps])</td>
-<td>Remove trailling zeros frames.</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.trim_zeros_frames.html#nnmnkwii.preprocessing.trim_zeros_frames" title="nnmnkwii.preprocessing.trim_zeros_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trim_zeros_frames</span></code></a>(x[,&nbsp;eps,&nbsp;trim])</td>
+<td>Remove leading and/or trailing zeros frames.</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.preprocessing.remove_zeros_frames.html#nnmnkwii.preprocessing.remove_zeros_frames" title="nnmnkwii.preprocessing.remove_zeros_frames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_zeros_frames</span></code></a>(x[,&nbsp;eps])</td>
 <td>Remove zeros frames.</td>
@@ -599,7 +600,7 @@ directly instead.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.preprocessing.alignment.DTWAligner.dist">
 <code class="descname">dist</code><a class="headerlink" href="#nnmnkwii.preprocessing.alignment.DTWAligner.dist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Distance function. Default is <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.norm.html#numpy.linalg.norm" title="(in NumPy v1.15)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.norm()</span></code></a>.</p>
+<dd><p>Distance function. Default is <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.norm.html#numpy.linalg.norm" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.norm()</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

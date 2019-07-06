@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.17 documentation</title>
+  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.19 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                0.0.17
+                0.0.19
               </div>
             
           
@@ -369,6 +369,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-16-2018-08-23">v0.0.16 &lt;2018-08-23&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
@@ -723,14 +725,15 @@
     <span class="k">return</span> <span class="n">combined_features</span></div>
 
 
-<div class="viewcode-block" id="trim_zeros_frames"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html#nnmnkwii.preprocessing.trim_zeros_frames">[docs]</a><span class="k">def</span> <span class="nf">trim_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Remove trailling zeros frames.</span>
+<div class="viewcode-block" id="trim_zeros_frames"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html#nnmnkwii.preprocessing.trim_zeros_frames">[docs]</a><span class="k">def</span> <span class="nf">trim_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">,</span> <span class="n">trim</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Remove leading and/or trailing zeros frames.</span>
 
 <span class="sd">    Similar to :func:`numpy.trim_zeros`, trimming trailing zeros features.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        x (numpy.ndarray): Feature matrix, shape (``T x D``)</span>
 <span class="sd">        eps (float): Values smaller than ``eps`` considered as zeros.</span>
+<span class="sd">        trim (string): Representing trim from where.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        numpy.ndarray: Trimmed 2d feature matrix, shape (``T&#39; x D``)</span>
@@ -742,10 +745,28 @@
 <span class="sd">        &gt;&gt;&gt; y = trim_zeros_frames(x)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="k">assert</span> <span class="n">trim</span> <span class="ow">in</span> <span class="p">{</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;fb&#39;</span><span class="p">}</span>
+
     <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">s</span><span class="p">[</span><span class="n">s</span> <span class="o">&lt;</span> <span class="n">eps</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>
-    <span class="k">return</span> <span class="n">x</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trim_zeros</span><span class="p">(</span><span class="n">s</span><span class="p">))]</span></div>
+
+    <span class="k">if</span> <span class="n">trim</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trim_zeros</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">trim</span><span class="o">=</span><span class="n">trim</span><span class="p">)):]</span>
+    <span class="k">elif</span> <span class="n">trim</span> <span class="o">==</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trim_zeros</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">trim</span><span class="o">=</span><span class="n">trim</span><span class="p">))</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">[:</span> <span class="n">end</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">trim</span> <span class="o">==</span> <span class="s1">&#39;fb&#39;</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trim_zeros</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">trim</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">))</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trim_zeros</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">trim</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">))</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">b</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">end</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">:]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">:</span> <span class="n">end</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="remove_zeros_frames"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html#nnmnkwii.preprocessing.remove_zeros_frames">[docs]</a><span class="k">def</span> <span class="nf">remove_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">eps</span><span class="o">=</span><span class="mf">1e-7</span><span class="p">):</span>
