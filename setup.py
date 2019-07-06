@@ -10,6 +10,7 @@ from setuptools.command.build_ext import build_ext as _build_ext
 from os.path import join, exists
 import subprocess
 import os
+import sys
 
 version = '0.0.19'
 
@@ -58,6 +59,7 @@ class develop(setuptools.command.develop.develop):
     def run(self):
         build_py.create_version_file()
         setuptools.command.develop.develop.run(self)
+
 
 cmdclass = {"build_py": build_py, "develop": develop}
 
@@ -118,6 +120,20 @@ def package_files(directory):
 
 package_data = package_files("./nnmnkwii/util/_example_data")
 
+install_requires = [
+    'scipy',
+    'cython >= ' + min_cython_ver,
+    'fastdtw',
+    'sklearn',
+    'pysptk >= 0.1.17',
+    'tqdm',
+]
+
+# Workaround for python 3.7 and bandmat
+# https://github.com/r9y9/deepvoice3_pytorch/issues/154
+if sys.version_info[:2] != (3, 7):
+    install_requires.append('bandmat >= 0.7')
+
 setup(
     name='nnmnkwii',
     version=version,
@@ -133,15 +149,7 @@ setup(
     ext_modules=ext_modules,
     cmdclass=cmdclass,
     setup_requires=["numpy >= 1.11.0"],
-    install_requires=[
-        'scipy',
-        'cython >= ' + min_cython_ver,
-        'bandmat >= 0.7',
-        'fastdtw',
-        'sklearn',
-        'pysptk >= 0.1.17',
-        'tqdm',
-    ],
+    install_requires=install_requires,
     tests_require=['nose', 'coverage'],
     extras_require={
         'docs': ['numpydoc', 'sphinx_rtd_theme'],
