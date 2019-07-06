@@ -1,10 +1,10 @@
 from __future__ import division, print_function, absolute_import
 
-from nnmnkwii.baseline.gmm import MLPG
 import numpy as np
 from sklearn.mixture import GaussianMixture
 from os.path import join, dirname
 from numpy.linalg import norm
+from nose.plugins.attrib import attr
 
 DATA_DIR = join(dirname(__file__), "data")
 
@@ -30,7 +30,10 @@ def _get_windows_set():
     return windows_set
 
 
+@attr("requires_bandmat")
 def test_diffvc():
+    from nnmnkwii.baseline.gmm import MLPG
+
     # MLPG is performed dimention by dimention, so static_dim 1 is enough, 2 just for in
     # case.
     static_dim = 2
@@ -60,7 +63,10 @@ def test_diffvc():
         assert norm(tgt_mc - mc_converted1) < norm(src_mc - mc_converted1)
 
 
+@attr("requires_bandmat")
 def test_gmmmap_swap():
+    from nnmnkwii.baseline.gmm import MLPG
+
     static_dim = 2
     T = 10
     windows = _get_windows_set()[-1]
