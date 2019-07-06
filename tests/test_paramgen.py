@@ -1,7 +1,8 @@
 from __future__ import division, print_function, absolute_import
 
-from nnmnkwii import paramgen as G
 import numpy as np
+
+from nose.plugins.attrib import attr
 
 
 def _get_windows_set():
@@ -25,7 +26,10 @@ def _get_windows_set():
     return windows_set
 
 
+@attr("requires_bandmat")
 def test_mlpg():
+    from nnmnkwii import paramgen as G
+
     static_dim = 2
     T = 10
 
@@ -54,7 +58,9 @@ def test_mlpg():
             assert np.allclose(generated1, generated2)
 
 
+@attr("requires_bandmat")
 def test_mlpg_window_full():
+    from nnmnkwii import paramgen as G
     static_dim = 2
     T = 10
 
@@ -73,7 +79,9 @@ def test_mlpg_window_full():
         assert np.allclose(full_window_mat_native(win_mats, T), fullwin)
 
 
+@attr("requires_bandmat")
 def test_unit_variance_mlpg():
+    from nnmnkwii import paramgen as G
     static_dim = 2
     T = 10
 
@@ -87,7 +95,9 @@ def test_unit_variance_mlpg():
         assert np.allclose(y_hat, y)
 
 
+@attr("requires_bandmat")
 def test_reshape_means():
+    from nnmnkwii import paramgen as G
     static_dim = 2
     T = 10
 

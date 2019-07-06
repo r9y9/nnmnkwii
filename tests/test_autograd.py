@@ -1,5 +1,8 @@
 from __future__ import division, print_function, absolute_import
 
+
+# Note: Tests in the file tightly depends on MLPG and bandmat
+
 from nnmnkwii.autograd._impl.mlpg import MLPG, UnitVarianceMLPG
 from nnmnkwii.autograd._impl.modspec import ModSpec
 from nnmnkwii import paramgen as G

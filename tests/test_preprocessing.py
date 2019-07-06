@@ -4,7 +4,6 @@ from nnmnkwii.preprocessing.f0 import interp1d
 from nnmnkwii.preprocessing import trim_zeros_frames, remove_zeros_frames
 from nnmnkwii.preprocessing import adjust_frame_lengths, delta_features
 from nnmnkwii.preprocessing import adjust_frame_length
-from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 from nnmnkwii.preprocessing import modspec, modphase
 from nnmnkwii.preprocessing import preemphasis, inv_preemphasis
 from nnmnkwii import preprocessing as P
@@ -20,6 +19,8 @@ import numpy as np
 import pyworld
 import librosa
 import pysptk
+
+from nose.plugins.attrib import attr
 
 
 def _get_windows_set():
@@ -404,7 +405,10 @@ def _get_mcep(x, fs, frame_period=5, order=24):
     return mc
 
 
+@attr("requires_bandmat")
 def test_dtw_frame_length_adjustment():
+    from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
+
     _, X = example_file_data_sources_for_duration_model()
     X = FileSourceDataset(X)
     X_unaligned = X.asarray()
@@ -418,7 +422,10 @@ def test_dtw_frame_length_adjustment():
         assert X_aligned.shape == Y_aligned.shape
 
 
+@attr("requires_bandmat")
 def test_dtw_aligner():
+    from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
+
     x, fs = librosa.load(example_audio_file(), sr=None)
     assert fs == 16000
     x_fast = librosa.effects.time_stretch(x, 2.0)
