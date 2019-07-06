@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.18+3162967 documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.20+c09ba07 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.0.18+3162967
+                0.0.20+c09ba07
               </div>
             
           
@@ -371,7 +371,9 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-18-2019-xx-xx">v0.0.18 &lt;2019-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-20-2019-xx-xx">v0.0.20 &lt;2019-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-16-2018-08-23">v0.0.16 &lt;2018-08-23&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
@@ -497,10 +499,10 @@ how to process them. Any FileDataSource must implement:</p>
 <p>The later is an abstraction of dataset. Any dataset must implement
 <a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dataset</span></code></a> interface:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>: returns features (typically, two dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>: returns features (typically, two dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>)</li>
 <li><code class="docutils literal notranslate"><span class="pre">__len__</span></code>: returns the size of dataset (e.g., number of utterances).</li>
 </ul>
-<p>One important point is that we use <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> to represent features
+<p>One important point is that we use <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> to represent features
 (there might be exception though). For example,</p>
 <ul class="simple">
 <li>F0 trajecoty as <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">1</span></code> array, where <code class="docutils literal notranslate"><span class="pre">T</span></code> represents number of frames.</li>
@@ -578,7 +580,7 @@ tutorials how we can use it practically.</p>
 <em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">FileSourceDataset</code><span class="sig-paren">(</span><em>file_data_source</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Most basic dataset implementation. It supports utterance-wise iteration and
 has utility (<a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="nnmnkwii.datasets.FileSourceDataset.asarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asarray</span></code></a> method) to convert dataset to an three
-dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
+dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
 <p>Speech features have typically different number of time resolusion,
 so we cannot simply represent dataset as an
 array. To address the issue, the dataset class represents set
@@ -654,7 +656,7 @@ find data to be loaded and 2) how to collect features from them.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of maximum time frames to be expected.
 If None, it is set to actual maximum time length.</li>
-<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.15)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
 <li><strong>padded_length_guess</strong> – (int): Initial guess of max time length of
 padded dataset array. Used if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is None.</li>
 </ul>
@@ -679,7 +681,7 @@ None, otherwise <code class="docutils literal notranslate"><span class="pre">N</
 <dd><p>Basic dataset with padding. Very similar to <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a>,
 it supports utterance-wise iteration and has
 utility (<a class="reference internal" href="#nnmnkwii.datasets.PaddedFileSourceDataset.asarray" title="nnmnkwii.datasets.PaddedFileSourceDataset.asarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asarray</span></code></a> method) to convert dataset to an three
-dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
+dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
 <p>The difference between <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a> is that this returns
 padded features as <code class="docutils literal notranslate"><span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> array at <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, while
 <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a> returns not-padded <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code> array.</p>
@@ -752,7 +754,7 @@ padded features as <code class="docutils literal notranslate"><span class="pre">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of maximum time frames to be expected.
 If None, it is set to actual maximum time length.</li>
-<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.15)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
 <li><strong>padded_length_guess</strong> – (int): Initial guess of max time length of
 padded dataset array. Used if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is None.</li>
 </ul>
@@ -1033,7 +1035,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1117,7 +1119,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1193,7 +1195,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1249,7 +1251,7 @@ method, which defines how features are computed given a transcription.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1300,7 +1302,7 @@ method, which defines how features are computed given a wav file path.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1404,7 +1406,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1513,7 +1515,7 @@ labelmap. Stored in <code class="docutils literal notranslate"><span class="pre"
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>

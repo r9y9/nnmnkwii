@@ -1,0 +1,1656 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Datasets &mdash; nnmnkwii 0.0.19 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Display" href="display.html" />
+    <link rel="prev" title="Baseline" href="baseline.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.19
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../design.html">General design documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../design.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../design_jp.html">設計ドキュメント (Japanese)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../design_jp.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_jp.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_jp.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_jp.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_jp.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../design_jp.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Cut-silence-frames">Cut silence frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Linguistic-features">Linguistic features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-datasets">Playing with datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Get-example-file-sources">Get example file sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-data">Load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Utterance-wise-iteration">Utterance-wise iteration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Memory-cache-iteration">Memory cache iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Frame-wise-iteration">Frame-wise iteration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html">DNN text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-loop">Training loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html">Bidirectional-LSTM based RNNs for text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Trainining-loop">Trainining loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html">Bidirectional-LSTM based RNNs for text-to-speech synthesis with OpenJTalk (ja)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Trainining-loop">Trainining loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Listen-generated-audio">Listen generated audio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#TTS-using-OpenJTalk-frontend">TTS using OpenJTalk frontend</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html">GMM-based voice conversion (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Convert-dataset-to-arrays">Convert dataset to arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Align-source-and-target-features">Align source and target features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-parallel-data-look-like?">How parallel data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Append-delta-features">Append delta features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Finally,-we-get-joint-feature-matrix">Finally, we get joint feature matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Model">Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Visualize-model">Visualize model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Means">Means</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Covariances">Covariances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Listen-results">Listen results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-different?">How different?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Package references</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="autograd.html">Autograd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="autograd.html#functional-interface">Functional interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="autograd.html#function-classes">Function classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="baseline.html">Baseline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="baseline.html#module-nnmnkwii.baseline.gmm">GMM voice conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-that-supports-utterance-wise-iteration">Dataset that supports utterance-wise iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#builtin-data-sources">Builtin data sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vctk-en">VCTK (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#voice-statistics-ja">Voice statistics (ja)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jsut-ja">JSUT (ja)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="display.html">Display</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="frontend.html">Frontend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="frontend.html#merlin-frontend">Merlin frontend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.frontend.merlin.duration_features.html">nnmnkwii.frontend.merlin.duration_features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="io.html">IO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.io.hts.load_question_set.html">nnmnkwii.io.hts.load_question_set</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="metrics.html">Evaluation metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="postfilters.html">Post-filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Pre-processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#f0">F0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessing.html#alignment">Alignment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="util.html#files">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_label_file.html">nnmnkwii.util.example_label_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_audio_file.html">nnmnkwii.util.example_audio_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-16-2018-08-23">v0.0.16 &lt;2018-08-23&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-10-2017-12-05">v0.0.10 &lt;2017-12-05&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-9-2017-11-14">v0.0.9 &lt;2017-11-14&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-8-2017-10-25">v0.0.8 &lt;2017-10-25&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nnmnkwii</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Datasets</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/references/datasets.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="module-nnmnkwii.datasets">
+<span id="datasets"></span><h1>Datasets<a class="headerlink" href="#module-nnmnkwii.datasets" title="Permalink to this headline">¶</a></h1>
+<p>This module provides dataset abstraction.
+In this library, a dataset represents fixed-sized set of features (e.g., acoustic
+features, linguistic features, duration features etc.) composed of multiple
+utterances, supporting iteration and indexing.</p>
+<div class="section" id="interface">
+<h2>Interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<p>To build dataset and represent variety of features (linguistic, duration,
+acoustic, etc) in an unified way, we define couple of interfaces.</p>
+<ol class="arabic simple">
+<li><a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileDataSource</span></code></a></li>
+<li><a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dataset</span></code></a></li>
+</ol>
+<p>The former is an abstraction of file data sources, where we find the data and
+how to process them. Any FileDataSource must implement:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">collect_files</span></code>: specifies where to find source files (wav, lab, cmp, bin, etc.).</li>
+<li><code class="docutils literal notranslate"><span class="pre">collect_features</span></code>: specifies how to collect features (just load from file, or do some feature extraction logic, etc).</li>
+</ul>
+<p>The later is an abstraction of dataset. Any dataset must implement
+<a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dataset</span></code></a> interface:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>: returns features (typically, two dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">__len__</span></code>: returns the size of dataset (e.g., number of utterances).</li>
+</ul>
+<p>One important point is that we use <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> to represent features
+(there might be exception though). For example,</p>
+<ul class="simple">
+<li>F0 trajecoty as <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">1</span></code> array, where <code class="docutils literal notranslate"><span class="pre">T</span></code> represents number of frames.</li>
+<li>Spectrogram as <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code> array, where <code class="docutils literal notranslate"><span class="pre">D</span></code> is number of feature dimention.</li>
+<li>Linguistic features as <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code> array.</li>
+</ul>
+<dl class="class">
+<dt id="nnmnkwii.datasets.FileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">FileDataSource</code><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>File data source interface.</p>
+<p>Users are expected to implement custum data source for your own data.
+All file data sources must implement this interface.</p>
+<dl class="method">
+<dt id="nnmnkwii.datasets.FileDataSource.collect_features">
+<code class="descname">collect_features</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileDataSource.collect_features"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileDataSource.collect_features" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect features given path(s).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>args</strong> – File path or tuple of file paths</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code> features represented by 2d array.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">2darray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.FileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect data source files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of files, or tuple of list if you need
+multiple files to collect features.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">List or tuple of list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.Dataset">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">Dataset</code><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#Dataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataset represents a fixed-sized set of features composed of multiple
+utterances.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>With combination of <a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileDataSource</span></code></a> and <a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dataset</span></code></a>, we define
+some dataset implementation that can be used for typical situations.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that we don’t provide special iterator implementation (e.g., mini-batch
+iteration, multiprocessing, etc). Users are expected to use dataset with other
+iterator implementation. For PyTorch users, we can use <a class="reference external" href="http://pytorch.org/docs/master/data.html?highlight=dataloader#torch.utils.data.DataLoader">PyTorch DataLoader</a> for
+mini-batch iteration and multiprocessing. Our dataset interface is <cite>exactly</cite>
+same as PyTorch’s one, so we can use PyTorch DataLoader seamlessly. See
+tutorials how we can use it practically.</p>
+</div>
+<div class="section" id="dataset-that-supports-utterance-wise-iteration">
+<h3>Dataset that supports utterance-wise iteration<a class="headerlink" href="#dataset-that-supports-utterance-wise-iteration" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nnmnkwii.datasets.FileSourceDataset">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">FileSourceDataset</code><span class="sig-paren">(</span><em>file_data_source</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Most basic dataset implementation. It supports utterance-wise iteration and
+has utility (<a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="nnmnkwii.datasets.FileSourceDataset.asarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asarray</span></code></a> method) to convert dataset to an three
+dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
+<p>Speech features have typically different number of time resolusion,
+so we cannot simply represent dataset as an
+array. To address the issue, the dataset class represents set
+of features as <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> array by padding zeros where <code class="docutils literal notranslate"><span class="pre">N</span></code> is the
+number of utterances, <code class="docutils literal notranslate"><span class="pre">T^max</span></code> is maximum number of frame lenghs and <code class="docutils literal notranslate"><span class="pre">D</span></code>
+is the dimention of features, respectively.</p>
+<p>While this dataset loads features on-demand while indexing, if you are
+dealing with relatively small dataset, it might be useful to convert it to
+an array, and then do whatever with numpy/scipy functionalities.</p>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.FileSourceDataset.file_data_source">
+<code class="descname">file_data_source</code><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.file_data_source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data source to specify 1) where to
+find data to be loaded and 2) how to collect features from them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource">FileDataSource</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.FileSourceDataset.collected_files">
+<code class="descname">collected_files</code><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.collected_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collected files are stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">ndarray</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_data_source</strong> (<a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource"><em>FileDataSource</em></a>) – File data source.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">(578, 425) (578, 187)</span>
+<span class="go">(675, 425) (675, 187)</span>
+<span class="go">(606, 425) (606, 187)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(3, 1000, 425)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(3, 1000, 187)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="nnmnkwii.datasets.FileSourceDataset.asarray">
+<code class="descname">asarray</code><span class="sig-paren">(</span><em>padded_length=None</em>, <em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>padded_length_guess=1000</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset.asarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert dataset to numpy array.</p>
+<p>This try to load entire dataset into a single 3d numpy array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of maximum time frames to be expected.
+If None, it is set to actual maximum time length.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
+<li><strong>padded_length_guess</strong> – (int): Initial guess of max time length of
+padded dataset array. Used if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of shape <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is
+None, otherwise <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">padded_length</span> <span class="pre">x</span> <span class="pre">D</span></code>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">3d-array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.PaddedFileSourceDataset">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">PaddedFileSourceDataset</code><span class="sig-paren">(</span><em>file_data_source</em>, <em>padded_length</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#PaddedFileSourceDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.PaddedFileSourceDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic dataset with padding. Very similar to <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a>,
+it supports utterance-wise iteration and has
+utility (<a class="reference internal" href="#nnmnkwii.datasets.PaddedFileSourceDataset.asarray" title="nnmnkwii.datasets.PaddedFileSourceDataset.asarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asarray</span></code></a> method) to convert dataset to an three
+dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
+<p>The difference between <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a> is that this returns
+padded features as <code class="docutils literal notranslate"><span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> array at <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, while
+<a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a> returns not-padded <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code> array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_data_source</strong> (<a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource"><em>FileDataSource</em></a>) – File data source.</li>
+<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Padded length.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.PaddedFileSourceDataset.file_data_source">
+<code class="descname">file_data_source</code><a class="headerlink" href="#nnmnkwii.datasets.PaddedFileSourceDataset.file_data_source" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource">FileDataSource</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.PaddedFileSourceDataset.padded_length">
+<code class="descname">padded_length</code><a class="headerlink" href="#nnmnkwii.datasets.PaddedFileSourceDataset.padded_length" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">PaddedFileSourceDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(3, 1000, 425)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="mi">1000</span><span class="p">),</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">(1000, 425) (1000, 187)</span>
+<span class="go">(1000, 425) (1000, 187)</span>
+<span class="go">(1000, 425) (1000, 187)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(3, 1000, 425)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(3, 1000, 187)</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="nnmnkwii.datasets.PaddedFileSourceDataset.asarray">
+<code class="descname">asarray</code><span class="sig-paren">(</span><em>dtype=&lt;class 'numpy.float32'&gt;</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#PaddedFileSourceDataset.asarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.PaddedFileSourceDataset.asarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert dataset to numpy array.</p>
+<p>This try to load entire dataset into a single 3d numpy array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of maximum time frames to be expected.
+If None, it is set to actual maximum time length.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
+<li><strong>padded_length_guess</strong> – (int): Initial guess of max time length of
+padded dataset array. Used if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is None.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Array of shape <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is
+None, otherwise <code class="docutils literal notranslate"><span class="pre">N</span> <span class="pre">x</span> <span class="pre">padded_length</span> <span class="pre">x</span> <span class="pre">D</span></code>.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">3d-array</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.MemoryCacheDataset">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">MemoryCacheDataset</code><span class="sig-paren">(</span><em>dataset</em>, <em>cache_size=777</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#MemoryCacheDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A thin dataset wrapper class that has simple cache functionality. It supports
+utterance-wise iteration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dataset</strong> (<a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><em>Dataset</em></a>) – Dataset implementation to wrap.</li>
+<li><strong>cache_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Cache size (utterance unit).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.MemoryCacheDataset.dataset">
+<code class="descname">dataset</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheDataset.dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.MemoryCacheDataset.cached_utterances">
+<code class="descname">cached_utterances</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheDataset.cached_utterances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loaded utterances. Keys are utterance
+indices and values are numpy arrays.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">OrderedDict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.MemoryCacheDataset.cache_size">
+<code class="descname">cache_size</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheDataset.cache_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cache size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">MemoryCacheDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">MemoryCacheDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">MemoryCacheDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">cached_utterances</span>
+<span class="go">OrderedDict()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">(578, 425) (578, 187)</span>
+<span class="go">(675, 425) (675, 187)</span>
+<span class="go">(606, 425) (606, 187)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">cached_utterances</span><span class="p">)</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="dataset-that-supports-frame-wise-iteration">
+<h3>Dataset that supports frame-wise iteration<a class="headerlink" href="#dataset-that-supports-frame-wise-iteration" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="nnmnkwii.datasets.MemoryCacheFramewiseDataset">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">MemoryCacheFramewiseDataset</code><span class="sig-paren">(</span><em>dataset</em>, <em>lengths</em>, <em>cache_size=777</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#MemoryCacheFramewiseDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheFramewiseDataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>A thin dataset wrapper class that has simple cache functionality. It supports
+frame-wise iteration. Different from other utterance-wise datasets, you will
+need to explicitly give number of time frames for each utterance at
+construction, since the class has to know the size of dataset to implement
+<code class="docutils literal notranslate"><span class="pre">__len__</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are doing random access to the dataset, please be careful that you
+give sufficient large number of cache size, to avoid many file re-loading.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>dataset</strong> (<a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><em>Dataset</em></a>) – Dataset implementation to wrap.</li>
+<li><strong>lengths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Frame lengths for each utterance.</li>
+<li><strong>cache_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Cache size (utterance unit).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.MemoryCacheFramewiseDataset.dataset">
+<code class="descname">dataset</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheFramewiseDataset.dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dataset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset">Dataset</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.MemoryCacheFramewiseDataset.cached_utterances">
+<code class="descname">cached_utterances</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheFramewiseDataset.cached_utterances" title="Permalink to this definition">¶</a></dt>
+<dd><p>Loaded utterances.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">OrderedDict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.MemoryCacheFramewiseDataset.cache_size">
+<code class="descname">cache_size</code><a class="headerlink" href="#nnmnkwii.datasets.MemoryCacheFramewiseDataset.cache_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cache size.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="docutils">
+<dt>Examples</dt>
+<dd><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_acoustic_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">MemoryCacheFramewiseDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_acoustic_model</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]</span> <span class="c1"># collect frame lengths</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">MemoryCacheFramewiseDataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Y</span> <span class="o">=</span> <span class="n">MemoryCacheFramewiseDataset</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span> <span class="n">lengths</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="go">1859</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(425,)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(187,)</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="builtin-data-sources">
+<h2>Builtin data sources<a class="headerlink" href="#builtin-data-sources" title="Permalink to this headline">¶</a></h2>
+<p>There are a couple of builtin file data sources for typical datasets to make it
+easy to work on those. With the following data source implementation,
+you only need to implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>, which
+defines what features you want from wav file or text (depends on data source).
+If you want maximum flexibility to access dataset, you may want to implement your
+own data source, instead of using bulitin ones.</p>
+<p>e.g. If we are trying to extract acoustic features from wav files from
+CMU Arctic, then you can write:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="kn">import</span> <span class="n">trim_zeros_frames</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileSourceDataset</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">cmu_arctic</span>
+<span class="kn">import</span> <span class="nn">pysptk</span>
+<span class="kn">import</span> <span class="nn">pyworld</span>
+
+<span class="k">class</span> <span class="nc">MyFileDataSource</span><span class="p">(</span><span class="n">cmu_arctic</span><span class="o">.</span><span class="n">WavFileDataSource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">collect_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute mel-cepstrum given a wav file.&quot;&quot;&quot;</span>
+        <span class="n">fs</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="n">f0</span><span class="p">,</span> <span class="n">timeaxis</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">dio</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">fs</span><span class="p">,</span> <span class="n">frame_period</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">f0</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">stonemask</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">timeaxis</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+        <span class="n">spectrogram</span> <span class="o">=</span> <span class="n">pyworld</span><span class="o">.</span><span class="n">cheaptrick</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">timeaxis</span><span class="p">,</span> <span class="n">fs</span><span class="p">)</span>
+        <span class="n">spectrogram</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">spectrogram</span><span class="p">)</span>
+        <span class="n">mc</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">sp2mc</span><span class="p">(</span><span class="n">spectrogram</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.41</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mc</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+<span class="n">DATA_ROOT</span> <span class="o">=</span> <span class="s2">&quot;/home/ryuichi/data/cmu_arctic/&quot;</span> <span class="c1"># your data path</span>
+<span class="n">data_source</span> <span class="o">=</span> <span class="n">MyFileDataSource</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;clb&quot;</span><span class="p">],</span> <span class="n">max_files</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># 100 wav files of `clb` speaker will be collected</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">data_source</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">==</span> <span class="mi">100</span>
+
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">:</span>
+    <span class="c1"># do anything on acoustic features (e.g., save to disk)</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>More real examples can be found in <a class="reference external" href="https://github.com/r9y9/nnmnkwii/tree/master/tests">tests directory</a> in nnmnkwii and
+tutorial notebooks in <a class="reference external" href="https://github.com/r9y9/nnmnkwii_gallery">nnmnkwii_gallery</a>.</p>
+</div>
+<div class="section" id="cmu-arctic-en">
+<h2>CMU Arctic (en)<a class="headerlink" href="#cmu-arctic-en" title="Permalink to this headline">¶</a></h2>
+<p>You can download data from <a class="reference external" href="http://festvox.org/cmu_arctic/">http://festvox.org/cmu_arctic/</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.cmu_arctic.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/cmu_arctic.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for CMU Arctic dataset.</p>
+<p>The data source collects wav files from CMU Arctic.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Supported names of speaker
+are <code class="docutils literal notranslate"><span class="pre">awb</span></code>, <code class="docutils literal notranslate"><span class="pre">bdl</span></code>, <code class="docutils literal notranslate"><span class="pre">clb</span></code>, <code class="docutils literal notranslate"><span class="pre">jmk</span></code>, <code class="docutils literal notranslate"><span class="pre">ksp</span></code>, <code class="docutils literal notranslate"><span class="pre">rms</span></code> and <code class="docutils literal notranslate"><span class="pre">slt</span></code>.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speaker labels paired with collected files.
+Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.cmu_arctic.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/cmu_arctic.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.cmu_arctic.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files for specific speakers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="vctk-en">
+<h2>VCTK (en)<a class="headerlink" href="#vctk-en" title="Permalink to this headline">¶</a></h2>
+<p>You can download data (15GB) from <a class="reference external" href="http://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html">http://homepages.inf.ed.ac.uk/jyamagis/page3/page58/page58.html</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that VCTK data sources don’t collect files for speaker <code class="docutils literal notranslate"><span class="pre">315</span></code>, since there
+are no transcriptions available for <code class="docutils literal notranslate"><span class="pre">315</span></code> entries,</p>
+</div>
+<dl class="class">
+<dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None, max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for VCTK dataset.</p>
+<p>The data source collects text transcriptions from VCTK.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
+For supported names of speaker, please refer to <code class="docutils literal notranslate"><span class="pre">available_speakers</span></code>
+defined in the module.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dict of speaker information dict. Keyes are speaker
+ids (str) and each value is speaker information consists of <code class="docutils literal notranslate"><span class="pre">AGE</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GENDER</span></code> and <code class="docutils literal notranslate"><span class="pre">REGION</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speaker labels paired with collected files.
+Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.vctk.TranscriptionDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#TranscriptionDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.TranscriptionDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect data source files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of files, or tuple of list if you need
+multiple files to collect features.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">List or tuple of list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.vctk.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vctk.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['225', '226', '227', '228', '229', '230', '231', '232', '233', '234', '236', '237', '238', '239', '240', '241', '243', '244', '245', '246', '247', '248', '249', '250', '251', '252', '253', '254', '255', '256', '257', '258', '259', '260', '261', '262', '263', '264', '265', '266', '267', '268', '269', '270', '271', '272', '273', '274', '275', '276', '277', '278', '279', '280', '281', '282', '283', '284', '285', '286', '287', '288', '292', '293', '294', '295', '297', '298', '299', '300', '301', '302', '303', '304', '305', '306', '307', '308', '310', '311', '312', '313', '314', '316', '317', '318', '323', '326', '329', '330', '333', '334', '335', '336', '339', '340', '341', '343', '345', '347', '351', '360', '361', '362', '363', '364', '374', '376'], labelmap=None, max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for VCTK dataset.</p>
+<p>The data source collects text transcriptions from VCTK.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
+For supported names of speaker, please refer to <code class="docutils literal notranslate"><span class="pre">available_speakers</span></code>
+defined in the module.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.vctk.WavFileDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dict of speaker information dict. Keyes are speaker
+ids (str) and each value is speaker information consists of <code class="docutils literal notranslate"><span class="pre">AGE</span></code>,
+<code class="docutils literal notranslate"><span class="pre">GENDER</span></code> and <code class="docutils literal notranslate"><span class="pre">REGION</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.vctk.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speaker labels paired with collected files.
+Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.vctk.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vctk.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vctk.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect data source files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of files, or tuple of list if you need
+multiple files to collect features.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">List or tuple of list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="lj-speech-en">
+<h2>LJ-Speech (en)<a class="headerlink" href="#lj-speech-en" title="Permalink to this headline">¶</a></h2>
+<p>You can download data (2.6GB) from <a class="reference external" href="https://keithito.com/LJ-Speech-Dataset/">https://keithito.com/LJ-Speech-Dataset/</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.ljspeech.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.ljspeech.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>normalized=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for LJSpeech dataset.</p>
+<p>The data source collects text transcriptions from LJSpeech.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>normalized</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Collect normalized transcriptions or not.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.ljspeech.TranscriptionDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Metadata, shapeo (<code class="docutils literal notranslate"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.ljspeech.TranscriptionDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#TranscriptionDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.TranscriptionDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect text transcriptions.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note that it returns list of transcriptions (str), not file paths.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of text transcription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.ljspeech.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.ljspeech.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for LJSpeech dataset.</p>
+<p>The data source collects wav files from LJSpeech.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.ljspeech.WavFileDataSource.metadata">
+<code class="descname">metadata</code><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.WavFileDataSource.metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Metadata, shape (<code class="docutils literal notranslate"><span class="pre">num_files</span> <span class="pre">x</span> <span class="pre">3</span></code>).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.ljspeech.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/ljspeech.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.ljspeech.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="voice-conversion-challenge-vcc-2016-en">
+<h2>Voice Conversion Challenge (VCC) 2016 (en)<a class="headerlink" href="#voice-conversion-challenge-vcc-2016-en" title="Permalink to this headline">¶</a></h2>
+<p>You can download training data (181MB) and evaluation data (~56 MB) from <a class="reference external" href="http://datashare.is.ed.ac.uk/handle/10283/2211">http://datashare.is.ed.ac.uk/handle/10283/2211</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.vcc2016.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>speakers</em>, <em>labelmap=None</em>, <em>max_files=None</em>, <em>training_data_root=None</em>, <em>evaluation_data_root=None</em>, <em>training=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vcc2016.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for Voice Conversion Challenge (VCC) 2016 dataset.</p>
+<p>The data source collects wav files from VCC2016 dataset.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">VCC2016 datasets are composed of training data and evaluation data,
+which can be downloaded separately. <code class="docutils literal notranslate"><span class="pre">data_root</span></code> should point to the
+directory that contains both the training and evaluation data.</p>
+</div>
+<p>Directory structure should look like for example:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>&gt; tree -d ~/data/vcc2016/
+/home/ryuichi/data/vcc2016/
+├── evaluation_all
+│   ├── SF1
+│   ├── SF2
+│   ├── SF3
+│   ├── SM1
+│   ├── SM2
+│   ├── TF1
+│   ├── TF2
+│   ├── TM1
+│   ├── TM2
+│   └── TM3
+└── vcc2016_training
+    ├── SF1
+    ├── SF2
+    ├── SF3
+    ├── SM1
+    ├── SM2
+    ├── TF1
+    ├── TF2
+    ├── TM1
+    ├── TM2
+    └── TM3
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root. It’s assumed that training and evaluation
+data are placed at <code class="docutils literal notranslate"><span class="pre">${data_root}/vcc2016_training</span></code> and</li>
+<li><strong>respectively</strong><strong>, </strong><strong>by default.</strong> (<em>${data_root}/evaluation_all</em><em>,</em>) – </li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Supported names of speaker
+are <code class="docutils literal notranslate"><span class="pre">SF1</span></code>, <code class="docutils literal notranslate"><span class="pre">SF2</span></code>, <code class="docutils literal notranslate"><span class="pre">SF3</span></code>, <code class="docutils literal notranslate"><span class="pre">SM1</span></code>, <code class="docutils literal notranslate"><span class="pre">SM2</span></code>, <code class="docutils literal notranslate"><span class="pre">TF1</span></code>, <code class="docutils literal notranslate"><span class="pre">TF2</span></code>,
+<code class="docutils literal notranslate"><span class="pre">TM1</span></code>, <code class="docutils literal notranslate"><span class="pre">TM2</span></code> and <code class="docutils literal notranslate"><span class="pre">TM3</span></code>.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>training_data_root</strong> – If specified, try to search training data to the
+directory. If None, set to <code class="docutils literal notranslate"><span class="pre">${data_root}/vcc2016_training</span></code>.</li>
+<li><strong>evaluation_data_root</strong> – If specified, try to search evaluation data to the
+directory. If None, set to <code class="docutils literal notranslate"><span class="pre">${data_root}/evaluation_all</span></code>.</li>
+<li><strong>training</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether it collects training data or not. If False,
+it collects evaluation data.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speaker labels paired with collected files.
+Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.vcc2016.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/vcc2016.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.vcc2016.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files for specific speakers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="voice-statistics-ja">
+<h2>Voice statistics (ja)<a class="headerlink" href="#voice-statistics-ja" title="Permalink to this headline">¶</a></h2>
+<p>You can download data (~720MB) from <a class="reference external" href="https://voice-statistics.github.io/">https://voice-statistics.github.io/</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.voice_statistics.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.voice_statistics.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root</em>, <em>column='sentence'</em>, <em>max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for VoiceStatistics dataset</p>
+<p>Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – <code class="docutils literal notranslate"><span class="pre">sentense</span></code>, <code class="docutils literal notranslate"><span class="pre">yomi</span></code> or <code class="docutils literal notranslate"><span class="pre">monophone</span></code>.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="docutils">
+<dt>Atributes:</dt>
+<dd>transcriptions (list): Transcriptions.</dd>
+</dl>
+<dl class="method">
+<dt id="nnmnkwii.datasets.voice_statistics.TranscriptionDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#TranscriptionDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.TranscriptionDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect text transcriptions.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Note that it returns list of transcriptions (str), not file paths.</p>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of text transcription.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.voice_statistics.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers, labelmap=None, max_files=None, emotions=['normal']</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for Voice-statistics dataset.</p>
+<p>The data source collects wav files from voice-statistics.
+Users are expected to inherit the class and implement
+<code class="docutils literal notranslate"><span class="pre">collect_features</span></code> method, which defines how features are computed
+given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to load. Supported names of speaker
+are <code class="docutils literal notranslate"><span class="pre">fujitou</span></code>, <code class="docutils literal notranslate"><span class="pre">tsuchiya</span></code> and <code class="docutils literal notranslate"><span class="pre">uemura</span></code>.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>emotions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of emotions we use. Supported names of emotions
+are <code class="docutils literal notranslate"><span class="pre">angry</span></code>, <code class="docutils literal notranslate"><span class="pre">happy</span></code> and <code class="docutils literal notranslate"><span class="pre">normal</span></code>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of speaker identifiers determined by
+labelmap. Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/voice_statistics.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.voice_statistics.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect wav files for specific speakers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="jsut-ja">
+<h2>JSUT (ja)<a class="headerlink" href="#jsut-ja" title="Permalink to this headline">¶</a></h2>
+<p>JSUT (Japanese speech corpus of Saruwatari Lab, University of Tokyo).</p>
+<p>You can download data (2.7GB) from <a class="reference external" href="https://sites.google.com/site/shinnosuketakamichi/publication/jsut">https://sites.google.com/site/shinnosuketakamichi/publication/jsut</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.jsut.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for JSUT dataset.</p>
+<p>The data source collects text transcriptions from JSUT.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Subsets.  Supported names of subset are <code class="docutils literal notranslate"><span class="pre">basic5000</span></code>,
+<code class="docutils literal notranslate"><span class="pre">countersuffix26</span></code>, <code class="docutils literal notranslate"><span class="pre">loanword128</span></code>, <code class="docutils literal notranslate"><span class="pre">onomatopee300</span></code>,
+<code class="docutils literal notranslate"><span class="pre">precedent130</span></code>, <code class="docutils literal notranslate"><span class="pre">repeat500</span></code>, <code class="docutils literal notranslate"><span class="pre">travel1000</span></code>, <code class="docutils literal notranslate"><span class="pre">utparaphrase512</span></code>.
+and <code class="docutils literal notranslate"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.jsut.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jsut.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, subsets=['basic5000'], validate=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jsut.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jsut.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wav file data source for JSUT dataset.</p>
+<p>The data source collects wav files from JSUT.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a wav file path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Subsets.  Supported names of subset are <code class="docutils literal notranslate"><span class="pre">basic5000</span></code>,
+<code class="docutils literal notranslate"><span class="pre">countersuffix26</span></code>, <code class="docutils literal notranslate"><span class="pre">loanword128</span></code>, <code class="docutils literal notranslate"><span class="pre">onomatopee300</span></code>,
+<code class="docutils literal notranslate"><span class="pre">precedent130</span></code>, <code class="docutils literal notranslate"><span class="pre">repeat500</span></code>, <code class="docutils literal notranslate"><span class="pre">travel1000</span></code>, <code class="docutils literal notranslate"><span class="pre">utparaphrase512</span></code>.
+and <code class="docutils literal notranslate"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="display.html" class="btn btn-neutral float-right" title="Display" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="baseline.html" class="btn btn-neutral" title="Baseline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ryuichi Yamamoto
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
