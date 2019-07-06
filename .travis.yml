@@ -34,7 +34,13 @@ install:
   - pip install -e ".[test]"
 
 script:
-  - nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec'
+  # Workaround for bandmat installation issue on python 3.7
+  # see https://github.com/MattShannon/bandmat/issues/10
+  - if [["$TRAVIS_PYTHON_VERSION" == "3.7"]]; then
+      nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec,!requires_bandmat' --ignore-files=test_autograd.py
+    else
+      nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec'
+    fi
   - flake8
 
 after_success:
