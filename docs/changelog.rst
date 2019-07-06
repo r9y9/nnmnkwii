@@ -1,7 +1,7 @@
 Change log
 ==========
 
-v0.0.19 <2019-xx-xx>
+v0.0.19 <2019-07-06>
 --------------------
 
 - `#88`_: Tentative fix: make bandmat optional requirement as it is causing installation errors on python 3.7. See [here](https://github.com/MattShannon/bandmat/issues/10) for details.
