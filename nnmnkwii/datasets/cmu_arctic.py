@@ -7,7 +7,11 @@ from os.path import join, splitext, isdir
 from os import listdir
 
 # List of available speakers.
-available_speakers = ["awb", "bdl", "clb", "jmk", "ksp", "rms", "slt"]
+available_speakers = [
+    "aew", "ahw", "aup", "awb", "axb" "bdl",
+    "clb", "eey", "fem", "gka", "jmk", "ksp",
+    "ljm", "lnh", "rms", "rxr", "slp", "slt"
+]
 
 
 def _name_to_dirname(name):
@@ -25,7 +29,9 @@ class WavFileDataSource(FileDataSource):
     Args:
         data_root (str): Data root.
         speakers (list): List of speakers to find. Supported names of speaker
-         are ``awb``, ``bdl``, ``clb``, ``jmk``, ``ksp``, ``rms`` and ``slt``.
+         are ``aew``, ``ahw``, ``aup``, ``awb``, ``axb``, ``bdl``,
+         ``clb``, ``eey``, ``fem``, ``gka``, ``jmk``, ``ksp``,
+         ``ljm``, ``lnh``, ``rms``, ``rxr``, ``slp``, ``slt`` .
         labelmap (dict[optional]): Dict of speaker labels. If None,
           it's assigned as incrementally (i.e., 0, 1, 2) for specified
           speakers.
