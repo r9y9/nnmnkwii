@@ -2,6 +2,9 @@ Change log
 ==========
 
 v0.0.20 <2019-xx-xx>
+
+- `#90`_: Expand available speakers list for CMU Arctic dataset
+
 --------------------
 
 v0.0.19 <2019-07-06>
@@ -182,3 +185,4 @@ v0.0.1 <2017-08-14>
 .. _#85: https://github.com/r9y9/nnmnkwii/issues/85
 .. _#87: https://github.com/r9y9/nnmnkwii/pull/87
 .. _#88: https://github.com/r9y9/nnmnkwii/pull/88
+.. _#90: https://github.com/r9y9/nnmnkwii/pull/90
