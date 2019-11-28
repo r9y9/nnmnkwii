@@ -8,9 +8,9 @@ from os import listdir
 
 # List of available speakers.
 available_speakers = [
-    "aew", "ahw", "aup", "awb", "axb" "bdl",
+    "aew", "ahw", "aup", "awb", "axb", "bdl",
     "clb", "eey", "fem", "gka", "jmk", "ksp",
-    "ljm", "lnh", "rms", "rxr", "slp", "slt"
+    "ljm", "lnh", "rms", "rxr", "slp", "slt",
 ]
 
 
