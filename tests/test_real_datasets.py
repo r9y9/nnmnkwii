@@ -16,7 +16,7 @@ from nnmnkwii.preprocessing import trim_zeros_frames
 
 # Data source implementations
 from nnmnkwii.datasets import cmu_arctic, voice_statistics, ljspeech, vcc2016
-from nnmnkwii.datasets import jsut, vctk
+from nnmnkwii.datasets import jsut, vctk, jvs
 
 # Tests marked with "require_local_data" needs data to be downloaded.
 
@@ -111,6 +111,18 @@ def test_vctk_dummy():
         @raises(RuntimeError)
         def f(source):
             source("dummy")
+
+        f(data_source)
+
+
+def test_jvs_dummy():
+    assert len(jvs.available_speakers) == 100
+    data_sources = [jvs.TranscriptionDataSource, jvs.WavFileDataSource]
+
+    for data_source in data_sources:
+        @raises(RuntimeError)
+        def f(source):
+            source('dummy')
 
         f(data_source)
 
@@ -507,3 +519,52 @@ def test_vctk():
     data_source = MyWavFileDataSource(DATA_DIR, speakers=["225"])
     X = FileSourceDataset(data_source)
     print(X[0].shape)
+
+
+@attr("require_local_data")
+@attr("require_jvs")
+def test_jvs():
+    DATA_DIR = join(expanduser("~"), "Downloads", "jvs_ver1")
+    if not exists(DATA_DIR):
+        warn("Data doesn't exist at {}".format(DATA_DIR))
+        return
+
+    speakers = jvs.available_speakers
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers)
+    X1 = data_source.collect_files()
+    assert X1[0] == "また、東寺のように、五大明王と呼ばれる、主要な明王の中央に配されることも多い。"
+    para_len = len(X1)
+    # currently 3 files lost for para, so 100 * 100 - 3 = 9997
+    assert para_len == 9997
+
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers[50:])
+    X2 = data_source.collect_files(True)
+    # parallel always at first
+    assert X2[0] == "また、東寺のように、五大明王と呼ばれる、主要な明王の中央に配されることも多い。"
+
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers)
+    X3 = data_source.collect_files(True)
+    para_nonpara_len = len(X3)
+    # each speaker has 30 non-para
+    assert para_nonpara_len == para_len + 30 * 100
+
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers)
+    X = data_source.collect_files(True, True)
+    # each speaker has 10 whisper
+    assert len(X) == para_nonpara_len + 10 * 100
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers)
+    W1 = wav_source.collect_files()
+    assert 'VOICEACTRESS100_001.wav' in W1[0] and 'jvs001' in W1[0]
+    assert len(W1) == para_len
+
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers[30:])
+    W2 = wav_source.collect_files(True, True)
+    assert 'VOICEACTRESS100_001.wav' in W2[0] and 'jvs031' in W2[0]
+
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers)
+    W3 = wav_source.collect_files(True)
+    assert len(W3) == para_nonpara_len
+
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers)
+    W = wav_source.collect_files(True, True)
+    assert len(W) == len(X)
