@@ -68,7 +68,7 @@ def test_gmmmap_swap():
     from nnmnkwii.baseline.gmm import MLPG
 
     static_dim = 2
-    T = 10
+    T = 50
     windows = _get_windows_set()[-1]
 
     np.random.seed(1234)
