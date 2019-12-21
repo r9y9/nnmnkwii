@@ -37,7 +37,7 @@ def test_diffvc():
     # MLPG is performed dimention by dimention, so static_dim 1 is enough, 2 just for in
     # case.
     static_dim = 2
-    T = 10
+    T = 50
 
     for windows in _get_windows_set():
         np.random.seed(1234)
