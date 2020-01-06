@@ -530,41 +530,54 @@ def test_jvs():
         return
 
     speakers = jvs.available_speakers
-    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers)
+    categories = ["parallel"]
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers, categories)
     X1 = data_source.collect_files()
     assert X1[0] == "また、東寺のように、五大明王と呼ばれる、主要な明王の中央に配されることも多い。"
     para_len = len(X1)
     # currently 3 files lost for para, so 100 * 100 - 3 = 9997
     assert para_len == 9997
 
-    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers[50:])
-    X2 = data_source.collect_files(True)
+    categories.append("nonpara")
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers[50:], categories)
+    X2 = data_source.collect_files()
     # parallel always at first
     assert X2[0] == "また、東寺のように、五大明王と呼ばれる、主要な明王の中央に配されることも多い。"
 
-    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers)
-    X3 = data_source.collect_files(True)
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers, categories)
+    X3 = data_source.collect_files()
     para_nonpara_len = len(X3)
     # each speaker has 30 non-para
     assert para_nonpara_len == para_len + 30 * 100
 
-    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers)
-    X = data_source.collect_files(True, True)
+    categories2 = ['nonpara']
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers, categories2)
+    X4 = data_source.collect_files()
+    assert X4[0] == "テニスにもあるけど、４大大会って何。"
+
+    categories3 = ['whisper']
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers, categories3)
+    X5 = data_source.collect_files()
+    assert X5[0] == "母は私の望むものは、何でも言わなくてもかなえてくれる。"
+
+    categories.append("whisper")
+    data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers, categories)
+    X = data_source.collect_files()
     # each speaker has 10 whisper
     assert len(X) == para_nonpara_len + 10 * 100
-    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers)
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers, categories[:1])
     W1 = wav_source.collect_files()
     assert 'VOICEACTRESS100_001.wav' in W1[0] and 'jvs001' in W1[0]
     assert len(W1) == para_len
 
-    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers[30:])
-    W2 = wav_source.collect_files(True, True)
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers[30:], categories)
+    W2 = wav_source.collect_files()
     assert 'VOICEACTRESS100_001.wav' in W2[0] and 'jvs031' in W2[0]
 
-    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers)
-    W3 = wav_source.collect_files(True)
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers, categories[:2])
+    W3 = wav_source.collect_files()
     assert len(W3) == para_nonpara_len
 
-    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers)
-    W = wav_source.collect_files(True, True)
+    wav_source = jvs.WavFileDataSource(DATA_DIR, speakers, categories)
+    W = wav_source.collect_files()
     assert len(W) == len(X)

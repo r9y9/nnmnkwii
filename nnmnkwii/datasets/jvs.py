@@ -41,7 +41,7 @@ def _parse_speaker_info(data_root):
 
 
 class _JVSBaseDataSource(FileDataSource):
-    def __init__(self, data_root, speakers, labelmap, max_files):
+    def __init__(self, data_root, speakers, categories, labelmap, max_files):
         # only accept "jvs*" format
         self.data_root = data_root
         if speakers == "all":
@@ -49,6 +49,19 @@ class _JVSBaseDataSource(FileDataSource):
         for speaker in speakers:
             if speaker not in available_speakers:
                 raise ValueError("Unknown speaker {}. It should be one of {}".format(speaker, available_speakers))
+        if not categories:
+            raise ValueError("You should set at least one category")
+        self.parallel, self.nonpara, self.whisper = False, False, False
+        for cate in categories:
+            if cate == "parallel":
+                self.parallel = True
+            elif cate == "nonpara":
+                self.nonpara = True
+            elif cate == "whisper":
+                self.whisper = True
+            else:
+                raise ValueError('Invalid category {}, '.format(cate) +
+                                 'it should be one of "parallel", "nonpara" or "whisper"')
         self.speakers = speakers
         if labelmap is None:
             labelmap = {s: idx for idx, s in enumerate(speakers)}
@@ -102,7 +115,7 @@ class _JVSBaseDataSource(FileDataSource):
                                   .format(line, speaker, speaker_wavfolder))
         return nonpara_without_wav
 
-    def collect_files(self, is_wav, nonpara=False, whisper=False):
+    def collect_files(self, is_wav):
         paths, labels = [], []
         global lost_wavfiles
         max_files_per_speaker = self.max_files // len(self.speakers) if self.max_files else None
@@ -123,7 +136,7 @@ class _JVSBaseDataSource(FileDataSource):
                 return sorted(glob(join(folderpath, "*.wav")), key=lambda x: basename(x))
 
             files = []
-            for name, isset in zip(self._folders, [True, nonpara, whisper]):
+            for name, isset in zip(self._folders, [self.parallel, self.nonpara, self.whisper]):
                 if isset:
                     folder = join(speaker_folder, name)
                     if is_wav:
@@ -166,11 +179,11 @@ class TranscriptionDataSource(_JVSBaseDataSource):
           models.
 
     """
-    def __init__(self, data_root, speakers=available_speakers, labelmap=None, max_files=None):
-        super(TranscriptionDataSource, self).__init__(data_root, speakers, labelmap, max_files)
+    def __init__(self, data_root, speakers=available_speakers, categories=None, labelmap=None, max_files=None):
+        super(TranscriptionDataSource, self).__init__(data_root, speakers, categories, labelmap, max_files)
 
-    def collect_files(self, nonpara=False, whisper=False):
-        return super(TranscriptionDataSource, self).collect_files(False, nonpara=nonpara, whisper=whisper)
+    def collect_files(self):
+        return super(TranscriptionDataSource, self).collect_files(False)
 
 
 class WavFileDataSource(_JVSBaseDataSource):
@@ -185,6 +198,8 @@ class WavFileDataSource(_JVSBaseDataSource):
         speakers (list): List of speakers to find. Speaker id must be ``str``.
           For supported names of speaker, please refer to ``available_speakers``
           defined in the module.
+        categories(list): List of categories to collect, the item should be one of
+          "parallel", "nonpara" and "whisper"
         labelmap (dict[optional]): Dict of speaker labels. If None,
           it's assigned as incrementally (i.e., 0, 1, 2) for specified
           speakers.
@@ -198,8 +213,8 @@ class WavFileDataSource(_JVSBaseDataSource):
           Stored in ``collect_files``. This is useful to build multi-speaker
           models.
     """
-    def __init__(self, data_root, speakers=available_speakers, labelmap=None, max_files=None):
-        super(WavFileDataSource, self).__init__(data_root, speakers, labelmap, max_files)
+    def __init__(self, data_root, speakers=available_speakers, categories=None, labelmap=None, max_files=None):
+        super(WavFileDataSource, self).__init__(data_root, speakers, categories, labelmap, max_files)
 
-    def collect_files(self, nonpara=False, whisper=False):
-        return super(WavFileDataSource, self).collect_files(True, nonpara=nonpara, whisper=whisper)
+    def collect_files(self):
+        return super(WavFileDataSource, self).collect_files(True)
