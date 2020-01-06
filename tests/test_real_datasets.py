@@ -122,7 +122,7 @@ def test_jvs_dummy():
     for data_source in data_sources:
         @raises(RuntimeError)
         def f(source):
-            source('dummy')
+            source('dummy', categories=['parallel'])
 
         f(data_source)
 
