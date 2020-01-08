@@ -5,7 +5,8 @@ language: python
 python:
   - "3.6"
   - "3.7"
-  - "3.8"
+# turn this on once pytorch provides binaries for py38
+# - "3.8"
 
 notifications:
   email: false
