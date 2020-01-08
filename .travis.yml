@@ -29,7 +29,7 @@ before_install:
   - deps='pip numpy scipy cython nose pytorch'
   - conda create -q -n test-environment "python=$TRAVIS_PYTHON_VERSION" $deps -c pytorch
   - source activate test-environment
-  - pip install codecov flake8
+  - pip install codecov flake8 'coverage==5.0.1'
   - pip install scikit-learn
 
 install:
