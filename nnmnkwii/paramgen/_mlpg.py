@@ -176,6 +176,8 @@ def mlpg(mean_frames, variance_frames, windows):
     num_windows = len(windows)
     win_mats = build_win_mats(windows, T)
 
+    max_win_width = np.max([max(win_mat.l, win_mat.u) for win_mat in win_mats])
+
     # workspaces; those will be updated in the following generation loop
     means = np.zeros((T, num_windows))
     precisions = np.zeros((T, num_windows))
@@ -187,6 +189,11 @@ def mlpg(mean_frames, variance_frames, windows):
             means[:, win_idx] = mean_frames[:, win_idx * static_dim + d]
             precisions[:, win_idx] = 1 / \
                 variance_frames[:, win_idx * static_dim + d]
+
+            # use zero precisions at edge frames for dynamic features
+            if win_idx != 0:
+                precisions[:max_win_width, win_idx] = 0
+                precisions[-max_win_width:, win_idx] = 0
 
         bs = precisions * means
         b, P = build_poe(bs, precisions, win_mats)
@@ -239,6 +246,8 @@ def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
     win_mats = build_win_mats(windows, T)
     static_dim = D // len(windows)
 
+    max_win_width = np.max([max(win_mat.l, win_mat.u) for win_mat in win_mats])
+
     grads = np.zeros((T, D), dtype=np.float32)
     for d in range(static_dim):
         sdw = max([win_mat.l + win_mat.u for win_mat in win_mats])
@@ -252,6 +261,12 @@ def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
         for win_idx, win_mat in enumerate(win_mats):
             precisions[win_idx] = 1 / \
                 variance_frames[:, win_idx * static_dim + d]
+
+            # use zero precisions at edge frames for dynamic features
+            if win_idx != 0:
+                precisions[win_idx, :max_win_width] = 0
+                precisions[win_idx, -max_win_width:] = 0
+
 
             bm.dot_mm_plus_equals(win_mat.T, win_mat,
                                   target_bm=R, diag=precisions[win_idx])
@@ -334,14 +349,31 @@ def unit_variance_mlpg_matrix(windows, T):
     """
     win_mats = build_win_mats(windows, T)
     sdw = np.max([win_mat.l + win_mat.u for win_mat in win_mats])
+    max_win_width = np.max([max(win_mat.l, win_mat.u) for win_mat in win_mats])
 
     P = bm.zeros(sdw, sdw, T)
+
+    # set edge precitions to zero
+    precisions = bm.zeros(0, 0, T)
+    precisions.data[:, max_win_width:-max_win_width] += 1.0
+
+    mod_win_mats = list()
     for win_index, win_mat in enumerate(win_mats):
-        bm.dot_mm_plus_equals(win_mat.T, win_mat, target_bm=P)
+        if win_index != 0:
+            # use zero precisions for dynamic features
+            mod_win_mat = bm.dot_mm(precisions, win_mat)
+            bm.dot_mm_plus_equals(mod_win_mat.T, win_mat, target_bm=P)
+
+            mod_win_mats.append(mod_win_mat)
+        else:
+            # static features
+            bm.dot_mm_plus_equals(win_mat.T, win_mat, target_bm=P)
+            mod_win_mats.append(win_mat)
+
     chol_bm = bla.cholesky(P, lower=True)
     Pinv = cholesky_inv_banded(chol_bm.full(), width=chol_bm.l + chol_bm.u + 1)
 
-    cocatenated_window = full_window_mat(win_mats, T)
+    cocatenated_window = full_window_mat(mod_win_mats, T)
     return Pinv.dot(cocatenated_window.T).astype(np.float32)
 
 

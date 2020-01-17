@@ -34,6 +34,12 @@ def _get_windows_set():
             (1, 1, np.array([-0.5, 0.0, 0.5])),
             (1, 1, np.array([1.0, -2.0, 1.0])),
         ],
+        # Static + delta + deltadelta (wide window)
+        [
+            (0, 0, np.array([1.0])),
+            (2, 2, np.array([1.0, -8.0, 0.0, 8.0, -1.0]) / 12.0),
+            (2, 2, np.array([-1.0, 16.0, -30.0, 16.0, -1.0]) / 12.0),
+        ]
     ]
     return windows_set
 
@@ -161,7 +167,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
         for i in range(batch_size):
             grad1 = reshaped_means.grad.data.numpy()
             grad2 = reshaped_means_expanded.grad[i].data.numpy()
-            assert np.allclose(grad1, grad2, atol=1.05e-08)
+            assert np.allclose(grad1, grad2, atol=1.00e-06)
 
         # Case 3: 2d with non-reshaped input
         y_hat3 = AF.unit_variance_mlpg(R, means)
@@ -180,7 +186,7 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
         for i in range(batch_size):
             grad1 = means.grad.data.numpy()
             grad2 = means_expanded.grad[i].data.numpy()
-            assert np.allclose(grad1, grad2, atol=1.05e-08)
+            assert np.allclose(grad1, grad2, atol=1.00e-06)
 
 
 def test_mlpg_gradcheck():
