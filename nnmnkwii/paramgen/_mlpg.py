@@ -357,7 +357,7 @@ def unit_variance_mlpg_matrix(windows, T):
     precisions = bm.zeros(0, 0, T)
     precisions.data[:, max_win_width:-max_win_width] += 1.0
 
-    mod_win_mats = list()
+    mod_win_mats = []
     for win_index, win_mat in enumerate(win_mats):
         if win_index != 0:
             # use zero precisions for dynamic features
