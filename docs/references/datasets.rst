@@ -202,3 +202,17 @@ You can download data (2.7GB) from https://sites.google.com/site/shinnosuketakam
 
 .. autoclass:: nnmnkwii.datasets.jsut.WavFileDataSource
     :members:
+
+
+JVS (ja)
+---------
+
+JVS: free Japanese multi-speaker voice corpus
+
+You can download data from https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus.
+
+.. autoclass:: nnmnkwii.datasets.jvs.TranscriptionDataSource
+    :members:
+
+.. autoclass:: nnmnkwii.datasets.jvs.WavFileDataSource
+    :members:
