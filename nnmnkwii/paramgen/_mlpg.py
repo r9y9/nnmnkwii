@@ -267,7 +267,6 @@ def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
                 precisions[win_idx, :max_win_width] = 0
                 precisions[win_idx, -max_win_width:] = 0
 
-
             bm.dot_mm_plus_equals(win_mat.T, win_mat,
                                   target_bm=R, diag=precisions[win_idx])
 
