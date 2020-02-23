@@ -1,8 +1,13 @@
 Change log
 ==========
 
-v0.0.20 <2020-xx-xx>
+v0.0.21 <2020-xx-xx>
+--------------------
+- `#95`_: Fixed parameter generation error of MLPG.
 
+
+v0.0.20 <2020-xx-xx>
+--------------------
 - `#90`_: Expand available speakers list for CMU Arctic dataset
 - `#91`_: Add support for JVS dataset: a free Japanese multi-speaker voice corpus.
 
