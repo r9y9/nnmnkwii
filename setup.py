@@ -129,9 +129,9 @@ install_requires = [
     'tqdm',
 ]
 
-# Workaround for python 3.7 and bandmat
+# Workaround for python >= 3.7 and bandmat
 # https://github.com/r9y9/deepvoice3_pytorch/issues/154
-if sys.version_info[:2] != (3, 7):
+if sys.version_info[:2] < (3, 7):
     install_requires.append('bandmat >= 0.7')
 
 setup(
