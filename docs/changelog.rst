@@ -1,15 +1,12 @@
 Change log
 ==========
 
-v0.0.21 <2020-xx-xx>
---------------------
-- `#95`_: Fixed parameter generation error of MLPG.
-
-
-v0.0.20 <2020-xx-xx>
+v0.0.20 <2020-03-02>
 --------------------
 - `#90`_: Expand available speakers list for CMU Arctic dataset
 - `#91`_: Add support for JVS dataset: a free Japanese multi-speaker voice corpus.
+- `#98`_: Enable python 3.8 tests on travis
+- `#95`_: Fixed parameter generation error of MLPG.
 
 --------------------
 
@@ -193,3 +190,5 @@ v0.0.1 <2017-08-14>
 .. _#88: https://github.com/r9y9/nnmnkwii/pull/88
 .. _#90: https://github.com/r9y9/nnmnkwii/pull/90
 .. _#91: https://github.com/r9y9/nnmnkwii/issues/91
+.. _#95: https://github.com/r9y9/nnmnkwii/issues/95
+.. _#98: https://github.com/r9y9/nnmnkwii/pull/98
