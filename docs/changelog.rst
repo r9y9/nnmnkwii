@@ -1,6 +1,9 @@
 Change log
 ==========
 
+v0.0.21 <2020-xx-xx>
+--------------------
+
 v0.0.20 <2020-03-02>
 --------------------
 - `#90`_: Expand available speakers list for CMU Arctic dataset
