@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.adjust_frame_lengths &mdash; nnmnkwii 0.0.20+c09ba07 documentation</title>
+  <title>nnmnkwii.preprocessing.adjust_frame_lengths &mdash; nnmnkwii 0.0.21+28fc23b documentation</title>
   
 
   
@@ -17,34 +17,39 @@
   
 
   
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="nnmnkwii.preprocessing.scale" href="nnmnkwii.preprocessing.scale.html" />
     <link rel="prev" title="nnmnkwii.preprocessing.adjust_frame_length" href="nnmnkwii.preprocessing.adjust_frame_length.html" /> 
-
-  
-  <script src="../../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -61,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20+c09ba07
+                0.0.21+28fc23b
               </div>
             
           
@@ -266,6 +271,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../datasets.html#voice-statistics-ja">Voice statistics (ja)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../datasets.html#jsut-ja">JSUT (ja)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../display.html">Display</a><ul class="simple">
@@ -371,7 +377,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-20-2019-xx-xx">v0.0.20 &lt;2019-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-21-2020-xx-xx">v0.0.21 &lt;2020-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-20-2020-03-02">v0.0.20 &lt;2020-03-02&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
@@ -464,18 +471,23 @@
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
 }
 </style>
 <div class="section" id="nnmnkwii-preprocessing-adjust-frame-lengths">
@@ -497,13 +509,13 @@ Use <code class="docutils literal notranslate"><span class="pre">divisible_by=2<
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^1</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
-<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^2</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
-<li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
+<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^1</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^2</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
 frames to ensure same frame lengths.</li>
-<li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – If <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
+<li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – If <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
 adjusted to be divisible by <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code>.</li>
-<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.16)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.pad()</span></code></a>. Default is
+<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.17)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.pad()</span></code></a>. Default is
 mode = <code class="docutils literal notranslate"><span class="pre">constant</span></code>, which means zero padding.</li>
 </ul>
 </td>
@@ -544,7 +556,7 @@ mode = <code class="docutils literal notranslate"><span class="pre">constant</sp
         <a href="nnmnkwii.preprocessing.scale.html" class="btn btn-neutral float-right" title="nnmnkwii.preprocessing.scale" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="nnmnkwii.preprocessing.adjust_frame_length.html" class="btn btn-neutral" title="nnmnkwii.preprocessing.adjust_frame_length" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="nnmnkwii.preprocessing.adjust_frame_length.html" class="btn btn-neutral float-left" title="nnmnkwii.preprocessing.adjust_frame_length" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -570,26 +582,16 @@ mode = <code class="docutils literal notranslate"><span class="pre">constant</sp
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../../_static/jquery.js"></script>
-        <script type="text/javascript" src="../../_static/underscore.js"></script>
-        <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

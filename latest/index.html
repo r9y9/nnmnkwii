@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii (nanamin kawaii) documentation &mdash; nnmnkwii 0.0.20+c09ba07 documentation</title>
+  <title>nnmnkwii (nanamin kawaii) documentation &mdash; nnmnkwii 0.0.21+28fc23b documentation</title>
   
 
   
@@ -17,33 +17,38 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="General design documentation" href="design.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -60,7 +65,7 @@
             
             
               <div class="version">
-                0.0.20+c09ba07
+                0.0.21+28fc23b
               </div>
             
           
@@ -265,6 +270,7 @@
 <li class="toctree-l2"><a class="reference internal" href="references/datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="references/datasets.html#voice-statistics-ja">Voice statistics (ja)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="references/datasets.html#jsut-ja">JSUT (ja)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="references/display.html">Display</a><ul class="simple">
@@ -370,7 +376,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-20-2019-xx-xx">v0.0.20 &lt;2019-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-21-2020-xx-xx">v0.0.21 &lt;2020-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-20-2020-03-02">v0.0.20 &lt;2020-03-02&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
@@ -466,18 +473,23 @@
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
 }
 </style>
 <div class="section" id="nnmnkwii-nanamin-kawaii-documentation">
@@ -531,51 +543,58 @@
 <div class="section" id="external-links">
 <span id="external-links-label"></span><h2>External links<a class="headerlink" href="#external-links" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/r9y9/wavenet_vocoder">wavenet_vocoder</a>: WaveNet vocoder <a class="footnote-reference" href="#id13" id="id1">[6]</a> <a class="footnote-reference" href="#id14" id="id2">[7]</a></li>
-<li><a class="reference external" href="https://github.com/r9y9/deepvoice3_pytorch">deepvoice3_pytorch</a>: PyTorch implementation of convolutional networks-based text-to-speech synthesis models. <a class="footnote-reference" href="#id11" id="id3">[4]</a> <a class="footnote-reference" href="#id12" id="id4">[5]</a></li>
-<li><a class="reference external" href="https://github.com/r9y9/tacotron_pytorch">tacotron_pytorch</a>: PyTorch implementation of Tacotron speech synthesis model. <a class="footnote-reference" href="#id10" id="id5">[3]</a></li>
-<li><a class="reference external" href="https://github.com/r9y9/gantts">gantts</a>: PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion (VC). <a class="footnote-reference" href="#id8" id="id6">[1]</a>  <a class="footnote-reference" href="#id9" id="id7">[2]</a></li>
+<li><a class="reference external" href="https://github.com/r9y9/wavenet_vocoder">wavenet_vocoder</a>: WaveNet vocoder <a class="footnote-reference" href="#id14" id="id1">[6]</a> <a class="footnote-reference" href="#id15" id="id2">[7]</a></li>
+<li><a class="reference external" href="https://github.com/r9y9/deepvoice3_pytorch">deepvoice3_pytorch</a>: PyTorch implementation of convolutional networks-based text-to-speech synthesis models. <a class="footnote-reference" href="#id12" id="id3">[4]</a> <a class="footnote-reference" href="#id13" id="id4">[5]</a></li>
+<li><a class="reference external" href="https://github.com/r9y9/tacotron_pytorch">tacotron_pytorch</a>: PyTorch implementation of Tacotron speech synthesis model. <a class="footnote-reference" href="#id11" id="id5">[3]</a></li>
+<li><a class="reference external" href="https://github.com/r9y9/gantts">gantts</a>: PyTorch implementation of GAN-based text-to-speech synthesis and voice conversion (VC). <a class="footnote-reference" href="#id9" id="id6">[1]</a>  <a class="footnote-reference" href="#id10" id="id7">[2]</a></li>
+<li><a class="reference external" href="https://github.com/r9y9/icassp2020-espnet-tts-merlin-baseline">icassp2020-espnet-tts-merlin-baseline</a>: ICASSP 2020 ESPnet-TTS: Merlin baseline system <a class="footnote-reference" href="#id16" id="id8">[8]</a></li>
 </ul>
-<table class="docutils footnote" frame="void" id="id8" rules="none">
+<table class="docutils footnote" frame="void" id="id9" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id6">[1]</a></td><td>Saito, Yuki, Shinnosuke Takamichi, and Hiroshi Saruwatari. “Statistical Parametric Speech Synthesis Incorporating Generative Adversarial Networks.” IEEE/ACM Transactions on Audio, Speech, and Language Processing 26.1 (2018): 84-96.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id9" rules="none">
+<table class="docutils footnote" frame="void" id="id10" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id7">[2]</a></td><td>Shan Yang, Lei Xie, Xiao Chen, Xiaoyan Lou, Xuan Zhu, Dongyan Huang, Haizhou Li, ” Statistical Parametric Speech Synthesis Using Generative Adversarial Networks Under A Multi-task Learning Framework”, arXiv:1707.01670, Jul 2017.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id10" rules="none">
+<table class="docutils footnote" frame="void" id="id11" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id5">[3]</a></td><td>Yuxuan Wang, RJ Skerry-Ryan, Daisy Stanton et al, “Tacotron: Towards End-to-End Speech Synthesis”,       arXiv:1703.10135, Mar 2017.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id11" rules="none">
+<table class="docutils footnote" frame="void" id="id12" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id3">[4]</a></td><td>Wei Ping, Kainan Peng, Andrew Gibiansky, et al, “Deep Voice 3: 2000-Speaker Neural Text-to-Speech”, arXiv:1710.07654, Oct. 2017.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id12" rules="none">
+<table class="docutils footnote" frame="void" id="id13" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id4">[5]</a></td><td>Hideyuki Tachibana, Katsuya Uenoyama, Shunsuke Aihara, “Efficiently Trainable Text-to-Speech System Based on Deep Convolutional Networks with Guided Attention”. arXiv:1710.08969, Oct 2017.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id13" rules="none">
+<table class="docutils footnote" frame="void" id="id14" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id1">[6]</a></td><td>Aaron van den Oord, Sander Dieleman, Heiga Zen, et al, “WaveNet: A Generative Model for Raw Audio”, arXiv:1609.03499, Sep 2016.</td></tr>
 </tbody>
 </table>
-<table class="docutils footnote" frame="void" id="id14" rules="none">
+<table class="docutils footnote" frame="void" id="id15" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
 <tbody valign="top">
 <tr><td class="label"><a class="fn-backref" href="#id2">[7]</a></td><td>Tamamori Akira, Tomoki Hayashi, Kazuhiro Kobayashi, et al. “Speaker-dependent WaveNet vocoder.” Proceedings of Interspeech. 2017.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id16" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id8">[8]</a></td><td>‘T. Hayashi, R. Yamamoto, K. Inoue, T. Yoshimura, S. Watanabe,T. Toda, K. Takeda, Y. Zhang, and X. Tan, ESPnet-TTS: Unified, reproducible, and integratable open source end-to-end text-to-speech toolkit,” arXiv:1910.10909, 2019.</td></tr>
 </tbody>
 </table>
 </div>
@@ -624,26 +643,16 @@
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

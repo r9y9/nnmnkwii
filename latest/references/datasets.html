@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Datasets &mdash; nnmnkwii 0.0.20+c09ba07 documentation</title>
+  <title>Datasets &mdash; nnmnkwii 0.0.21+28fc23b documentation</title>
   
 
   
@@ -17,34 +17,39 @@
   
 
   
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Display" href="display.html" />
     <link rel="prev" title="Baseline" href="baseline.html" /> 
-
-  
-  <script src="../_static/js/modernizr.min.js"></script>
-
 </head>
 
 <body class="wy-body-for-nav">
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -61,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20+c09ba07
+                0.0.21+28fc23b
               </div>
             
           
@@ -266,6 +271,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#voice-statistics-ja">Voice statistics (ja)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#jsut-ja">JSUT (ja)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="display.html">Display</a><ul class="simple">
@@ -371,7 +377,8 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Change log</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-20-2019-xx-xx">v0.0.20 &lt;2019-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-21-2020-xx-xx">v0.0.21 &lt;2020-xx-xx&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-20-2020-03-02">v0.0.20 &lt;2020-03-02&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
@@ -462,18 +469,23 @@
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
 .admonition > p:before {
     margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
 }
 </style>
 <div class="section" id="module-nnmnkwii.datasets">
@@ -499,10 +511,10 @@ how to process them. Any FileDataSource must implement:</p>
 <p>The later is an abstraction of dataset. Any dataset must implement
 <a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dataset</span></code></a> interface:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>: returns features (typically, two dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>)</li>
+<li><code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>: returns features (typically, two dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>)</li>
 <li><code class="docutils literal notranslate"><span class="pre">__len__</span></code>: returns the size of dataset (e.g., number of utterances).</li>
 </ul>
-<p>One important point is that we use <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> to represent features
+<p>One important point is that we use <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> to represent features
 (there might be exception though). For example,</p>
 <ul class="simple">
 <li>F0 trajecoty as <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">1</span></code> array, where <code class="docutils literal notranslate"><span class="pre">T</span></code> represents number of frames.</li>
@@ -580,7 +592,7 @@ tutorials how we can use it practically.</p>
 <em class="property">class </em><code class="descclassname">nnmnkwii.datasets.</code><code class="descname">FileSourceDataset</code><span class="sig-paren">(</span><em>file_data_source</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets.html#FileSourceDataset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.FileSourceDataset" title="Permalink to this definition">¶</a></dt>
 <dd><p>Most basic dataset implementation. It supports utterance-wise iteration and
 has utility (<a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset.asarray" title="nnmnkwii.datasets.FileSourceDataset.asarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asarray</span></code></a> method) to convert dataset to an three
-dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
+dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
 <p>Speech features have typically different number of time resolusion,
 so we cannot simply represent dataset as an
 array. To address the issue, the dataset class represents set
@@ -654,9 +666,9 @@ find data to be loaded and 2) how to collect features from them.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of maximum time frames to be expected.
+<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Number of maximum time frames to be expected.
 If None, it is set to actual maximum time length.</li>
-<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
 <li><strong>padded_length_guess</strong> – (int): Initial guess of max time length of
 padded dataset array. Used if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is None.</li>
 </ul>
@@ -681,7 +693,7 @@ None, otherwise <code class="docutils literal notranslate"><span class="pre">N</
 <dd><p>Basic dataset with padding. Very similar to <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a>,
 it supports utterance-wise iteration and has
 utility (<a class="reference internal" href="#nnmnkwii.datasets.PaddedFileSourceDataset.asarray" title="nnmnkwii.datasets.PaddedFileSourceDataset.asarray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asarray</span></code></a> method) to convert dataset to an three
-dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
+dimentional <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p>
 <p>The difference between <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a> is that this returns
 padded features as <code class="docutils literal notranslate"><span class="pre">T^max</span> <span class="pre">x</span> <span class="pre">D</span></code> array at <code class="docutils literal notranslate"><span class="pre">__getitem__</span></code>, while
 <a class="reference internal" href="#nnmnkwii.datasets.FileSourceDataset" title="nnmnkwii.datasets.FileSourceDataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FileSourceDataset</span></code></a> returns not-padded <code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code> array.</p>
@@ -691,7 +703,7 @@ padded features as <code class="docutils literal notranslate"><span class="pre">
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>file_data_source</strong> (<a class="reference internal" href="#nnmnkwii.datasets.FileDataSource" title="nnmnkwii.datasets.FileDataSource"><em>FileDataSource</em></a>) – File data source.</li>
-<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Padded length.</li>
+<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Padded length.</li>
 </ul>
 </td>
 </tr>
@@ -717,7 +729,7 @@ padded features as <code class="docutils literal notranslate"><span class="pre">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></td>
 </tr>
 </tbody>
 </table>
@@ -752,9 +764,9 @@ padded features as <code class="docutils literal notranslate"><span class="pre">
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Number of maximum time frames to be expected.
+<li><strong>padded_length</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Number of maximum time frames to be expected.
 If None, it is set to actual maximum time length.</li>
-<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.16)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
+<li><strong>dtype</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v1.17)"><em>numpy.dtype</em></a>) – Numpy dtype.</li>
 <li><strong>padded_length_guess</strong> – (int): Initial guess of max time length of
 padded dataset array. Used if <code class="docutils literal notranslate"><span class="pre">padded_length</span></code> is None.</li>
 </ul>
@@ -784,7 +796,7 @@ utterance-wise iteration.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>dataset</strong> (<a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><em>Dataset</em></a>) – Dataset implementation to wrap.</li>
-<li><strong>cache_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Cache size (utterance unit).</li>
+<li><strong>cache_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Cache size (utterance unit).</li>
 </ul>
 </td>
 </tr>
@@ -827,7 +839,7 @@ indices and values are numpy arrays.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></td>
 </tr>
 </tbody>
 </table>
@@ -876,8 +888,8 @@ give sufficient large number of cache size, to avoid many file re-loading.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>dataset</strong> (<a class="reference internal" href="#nnmnkwii.datasets.Dataset" title="nnmnkwii.datasets.Dataset"><em>Dataset</em></a>) – Dataset implementation to wrap.</li>
-<li><strong>lengths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Frame lengths for each utterance.</li>
-<li><strong>cache_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Cache size (utterance unit).</li>
+<li><strong>lengths</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – Frame lengths for each utterance.</li>
+<li><strong>cache_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Cache size (utterance unit).</li>
 </ul>
 </td>
 </tr>
@@ -919,7 +931,7 @@ give sufficient large number of cache size, to avoid many file re-loading.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></td>
 </tr>
 </tbody>
 </table>
@@ -1013,13 +1025,15 @@ method, which defines how features are computed given a wav file path.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Supported names of speaker
-are <code class="docutils literal notranslate"><span class="pre">awb</span></code>, <code class="docutils literal notranslate"><span class="pre">bdl</span></code>, <code class="docutils literal notranslate"><span class="pre">clb</span></code>, <code class="docutils literal notranslate"><span class="pre">jmk</span></code>, <code class="docutils literal notranslate"><span class="pre">ksp</span></code>, <code class="docutils literal notranslate"><span class="pre">rms</span></code> and <code class="docutils literal notranslate"><span class="pre">slt</span></code>.</li>
-<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of speakers to find. Supported names of speaker
+are <code class="docutils literal notranslate"><span class="pre">aew</span></code>, <code class="docutils literal notranslate"><span class="pre">ahw</span></code>, <code class="docutils literal notranslate"><span class="pre">aup</span></code>, <code class="docutils literal notranslate"><span class="pre">awb</span></code>, <code class="docutils literal notranslate"><span class="pre">axb</span></code>, <code class="docutils literal notranslate"><span class="pre">bdl</span></code>,
+<code class="docutils literal notranslate"><span class="pre">clb</span></code>, <code class="docutils literal notranslate"><span class="pre">eey</span></code>, <code class="docutils literal notranslate"><span class="pre">fem</span></code>, <code class="docutils literal notranslate"><span class="pre">gka</span></code>, <code class="docutils literal notranslate"><span class="pre">jmk</span></code>, <code class="docutils literal notranslate"><span class="pre">ksp</span></code>,
+<code class="docutils literal notranslate"><span class="pre">ljm</span></code>, <code class="docutils literal notranslate"><span class="pre">lnh</span></code>, <code class="docutils literal notranslate"><span class="pre">rms</span></code>, <code class="docutils literal notranslate"><span class="pre">rxr</span></code>, <code class="docutils literal notranslate"><span class="pre">slp</span></code>, <code class="docutils literal notranslate"><span class="pre">slt</span></code> .</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
 it’s assigned as incrementally (i.e., 0, 1, 2) for specified
 speakers.</li>
-<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
 </ul>
 </td>
 </tr>
@@ -1035,7 +1049,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1051,7 +1065,7 @@ models.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -1080,14 +1094,14 @@ method, which defines how features are computed given a transcription.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
 For supported names of speaker, please refer to <code class="docutils literal notranslate"><span class="pre">available_speakers</span></code>
 defined in the module.</li>
-<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
 it’s assigned as incrementally (i.e., 0, 1, 2) for specified
 speakers.</li>
-<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
 </ul>
 </td>
 </tr>
@@ -1103,7 +1117,7 @@ ids (str) and each value is speaker information consists of <code class="docutil
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></td>
 </tr>
 </tbody>
 </table>
@@ -1119,7 +1133,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1156,14 +1170,14 @@ method, which defines how features are computed given a transcription.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
 For supported names of speaker, please refer to <code class="docutils literal notranslate"><span class="pre">available_speakers</span></code>
 defined in the module.</li>
-<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
 it’s assigned as incrementally (i.e., 0, 1, 2) for specified
 speakers.</li>
-<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
 </ul>
 </td>
 </tr>
@@ -1179,7 +1193,7 @@ ids (str) and each value is speaker information consists of <code class="docutil
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></td>
 </tr>
 </tbody>
 </table>
@@ -1195,7 +1209,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1236,8 +1250,8 @@ method, which defines how features are computed given a transcription.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>normalized</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Collect normalized transcriptions or not.</li>
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>normalized</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Collect normalized transcriptions or not.</li>
 </ul>
 </td>
 </tr>
@@ -1251,7 +1265,7 @@ method, which defines how features are computed given a transcription.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1271,7 +1285,7 @@ method, which defines how features are computed given a transcription.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of text transcription.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -1290,7 +1304,7 @@ method, which defines how features are computed given a wav file path.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</td>
 </tr>
 </tbody>
 </table>
@@ -1302,7 +1316,7 @@ method, which defines how features are computed given a wav file path.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1318,7 +1332,7 @@ method, which defines how features are computed given a wav file path.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of wav files.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -1375,21 +1389,21 @@ directory that contains both the training and evaluation data.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root. It’s assumed that training and evaluation
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root. It’s assumed that training and evaluation
 data are placed at <code class="docutils literal notranslate"><span class="pre">${data_root}/vcc2016_training</span></code> and</li>
 <li><strong>respectively</strong><strong>, </strong><strong>by default.</strong> (<em>${data_root}/evaluation_all</em><em>,</em>) – </li>
-<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to find. Supported names of speaker
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of speakers to find. Supported names of speaker
 are <code class="docutils literal notranslate"><span class="pre">SF1</span></code>, <code class="docutils literal notranslate"><span class="pre">SF2</span></code>, <code class="docutils literal notranslate"><span class="pre">SF3</span></code>, <code class="docutils literal notranslate"><span class="pre">SM1</span></code>, <code class="docutils literal notranslate"><span class="pre">SM2</span></code>, <code class="docutils literal notranslate"><span class="pre">TF1</span></code>, <code class="docutils literal notranslate"><span class="pre">TF2</span></code>,
 <code class="docutils literal notranslate"><span class="pre">TM1</span></code>, <code class="docutils literal notranslate"><span class="pre">TM2</span></code> and <code class="docutils literal notranslate"><span class="pre">TM3</span></code>.</li>
-<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
 it’s assigned as incrementally (i.e., 0, 1, 2) for specified
 speakers.</li>
-<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
 <li><strong>training_data_root</strong> – If specified, try to search training data to the
 directory. If None, set to <code class="docutils literal notranslate"><span class="pre">${data_root}/vcc2016_training</span></code>.</li>
 <li><strong>evaluation_data_root</strong> – If specified, try to search evaluation data to the
 directory. If None, set to <code class="docutils literal notranslate"><span class="pre">${data_root}/evaluation_all</span></code>.</li>
-<li><strong>training</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether it collects training data or not. If False,
+<li><strong>training</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether it collects training data or not. If False,
 it collects evaluation data.</li>
 </ul>
 </td>
@@ -1406,7 +1420,7 @@ models.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1422,7 +1436,7 @@ models.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -1445,9 +1459,9 @@ method, which defines how features are computed given a transcription.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – <code class="docutils literal notranslate"><span class="pre">sentense</span></code>, <code class="docutils literal notranslate"><span class="pre">yomi</span></code> or <code class="docutils literal notranslate"><span class="pre">monophone</span></code>.</li>
-<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – <code class="docutils literal notranslate"><span class="pre">sentense</span></code>, <code class="docutils literal notranslate"><span class="pre">yomi</span></code> or <code class="docutils literal notranslate"><span class="pre">monophone</span></code>.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
 </ul>
 </td>
 </tr>
@@ -1471,7 +1485,7 @@ method, which defines how features are computed given a transcription.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of text transcription.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -1492,14 +1506,14 @@ given a wav file path.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root</li>
-<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of speakers to load. Supported names of speaker
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of speakers to load. Supported names of speaker
 are <code class="docutils literal notranslate"><span class="pre">fujitou</span></code>, <code class="docutils literal notranslate"><span class="pre">tsuchiya</span></code> and <code class="docutils literal notranslate"><span class="pre">uemura</span></code>.</li>
-<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
 it’s assigned as incrementally (i.e., 0, 1, 2) for specified
 speakers.</li>
-<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – Total number of files to be collected.</li>
-<li><strong>emotions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – List of emotions we use. Supported names of emotions
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
+<li><strong>emotions</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of emotions we use. Supported names of emotions
 are <code class="docutils literal notranslate"><span class="pre">angry</span></code>, <code class="docutils literal notranslate"><span class="pre">happy</span></code> and <code class="docutils literal notranslate"><span class="pre">normal</span></code>.</li>
 </ul>
 </td>
@@ -1515,7 +1529,7 @@ labelmap. Stored in <code class="docutils literal notranslate"><span class="pre"
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
 </tr>
 </tbody>
 </table>
@@ -1531,7 +1545,7 @@ labelmap. Stored in <code class="docutils literal notranslate"><span class="pre"
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of collected wav files.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)">list</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)">list</a></td>
 </tr>
 </tbody>
 </table>
@@ -1556,8 +1570,8 @@ method, which defines how features are computed given a transcription.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>subsets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Subsets.  Supported names of subset are <code class="docutils literal notranslate"><span class="pre">basic5000</span></code>,
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – Subsets.  Supported names of subset are <code class="docutils literal notranslate"><span class="pre">basic5000</span></code>,
 <code class="docutils literal notranslate"><span class="pre">countersuffix26</span></code>, <code class="docutils literal notranslate"><span class="pre">loanword128</span></code>, <code class="docutils literal notranslate"><span class="pre">onomatopee300</span></code>,
 <code class="docutils literal notranslate"><span class="pre">precedent130</span></code>, <code class="docutils literal notranslate"><span class="pre">repeat500</span></code>, <code class="docutils literal notranslate"><span class="pre">travel1000</span></code>, <code class="docutils literal notranslate"><span class="pre">utparaphrase512</span></code>.
 and <code class="docutils literal notranslate"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
@@ -1580,8 +1594,8 @@ method, which defines how features are computed given a wav file path.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – Data root.</li>
-<li><strong>subsets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – Subsets.  Supported names of subset are <code class="docutils literal notranslate"><span class="pre">basic5000</span></code>,
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>subsets</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – Subsets.  Supported names of subset are <code class="docutils literal notranslate"><span class="pre">basic5000</span></code>,
 <code class="docutils literal notranslate"><span class="pre">countersuffix26</span></code>, <code class="docutils literal notranslate"><span class="pre">loanword128</span></code>, <code class="docutils literal notranslate"><span class="pre">onomatopee300</span></code>,
 <code class="docutils literal notranslate"><span class="pre">precedent130</span></code>, <code class="docutils literal notranslate"><span class="pre">repeat500</span></code>, <code class="docutils literal notranslate"><span class="pre">travel1000</span></code>, <code class="docutils literal notranslate"><span class="pre">utparaphrase512</span></code>.
 and <code class="docutils literal notranslate"><span class="pre">voiceactress100</span></code>. Default is [“basic5000”].</li>
@@ -1590,6 +1604,165 @@ and <code class="docutils literal notranslate"><span class="pre">voiceactress100
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+</div>
+<div class="section" id="jvs-ja">
+<h2>JVS (ja)<a class="headerlink" href="#jvs-ja" title="Permalink to this headline">¶</a></h2>
+<p>JVS: free Japanese multi-speaker voice corpus</p>
+<p>You can download data from <a class="reference external" href="https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus">https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus</a>.</p>
+<dl class="class">
+<dt id="nnmnkwii.datasets.jvs.TranscriptionDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jvs.</code><code class="descname">TranscriptionDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['jvs001', 'jvs002', 'jvs003', 'jvs004', 'jvs005', 'jvs006', 'jvs007', 'jvs008', 'jvs009', 'jvs010', 'jvs011', 'jvs012', 'jvs013', 'jvs014', 'jvs015', 'jvs016', 'jvs017', 'jvs018', 'jvs019', 'jvs020', 'jvs021', 'jvs022', 'jvs023', 'jvs024', 'jvs025', 'jvs026', 'jvs027', 'jvs028', 'jvs029', 'jvs030', 'jvs031', 'jvs032', 'jvs033', 'jvs034', 'jvs035', 'jvs036', 'jvs037', 'jvs038', 'jvs039', 'jvs040', 'jvs041', 'jvs042', 'jvs043', 'jvs044', 'jvs045', 'jvs046', 'jvs047', 'jvs048', 'jvs049', 'jvs050', 'jvs051', 'jvs052', 'jvs053', 'jvs054', 'jvs055', 'jvs056', 'jvs057', 'jvs058', 'jvs059', 'jvs060', 'jvs061', 'jvs062', 'jvs063', 'jvs064', 'jvs065', 'jvs066', 'jvs067', 'jvs068', 'jvs069', 'jvs070', 'jvs071', 'jvs072', 'jvs073', 'jvs074', 'jvs075', 'jvs076', 'jvs077', 'jvs078', 'jvs079', 'jvs080', 'jvs081', 'jvs082', 'jvs083', 'jvs084', 'jvs085', 'jvs086', 'jvs087', 'jvs088', 'jvs089', 'jvs090', 'jvs091', 'jvs092', 'jvs093', 'jvs094', 'jvs095', 'jvs096', 'jvs097', 'jvs098', 'jvs099', 'jvs100'], categories=None, labelmap=None, max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jvs.html#TranscriptionDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jvs.TranscriptionDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcription data source for JVS dataset</p>
+<p>The data source collects text transcriptions from JVS.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
+For supported names of speaker, please refer to <code class="docutils literal notranslate"><span class="pre">available_speakers</span></code>
+defined in the module.</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.jvs.TranscriptionDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.jvs.TranscriptionDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dict of speaker information dict. Keyes are speaker
+ids (str) and each value is speaker information consists of <code class="docutils literal notranslate"><span class="pre">gender</span></code>,
+<code class="docutils literal notranslate"><span class="pre">minf0</span></code> and <code class="docutils literal notranslate"><span class="pre">maxf0</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.jvs.TranscriptionDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.jvs.TranscriptionDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speaker labels paired with collected files.
+Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.jvs.TranscriptionDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jvs.html#TranscriptionDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jvs.TranscriptionDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect data source files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of files, or tuple of list if you need
+multiple files to collect features.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">List or tuple of list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nnmnkwii.datasets.jvs.WavFileDataSource">
+<em class="property">class </em><code class="descclassname">nnmnkwii.datasets.jvs.</code><code class="descname">WavFileDataSource</code><span class="sig-paren">(</span><em>data_root, speakers=['jvs001', 'jvs002', 'jvs003', 'jvs004', 'jvs005', 'jvs006', 'jvs007', 'jvs008', 'jvs009', 'jvs010', 'jvs011', 'jvs012', 'jvs013', 'jvs014', 'jvs015', 'jvs016', 'jvs017', 'jvs018', 'jvs019', 'jvs020', 'jvs021', 'jvs022', 'jvs023', 'jvs024', 'jvs025', 'jvs026', 'jvs027', 'jvs028', 'jvs029', 'jvs030', 'jvs031', 'jvs032', 'jvs033', 'jvs034', 'jvs035', 'jvs036', 'jvs037', 'jvs038', 'jvs039', 'jvs040', 'jvs041', 'jvs042', 'jvs043', 'jvs044', 'jvs045', 'jvs046', 'jvs047', 'jvs048', 'jvs049', 'jvs050', 'jvs051', 'jvs052', 'jvs053', 'jvs054', 'jvs055', 'jvs056', 'jvs057', 'jvs058', 'jvs059', 'jvs060', 'jvs061', 'jvs062', 'jvs063', 'jvs064', 'jvs065', 'jvs066', 'jvs067', 'jvs068', 'jvs069', 'jvs070', 'jvs071', 'jvs072', 'jvs073', 'jvs074', 'jvs075', 'jvs076', 'jvs077', 'jvs078', 'jvs079', 'jvs080', 'jvs081', 'jvs082', 'jvs083', 'jvs084', 'jvs085', 'jvs086', 'jvs087', 'jvs088', 'jvs089', 'jvs090', 'jvs091', 'jvs092', 'jvs093', 'jvs094', 'jvs095', 'jvs096', 'jvs097', 'jvs098', 'jvs099', 'jvs100'], categories=None, labelmap=None, max_files=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jvs.html#WavFileDataSource"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jvs.WavFileDataSource" title="Permalink to this definition">¶</a></dt>
+<dd><p>WavFile data source for JVS dataset.</p>
+<p>The data source collects text transcriptions from JVS.
+Users are expected to inherit the class and implement <code class="docutils literal notranslate"><span class="pre">collect_features</span></code>
+method, which defines how features are computed given a transcription.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data_root</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Data root.</li>
+<li><strong>speakers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of speakers to find. Speaker id must be <code class="docutils literal notranslate"><span class="pre">str</span></code>.
+For supported names of speaker, please refer to <code class="docutils literal notranslate"><span class="pre">available_speakers</span></code>
+defined in the module.</li>
+<li><strong>categories</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of categories to collect, the item should be one of
+“parallel”, “nonpara” and “whisper”</li>
+<li><strong>labelmap</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a><em>[</em><em>optional</em><em>]</em>) – Dict of speaker labels. If None,
+it’s assigned as incrementally (i.e., 0, 1, 2) for specified
+speakers.</li>
+<li><strong>max_files</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – Total number of files to be collected.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.jvs.WavFileDataSource.speaker_info">
+<code class="descname">speaker_info</code><a class="headerlink" href="#nnmnkwii.datasets.jvs.WavFileDataSource.speaker_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dict of speaker information dict. Keyes are speaker
+ids (str) and each value is speaker information consists of <code class="docutils literal notranslate"><span class="pre">gender</span></code>,
+<code class="docutils literal notranslate"><span class="pre">minf0</span></code> and <code class="docutils literal notranslate"><span class="pre">maxf0</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nnmnkwii.datasets.jvs.WavFileDataSource.labels">
+<code class="descname">labels</code><a class="headerlink" href="#nnmnkwii.datasets.jvs.WavFileDataSource.labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Speaker labels paired with collected files.
+Stored in <code class="docutils literal notranslate"><span class="pre">collect_files</span></code>. This is useful to build multi-speaker
+models.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="nnmnkwii.datasets.jvs.WavFileDataSource.collect_files">
+<code class="descname">collect_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/datasets/jvs.html#WavFileDataSource.collect_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.datasets.jvs.WavFileDataSource.collect_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect data source files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of files, or tuple of list if you need
+multiple files to collect features.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">List or tuple of list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -1606,7 +1779,7 @@ and <code class="docutils literal notranslate"><span class="pre">voiceactress100
         <a href="display.html" class="btn btn-neutral float-right" title="Display" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="baseline.html" class="btn btn-neutral" title="Baseline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="baseline.html" class="btn btn-neutral float-left" title="Baseline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1632,26 +1805,16 @@ and <code class="docutils literal notranslate"><span class="pre">voiceactress100
   
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    
-
-  
-
-  <script type="text/javascript" src="../_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

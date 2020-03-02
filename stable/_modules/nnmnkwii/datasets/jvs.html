@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>nnmnkwii.datasets.jvs &mdash; nnmnkwii 0.0.20 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../../_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html">
+          
+
+          
+            
+            <img src="../../../_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.20
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Notes</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../design.html">General design documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../design_jp.html">設計ドキュメント (Japanese)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#the-underlying-design-philosophy">The underlying design philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#background">Background</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#goal">Goal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#so-what-do-we-provide">So what do we provide?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#design-decisions">Design decisions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../design_jp.html#development-guidelines">Development guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html">A quick start guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-audio-and-it’s-alignment-file">Playing with audio and it’s alignment file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-wav-file">Load wav file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Acoustic-features">Acoustic features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-aligment-file">Load aligment file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Cut-silence-frames">Cut silence frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Linguistic-features">Linguistic features</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Playing-with-datasets">Playing with datasets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Get-example-file-sources">Get example file sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Load-data">Load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Utterance-wise-iteration">Utterance-wise iteration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Memory-cache-iteration">Memory cache iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/00-Quick start guide.html#Frame-wise-iteration">Frame-wise iteration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html">DNN text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-loop">Training loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/01-DNN-based statistical speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html">Bidirectional-LSTM based RNNs for text-to-speech synthesis (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Trainining-loop">Trainining loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis (en).html#Listen-generated-audio">Listen generated audio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html">Bidirectional-LSTM based RNNs for text-to-speech synthesis with OpenJTalk (ja)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Utterance-lengths">Utterance lengths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Statistics">Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Combine-datasets-and-normalization.">Combine datasets and normalization.</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Model">Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Train">Train</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Trainining-loop">Trainining loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Define-models">Define models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Training-Duration-model">Training Duration model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Training-acoustic-model">Training acoustic model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Parameter-generation-utilities">Parameter generation utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#Listen-generated-audio">Listen generated audio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM based RNNs for speech synthesis using OpenJTalk (ja).html#TTS-using-OpenJTalk-frontend">TTS using OpenJTalk frontend</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html">GMM-based voice conversion (en)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data">Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Data-specification">Data specification</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#File-data-sources">File data sources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Convert-dataset-to-arrays">Convert dataset to arrays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-data-look-like?">How data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Align-source-and-target-features">Align source and target features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-parallel-data-look-like?">How parallel data look like?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Append-delta-features">Append delta features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Finally,-we-get-joint-feature-matrix">Finally, we get joint feature matrix</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Model">Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Visualize-model">Visualize model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Means">Means</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Covariances">Covariances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Test">Test</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#Listen-results">Listen results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../nnmnkwii_gallery/notebooks/vc/01-GMM voice conversion (en).html#How-different?">How different?</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Package references</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/autograd.html">Autograd</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#functional-interface">Functional interface</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.mlpg.html">nnmnkwii.autograd.mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.unit_variance_mlpg.html">nnmnkwii.autograd.unit_variance_mlpg</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.autograd.modspec.html">nnmnkwii.autograd.modspec</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/autograd.html#function-classes">Function classes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/baseline.html">Baseline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/baseline.html#module-nnmnkwii.baseline.gmm">GMM voice conversion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/datasets.html">Datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#interface">Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#implementation">Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-utterance-wise-iteration">Dataset that supports utterance-wise iteration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/datasets.html#dataset-that-supports-frame-wise-iteration">Dataset that supports frame-wise iteration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#builtin-data-sources">Builtin data sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#cmu-arctic-en">CMU Arctic (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#vctk-en">VCTK (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#lj-speech-en">LJ-Speech (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#voice-conversion-challenge-vcc-2016-en">Voice Conversion Challenge (VCC) 2016 (en)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#voice-statistics-ja">Voice statistics (ja)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jsut-ja">JSUT (ja)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.duration_features.html">nnmnkwii.frontend.merlin.duration_features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/functions.html">Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/io.html">IO</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/io.html#module-nnmnkwii.io.hts">HTS IO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load.html">nnmnkwii.io.hts.load</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.io.hts.load_question_set.html">nnmnkwii.io.hts.load_question_set</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/metrics.html">Evaluation metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.melcd.html">nnmnkwii.metrics.melcd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.mean_squared_error.html">nnmnkwii.metrics.mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.lf0_mean_squared_error.html">nnmnkwii.metrics.lf0_mean_squared_error</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.metrics.vuv_error.html">nnmnkwii.metrics.vuv_error</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/paramgen.html">Parameter generation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html">nnmnkwii.paramgen.build_win_mats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html">nnmnkwii.paramgen.mlpg</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html">nnmnkwii.paramgen.mlpg_grad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html">nnmnkwii.paramgen.unit_variance_mlpg_matrix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.paramgen.reshape_means.html">nnmnkwii.paramgen.reshape_means</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/postfilters.html">Post-filters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html">nnmnkwii.postfilters.merlin_post_filter</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/preprocessing.html">Pre-processing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#generic">Generic</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#utterance-wise-operations">Utterance-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw.html">nnmnkwii.preprocessing.mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw.html">nnmnkwii.preprocessing.inv_mulaw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.mulaw_quantize.html">nnmnkwii.preprocessing.mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw_quantize.html">nnmnkwii.preprocessing.inv_mulaw_quantize</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.preemphasis.html">nnmnkwii.preprocessing.preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_preemphasis.html">nnmnkwii.preprocessing.inv_preemphasis</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.delta_features.html">nnmnkwii.preprocessing.delta_features</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.trim_zeros_frames.html">nnmnkwii.preprocessing.trim_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.remove_zeros_frames.html">nnmnkwii.preprocessing.remove_zeros_frames</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_length.html">nnmnkwii.preprocessing.adjust_frame_length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.adjust_frame_lengths.html">nnmnkwii.preprocessing.adjust_frame_lengths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.scale.html">nnmnkwii.preprocessing.scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_scale.html">nnmnkwii.preprocessing.inv_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale_params.html">nnmnkwii.preprocessing.minmax_scale_params</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html">nnmnkwii.preprocessing.minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html">nnmnkwii.preprocessing.inv_minmax_scale</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec.html">nnmnkwii.preprocessing.modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.inv_modspec.html">nnmnkwii.preprocessing.inv_modspec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.modspec_smoothing.html">nnmnkwii.preprocessing.modspec_smoothing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/preprocessing.html#dataset-wise-operations">Dataset-wise operations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanvar.html">nnmnkwii.preprocessing.meanvar</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.meanstd.html">nnmnkwii.preprocessing.meanstd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.minmax.html">nnmnkwii.preprocessing.minmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#f0">F0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.preprocessing.f0.interp1d.html">nnmnkwii.preprocessing.f0.interp1d</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/preprocessing.html#alignment">Alignment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references/util.html">Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#function-utilities">Function utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_padded.html">nnmnkwii.util.apply_each2d_padded</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.apply_each2d_trim.html">nnmnkwii.util.apply_each2d_trim</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#files">Files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_label_file.html">nnmnkwii.util.example_label_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_audio_file.html">nnmnkwii.util.example_audio_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_question_file.html">nnmnkwii.util.example_question_file</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html">nnmnkwii.util.example_file_data_sources_for_duration_model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_acoustic_model.html">nnmnkwii.util.example_file_data_sources_for_acoustic_model</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../references/util.html#module-nnmnkwii.util.linalg">Linear algebra</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv.html">nnmnkwii.util.linalg.cholesky_inv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.util.linalg.cholesky_inv_banded.html">nnmnkwii.util.linalg.cholesky_inv_banded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Meta information</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-20-2020-03-02">v0.0.20 &lt;2020-03-02&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-19-2019-07-06">v0.0.19 &lt;2019-07-06&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-18-2019-05-31">v0.0.18 &lt;2019-05-31&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-17-2018-12-25">v0.0.17 &lt;2018-12-25&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-16-2018-08-23">v0.0.16 &lt;2018-08-23&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-15-2018-07-12">v0.0.15 &lt;2018-07-12&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-14-2018-06-06">v0.0.14 &lt;2018-06-06&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-13-2018-01-24">v0.0.13 &lt;2018-01-24&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-12-2018-01-04">v0.0.12 &lt;2018-01-04&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-11-2017-12-22">v0.0.11 &lt;2017-12-22&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-10-2017-12-05">v0.0.10 &lt;2017-12-05&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-9-2017-11-14">v0.0.9 &lt;2017-11-14&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-8-2017-10-25">v0.0.8 &lt;2017-10-25&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-7-2017-10-09">v0.0.7 &lt;2017-10-09&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-6-2017-10-01">v0.0.6 &lt;2017-10-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-5-2017-09-19">v0.0.5 &lt;2017-09-19&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-4-2017-09-01">v0.0.4 &lt;2017-09-01&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-3-2017-08-26">v0.0.3 &lt;2017-08-26&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-2-2017-08-18">v0.0.2 &lt;2017-08-18&gt;</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-1-2017-08-14">v0.0.1 &lt;2017-08-14&gt;</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">nnmnkwii</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../datasets.html">nnmnkwii.datasets</a> &raquo;</li>
+        
+      <li>nnmnkwii.datasets.jvs</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for nnmnkwii.datasets.jvs</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf-8</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">isfile</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+
+<span class="n">available_speakers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;jvs&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)]</span>
+<span class="c1"># Three lost wavfiles in this dataset</span>
+<span class="n">lost_wavfiles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;jvs089&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VOICEACTRESS100_019&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;jvs030&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VOICEACTRESS100_045&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;jvs074&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VOICEACTRESS100_094&quot;</span><span class="p">]}</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_speaker_info</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
+    <span class="c1"># only use gender_f0range.txt</span>
+    <span class="n">speaker_info_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;gender_f0range.txt&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">exists</span><span class="p">(</span><span class="n">speaker_info_path</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker_info_path</span><span class="p">))</span>
+    <span class="n">speaker_info</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    <span class="n">terms</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;speaker&quot;</span><span class="p">,</span> <span class="s2">&quot;Male_or_Female&quot;</span><span class="p">,</span> <span class="s2">&quot;minf0[Hz]&quot;</span><span class="p">,</span> <span class="s2">&quot;maxf0[Hz]&quot;</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">speaker_info_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_</span><span class="p">:</span>
+            <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">fields</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">terms</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="k">continue</span>
+            <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+            <span class="n">speaker</span><span class="p">,</span> <span class="n">gender</span><span class="p">,</span> <span class="n">minf0</span><span class="p">,</span> <span class="n">maxf0</span> <span class="o">=</span> <span class="n">fields</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">speaker</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">speaker</span><span class="p">][</span><span class="s2">&quot;gender&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gender</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">speaker</span><span class="p">][</span><span class="s2">&quot;minf0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">minf0</span>
+            <span class="n">speaker_info</span><span class="p">[</span><span class="n">speaker</span><span class="p">][</span><span class="s2">&quot;maxf0&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">maxf0</span>
+    <span class="k">return</span> <span class="n">speaker_info</span>
+
+
+<span class="k">class</span> <span class="nc">_JVSBaseDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">):</span>
+        <span class="c1"># only accept &quot;jvs*&quot; format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
+        <span class="k">if</span> <span class="n">speakers</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
+            <span class="n">speakers</span> <span class="o">=</span> <span class="n">available_speakers</span>
+        <span class="k">for</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="n">speakers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">speaker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_speakers</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown speaker </span><span class="si">{}</span><span class="s2">. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">available_speakers</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You should set at least one category&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonpara</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">whisper</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">cate</span> <span class="ow">in</span> <span class="n">categories</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cate</span> <span class="o">==</span> <span class="s2">&quot;parallel&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">cate</span> <span class="o">==</span> <span class="s2">&quot;nonpara&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">nonpara</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">elif</span> <span class="n">cate</span> <span class="o">==</span> <span class="s2">&quot;whisper&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">whisper</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid category </span><span class="si">{}</span><span class="s1">, &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cate</span><span class="p">)</span> <span class="o">+</span>
+                                 <span class="s1">&#39;it should be one of &quot;parallel&quot;, &quot;nonpara&quot; or &quot;whisper&quot;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speakers</span> <span class="o">=</span> <span class="n">speakers</span>
+        <span class="k">if</span> <span class="n">labelmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">labelmap</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">speakers</span><span class="p">)}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labelmap</span> <span class="o">=</span> <span class="n">labelmap</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="o">=</span> <span class="n">max_files</span>
+        <span class="c1"># TODO: currently there are many problem in falset, so we do not support falset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;parallel100&quot;</span><span class="p">,</span> <span class="s2">&quot;nonpara30&quot;</span><span class="p">,</span> <span class="s2">&quot;whisper10&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_textfilename</span> <span class="o">=</span> <span class="s2">&quot;transcripts_utf8.txt&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_wavfoldername</span> <span class="o">=</span> <span class="s2">&quot;wav24kHz16bit&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speaker_info</span> <span class="o">=</span> <span class="n">_parse_speaker_info</span><span class="p">(</span><span class="n">data_root</span><span class="p">)</span>
+        <span class="c1"># some of the text in nonpara data have no corresponding wav file, so we need to record it</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_nonpara_without_wav</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="c1"># for each speaker, validate the data</span>
+        <span class="c1"># TODO: check lab file</span>
+        <span class="n">nonpara_without_wav</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">):</span>
+            <span class="c1"># 1. check folder</span>
+            <span class="n">speaker_folder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speaker</span><span class="p">)</span>
+            <span class="n">folders</span> <span class="o">=</span> <span class="n">listdir</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">)</span>
+            <span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">,</span>\
+                    <span class="s2">&quot;Can not find </span><span class="si">{}</span><span class="s2"> for </span><span class="si">{}</span><span class="s2"> in its directory </span><span class="si">{}</span><span class="s2">&quot;</span>\
+                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">speaker_folder</span><span class="p">)</span>
+            <span class="c1"># 2. check wav and txt file,</span>
+            <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">:</span>
+                <span class="n">speaker_textfile</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textfilename</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="n">isfile</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">),</span> <span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">)</span>
+                <span class="n">speaker_wavfolder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wavfoldername</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="n">isdir</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">),</span> <span class="s2">&quot;Directory </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">)</span>
+                <span class="c1"># nonpara</span>
+                <span class="k">if</span> <span class="n">folder</span> <span class="o">==</span> <span class="s2">&quot;nonpara30&quot;</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+                        <span class="n">txtfiles</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_</span><span class="p">]</span>
+                    <span class="n">wavfiles</span> <span class="o">=</span> <span class="n">listdir</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="n">txtfiles</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">file_</span> <span class="o">+</span> <span class="s2">&quot;.wav&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">wavfiles</span><span class="p">:</span>
+                            <span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">][</span><span class="n">file_</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">txtfiles</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">wavfiles</span><span class="p">)</span>
+                <span class="c1"># strict mode, check whether each text has a corresponding wavfile, if not, report it.</span>
+                <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+                        <span class="n">txtlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_</span><span class="p">]</span>
+                    <span class="n">wavlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">basename</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">)]</span>
+                    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">txtlines</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">line</span> <span class="o">+</span> <span class="s1">&#39;.wav&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">wavlines</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wavfile </span><span class="si">{}</span><span class="s2"> of speaker </span><span class="si">{}</span><span class="s2"> in </span><span class="si">{}</span><span class="s2"> doesn&#39;t exists.&quot;</span>
+                                  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">speaker_wavfolder</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">nonpara_without_wav</span>
+
+    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_wav</span><span class="p">):</span>
+        <span class="n">paths</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">global</span> <span class="n">lost_wavfiles</span>
+        <span class="n">max_files_per_speaker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">):</span>
+            <span class="n">speaker_folder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speaker</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">read_text</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">nonpara</span><span class="p">,</span> <span class="n">para</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+                    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+                <span class="k">if</span> <span class="n">nonpara</span><span class="p">:</span>
+                    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]]</span>
+                <span class="k">if</span> <span class="n">para</span> <span class="ow">and</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="n">lost_wavfiles</span><span class="p">:</span>
+                    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lost_wavfiles</span><span class="p">[</span><span class="n">speaker</span><span class="p">]]</span>
+                <span class="n">lines</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">return</span> <span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
+
+            <span class="k">def</span> <span class="nf">read_wavs</span><span class="p">(</span><span class="n">folderpath</span><span class="p">):</span>
+                <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">folderpath</span><span class="p">,</span> <span class="s2">&quot;*.wav&quot;</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+            <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">isset</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonpara</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">whisper</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">isset</span><span class="p">:</span>
+                    <span class="n">folder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">is_wav</span><span class="p">:</span>
+                        <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">read_wavs</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wavfoldername</span><span class="p">)))</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                            <span class="n">read_text</span><span class="p">(</span>
+                                <span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textfilename</span><span class="p">),</span>
+                                <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nonpara30&quot;</span><span class="p">,</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;parallel100&quot;</span><span class="p">))</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">files</span><span class="p">[:</span><span class="n">max_files_per_speaker</span><span class="p">]</span>
+            <span class="n">paths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+            <span class="n">labels</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">labelmap</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">[</span><span class="n">idx</span><span class="p">]]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">paths</span>
+
+
+<div class="viewcode-block" id="TranscriptionDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.TranscriptionDataSource">[docs]</a><span class="k">class</span> <span class="nc">TranscriptionDataSource</span><span class="p">(</span><span class="n">_JVSBaseDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transcription data source for JVS dataset</span>
+
+<span class="sd">    The data source collects text transcriptions from JVS.</span>
+<span class="sd">    Users are expected to inherit the class and implement ``collect_features``</span>
+<span class="sd">    method, which defines how features are computed given a transcription.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        speakers (list): List of speakers to find. Speaker id must be ``str``.</span>
+<span class="sd">          For supported names of speaker, please refer to ``available_speakers``</span>
+<span class="sd">          defined in the module.</span>
+<span class="sd">        labelmap (dict[optional]): Dict of speaker labels. If None,</span>
+<span class="sd">          it&#39;s assigned as incrementally (i.e., 0, 1, 2) for specified</span>
+<span class="sd">          speakers.</span>
+<span class="sd">        max_files (int): Total number of files to be collected.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        speaker_info (dict): Dict of speaker information dict. Keyes are speaker</span>
+<span class="sd">          ids (str) and each value is speaker information consists of ``gender``,</span>
+<span class="sd">          ``minf0`` and ``maxf0``.</span>
+<span class="sd">        labels (numpy.ndarray): Speaker labels paired with collected files.</span>
+<span class="sd">          Stored in ``collect_files``. This is useful to build multi-speaker</span>
+<span class="sd">          models.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TranscriptionDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.TranscriptionDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">collect_files</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="WavFileDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.WavFileDataSource">[docs]</a><span class="k">class</span> <span class="nc">WavFileDataSource</span><span class="p">(</span><span class="n">_JVSBaseDataSource</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;WavFile data source for JVS dataset.</span>
+
+<span class="sd">    The data source collects text transcriptions from JVS.</span>
+<span class="sd">    Users are expected to inherit the class and implement ``collect_features``</span>
+<span class="sd">    method, which defines how features are computed given a transcription.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        data_root (str): Data root.</span>
+<span class="sd">        speakers (list): List of speakers to find. Speaker id must be ``str``.</span>
+<span class="sd">          For supported names of speaker, please refer to ``available_speakers``</span>
+<span class="sd">          defined in the module.</span>
+<span class="sd">        categories(list): List of categories to collect, the item should be one of</span>
+<span class="sd">          &quot;parallel&quot;, &quot;nonpara&quot; and &quot;whisper&quot;</span>
+<span class="sd">        labelmap (dict[optional]): Dict of speaker labels. If None,</span>
+<span class="sd">          it&#39;s assigned as incrementally (i.e., 0, 1, 2) for specified</span>
+<span class="sd">          speakers.</span>
+<span class="sd">        max_files (int): Total number of files to be collected.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        speaker_info (dict): Dict of speaker information dict. Keyes are speaker</span>
+<span class="sd">          ids (str) and each value is speaker information consists of ``gender``,</span>
+<span class="sd">          ``minf0`` and ``maxf0``.</span>
+<span class="sd">        labels (numpy.ndarray): Speaker labels paired with collected files.</span>
+<span class="sd">          Stored in ``collect_files``. This is useful to build multi-speaker</span>
+<span class="sd">          models.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">)</span>
+
+<div class="viewcode-block" id="WavFileDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.WavFileDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">collect_files</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Ryuichi Yamamoto
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
