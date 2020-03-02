@@ -22,6 +22,12 @@ def _get_windows_set():
             (1, 1, np.array([-0.5, 0.0, 0.5])),
             (1, 1, np.array([1.0, -2.0, 1.0])),
         ],
+        # Static + delta + deltadelta (wide window)
+        [
+            (0, 0, np.array([1.0])),
+            (2, 2, np.array([1.0, -8.0, 0.0, 8.0, -1.0]) / 12.0),
+            (2, 2, np.array([-1.0, 16.0, -30.0, 16.0, -1.0]) / 12.0),
+        ]
     ]
     return windows_set
 
