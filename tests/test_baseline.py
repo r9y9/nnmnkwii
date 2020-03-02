@@ -42,7 +42,7 @@ def test_diffvc():
     for windows in _get_windows_set():
         np.random.seed(1234)
         src_mc = np.random.rand(T, static_dim * len(windows))
-        tgt_mc = np.random.rand(T, static_dim * len(windows))
+        tgt_mc = np.random.rand(T, static_dim * len(windows)) + 1
 
         # pseudo parallel data
         XY = np.concatenate((src_mc, tgt_mc), axis=-1)
@@ -73,7 +73,7 @@ def test_gmmmap_swap():
 
     np.random.seed(1234)
     src_mc = np.random.rand(T, static_dim * len(windows))
-    tgt_mc = np.random.rand(T, static_dim * len(windows))
+    tgt_mc = np.random.rand(T, static_dim * len(windows)) + 1
 
     # pseudo parallel data
     XY = np.concatenate((src_mc, tgt_mc), axis=-1)
