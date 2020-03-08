@@ -302,7 +302,7 @@ def load(path=None, lines=None):
     return labels.load(path, lines)
 
 
-def wildcards2regex(question, convert_number_pattern=False):
+def wildcards2regex(question, convert_number_pattern=False, convert_note_pattern=True):
     """subphone_features
     Convert HTK-style question into regular expression for searching labels.
     If convert_number_pattern, keep the following sequences unescaped for
@@ -329,6 +329,11 @@ def wildcards2regex(question, convert_number_pattern=False):
         question = question.replace('\\(\\\\d\\+\\)', '(\d+)')
         question = question.replace(
             '\\(\\[\\\\d\\\\\\.\\]\\+\\)', '([\d\.]+)')
+    if convert_note_pattern:
+            question = question.replace(
+            '\\(\\[A\\-Z\\]\\[b\\]\\?\\[0\\-9\\]\\+\\)', '([A-Z][b]?[0-9]+)')
+            question = question.replace(
+            '\\(\\\\NOTE\\)', '([A-Z][b]?[0-9]+)')
     return question
 
 
