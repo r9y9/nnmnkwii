@@ -337,7 +337,7 @@ def wildcards2regex(question, convert_number_pattern=False, convert_note_pattern
     return question
 
 
-def load_question_set(qs_file_name):
+def load_question_set(qs_file_name, append_hat_for_LL=True):
     """Load HTS-style question and convert it to binary/continuous feature
     extraction regexes.
 
@@ -345,6 +345,10 @@ def load_question_set(qs_file_name):
 
     Args:
         qs_file_name (str): Input HTS-style question file path
+        append_hat_for_LL (bool): Append ^ for LL regex search.
+            Note that the most left context is assumed to be phoneme identity
+            before the previous phoneme (i.e. LL-xx). This parameter should be False
+            for the HTS-demo_NIT-SONG070-F001 demo.
 
     Returns:
         (binary_dict, continuous_dict): Binary/continuous feature extraction
@@ -361,8 +365,7 @@ def load_question_set(qs_file_name):
     continuous_qs_index = 0
     binary_dict = {}
     continuous_dict = {}
-    # I guess `LL` means Left-left, but it doesn't seem to be docmented
-    # anywhere
+
     LL = re.compile(re.escape('LL-'))
 
     for line in lines:
@@ -388,10 +391,9 @@ def load_question_set(qs_file_name):
             continuous_qs_index = continuous_qs_index + 1
         elif temp_list[0] == 'QS':
             re_list = []
-            # import ipdb; ipdb.set_trace()
             for temp_question in question_list:
                 processed_question = wildcards2regex(temp_question)
-                if LL.search(question_key) and processed_question[0] != '^':
+                if append_hat_for_LL and LL.search(question_key) and processed_question[0] != '^':
                     processed_question = '^' + processed_question
                 re_list.append(re.compile(processed_question))
 
