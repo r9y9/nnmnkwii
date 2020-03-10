@@ -197,12 +197,7 @@ def load_labels_with_phone_alignment(hts_labels,
     if subphone_features == "coarse_coding":
         cc_features = compute_coarse_coding_features()
 
-    last_start_time = -1
     for idx, (start_time, end_time, full_label) in enumerate(hts_labels):
-        if start_time == last_start_time:
-            last_start_time = start_time
-            continue
-        last_start_time = start_time
         frame_number = int(end_time / frame_shift_in_micro_sec) - int(start_time / frame_shift_in_micro_sec)
 
         label_binary_vector = pattern_matching_binary(
@@ -302,13 +297,8 @@ def load_labels_with_state_alignment(hts_labels,
 
     phone_duration = 0
     state_duration_base = 0
-    last_start_time = -1
     for current_index, (start_time, end_time,
                         full_label) in enumerate(hts_labels):
-        if start_time == last_start_time:
-            last_start_time = start_time
-            continue
-        last_start_time = start_time
         # remove state information [k]
         assert full_label[-1] == "]"
         full_label_length = len(full_label) - 3
@@ -560,13 +550,8 @@ def extract_dur_from_state_alignment_labels(hts_labels,
     dur_dim = state_number
 
     dur_feature_index = 0
-    last_start_time = -1
     for current_index, (start_time, end_time,
                         full_label) in enumerate(hts_labels):
-        if start_time == last_start_time:
-            last_start_time = start_time
-            continue
-        last_start_time = start_time
         # remove state information [k]
         full_label_length = len(full_label) - 3
         state_index = full_label[full_label_length + 1]
@@ -638,12 +623,7 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
         dur_feature_matrix = np.empty(
             (hts_labels.num_frames(), 1), dtype=np.int)
     dur_feature_index = 0
-    last_start_time = -1
     for current_index, (start_time, end_time, _) in enumerate(hts_labels):
-        if start_time == last_start_time:
-            last_start_time = start_time
-            continue
-        last_start_time = start_time
         frame_number = (end_time - start_time) / frame_shift_in_micro_sec
 
         phone_duration = frame_number
