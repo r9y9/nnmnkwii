@@ -115,11 +115,12 @@ J:13+9-2[2]')
     def __repr__(self):
         return str(self)
 
-    def append(self, label):
+    def append(self, label, strict=True):
         """Append a single alignment label
 
         Args:
             label (tuple): tuple of (start_time, end_time, context).
+            strict (bool): strict mode.
 
         Returns:
             self
@@ -132,14 +133,15 @@ J:13+9-2[2]')
         start_time = int(start_time)
         end_time = int(end_time)
 
-        if start_time >= end_time:
-            raise ValueError(
-                "end_time ({}) must be larger than start_time ({}).".format(
-                    end_time, start_time))
-        if len(self.end_times) > 0 and start_time != self.end_times[-1]:
-            raise ValueError(
-                "start_time ({}) must be equal to the last end_time ({}).".format(
-                    start_time, self.end_times[-1]))
+        if strict:
+            if start_time >= end_time:
+                raise ValueError(
+                    "end_time ({}) must be larger than start_time ({}).".format(
+                        end_time, start_time))
+            if len(self.end_times) > 0 and start_time != self.end_times[-1]:
+                raise ValueError(
+                    "start_time ({}) must be equal to the last end_time ({}).".format(
+                        start_time, self.end_times[-1]))
 
         self.start_times.append(start_time)
         self.end_times.append(end_time)
