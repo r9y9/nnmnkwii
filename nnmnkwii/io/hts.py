@@ -42,6 +42,7 @@ from __future__ import division, print_function, absolute_import
 
 import numpy as np
 import re
+from copy import copy
 
 # TODO: consider two label alignmetn format
 
@@ -102,7 +103,17 @@ J:13+9-2[2]')
         return len(self.start_times)
 
     def __getitem__(self, idx):
-        return self.start_times[idx], self.end_times[idx], self.contexts[idx]
+        if isinstance(idx, slice):
+            # yes, this is inefficient and there will probably a bette way
+            # but this is okay for now
+            current, stop, _ = idx.indices(len(self))
+            obj = copy(self)
+            obj.start_times = obj.start_times[current:stop]
+            obj.end_times = obj.end_times[current:stop]
+            obj.contexts = obj.contexts[current:stop]
+            return obj
+        else:
+            return self.start_times[idx], self.end_times[idx], self.contexts[idx]
 
     def __str__(self):
         ret = ""
