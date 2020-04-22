@@ -112,6 +112,12 @@ J:13+9-2[2]')
             obj.end_times = obj.end_times[current:stop]
             obj.contexts = obj.contexts[current:stop]
             return obj
+        elif isinstance(idx, list):
+            obj = copy(self)
+            obj.start_times = list(np.asarray(obj.start_times)[idx])
+            obj.end_times = list(np.asarray(obj.end_times)[idx])
+            obj.contexts = list(np.asarray(obj.contexts)[idx])
+            return obj
         else:
             return self.start_times[idx], self.end_times[idx], self.contexts[idx]
 
