@@ -2,6 +2,9 @@ Change log
 ==========
 
 v0.0.21 <2020-xx-xx>
+
+- `#99`_: FIx future warning from sklearn
+
 --------------------
 
 v0.0.20 <2020-03-02>
@@ -195,3 +198,4 @@ v0.0.1 <2017-08-14>
 .. _#91: https://github.com/r9y9/nnmnkwii/issues/91
 .. _#95: https://github.com/r9y9/nnmnkwii/issues/95
 .. _#98: https://github.com/r9y9/nnmnkwii/pull/98
+.. _#99: https://github.com/r9y9/nnmnkwii/issues/99
