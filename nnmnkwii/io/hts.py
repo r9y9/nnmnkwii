@@ -171,14 +171,14 @@ J:13+9-2[2]')
         TODO:
             this should be refactored
         """
+        offset = self.start_times[0]
+
         # Unwrap state-axis
-        end_times = np.cumsum(
+        end_times = offset + np.cumsum(
             durations.reshape(-1, 1) * frame_shift_in_micro_sec).astype(np.int)
         if len(end_times) != len(self.end_times):
             raise RuntimeError("Unexpected input, maybe")
-        # Assuming first label starts with time `0`
-        # Is this really true? probably no
-        start_times = np.hstack((0, end_times[:-1])).astype(np.int)
+        start_times = np.hstack((offset, end_times[:-1])).astype(np.int)
         self.start_times, self.end_times = start_times, end_times
 
     def load(self, path=None, lines=None):
