@@ -44,8 +44,6 @@ import numpy as np
 import re
 from copy import copy
 
-# TODO: consider two label alignmetn format
-
 
 class HTSLabelFile(object):
     """Memory representation for HTS-style context labels (a.k.a HTK alignment).
@@ -355,10 +353,9 @@ def wildcards2regex(question, convert_number_pattern=False, convert_note_pattern
         question = question.replace(
             '\\(\\[\\\\d\\\\\\.\\]\\+\\)', '([\d\.]+)')
     if convert_note_pattern:
-            question = question.replace(
+        question = question.replace(
             '\\(\\[A\\-Z\\]\\[b\\]\\?\\[0\\-9\\]\\+\\)', '([A-Z][b]?[0-9]+)')
-            question = question.replace(
-            '\\(\\\\NOTE\\)', '([A-Z][b]?[0-9]+)')
+        question = question.replace('\\(\\\\NOTE\\)', '([A-Z][b]?[0-9]+)')
     return question
 
 
