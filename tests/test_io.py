@@ -77,6 +77,31 @@ QS "RR-Phone_o"      {*=o/A:*}
     assert R_phone_o.search(label) is None
     assert RR_phone_o.search(label) is None
 
+    # Slice/list indexing
+    assert str(labels[:2]) == str(labels[[0, 1]])
+
+
+def test_singing_voice_question():
+    # Test SVS case
+    """
+QS "L-Phone_Yuusei_Boin"           {*^a-*,*^i-*,*^u-*,*^e-*,*^o-*}
+CQS "e1" {/E:(\\NOTE)]}
+    """
+    binary_dict, continuous_dict = hts.load_question_set(
+        join(DATA_DIR, "test_jp_svs.hed"), append_hat_for_LL=False)
+    input_phone_label = join(DATA_DIR, "song070_f00001_063.lab")
+    labels = hts.load(input_phone_label)
+    feats = fe.linguistic_features(labels, binary_dict, continuous_dict)
+    assert feats.shape == (74, 2)
+
+    # CQS e1: get the current MIDI number
+    C_e1 = continuous_dict[0]
+    for idx, lab in enumerate(labels):
+        context = lab[-1]
+        if C_e1.search(context) is not None:
+            from nnmnkwii.frontend import NOTE_MAPPING
+            assert NOTE_MAPPING[C_e1.findall(context)[0]] == feats[idx, 1]
+
 
 def test_state_alignment_label_file():
     input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
@@ -153,9 +178,15 @@ def test_hts_append():
         l.append((0, 1000000, "OK"))
         l.append((1500000, 2000000, "NG"))
 
+    def test_non_succeeding_times_wo_strict():
+        l = hts.HTSLabelFile()
+        l.append((0, 1000000, "OK"), strict=False)
+        l.append((1500000, 2000000, "OK"), strict=False)
+
     test_invalid_start_time()
     test_succeeding_times()
     test_non_succeeding_times()
+    test_non_succeeding_times_wo_strict()
 
 
 # shouldn't raise RuntimeError
