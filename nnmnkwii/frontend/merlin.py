@@ -45,6 +45,7 @@ from __future__ import division, print_function, absolute_import
 import numpy as np
 
 from nnmnkwii.io import hts
+from nnmnkwii.frontend import NOTE_MAPPING
 
 
 def get_frame_feature_size(subphone_features="full"):
@@ -155,6 +156,8 @@ def pattern_matching_continous_position(continuous_dict, label):
         ms = current_compiled.search(label)
         if ms is not None:
             continuous_value = ms.group(1)
+            if continuous_value in NOTE_MAPPING:
+                continuous_value = NOTE_MAPPING[continuous_value]
 
         lab_continuous_vector[0, i] = continuous_value
 
@@ -236,7 +239,6 @@ def load_labels_with_phone_alignment(hts_labels,
                     raise ValueError(
                         "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
                             subphone_features, add_frame_features))
-
             label_feature_matrix[label_feature_index:label_feature_index +
                                  frame_number, ] = current_block_binary_array
             label_feature_index = label_feature_index + frame_number
@@ -587,7 +589,7 @@ def extract_dur_from_state_alignment_labels(hts_labels,
         else:
             pass
 
-    # dur_feature_matrix = dur_feature_matrix[0:dur_feature_index, ]
+    dur_feature_matrix = dur_feature_matrix[0:dur_feature_index, ]
     return dur_feature_matrix
 
 
@@ -634,7 +636,7 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
         else:
             assert False
 
-    # dur_feature_matrix = dur_feature_matrix[0:dur_feature_index]
+    dur_feature_matrix = dur_feature_matrix[0:dur_feature_index]
     return dur_feature_matrix
 
 

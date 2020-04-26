@@ -42,8 +42,7 @@ from __future__ import division, print_function, absolute_import
 
 import numpy as np
 import re
-
-# TODO: consider two label alignmetn format
+from copy import copy
 
 
 class HTSLabelFile(object):
@@ -96,13 +95,29 @@ J:13+9-2[2]')
         self.start_times = []
         self.end_times = []
         self.contexts = []
-        frame_shift_in_micro_sec = frame_shift_in_micro_sec
+        self.frame_shift_in_micro_sec = frame_shift_in_micro_sec
 
     def __len__(self):
         return len(self.start_times)
 
     def __getitem__(self, idx):
-        return self.start_times[idx], self.end_times[idx], self.contexts[idx]
+        if isinstance(idx, slice):
+            # yes, this is inefficient and there will probably a bette way
+            # but this is okay for now
+            current, stop, _ = idx.indices(len(self))
+            obj = copy(self)
+            obj.start_times = obj.start_times[current:stop]
+            obj.end_times = obj.end_times[current:stop]
+            obj.contexts = obj.contexts[current:stop]
+            return obj
+        elif isinstance(idx, list):
+            obj = copy(self)
+            obj.start_times = list(np.asarray(obj.start_times)[idx])
+            obj.end_times = list(np.asarray(obj.end_times)[idx])
+            obj.contexts = list(np.asarray(obj.contexts)[idx])
+            return obj
+        else:
+            return self.start_times[idx], self.end_times[idx], self.contexts[idx]
 
     def __str__(self):
         ret = ""
@@ -115,11 +130,18 @@ J:13+9-2[2]')
     def __repr__(self):
         return str(self)
 
-    def append(self, label):
+    def round_(self):
+        s = self.frame_shift_in_micro_sec
+        self.start_times = list(np.round(np.asarray(self.start_times) / s).astype(np.int) * s)
+        self.end_times = list(np.round(np.asarray(self.end_times) / s).astype(np.int) * s)
+        return self
+
+    def append(self, label, strict=True):
         """Append a single alignment label
 
         Args:
             label (tuple): tuple of (start_time, end_time, context).
+            strict (bool): strict mode.
 
         Returns:
             self
@@ -132,14 +154,15 @@ J:13+9-2[2]')
         start_time = int(start_time)
         end_time = int(end_time)
 
-        if start_time >= end_time:
-            raise ValueError(
-                "end_time ({}) must be larger than start_time ({}).".format(
-                    end_time, start_time))
-        if len(self.end_times) > 0 and start_time != self.end_times[-1]:
-            raise ValueError(
-                "start_time ({}) must be equal to the last end_time ({}).".format(
-                    start_time, self.end_times[-1]))
+        if strict:
+            if start_time >= end_time:
+                raise ValueError(
+                    "end_time ({}) must be larger than start_time ({}).".format(
+                        end_time, start_time))
+            if len(self.end_times) > 0 and start_time != self.end_times[-1]:
+                raise ValueError(
+                    "start_time ({}) must be equal to the last end_time ({}).".format(
+                        start_time, self.end_times[-1]))
 
         self.start_times.append(start_time)
         self.end_times.append(end_time)
@@ -152,14 +175,14 @@ J:13+9-2[2]')
         TODO:
             this should be refactored
         """
+        offset = self.start_times[0]
+
         # Unwrap state-axis
-        end_times = np.cumsum(
+        end_times = offset + np.cumsum(
             durations.reshape(-1, 1) * frame_shift_in_micro_sec).astype(np.int)
         if len(end_times) != len(self.end_times):
             raise RuntimeError("Unexpected input, maybe")
-        # Assuming first label starts with time `0`
-        # Is this really true? probably no
-        start_times = np.hstack((0, end_times[:-1])).astype(np.int)
+        start_times = np.hstack((offset, end_times[:-1])).astype(np.int)
         self.start_times, self.end_times = start_times, end_times
 
     def load(self, path=None, lines=None):
@@ -302,7 +325,7 @@ def load(path=None, lines=None):
     return labels.load(path, lines)
 
 
-def wildcards2regex(question, convert_number_pattern=False):
+def wildcards2regex(question, convert_number_pattern=False, convert_note_pattern=True):
     """subphone_features
     Convert HTK-style question into regular expression for searching labels.
     If convert_number_pattern, keep the following sequences unescaped for
@@ -329,10 +352,14 @@ def wildcards2regex(question, convert_number_pattern=False):
         question = question.replace('\\(\\\\d\\+\\)', '(\d+)')
         question = question.replace(
             '\\(\\[\\\\d\\\\\\.\\]\\+\\)', '([\d\.]+)')
+    if convert_note_pattern:
+        question = question.replace(
+            '\\(\\[A\\-Z\\]\\[b\\]\\?\\[0\\-9\\]\\+\\)', '([A-Z][b]?[0-9]+)')
+        question = question.replace('\\(\\\\NOTE\\)', '([A-Z][b]?[0-9]+)')
     return question
 
 
-def load_question_set(qs_file_name):
+def load_question_set(qs_file_name, append_hat_for_LL=True):
     """Load HTS-style question and convert it to binary/continuous feature
     extraction regexes.
 
@@ -340,6 +367,10 @@ def load_question_set(qs_file_name):
 
     Args:
         qs_file_name (str): Input HTS-style question file path
+        append_hat_for_LL (bool): Append ^ for LL regex search.
+            Note that the most left context is assumed to be phoneme identity
+            before the previous phoneme (i.e. LL-xx). This parameter should be False
+            for the HTS-demo_NIT-SONG070-F001 demo.
 
     Returns:
         (binary_dict, continuous_dict): Binary/continuous feature extraction
@@ -356,8 +387,7 @@ def load_question_set(qs_file_name):
     continuous_qs_index = 0
     binary_dict = {}
     continuous_dict = {}
-    # I guess `LL` means Left-left, but it doesn't seem to be docmented
-    # anywhere
+
     LL = re.compile(re.escape('LL-'))
 
     for line in lines:
@@ -383,10 +413,9 @@ def load_question_set(qs_file_name):
             continuous_qs_index = continuous_qs_index + 1
         elif temp_list[0] == 'QS':
             re_list = []
-            # import ipdb; ipdb.set_trace()
             for temp_question in question_list:
                 processed_question = wildcards2regex(temp_question)
-                if LL.search(question_key) and processed_question[0] != '^':
+                if append_hat_for_LL and LL.search(question_key) and processed_question[0] != '^':
                     processed_question = '^' + processed_question
                 re_list.append(re.compile(processed_question))
 
