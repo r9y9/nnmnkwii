@@ -97,7 +97,7 @@ J:13+9-2[2]')
         self.start_times = []
         self.end_times = []
         self.contexts = []
-        frame_shift_in_micro_sec = frame_shift_in_micro_sec
+        self.frame_shift_in_micro_sec = frame_shift_in_micro_sec
 
     def __len__(self):
         return len(self.start_times)
@@ -131,6 +131,12 @@ J:13+9-2[2]')
 
     def __repr__(self):
         return str(self)
+
+    def round_(self):
+        s = self.frame_shift_in_micro_sec
+        self.start_times = list(np.round(np.asarray(self.start_times) / s).astype(np.int) * s)
+        self.end_times = list(np.round(np.asarray(self.end_times) / s).astype(np.int) * s)
+        return self
 
     def append(self, label, strict=True):
         """Append a single alignment label
