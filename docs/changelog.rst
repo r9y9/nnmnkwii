@@ -1,7 +1,7 @@
 Change log
 ==========
 
-v0.0.21 <2020-xx-xx>
+v0.0.21 <2020-08-13>
 
 - `#99`_: Fix future warning from sklearn
 - `#101`_: [hts][frontend] various fixes for singing voice synthesis. Our frontend now supports MIDI number extraction. HTSLabelFile supports list and slice indexing.
