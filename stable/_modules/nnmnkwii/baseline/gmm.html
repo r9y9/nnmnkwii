@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.baseline.gmm &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.baseline.gmm &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -461,17 +461,17 @@
             
   <h1>Source code for nnmnkwii.baseline.gmm</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="k">import</span> <span class="n">GaussianMixture</span>
-<span class="kn">from</span> <span class="nn">sklearn.mixture.gaussian_mixture</span> <span class="k">import</span> <span class="n">_compute_precision_cholesky</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture.gaussian_mixture</span> <span class="kn">import</span> <span class="n">_compute_precision_cholesky</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.paramgen</span> <span class="k">import</span> <span class="n">mlpg</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.paramgen</span> <span class="kn">import</span> <span class="n">mlpg</span>
 
 <span class="c1"># TODO: this can be refactored to be more flexible</span>
 <span class="c1"># e.g. take `swap` and `diff` out of the class</span>
 
 
 <span class="k">class</span> <span class="nc">MLPGBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmm</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmm</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="k">assert</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariance_type</span> <span class="o">==</span> <span class="s2">&quot;full&quot;</span>
         <span class="c1"># D: static + delta dim</span>
         <span class="n">D</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
@@ -618,7 +618,7 @@
 <span class="sd">      of Spectral Parameter Trajectory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MLPG</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">swap</span><span class="p">,</span> <span class="n">diff</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">windows</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>

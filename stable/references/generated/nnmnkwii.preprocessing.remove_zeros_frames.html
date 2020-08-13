@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.remove_zeros_frames &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.preprocessing.remove_zeros_frames &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -501,7 +501,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>numpy.ndarray</em></a>) – 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>)</li>
+<li><strong>x</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T</span> <span class="pre">x</span> <span class="pre">D</span></code>)</li>
 <li><strong>eps</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – Values smaller than <code class="docutils literal notranslate"><span class="pre">eps</span></code> considered as zeros.</li>
 </ul>
 </td>
@@ -509,14 +509,14 @@
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Zeros-removed 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T'</span> <span class="pre">x</span> <span class="pre">D</span></code>).</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">remove_zeros_frames</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="kn">import</span> <span class="n">remove_zeros_frames</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">remove_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 </pre></div>

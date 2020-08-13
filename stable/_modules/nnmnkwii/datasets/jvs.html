@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.datasets.jvs &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.datasets.jvs &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -464,16 +464,16 @@
   <h1>Source code for nnmnkwii.datasets.jvs</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">isfile</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">isfile</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
 
 <span class="n">available_speakers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;jvs&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)]</span>
 <span class="c1"># Three lost wavfiles in this dataset</span>
@@ -505,7 +505,7 @@
 
 
 <span class="k">class</span> <span class="nc">_JVSBaseDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">):</span>
         <span class="c1"># only accept &quot;jvs*&quot; format</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
         <span class="k">if</span> <span class="n">speakers</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
@@ -643,7 +643,7 @@
 <span class="sd">          models.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">)</span>
 
 <div class="viewcode-block" id="TranscriptionDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.TranscriptionDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -677,7 +677,7 @@
 <span class="sd">          Stored in ``collect_files``. This is useful to build multi-speaker</span>
 <span class="sd">          models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">)</span>
 
 <div class="viewcode-block" id="WavFileDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.WavFileDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

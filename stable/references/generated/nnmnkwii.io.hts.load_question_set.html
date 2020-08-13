@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.io.hts.load_question_set &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.io.hts.load_question_set &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -493,7 +493,7 @@
 <h1>nnmnkwii.io.hts.load_question_set<a class="headerlink" href="#nnmnkwii-io-hts-load-question-set" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="nnmnkwii.io.hts.load_question_set">
-<code class="descclassname">nnmnkwii.io.hts.</code><code class="descname">load_question_set</code><span class="sig-paren">(</span><em>qs_file_name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/io/hts.html#load_question_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.load_question_set" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">nnmnkwii.io.hts.</code><code class="descname">load_question_set</code><span class="sig-paren">(</span><em>qs_file_name</em>, <em>append_hat_for_LL=True</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/io/hts.html#load_question_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.load_question_set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load HTS-style question and convert it to binary/continuous feature
 extraction regexes.</p>
 <p>This code was taken from Merlin.</p>
@@ -501,18 +501,27 @@ extraction regexes.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>qs_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Input HTS-style question file path</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>qs_file_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Input HTS-style question file path</li>
+<li><strong>append_hat_for_LL</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Append ^ for LL regex search.
+Note that the most left context is assumed to be phoneme identity
+before the previous phoneme (i.e. LL-xx). This parameter should be False
+for the HTS-demo_NIT-SONG070-F001 demo.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Binary/continuous feature extraction
-regexes.</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Binary/continuous feature extraction
+regexes.</p>
+</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(binary_dict, continuous_dict)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">(binary_dict, continuous_dict)</p>
+</td>
 </tr>
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_question_file</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="kn">import</span> <span class="n">hts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_question_file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load_question_set</span><span class="p">(</span><span class="n">example_question_file</span><span class="p">())</span>
 </pre></div>
 </div>

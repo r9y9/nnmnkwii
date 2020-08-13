@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>DNN text-to-speech synthesis (ja) &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>DNN text-to-speech synthesis (ja) &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -785,7 +785,7 @@ HTS-demo_NIT-ATR503-M001 already copied
 <span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">expanduser</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">wavfile</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
 <span class="kn">import</span> <span class="nn">pyworld</span>
@@ -924,10 +924,10 @@ Features for acousic model training found, skipping feature extraction.
         <span class="n">train</span> <span class="o">=</span> <span class="n">phase</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span>
         <span class="n">x_dim</span> <span class="o">=</span> <span class="n">duration_linguistic_dim</span> <span class="k">if</span> <span class="n">ty</span> <span class="o">==</span> <span class="s2">&quot;duration&quot;</span> <span class="k">else</span> <span class="n">acoustic_linguisic_dim</span>
         <span class="n">y_dim</span> <span class="o">=</span> <span class="n">duration_dim</span> <span class="k">if</span> <span class="n">ty</span> <span class="o">==</span> <span class="s2">&quot;duration&quot;</span> <span class="k">else</span> <span class="n">acoustic_dim</span>
-        <span class="n">X</span><span class="p">[</span><span class="n">ty</span><span class="p">][</span><span class="n">phase</span><span class="p">]</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">BinaryFileSource</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">,</span> <span class="s2">&quot;X_{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ty</span><span class="p">)),</span>
+        <span class="n">X</span><span class="p">[</span><span class="n">ty</span><span class="p">][</span><span class="n">phase</span><span class="p">]</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">BinaryFileSource</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">,</span> <span class="s2">&quot;X_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ty</span><span class="p">)),</span>
                                                        <span class="n">dim</span><span class="o">=</span><span class="n">x_dim</span><span class="p">,</span>
                                                        <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">))</span>
-        <span class="n">Y</span><span class="p">[</span><span class="n">ty</span><span class="p">][</span><span class="n">phase</span><span class="p">]</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">BinaryFileSource</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">,</span> <span class="s2">&quot;Y_{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ty</span><span class="p">)),</span>
+        <span class="n">Y</span><span class="p">[</span><span class="n">ty</span><span class="p">][</span><span class="n">phase</span><span class="p">]</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">BinaryFileSource</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_ROOT</span><span class="p">,</span> <span class="s2">&quot;Y_</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ty</span><span class="p">)),</span>
                                                        <span class="n">dim</span><span class="o">=</span><span class="n">y_dim</span><span class="p">,</span>
                                                        <span class="n">train</span><span class="o">=</span><span class="n">train</span><span class="p">))</span>
         <span class="c1"># this triggers file loads, but can be neglectable in terms of performance.</span>
@@ -944,8 +944,8 @@ Features for acousic model training found, skipping feature extraction.
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of utterances:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of frames:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of utterances:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of frames:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
 <span class="n">hist</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">64</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -971,8 +971,8 @@ Total number of frames: 28435
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of utterances:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Total number of frames:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of utterances:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Total number of frames:&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">]))</span>
 <span class="n">hist</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">64</span><span class="p">);</span>
 </pre></div>
 </div>
@@ -1158,7 +1158,7 @@ Total number of frames: 483363
 <span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
 <span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tnrange</span><span class="p">,</span> <span class="n">tqdm</span>
 <span class="kn">import</span> <span class="nn">torch</span>
-<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="kn">as</span> <span class="nn">nn</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
 <span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Variable</span>
 <span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">optim</span>
 </pre></div>
@@ -1205,12 +1205,12 @@ Total number of frames: 483363
 <span class="c1"># We use PyTorch&#39;s multiprocess iterator. Note that large n_workers causes</span>
 <span class="c1"># dataset copies across proccess.</span>
 <span class="n">n_workers</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">pin_memory</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">pin_memory</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="n">nepoch</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">lr</span> <span class="o">=</span> <span class="mf">0.001</span>
 <span class="n">weight_decay</span> <span class="o">=</span> <span class="mf">1e-6</span>
 <span class="n">use_cuda</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">use_cuda</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">use_cuda</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1249,8 +1249,8 @@ True
                                   <span class="n">X_min</span><span class="p">,</span> <span class="n">X_max</span><span class="p">,</span> <span class="n">Y_mean</span><span class="p">,</span> <span class="n">Y_scale</span><span class="p">)</span>
     <span class="n">train_loader</span> <span class="o">=</span> <span class="n">data_utils</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
         <span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">,</span>
-        <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Train dataset number of frames&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">))</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Train dataset number of frames&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">))</span>
 
     <span class="c1"># Frame-wise test data loader</span>
     <span class="n">X_test_cache_dataset</span> <span class="o">=</span> <span class="n">MemoryCacheFramewiseDataset</span><span class="p">(</span>
@@ -1261,15 +1261,15 @@ True
                                  <span class="n">X_min</span><span class="p">,</span> <span class="n">X_max</span><span class="p">,</span> <span class="n">Y_mean</span><span class="p">,</span> <span class="n">Y_scale</span><span class="p">)</span>
     <span class="n">test_loader</span> <span class="o">=</span> <span class="n">data_utils</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">(</span>
         <span class="n">test_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">,</span>
-        <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Test dataset numer of frames&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">))</span>
+        <span class="n">pin_memory</span><span class="o">=</span><span class="n">pin_memory</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Test dataset numer of frames&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_dataset</span><span class="p">))</span>
 
     <span class="n">dataset_loaders</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="n">train_loader</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="n">test_loader</span><span class="p">}</span>
 
     <span class="c1"># Training loop</span>
     <span class="n">criterion</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">MSELoss</span><span class="p">()</span>
     <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Start frame-wise training...&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start frame-wise training...&quot;</span><span class="p">)</span>
     <span class="n">loss_history</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="p">[]}</span>
     <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">tnrange</span><span class="p">(</span><span class="n">nepoch</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">phase</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="s2">&quot;test&quot;</span><span class="p">]:</span>
@@ -1308,7 +1308,7 @@ True
     <span class="n">models</span><span class="p">[</span><span class="n">typ</span><span class="p">]</span> <span class="o">=</span> <span class="n">MyNet</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">typ</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                             <span class="n">hidden_size</span><span class="p">,</span> <span class="n">Y</span><span class="p">[</span><span class="n">typ</span><span class="p">][</span><span class="s2">&quot;train&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                             <span class="n">num_hidden_layers</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Model for {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">typ</span><span class="p">),</span> <span class="n">models</span><span class="p">[</span><span class="n">typ</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Model for </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">typ</span><span class="p">),</span> <span class="n">models</span><span class="p">[</span><span class="n">typ</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -1509,7 +1509,7 @@ Start frame-wise training...
 
     <span class="k">return</span> <span class="n">mgc</span><span class="p">,</span> <span class="n">lf0</span><span class="p">,</span> <span class="n">vuv</span><span class="p">,</span> <span class="n">bap</span>
 
-<span class="k">def</span> <span class="nf">gen_waveform</span><span class="p">(</span><span class="n">y_predicted</span><span class="p">,</span> <span class="n">do_postfilter</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">gen_waveform</span><span class="p">(</span><span class="n">y_predicted</span><span class="p">,</span> <span class="n">do_postfilter</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="n">y_predicted</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">y_predicted</span><span class="p">)</span>
 
     <span class="c1"># Generate parameters and split streams</span>
@@ -1535,8 +1535,8 @@ Start frame-wise training...
     <span class="n">hts_labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">label_path</span><span class="p">)</span>
     <span class="n">duration_linguistic_features</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">linguistic_features</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">,</span>
                                                <span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span><span class="p">,</span>
-                                               <span class="n">add_frame_features</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
-                                               <span class="n">subphone_features</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+                                               <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                               <span class="n">subphone_features</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
 
     <span class="c1"># Apply normalization</span>
     <span class="n">ty</span> <span class="o">=</span> <span class="s2">&quot;duration&quot;</span>
@@ -1560,14 +1560,14 @@ Start frame-wise training...
     <span class="k">return</span> <span class="n">hts_labels</span>
 
 
-<span class="k">def</span> <span class="nf">test_one_utt</span><span class="p">(</span><span class="n">label_path</span><span class="p">,</span> <span class="n">duration_model</span><span class="p">,</span> <span class="n">acoustic_model</span><span class="p">,</span> <span class="n">post_filter</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">test_one_utt</span><span class="p">(</span><span class="n">label_path</span><span class="p">,</span> <span class="n">duration_model</span><span class="p">,</span> <span class="n">acoustic_model</span><span class="p">,</span> <span class="n">post_filter</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="c1"># Predict durations</span>
     <span class="n">duration_modified_hts_labels</span> <span class="o">=</span> <span class="n">gen_duration</span><span class="p">(</span><span class="n">label_path</span><span class="p">,</span> <span class="n">duration_model</span><span class="p">)</span>
 
     <span class="c1"># Linguistic features</span>
     <span class="n">linguistic_features</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">linguistic_features</span><span class="p">(</span><span class="n">duration_modified_hts_labels</span><span class="p">,</span>
                                                   <span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span><span class="p">,</span>
-                                                  <span class="n">add_frame_features</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                                  <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                                                   <span class="n">subphone_features</span><span class="o">=</span><span class="s2">&quot;coarse_coding&quot;</span><span class="p">)</span>
     <span class="c1"># Trim silences</span>
     <span class="n">indices</span> <span class="o">=</span> <span class="n">duration_modified_hts_labels</span><span class="o">.</span><span class="n">silence_frame_indices</span><span class="p">()</span>
@@ -1609,12 +1609,12 @@ Start frame-wise training...
     <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">save_dir</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">label_path</span><span class="p">,</span> <span class="n">wav_path</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">test_label_paths</span><span class="p">,</span> <span class="n">hts_generated_wav_files</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;MyNet&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;MyNet&quot;</span><span class="p">)</span>
     <span class="n">waveform</span> <span class="o">=</span> <span class="n">test_one_utt</span><span class="p">(</span><span class="n">label_path</span><span class="p">,</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;duration&quot;</span><span class="p">],</span> <span class="n">models</span><span class="p">[</span><span class="s2">&quot;acoustic&quot;</span><span class="p">])</span>
     <span class="n">wavfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">save_dir</span><span class="p">,</span> <span class="n">basename</span><span class="p">(</span><span class="n">wav_path</span><span class="p">)),</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">waveform</span><span class="p">)</span>
     <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">))</span>
 
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;HTS (NIT_ATR503 2mix, generated with default configurations)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;HTS (NIT_ATR503 2mix, generated with default configurations)&quot;</span><span class="p">)</span>
     <span class="n">fs</span><span class="p">,</span> <span class="n">waveform</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">wav_path</span><span class="p">)</span>
     <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">waveform</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">))</span>
 </pre></div>

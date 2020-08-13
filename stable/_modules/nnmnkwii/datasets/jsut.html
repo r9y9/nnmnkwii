@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.datasets.jsut &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.datasets.jsut &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -462,14 +462,14 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.datasets.jsut</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">listdir</span>
-<span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
 
 <span class="n">available_subsets</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">,</span>
                      <span class="s2">&quot;countersuffix26&quot;</span><span class="p">,</span>
@@ -484,7 +484,7 @@
 
 
 <span class="k">class</span> <span class="nc">BaseDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="s2">&quot;basic5000&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="s2">&quot;basic5000&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">subset</span> <span class="o">=</span> <span class="n">subset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
         <span class="n">transcription_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">subset</span><span class="p">,</span> <span class="s2">&quot;transcript_utf8.txt&quot;</span><span class="p">)</span>
@@ -537,12 +537,12 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">transcriptions</span>
 
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">names</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">_JSUTFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="n">is_wav</span><span class="p">,</span> <span class="n">validate</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="n">is_wav</span><span class="p">,</span> <span class="n">validate</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">subsets</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span><span class="p">:</span>
             <span class="n">subsets</span> <span class="o">=</span> <span class="n">available_subsets</span>
         <span class="k">for</span> <span class="n">subset</span> <span class="ow">in</span> <span class="n">subsets</span><span class="p">:</span>
@@ -583,7 +583,7 @@
 <span class="sd">          and ``voiceactress100``. Default is [&quot;basic5000&quot;].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">validate</span><span class="p">)</span></div>
 
@@ -603,7 +603,7 @@
 <span class="sd">          and ``voiceactress100``. Default is [&quot;basic5000&quot;].</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;basic5000&quot;</span><span class="p">],</span> <span class="n">validate</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">subsets</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">validate</span><span class="p">)</span></div>
 </pre></div>
 

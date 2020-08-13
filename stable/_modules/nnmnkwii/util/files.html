@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -463,15 +463,15 @@
             
   <h1>Source code for nnmnkwii.util.files</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">pkg_resources</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileDataSource</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="k">import</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
 
 
 <div class="viewcode-block" id="example_label_file"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_label_file.html#nnmnkwii.util.example_label_file">[docs]</a><span class="k">def</span> <span class="nf">example_label_file</span><span class="p">(</span><span class="n">phone_level</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -542,7 +542,7 @@
 
 
 <span class="k">class</span> <span class="nc">BinaryFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
 
     <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -578,7 +578,7 @@
         <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])),</span>
     <span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ExampleSLTArcticFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SLT_DEMO_DATA_ROOT</span><span class="p">,</span> <span class="n">directory</span><span class="p">))</span>
 

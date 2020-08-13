@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Pre-processing &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>Pre-processing &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -612,7 +612,7 @@ directly instead.</p>
 <dl class="attribute">
 <dt id="nnmnkwii.preprocessing.alignment.DTWAligner.dist">
 <code class="descname">dist</code><a class="headerlink" href="#nnmnkwii.preprocessing.alignment.DTWAligner.dist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Distance function. Default is <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.norm.html#numpy.linalg.norm" title="(in NumPy v1.17)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.norm()</span></code></a>.</p>
+<dd><p>Distance function. Default is <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.norm.html#numpy.linalg.norm" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.linalg.norm()</span></code></a>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -652,9 +652,9 @@ directly instead.</p>
 </dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_duration_model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing.alignment</span> <span class="k">import</span> <span class="n">DTWAligner</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_file_data_sources_for_duration_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileSourceDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing.alignment</span> <span class="kn">import</span> <span class="n">DTWAligner</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_duration_model</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>
@@ -758,9 +758,9 @@ directly instead.</p>
 </dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_file_data_sources_for_duration_model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="k">import</span> <span class="n">FileSourceDataset</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing.alignment</span> <span class="k">import</span> <span class="n">IterativeDTWAligner</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_file_data_sources_for_duration_model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileSourceDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing.alignment</span> <span class="kn">import</span> <span class="n">IterativeDTWAligner</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">_</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">example_file_data_sources_for_duration_model</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">FileSourceDataset</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span><span class="o">.</span><span class="n">shape</span>

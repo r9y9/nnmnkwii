@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -500,12 +500,11 @@
 <span class="c1">#  THIS SOFTWARE.</span>
 <span class="c1">##########################################################################</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">re</span>
-
-<span class="c1"># TODO: consider two label alignmetn format</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
 
 
 <div class="viewcode-block" id="HTSLabelFile"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile">[docs]</a><span class="k">class</span> <span class="nc">HTSLabelFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -554,19 +553,35 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_shift_in_micro_sec</span><span class="o">=</span><span class="mi">50000</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">frame_shift_in_micro_sec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span> <span class="o">=</span> <span class="n">frame_shift_in_micro_sec</span>
 
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+    <span class="k">def</span> <span class="fm">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="c1"># yes, this is inefficient and there will probably a bette way</span>
+            <span class="c1"># but this is okay for now</span>
+            <span class="n">current</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">idx</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">start_times</span><span class="p">[</span><span class="n">current</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="n">current</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="n">current</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">start_times</span><span class="p">)[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">end_times</span><span class="p">)[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">contexts</span><span class="p">)[</span><span class="n">idx</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">ret</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ret</span>
@@ -574,14 +589,21 @@
             <span class="n">ret</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="s2"> </span><span class="si">{}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ret</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
-<div class="viewcode-block" id="HTSLabelFile.append"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">round_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift_in_micro_sec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span> <span class="o">/</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">)</span> <span class="o">/</span> <span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span> <span class="o">*</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+<div class="viewcode-block" id="HTSLabelFile.append"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Append a single alignment label</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">            label (tuple): tuple of (start_time, end_time, context).</span>
+<span class="sd">            strict (bool): strict mode.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">            self</span>
@@ -594,14 +616,15 @@
         <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
         <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">end_time</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;end_time (</span><span class="si">{}</span><span class="s2">) must be larger than start_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">end_time</span><span class="p">,</span> <span class="n">start_time</span><span class="p">))</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">start_time</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;start_time (</span><span class="si">{}</span><span class="s2">) must be equal to the last end_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                    <span class="n">start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">start_time</span> <span class="o">&gt;=</span> <span class="n">end_time</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;end_time (</span><span class="si">{}</span><span class="s2">) must be larger than start_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">end_time</span><span class="p">,</span> <span class="n">start_time</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">start_time</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;start_time (</span><span class="si">{}</span><span class="s2">) must be equal to the last end_time (</span><span class="si">{}</span><span class="s2">).&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">start_time</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
@@ -614,14 +637,14 @@
 <span class="sd">        TODO:</span>
 <span class="sd">            this should be refactored</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
         <span class="c1"># Unwrap state-axis</span>
-        <span class="n">end_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span>
+        <span class="n">end_times</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span>
             <span class="n">durations</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">frame_shift_in_micro_sec</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">end_times</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_times</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Unexpected input, maybe&quot;</span><span class="p">)</span>
-        <span class="c1"># Assuming first label starts with time `0`</span>
-        <span class="c1"># Is this really true? probably no</span>
-        <span class="n">start_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="n">end_times</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+        <span class="n">start_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">offset</span><span class="p">,</span> <span class="n">end_times</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_times</span> <span class="o">=</span> <span class="n">start_times</span><span class="p">,</span> <span class="n">end_times</span></div>
 
 <div class="viewcode-block" id="HTSLabelFile.load"><a class="viewcode-back" href="../../../references/io.html#nnmnkwii.io.hts.HTSLabelFile.load">[docs]</a>    <span class="k">def</span> <span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">lines</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -764,7 +787,7 @@
     <span class="k">return</span> <span class="n">labels</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">lines</span><span class="p">)</span></div>
 
 
-<span class="k">def</span> <span class="nf">wildcards2regex</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">convert_number_pattern</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">wildcards2regex</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">convert_number_pattern</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">convert_note_pattern</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;subphone_features</span>
 <span class="sd">    Convert HTK-style question into regular expression for searching labels.</span>
 <span class="sd">    If convert_number_pattern, keep the following sequences unescaped for</span>
@@ -791,10 +814,14 @@
         <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(</span><span class="se">\\\\</span><span class="s1">d</span><span class="se">\\</span><span class="s1">+</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;(\d+)&#39;</span><span class="p">)</span>
         <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
             <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(</span><span class="se">\\</span><span class="s1">[</span><span class="se">\\\\</span><span class="s1">d</span><span class="se">\\\\\\</span><span class="s1">.</span><span class="se">\\</span><span class="s1">]</span><span class="se">\\</span><span class="s1">+</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;([\d\.]+)&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">convert_note_pattern</span><span class="p">:</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(</span><span class="se">\\</span><span class="s1">[A</span><span class="se">\\</span><span class="s1">-Z</span><span class="se">\\</span><span class="s1">]</span><span class="se">\\</span><span class="s1">[b</span><span class="se">\\</span><span class="s1">]</span><span class="se">\\</span><span class="s1">?</span><span class="se">\\</span><span class="s1">[0</span><span class="se">\\</span><span class="s1">-9</span><span class="se">\\</span><span class="s1">]</span><span class="se">\\</span><span class="s1">+</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;([A-Z][b]?[0-9]+)&#39;</span><span class="p">)</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(</span><span class="se">\\\\</span><span class="s1">NOTE</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="s1">&#39;([A-Z][b]?[0-9]+)&#39;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">question</span>
 
 
-<div class="viewcode-block" id="load_question_set"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set">[docs]</a><span class="k">def</span> <span class="nf">load_question_set</span><span class="p">(</span><span class="n">qs_file_name</span><span class="p">):</span>
+<div class="viewcode-block" id="load_question_set"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set">[docs]</a><span class="k">def</span> <span class="nf">load_question_set</span><span class="p">(</span><span class="n">qs_file_name</span><span class="p">,</span> <span class="n">append_hat_for_LL</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load HTS-style question and convert it to binary/continuous feature</span>
 <span class="sd">    extraction regexes.</span>
 
@@ -802,6 +829,10 @@
 
 <span class="sd">    Args:</span>
 <span class="sd">        qs_file_name (str): Input HTS-style question file path</span>
+<span class="sd">        append_hat_for_LL (bool): Append ^ for LL regex search.</span>
+<span class="sd">            Note that the most left context is assumed to be phoneme identity</span>
+<span class="sd">            before the previous phoneme (i.e. LL-xx). This parameter should be False</span>
+<span class="sd">            for the HTS-demo_NIT-SONG070-F001 demo.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        (binary_dict, continuous_dict): Binary/continuous feature extraction</span>
@@ -818,8 +849,7 @@
     <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">binary_dict</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">continuous_dict</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="c1"># I guess `LL` means Left-left, but it doesn&#39;t seem to be docmented</span>
-    <span class="c1"># anywhere</span>
+
     <span class="n">LL</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="s1">&#39;LL-&#39;</span><span class="p">))</span>
 
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
@@ -845,10 +875,9 @@
             <span class="n">continuous_qs_index</span> <span class="o">=</span> <span class="n">continuous_qs_index</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">elif</span> <span class="n">temp_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;QS&#39;</span><span class="p">:</span>
             <span class="n">re_list</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="c1"># import ipdb; ipdb.set_trace()</span>
             <span class="k">for</span> <span class="n">temp_question</span> <span class="ow">in</span> <span class="n">question_list</span><span class="p">:</span>
                 <span class="n">processed_question</span> <span class="o">=</span> <span class="n">wildcards2regex</span><span class="p">(</span><span class="n">temp_question</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">LL</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">question_key</span><span class="p">)</span> <span class="ow">and</span> <span class="n">processed_question</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">append_hat_for_LL</span> <span class="ow">and</span> <span class="n">LL</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">question_key</span><span class="p">)</span> <span class="ow">and</span> <span class="n">processed_question</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
                     <span class="n">processed_question</span> <span class="o">=</span> <span class="s1">&#39;^&#39;</span> <span class="o">+</span> <span class="n">processed_question</span>
                 <span class="n">re_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">processed_question</span><span class="p">))</span>
 

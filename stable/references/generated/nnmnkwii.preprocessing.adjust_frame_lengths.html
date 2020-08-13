@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.adjust_frame_lengths &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.preprocessing.adjust_frame_lengths &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -508,13 +508,13 @@ Use <code class="docutils literal notranslate"><span class="pre">divisible_by=2<
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>x</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^1</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
-<li><strong>y</strong> (<a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^2</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>x</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^1</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
+<li><strong>y</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)"><em>numpy.ndarray</em></a>) – Input 2d feature matrix, shape (<code class="docutils literal notranslate"><span class="pre">T^2</span> <span class="pre">x</span> <span class="pre">D</span></code>).</li>
 <li><strong>pad</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If True, pads values to the end, otherwise removes last few
 frames to ensure same frame lengths.</li>
 <li><strong>divisible_by</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – If <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code> &gt; 0, number of frames will be
 adjusted to be divisible by <code class="docutils literal notranslate"><span class="pre">divisible_by</span></code>.</li>
-<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.17)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.pad()</span></code></a>. Default is
+<li><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)"><em>dict</em></a>) – Keyword argments passed to <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.pad.html#numpy.pad" title="(in NumPy v1.19)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.pad()</span></code></a>. Default is
 mode = <code class="docutils literal notranslate"><span class="pre">constant</span></code>, which means zero padding.</li>
 </ul>
 </td>
@@ -528,7 +528,7 @@ mode = <code class="docutils literal notranslate"><span class="pre">constant</sp
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="n">adjust_frame_lengths</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="kn">import</span> <span class="n">adjust_frame_lengths</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>

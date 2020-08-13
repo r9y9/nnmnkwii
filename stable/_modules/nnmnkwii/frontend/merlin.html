@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -502,11 +502,12 @@
 <span class="c1">#  THIS SOFTWARE.</span>
 <span class="c1">##########################################################################</span>
 
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="kn">import</span> <span class="n">hts</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.frontend</span> <span class="kn">import</span> <span class="n">NOTE_MAPPING</span>
 
 
 <span class="k">def</span> <span class="nf">get_frame_feature_size</span><span class="p">(</span><span class="n">subphone_features</span><span class="o">=</span><span class="s2">&quot;full&quot;</span><span class="p">):</span>
@@ -561,7 +562,7 @@
 
     <span class="n">sigma</span> <span class="o">=</span> <span class="mf">0.4</span>
 
-    <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">norm</span>
+    <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
     <span class="n">cc_features</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu1</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
     <span class="n">cc_features</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu2</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x2</span><span class="p">)</span>
     <span class="n">cc_features</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">norm</span><span class="p">(</span><span class="n">mu3</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x3</span><span class="p">)</span>
@@ -617,6 +618,8 @@
         <span class="n">ms</span> <span class="o">=</span> <span class="n">current_compiled</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ms</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">continuous_value</span> <span class="o">=</span> <span class="n">ms</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">continuous_value</span> <span class="ow">in</span> <span class="n">NOTE_MAPPING</span><span class="p">:</span>
+                <span class="n">continuous_value</span> <span class="o">=</span> <span class="n">NOTE_MAPPING</span><span class="p">[</span><span class="n">continuous_value</span><span class="p">]</span>
 
         <span class="n">lab_continuous_vector</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">continuous_value</span>
 
@@ -698,7 +701,6 @@
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                         <span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                             <span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span><span class="p">))</span>
-
             <span class="n">label_feature_matrix</span><span class="p">[</span><span class="n">label_feature_index</span><span class="p">:</span><span class="n">label_feature_index</span> <span class="o">+</span>
                                  <span class="n">frame_number</span><span class="p">,</span> <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_binary_array</span>
             <span class="n">label_feature_index</span> <span class="o">=</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="n">frame_number</span>
@@ -1049,7 +1051,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span>
 
-    <span class="c1"># dur_feature_matrix = dur_feature_matrix[0:dur_feature_index, ]</span>
+    <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">dur_feature_index</span><span class="p">,</span> <span class="p">]</span>
     <span class="k">return</span> <span class="n">dur_feature_matrix</span>
 
 
@@ -1096,7 +1098,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">assert</span> <span class="kc">False</span>
 
-    <span class="c1"># dur_feature_matrix = dur_feature_matrix[0:dur_feature_index]</span>
+    <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">dur_feature_index</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">dur_feature_matrix</span>
 
 

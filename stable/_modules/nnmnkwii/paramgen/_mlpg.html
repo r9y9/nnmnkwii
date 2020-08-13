@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -461,15 +461,15 @@
             
   <h1>Source code for nnmnkwii.paramgen._mlpg</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">bandmat</span> <span class="k">as</span> <span class="nn">bm</span>
 <span class="kn">import</span> <span class="nn">bandmat.linalg</span> <span class="k">as</span> <span class="nn">bla</span>
-<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="k">import</span> <span class="n">solve_banded</span>
-<span class="kn">from</span> <span class="nn">nnmnkwii.util.linalg</span> <span class="k">import</span> <span class="n">cholesky_inv_banded</span>
-<span class="kn">from</span> <span class="nn">.mlpg_helper</span> <span class="k">import</span> <span class="n">full_window_mat</span> <span class="k">as</span> <span class="n">_full_window_mat</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">solve_banded</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.util.linalg</span> <span class="kn">import</span> <span class="n">cholesky_inv_banded</span>
+<span class="kn">from</span> <span class="nn">.mlpg_helper</span> <span class="kn">import</span> <span class="n">full_window_mat</span> <span class="k">as</span> <span class="n">_full_window_mat</span>
 
 <span class="c1"># https://github.com/MattShannon/bandmat/blob/master/example_spg.py</span>
 <span class="c1"># Copied from the above link. Thanks to Matt shannon!</span>

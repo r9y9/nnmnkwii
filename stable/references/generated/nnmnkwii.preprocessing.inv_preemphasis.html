@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.inv_preemphasis &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.preprocessing.inv_preemphasis &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -518,11 +518,11 @@
 <p class="last"><a class="reference internal" href="nnmnkwii.preprocessing.preemphasis.html#nnmnkwii.preprocessing.preemphasis" title="nnmnkwii.preprocessing.preemphasis"><code class="xref py py-func docutils literal notranslate"><span class="pre">preemphasis()</span></code></a></p>
 </div>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_audio_file</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="k">import</span> <span class="n">wavfile</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_audio_file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">wavfile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fs</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">example_audio_file</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="k">import</span> <span class="n">preprocessing</span> <span class="k">as</span> <span class="n">P</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="kn">import</span> <span class="n">preprocessing</span> <span class="k">as</span> <span class="n">P</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">x_hat</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">inv_preemphasis</span><span class="p">(</span><span class="n">P</span><span class="o">.</span><span class="n">preemphasis</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="mf">0.97</span><span class="p">),</span> <span class="n">coef</span><span class="o">=</span><span class="mf">0.97</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x_hat</span><span class="p">)</span>
 </pre></div>

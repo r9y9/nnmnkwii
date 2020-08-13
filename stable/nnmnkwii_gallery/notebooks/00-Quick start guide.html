@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>A quick start guide &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>A quick start guide &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -835,7 +835,7 @@ Populating the interactive namespace from numpy and matplotlib
 
 <span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">example_label_file</span><span class="p">())</span>
 <span class="c1"># HTS labels support indexing. It returns tuple of (start time, end time, contexts)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -940,7 +940,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load_question_set</span><span class="p">(</span><span class="n">example_question_file</span><span class="p">())</span>
 <span class="c1"># `add_frame_features` True tells merlin frontend to extract frame-level features</span>
 <span class="n">linguistic_features</span> <span class="o">=</span> <span class="n">fe</span><span class="o">.</span><span class="n">linguistic_features</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">binary_dict</span><span class="p">,</span> <span class="n">continuous_dict</span><span class="p">,</span>
-                                            <span class="n">add_frame_features</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                                            <span class="n">add_frame_features</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="c1"># Not so good, but better than text</span>
 <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">specshow</span><span class="p">(</span><span class="n">linguistic_features</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">fs</span><span class="p">,</span>
                          <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span><span class="p">,</span> <span class="n">x_axis</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;magma&quot;</span><span class="p">)</span>
@@ -978,8 +978,8 @@ Populating the interactive namespace from numpy and matplotlib
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">print</span><span class="p">(</span><span class="n">silence_removed_spectrogram</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">silence_removed_linguistic_features</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span></span><span class="nb">print</span><span class="p">(</span><span class="n">silence_removed_spectrogram</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">silence_removed_linguistic_features</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1080,7 +1080,7 @@ array([[ &#39;/home/ryuichi/Dropbox/sp/nnmnkwii/nnmnkwii/util/_example_data/slt_
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature shape (T, D): {}, Acoustic feature shape (T, D): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature shape (T, D): </span><span class="si">{}</span><span class="s2">, Acoustic feature shape (T, D): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1152,7 +1152,7 @@ OrderedDict()
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature shape (T, D): {}, Acoustic feature shape (T, D): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature shape (T, D): </span><span class="si">{}</span><span class="s2">, Acoustic feature shape (T, D): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1226,7 +1226,7 @@ Linguistic feature shape (T, D): (606, 425), Acoustic feature shape (T, D): (606
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">utt_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]</span>
-<span class="k">print</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">utt_lengths</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1292,7 +1292,7 @@ Linguistic feature shape (T, D): (606, 425), Acoustic feature shape (T, D): (606
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="mi">3</span><span class="p">],</span> <span class="n">Y</span><span class="p">[:</span><span class="mi">3</span><span class="p">]):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature dimension (D,): {}, Acoustic feature dimension (D,): {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Linguistic feature dimension (D,): </span><span class="si">{}</span><span class="s2">, Acoustic feature dimension (D,): </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>

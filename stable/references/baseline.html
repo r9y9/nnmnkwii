@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Baseline &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>Baseline &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -510,7 +510,7 @@ conversion <a class="reference internal" href="#ra06d78ad6cd7-1" id="id1">[1]</a
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>gmm</strong> (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" title="(in scikit-learn v0.22)"><em>sklearn.mixture.GaussianMixture</em></a>) – Gaussian Mixture Models of
+<li><strong>gmm</strong> (<a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" title="(in scikit-learn v0.23)"><em>sklearn.mixture.GaussianMixture</em></a>) – Gaussian Mixture Models of
 source and target joint features.</li>
 <li><strong>windows</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – List of windows. See <code class="xref py py-func docutils literal notranslate"><span class="pre">nnmnkwii.functions.mlpg()</span></code> for
 details.</li>
@@ -668,15 +668,15 @@ speaker’s features</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" title="(in scikit-learn v0.22)">sklearn.mixture.GaussianMixture</a></td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html#sklearn.mixture.GaussianMixture" title="(in scikit-learn v0.23)">sklearn.mixture.GaussianMixture</a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="k">import</span> <span class="n">GaussianMixture</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.baseline.gmm</span> <span class="k">import</span> <span class="n">MLPG</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.baseline.gmm</span> <span class="kn">import</span> <span class="n">MLPG</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">static_dim</span><span class="p">,</span> <span class="n">T</span> <span class="o">=</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">10</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.postfilters.merlin_post_filter &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.postfilters.merlin_post_filter &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -495,7 +495,7 @@
 <dt id="nnmnkwii.postfilters.merlin_post_filter">
 <code class="descclassname">nnmnkwii.postfilters.</code><code class="descname">merlin_post_filter</code><span class="sig-paren">(</span><em>mgc</em>, <em>alpha</em>, <em>minimum_phase_order=511</em>, <em>fftlen=1024</em>, <em>coef=1.4</em>, <em>weight=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/nnmnkwii/postfilters.html#merlin_post_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.postfilters.merlin_post_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Post-filter used in Merlin.</p>
-<p>This is a <a class="reference external" href="https://pysptk.readthedocs.io/en/latest/index.html#module-pysptk" title="(in pysptk v0.1.15+61cb932)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pysptk</span></code></a> translation of <a class="reference external" href="https://goo.gl/jK5Hdd">Merlin’s post filter</a> written with
+<p>This is a <a class="reference external" href="https://pysptk.readthedocs.io/en/latest/index.html#module-pysptk" title="(in pysptk v0.1.19+dbc194c)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pysptk</span></code></a> translation of <a class="reference external" href="https://goo.gl/jK5Hdd">Merlin’s post filter</a> written with
 SPTK CLI tools. Details can be found at <a class="reference external" href="https://github.com/CSTR-Edinburgh/merlin/issues/241">CSTR-Edinburgh/merlin/issues/241</a>
 and <a class="reference internal" href="#r07810f23881b-1" id="id1">[1]</a>.</p>
 <table class="docutils citation" frame="void" id="r07810f23881b-1" rules="none">
@@ -530,7 +530,7 @@ cepstrum. If None, set automatically by <code class="docutils literal notranslat
 </tbody>
 </table>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.postfilters</span> <span class="k">import</span> <span class="n">merlin_post_filter</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.postfilters</span> <span class="kn">import</span> <span class="n">merlin_post_filter</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mgc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mgc_filtered</span> <span class="o">=</span> <span class="n">merlin_post_filter</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">)</span>

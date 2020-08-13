@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -461,12 +461,29 @@
             
   <h1>Source code for nnmnkwii.preprocessing.generic</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span> <span class="k">import</span> <span class="n">_incremental_mean_and_var</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing.data</span> <span class="k">import</span> <span class="n">_handle_zeros_in_scale</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">signal</span>
+<span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span> <span class="kn">import</span> <span class="n">_incremental_mean_and_var</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">signal</span>
+
+
+<span class="c1"># from: https://github.com/scikit-learn/scikit-learn/blob/0.22.2/sklearn/preprocessing/_data.py</span>
+<span class="k">def</span> <span class="nf">_handle_zeros_in_scale</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39; Makes sure that whenever scale is zero, we handle it correctly.</span>
+<span class="sd">    This happens in most scalers when we have constant features.&#39;&#39;&#39;</span>
+
+    <span class="c1"># if we are fitting on 1D arrays, scale might be a scalar</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">scale</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">scale</span> <span class="o">==</span> <span class="o">.</span><span class="mi">0</span><span class="p">:</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="k">return</span> <span class="n">scale</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scale</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">copy</span><span class="p">:</span>
+            <span class="c1"># New array to avoid side-effects</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">scale</span><span class="p">[</span><span class="n">scale</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">return</span> <span class="n">scale</span>
 
 
 <span class="k">def</span> <span class="nf">_sign</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>IO &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>IO &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -505,7 +505,7 @@
 <tr class="row-odd"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load.html#nnmnkwii.io.hts.load" title="nnmnkwii.io.hts.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></a>([path,&nbsp;lines])</td>
 <td>Load HTS-style label file</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set" title="nnmnkwii.io.hts.load_question_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_question_set</span></code></a>(qs_file_name)</td>
+<tr class="row-even"><td><a class="reference internal" href="generated/nnmnkwii.io.hts.load_question_set.html#nnmnkwii.io.hts.load_question_set" title="nnmnkwii.io.hts.load_question_set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_question_set</span></code></a>(qs_file_name[,&nbsp;…])</td>
 <td>Load HTS-style question and convert it to binary/continuous feature extraction regexes.</td>
 </tr>
 </tbody>
@@ -561,8 +561,8 @@ full-context annotation.</p>
 
 <p class="rubric">Examples</p>
 <p>Load from file</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="k">import</span> <span class="n">hts</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="k">import</span> <span class="n">example_label_file</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.io</span> <span class="kn">import</span> <span class="n">hts</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nnmnkwii.util</span> <span class="kn">import</span> <span class="n">example_label_file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">labels</span> <span class="o">=</span> <span class="n">hts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">example_label_file</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="go">(0, 50000, &#39;x^x-sil+hh=iy@x_x/A:0_0_0/B:x-x-x@x-x&amp;x-x#x-x$x-x!x-x;x-x|x/C:1+1+2/D:0_0/E:x+x@x+x&amp;x+x#x+x/F:content_1/G:0_0/H:x=x@1=2|0/I:4=3/J:13+9-2[2]&#39;)</span>
@@ -582,7 +582,7 @@ full-context annotation.</p>
 </pre></div>
 </div>
 <p>Save to file</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tempfile</span> <span class="k">import</span> <span class="n">TemporaryFile</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">TemporaryFile</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">TemporaryFile</span><span class="p">(</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
 <span class="gp">... </span>    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
 <span class="go">50</span>
@@ -590,13 +590,16 @@ full-context annotation.</p>
 </div>
 <dl class="method">
 <dt id="nnmnkwii.io.hts.HTSLabelFile.append">
-<code class="descname">append</code><span class="sig-paren">(</span><em>label</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.append" title="Permalink to this definition">¶</a></dt>
+<code class="descname">append</code><span class="sig-paren">(</span><em>label</em>, <em>strict=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nnmnkwii/io/hts.html#HTSLabelFile.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#nnmnkwii.io.hts.HTSLabelFile.append" title="Permalink to this definition">¶</a></dt>
 <dd><p>Append a single alignment label</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – tuple of (start_time, end_time, context).</p>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – tuple of (start_time, end_time, context).</li>
+<li><strong>strict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – strict mode.</li>
+</ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">self</p>

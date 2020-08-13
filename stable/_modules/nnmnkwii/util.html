@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>nnmnkwii.util &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>nnmnkwii.util &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -64,7 +64,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -461,19 +461,19 @@
             
   <h1>Source code for nnmnkwii.util</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># Compat</span>
-<span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="k">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.preprocessing</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">delta_features</span><span class="p">,</span> <span class="n">trim_zeros_frames</span><span class="p">,</span> <span class="n">remove_zeros_frames</span><span class="p">,</span>
     <span class="n">adjust_frame_length</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">minmax_scale</span><span class="p">,</span> <span class="n">meanvar</span><span class="p">,</span>
     <span class="n">meanstd</span><span class="p">,</span> <span class="n">minmax</span><span class="p">)</span>
 
 <span class="n">apply_delta_windows</span> <span class="o">=</span> <span class="n">delta_features</span>
 
-<span class="kn">from</span> <span class="nn">.files</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.files</span> <span class="kn">import</span> <span class="o">*</span>
 
 
 <div class="viewcode-block" id="apply_each2d_trim"><a class="viewcode-back" href="../../references/generated/nnmnkwii.util.apply_each2d_trim.html#nnmnkwii.util.apply_each2d_trim">[docs]</a><span class="k">def</span> <span class="nf">apply_each2d_trim</span><span class="p">(</span><span class="n">func2d</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>

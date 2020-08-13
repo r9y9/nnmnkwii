@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>GMM-based voice conversion (en) &mdash; nnmnkwii 0.0.20 documentation</title>
+  <title>GMM-based voice conversion (en) &mdash; nnmnkwii 0.0.21 documentation</title>
   
 
   
@@ -66,7 +66,7 @@
             
             
               <div class="version">
-                0.0.20
+                0.0.21
               </div>
             
           
@@ -716,7 +716,7 @@ div.rendered_html tbody tr:hover {
 </ul>
 <p>In this demo, we use differencial spectrum modification technique to get high speech quality described in the following paper:</p>
 <ul class="simple">
-<li>Kobayashi, Kazuhiro, et al. “Statistical Singing Voice Conversion with Direct Waveform Modification based on the Spectrum Differential.” Fifteenth Annual Conference of the International Speech Communication Association. 2014.</li>
+<li>Kobayashi, Kazuhiro, et al.&nbsp;“Statistical Singing Voice Conversion with Direct Waveform Modification based on the Spectrum Differential.” Fifteenth Annual Conference of the International Speech Communication Association. 2014.</li>
 </ul>
 <p>To run the demonstration notebook, in addition to nnmnkwii and its dependencies, you will need the following packages:</p>
 <ul class="simple">
@@ -772,7 +772,7 @@ cmu_us_bdl_arctic  cmu_us_jmk_arctic  cmu_us_rms_arctic
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy.io</span> <span class="kn">import</span> <span class="n">wavfile</span>
 <span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
@@ -818,7 +818,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span class="n">hop_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fs</span> <span class="o">*</span> <span class="p">(</span><span class="n">frame_period</span> <span class="o">*</span> <span class="mf">0.001</span><span class="p">))</span>
 <span class="n">max_files</span> <span class="o">=</span> <span class="mi">100</span> <span class="c1"># number of utterances to be used.</span>
 <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.03</span>
-<span class="n">use_delta</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="n">use_delta</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="k">if</span> <span class="n">use_delta</span><span class="p">:</span>
     <span class="n">windows</span> <span class="o">=</span> <span class="p">[</span>
@@ -850,7 +850,7 @@ Populating the interactive namespace from numpy and matplotlib
 <span></span><span class="k">class</span> <span class="nc">MyFileDataSource</span><span class="p">(</span><span class="n">CMUArcticWavFileDataSource</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">test_paths</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_paths</span> <span class="o">=</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">paths</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span>
@@ -899,8 +899,8 @@ Populating the interactive namespace from numpy and matplotlib
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">X</span> <span class="o">=</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">clb_source</span><span class="p">,</span> <span class="mi">1200</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
 <span class="n">Y</span> <span class="o">=</span> <span class="n">PaddedFileSourceDataset</span><span class="p">(</span><span class="n">slt_source</span><span class="p">,</span> <span class="mi">1200</span><span class="p">)</span><span class="o">.</span><span class="n">asarray</span><span class="p">()</span>
-<span class="k">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1037,7 +1037,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">XY</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_aligned</span><span class="p">,</span> <span class="n">Y_aligned</span><span class="p">),</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">X_aligned</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">XY</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">XY</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1056,7 +1056,7 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="n">XY</span> <span class="o">=</span> <span class="n">remove_zeros_frames</span><span class="p">(</span><span class="n">XY</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="n">XY</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">XY</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1126,7 +1126,7 @@ GaussianMixture(covariance_type=&#39;full&#39;, init_params=&#39;kmeans&#39;, ma
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
-    <span class="n">plot</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean of mixture {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">plot</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[</span><span class="n">k</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mean of mixture </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>
 </pre></div>
 </div>
@@ -1184,7 +1184,7 @@ GaussianMixture(covariance_type=&#39;full&#39;, init_params=&#39;kmeans&#39;, ma
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
     <span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[</span><span class="n">k</span><span class="p">]),</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
-         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Diagonal part of covariance matrix, mixture {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
+         <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Diagonal part of covariance matrix, mixture </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="p">))</span>
 <span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">})</span>
 </pre></div>
 </div>
@@ -1216,7 +1216,7 @@ GaussianMixture(covariance_type=&#39;full&#39;, init_params=&#39;kmeans&#39;, ma
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">diffvc</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+<span></span><span class="k">def</span> <span class="nf">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">diffvc</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="c1"># GMM-based parameter generation is provided by the library in `baseline` module</span>
     <span class="k">if</span> <span class="n">disable_mlpg</span><span class="p">:</span>
         <span class="c1"># Force disable MLPG</span>
@@ -1239,7 +1239,7 @@ GaussianMixture(covariance_type=&#39;full&#39;, init_params=&#39;kmeans&#39;, ma
     <span class="k">if</span> <span class="n">disable_mlpg</span> <span class="ow">and</span> <span class="n">mc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">static_dim</span><span class="p">:</span>
         <span class="n">mc</span> <span class="o">=</span> <span class="n">mc</span><span class="p">[:,:</span><span class="n">static_dim</span><span class="p">]</span>
     <span class="k">assert</span> <span class="n">mc</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">static_dim</span>
-    <span class="n">mc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">c0</span><span class="p">[:,</span> <span class="bp">None</span><span class="p">],</span> <span class="n">mc</span><span class="p">))</span>
+    <span class="n">mc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">c0</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">mc</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">diffvc</span><span class="p">:</span>
         <span class="n">mc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># remove power coefficients</span>
         <span class="n">engine</span> <span class="o">=</span> <span class="n">Synthesizer</span><span class="p">(</span><span class="n">MLSADF</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">),</span> <span class="n">hopsize</span><span class="o">=</span><span class="n">hop_length</span><span class="p">)</span>
@@ -1270,19 +1270,19 @@ GaussianMixture(covariance_type=&#39;full&#39;, init_params=&#39;kmeans&#39;, ma
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">clb_source</span><span class="o">.</span><span class="n">test_paths</span><span class="p">,</span> <span class="n">slt_source</span><span class="o">.</span><span class="n">test_paths</span><span class="p">)):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;{}-th sample&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">wo_MLPG</span> <span class="o">=</span> <span class="n">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-    <span class="n">w_MLPG</span> <span class="o">=</span> <span class="n">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-th sample&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">wo_MLPG</span> <span class="o">=</span> <span class="n">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">w_MLPG</span> <span class="o">=</span> <span class="n">test_one_utt</span><span class="p">(</span><span class="n">src_path</span><span class="p">,</span> <span class="n">tgt_path</span><span class="p">,</span> <span class="n">disable_mlpg</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">src</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span>
     <span class="n">_</span><span class="p">,</span> <span class="n">tgt</span> <span class="o">=</span> <span class="n">wavfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">tgt_path</span><span class="p">)</span>
 
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Source:&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">(</span><span class="n">src_path</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Source:&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">(</span><span class="n">src_path</span><span class="p">))</span>
     <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Target:&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">(</span><span class="n">tgt_path</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Target:&quot;</span><span class="p">,</span> <span class="n">basename</span><span class="p">(</span><span class="n">tgt_path</span><span class="p">))</span>
     <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">tgt</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;w/o MLPG&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;w/o MLPG&quot;</span><span class="p">)</span>
     <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">wo_MLPG</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">))</span>
-    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;w/ MLPG&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;w/ MLPG&quot;</span><span class="p">)</span>
     <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">Audio</span><span class="p">(</span><span class="n">w_MLPG</span><span class="p">,</span> <span class="n">rate</span><span class="o">=</span><span class="n">fs</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -1502,16 +1502,16 @@ w/ MLPG
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span><span class="k">def</span> <span class="nf">vis_difference</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">which_dims</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">T_max</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-    <span class="n">static_paramgen</span> <span class="o">=</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]))],</span> <span class="n">diff</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">paramgen</span> <span class="o">=</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="n">windows</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span></span><span class="k">def</span> <span class="nf">vis_difference</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">which_dims</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="n">T_max</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">static_paramgen</span> <span class="o">=</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">]))],</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">paramgen</span> <span class="o">=</span> <span class="n">MLPG</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">windows</span><span class="o">=</span><span class="n">windows</span><span class="p">,</span> <span class="n">diff</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="n">x</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
     <span class="n">y</span> <span class="o">=</span> <span class="n">trim_zeros_frames</span><span class="p">(</span><span class="n">y</span><span class="p">)[:,:</span><span class="n">static_dim</span><span class="p">]</span>
     <span class="n">y_hat1</span> <span class="o">=</span> <span class="n">static_paramgen</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)[:,:</span><span class="n">static_dim</span><span class="p">]</span>
     <span class="n">y_hat2</span> <span class="o">=</span> <span class="n">paramgen</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
 
-    <span class="k">if</span> <span class="n">T_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">T_max</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">T_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">T_max</span><span class="p">:</span>
         <span class="n">y</span><span class="p">,</span><span class="n">y_hat1</span><span class="p">,</span><span class="n">y_hat2</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="n">T_max</span><span class="p">],</span><span class="n">y_hat1</span><span class="p">[:</span><span class="n">T_max</span><span class="p">],</span><span class="n">y_hat2</span><span class="p">[:</span><span class="n">T_max</span><span class="p">]</span>
 
     <span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">which_dims</span><span class="p">)))</span>
@@ -1520,7 +1520,7 @@ w/ MLPG
         <span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">[:,</span><span class="n">which_dim</span><span class="p">],</span> <span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Target&quot;</span><span class="p">)</span>
         <span class="n">plot</span><span class="p">(</span><span class="n">y_hat1</span><span class="p">[:,</span><span class="n">which_dim</span><span class="p">],</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;w/o MLPG&quot;</span><span class="p">)</span>
         <span class="n">plot</span><span class="p">(</span><span class="n">y_hat2</span><span class="p">[:,</span><span class="n">which_dim</span><span class="p">],</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;w/ MLPG&quot;</span><span class="p">)</span>
-        <span class="n">title</span><span class="p">(</span><span class="s2">&quot;{}-th coef&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">which_dim</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+        <span class="n">title</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">-th coef&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">which_dim</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
         <span class="n">legend</span><span class="p">(</span><span class="n">prop</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;upper right&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
