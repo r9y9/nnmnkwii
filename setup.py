@@ -144,7 +144,7 @@ setup(
     author_email='zryuichi@gmail.com',
     url='https://github.com/r9y9/nnmnkwii',
     license='MIT',
-    packages=find_packages(include=["nnmnkwii"]),
+    packages=find_packages(exclude=["tests", "perf"]),
     package_data={'': package_data},
     ext_modules=ext_modules,
     cmdclass=cmdclass,
