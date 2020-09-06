@@ -124,7 +124,7 @@ install_requires = [
     'scipy',
     'cython >= ' + min_cython_ver,
     'fastdtw',
-    'sklearn',
+    'scikit-learn',
     'pysptk >= 0.1.17',
     'tqdm',
 ]
