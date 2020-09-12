@@ -169,7 +169,7 @@ def load_labels_with_phone_alignment(hts_labels,
                                      continuous_dict,
                                      subphone_features=None,
                                      add_frame_features=False,
-                                     frame_shift_in_micro_sec=50000):
+                                     frame_shift=50000):
     dict_size = len(binary_dict) + len(continuous_dict)
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
@@ -186,7 +186,7 @@ def load_labels_with_phone_alignment(hts_labels,
         cc_features = compute_coarse_coding_features()
 
     for idx, (start_time, end_time, full_label) in enumerate(hts_labels):
-        frame_number = int(end_time / frame_shift_in_micro_sec) - int(start_time / frame_shift_in_micro_sec)
+        frame_number = int(end_time / frame_shift) - int(start_time / frame_shift)
 
         label_binary_vector = pattern_matching_binary(
             binary_dict, full_label)
@@ -266,7 +266,7 @@ def load_labels_with_state_alignment(hts_labels,
                                      continuous_dict,
                                      subphone_features=None,
                                      add_frame_features=False,
-                                     frame_shift_in_micro_sec=50000):
+                                     frame_shift=50000):
     dict_size = len(binary_dict) + len(continuous_dict)
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
@@ -296,7 +296,7 @@ def load_labels_with_state_alignment(hts_labels,
         state_index_backward = state_number + 1 - state_index
         full_label = full_label[0:full_label_length]
 
-        frame_number = (end_time - start_time) // frame_shift_in_micro_sec
+        frame_number = (end_time - start_time) // frame_shift
 
         if state_index == 1:
             current_frame_number = 0
@@ -315,7 +315,7 @@ def load_labels_with_state_alignment(hts_labels,
 
             for i in range(state_number - 1):
                 s, e, _ = hts_labels[current_index + i + 1]
-                phone_duration += (e - s) // frame_shift_in_micro_sec
+                phone_duration += (e - s) // frame_shift
 
             if subphone_features == "coarse_coding":
                 cc_feat_matrix = extract_coarse_coding_features_relative(
@@ -468,7 +468,7 @@ def linguistic_features(hts_labels, *args, **kwargs):
           this library. Default is None.
         add_frame_features (dict): Whether add frame-level features or not.
           Default is False.
-        frame_shift_in_micro_sec (int) : Frame shift of alignment in micro seconds.
+        frame_shift (int) : Frame shift of alignment in 100ns units.
 
     Returns:
         numpy.ndarray: Numpy array representation of linguistic features.
@@ -517,7 +517,7 @@ def extract_dur_from_state_alignment_labels(hts_labels,
                                             feature_type="numerical",
                                             unit_size="state",
                                             feature_size="phoneme",
-                                            frame_shift_in_micro_sec=50000):
+                                            frame_shift=50000):
     if feature_type not in ["binary", "numerical"]:
         raise ValueError("Not supported")
     if unit_size not in ["phoneme", "state"]:
@@ -546,14 +546,14 @@ def extract_dur_from_state_alignment_labels(hts_labels,
         state_index = int(state_index) - 1
 
         frame_number = (
-            end_time - start_time) // frame_shift_in_micro_sec
+            end_time - start_time) // frame_shift
 
         if state_index == 1:
             phone_duration = frame_number
 
             for i in range(state_number - 1):
                 s, e, _ = hts_labels[current_index + i + 1]
-                phone_duration += (e - s) // frame_shift_in_micro_sec
+                phone_duration += (e - s) // frame_shift
 
         if feature_type == "binary":
             current_block_array = np.zeros((frame_number, 1))
@@ -597,7 +597,7 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
                                             feature_type="numerical",
                                             unit_size="phoneme",
                                             feature_size="phoneme",
-                                            frame_shift_in_micro_sec=50000):
+                                            frame_shift=50000):
     if feature_type not in ["binary", "numerical"]:
         raise ValueError("Not supported")
     if unit_size != "phoneme":
@@ -612,7 +612,7 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
             (hts_labels.num_frames(), 1), dtype=np.int)
     dur_feature_index = 0
     for current_index, (start_time, end_time, _) in enumerate(hts_labels):
-        frame_number = (end_time - start_time) / frame_shift_in_micro_sec
+        frame_number = (end_time - start_time) / frame_shift
 
         phone_duration = frame_number
 
@@ -657,7 +657,7 @@ def duration_features(hts_labels, *args, **kwargs):
           phone-level alignment is ``state`` and ``phoneme``, respectively.
         feature_size (str): ``frame`` or ``phoneme``. Default is ``phoneme``.
           ``frame`` is only supported for state-level alignments.
-        frame_shift_in_micro_sec (int) : Frame shift of alignment in micro seconds.
+        frame_shift (int) : Frame shift of alignment in 100ns units.
 
     Returns:
         numpy.ndarray: numpy array representation of duration features.
