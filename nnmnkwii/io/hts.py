@@ -132,8 +132,8 @@ J:13+9-2[2]')
 
     def round_(self):
         s = self.frame_shift
-        self.start_times = list(np.round(np.asarray(self.start_times) / s).astype(np.int) * s)
-        self.end_times = list(np.round(np.asarray(self.end_times) / s).astype(np.int) * s)
+        self.start_times = list(np.round(np.asarray(self.start_times) / s).astype(np.int64) * s)
+        self.end_times = list(np.round(np.asarray(self.end_times) / s).astype(np.int64) * s)
         return self
 
     def append(self, label, strict=True):
@@ -179,10 +179,10 @@ J:13+9-2[2]')
 
         # Unwrap state-axis
         end_times = offset + np.cumsum(
-            durations.reshape(-1, 1) * frame_shift).astype(np.int)
+            durations.reshape(-1, 1) * frame_shift).astype(np.int64)
         if len(end_times) != len(self.end_times):
             raise RuntimeError("Unexpected input, maybe")
-        start_times = np.hstack((offset, end_times[:-1])).astype(np.int)
+        start_times = np.hstack((offset, end_times[:-1])).astype(np.int64)
         self.start_times, self.end_times = start_times, end_times
 
     def load(self, path=None, lines=None):
@@ -273,7 +273,7 @@ J:13+9-2[2]')
         s = start_times[indices] // frame_shift
         e = end_times[indices] // frame_shift
         return np.unique(np.concatenate(
-            [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int)
+            [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int64)
 
     def is_state_alignment_label(self):
         return self.contexts[0][-1] == ']' and self.contexts[0][-3] == '['
