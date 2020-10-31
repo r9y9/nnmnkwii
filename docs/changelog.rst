@@ -4,6 +4,8 @@ Change log
 v0.0.22 <2020-xx-xx>
 --------------------
 
+- `#108`_: Fix label time overflow on environment which size of np.int is 4bytes
+
 
 v0.0.21 <2020-08-13>
 --------------------
@@ -205,3 +207,4 @@ v0.0.1 <2017-08-14>
 .. _#98: https://github.com/r9y9/nnmnkwii/pull/98
 .. _#99: https://github.com/r9y9/nnmnkwii/issues/99
 .. _#101: https://github.com/r9y9/nnmnkwii/pull/101
+.. _#108: https://github.com/r9y9/nnmnkwii/pull/108
