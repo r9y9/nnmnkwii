@@ -5,7 +5,7 @@ v0.0.22 <2020-xx-xx>
 --------------------
 
 - `#108`_: Fix label time overflow on environment which size of np.int is 4bytes
-
+- `#109`_: io: fix bug of handling pitch diff in the SVS full context format
 
 v0.0.21 <2020-08-13>
 --------------------
@@ -208,3 +208,4 @@ v0.0.1 <2017-08-14>
 .. _#99: https://github.com/r9y9/nnmnkwii/issues/99
 .. _#101: https://github.com/r9y9/nnmnkwii/pull/101
 .. _#108: https://github.com/r9y9/nnmnkwii/pull/108
+.. _#109: https://github.com/r9y9/nnmnkwii/pull/109

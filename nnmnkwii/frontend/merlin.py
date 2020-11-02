@@ -158,6 +158,11 @@ def pattern_matching_continous_position(continuous_dict, label):
             continuous_value = ms.group(1)
             if continuous_value in NOTE_MAPPING:
                 continuous_value = NOTE_MAPPING[continuous_value]
+            if isinstance(continuous_value, str):
+                if continuous_value.startswith("p"):
+                    continuous_value = int(continuous_value[1:])
+                elif continuous_value.startswith("m"):
+                    continuous_value = -int(continuous_value[1:])
 
         lab_continuous_vector[0, i] = continuous_value
 
