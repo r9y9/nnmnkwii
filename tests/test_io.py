@@ -111,8 +111,10 @@ CQS "e1" {/E:(\\NOTE)]}
         context = lab[-1]
         if "~p2+" in context:
             assert C_e57.search(context).group(1) == "p2"
+            assert feats[idx, 2] == 2
         if "~m2+" in context:
             assert C_e57.search(context).group(1) == "m2"
+            assert feats[idx, 2] == -2
 
 
 def test_state_alignment_label_file():
