@@ -325,7 +325,7 @@ def load(path=None, lines=None):
     return labels.load(path, lines)
 
 
-def wildcards2regex(question, convert_number_pattern=False, convert_note_pattern=True):
+def wildcards2regex(question, convert_number_pattern=False, convert_svs_pattern=True):
     """subphone_features
     Convert HTK-style question into regular expression for searching labels.
     If convert_number_pattern, keep the following sequences unescaped for
@@ -352,14 +352,17 @@ def wildcards2regex(question, convert_number_pattern=False, convert_note_pattern
         question = question.replace('\\(\\\\d\\+\\)', '(\d+)')
         question = question.replace(
             '\\(\\[\\\\d\\\\\\.\\]\\+\\)', '([\d\.]+)')
-    if convert_note_pattern:
+    # NOTE: singing voice synthesis specific handling
+    if convert_svs_pattern:
         question = question.replace(
             '\\(\\[A\\-Z\\]\\[b\\]\\?\\[0\\-9\\]\\+\\)', '([A-Z][b]?[0-9]+)')
         question = question.replace('\\(\\\\NOTE\\)', '([A-Z][b]?[0-9]+)')
+        question = question.replace('\\(\\[pm\\]\\\\d\\+\\)', '([pm]\d+)')
+
     return question
 
 
-def load_question_set(qs_file_name, append_hat_for_LL=True):
+def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=True):
     """Load HTS-style question and convert it to binary/continuous feature
     extraction regexes.
 
@@ -371,6 +374,7 @@ def load_question_set(qs_file_name, append_hat_for_LL=True):
             Note that the most left context is assumed to be phoneme identity
             before the previous phoneme (i.e. LL-xx). This parameter should be False
             for the HTS-demo_NIT-SONG070-F001 demo.
+        convert_svs_pattern (bool): Convert SVS specific patterns.
 
     Returns:
         (binary_dict, continuous_dict): Binary/continuous feature extraction
