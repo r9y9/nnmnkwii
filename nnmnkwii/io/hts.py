@@ -397,7 +397,7 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
     for line in lines:
         line = line.replace('\n', '')
         temp_list = line.split()
-        if len(line) <= 0:
+        if len(line) <= 0 or line.startswith("#"):
             continue
         temp_list = line.split('{')
         temp_line = temp_list[1]
