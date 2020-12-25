@@ -12,7 +12,7 @@ import subprocess
 import os
 import sys
 
-version = '0.0.22'
+version = '0.0.23'
 
 # Adapted from https://github.com/pytorch/pytorch
 cwd = os.path.dirname(os.path.abspath(__file__))
