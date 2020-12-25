@@ -1,9 +1,10 @@
 Change log
 ==========
 
-v0.0.22 <2020-xx-xx>
+v0.0.22 <2020-12-25>
 --------------------
 
+- `#105`_: Change sklearn to scikit-learn
 - `#108`_: Fix label time overflow on environment which size of np.int is 4bytes
 - `#109`_: io: fix bug of handling pitch diff in the SVS full context format
 - io: allow writing comments in hed files
@@ -208,5 +209,6 @@ v0.0.1 <2017-08-14>
 .. _#98: https://github.com/r9y9/nnmnkwii/pull/98
 .. _#99: https://github.com/r9y9/nnmnkwii/issues/99
 .. _#101: https://github.com/r9y9/nnmnkwii/pull/101
+.. _#105: https://github.com/r9y9/nnmnkwii/pull/105
 .. _#108: https://github.com/r9y9/nnmnkwii/pull/108
 .. _#109: https://github.com/r9y9/nnmnkwii/pull/109
