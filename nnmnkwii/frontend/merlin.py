@@ -40,12 +40,9 @@
 #  THIS SOFTWARE.
 ##########################################################################
 
-from __future__ import division, print_function, absolute_import
-
 import numpy as np
-
-from nnmnkwii.io import hts
 from nnmnkwii.frontend import NOTE_MAPPING
+from nnmnkwii.io import hts
 
 
 def get_frame_feature_size(subphone_features="full"):
