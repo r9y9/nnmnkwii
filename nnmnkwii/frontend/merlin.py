@@ -146,7 +146,10 @@ def pattern_matching_continous_position(continuous_dict, label):
     lab_continuous_vector = np.zeros((1, dict_size), dtype=np.float32)
     for i in range(dict_size):
 
-        continuous_value = -1.0
+        if "([-\d]+)" in continuous_dict[i].pattern:
+            continuous_value = -50.0
+        else:
+            continuous_value = -1.0
 
         current_compiled = continuous_dict[i]
 
