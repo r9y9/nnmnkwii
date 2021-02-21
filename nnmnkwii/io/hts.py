@@ -332,6 +332,7 @@ def wildcards2regex(question, convert_number_pattern=False, convert_svs_pattern=
     extracting continuous values):
     (\d+)       -- handles digit without decimal point
     ([\d\.]+)   -- handles digits with and without decimal point
+    ([-\d]+)    -- handles positive and negative numbers
     """
 
     # handle HTK wildcards (and lack of them) at ends of label:
@@ -349,9 +350,9 @@ def wildcards2regex(question, convert_number_pattern=False, convert_svs_pattern=
     question = prefix + question + postfix
 
     if convert_number_pattern:
-        question = question.replace('\\(\\\\d\\+\\)', '(\d+)')
-        question = question.replace(
-            '\\(\\[\\\\d\\\\\\.\\]\\+\\)', '([\d\.]+)')
+        question = question.replace("\\(\\\\d\\+\\)", "(\d+)")
+        question = question.replace("\\(\\[\\-\\\\d\\]\\+\\)", "([-\d]+)")
+        question = question.replace("\\(\\[\\\\d\\\\\\.\\]\\+\\)", "([\d\.]+)")
     # NOTE: singing voice synthesis specific handling
     if convert_svs_pattern:
         question = question.replace(
