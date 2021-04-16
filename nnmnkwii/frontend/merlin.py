@@ -51,34 +51,34 @@ def get_frame_feature_size(subphone_features="full"):
         return 0
     subphone_features = subphone_features.strip().lower()
     if subphone_features == "none":
-        raise ValueError(
-            "subphone_features = 'none' is deprecated, use None instead")
-    if subphone_features == 'full':
+        raise ValueError("subphone_features = 'none' is deprecated, use None instead")
+    if subphone_features == "full":
         return 9  # zhizheng's original 5 state features + 4 phoneme features
-    elif subphone_features == 'minimal_frame':
+    elif subphone_features == "minimal_frame":
         # the minimal features necessary to go from a state-level to
         # frame-level model
         return 2
-    elif subphone_features == 'state_only':
+    elif subphone_features == "state_only":
         return 1  # this is equivalent to a state-based system
-    elif subphone_features == 'frame_only':
+    elif subphone_features == "frame_only":
         # this is equivalent to a frame-based system without relying on
         # state-features
         return 1
-    elif subphone_features == 'uniform_state':
+    elif subphone_features == "uniform_state":
         # this is equivalent to a frame-based system with uniform
         # state-features
         return 2
-    elif subphone_features == 'minimal_phoneme':
+    elif subphone_features == "minimal_phoneme":
         # this is equivalent to a frame-based system with minimal features
         return 3
-    elif subphone_features == 'coarse_coding':
+    elif subphone_features == "coarse_coding":
         # this is equivalent to a frame-based positioning system reported in
         # Heiga Zen's work
         return 4
     else:
         raise ValueError(
-            'Unknown value for subphone_features: %s' % (subphone_features))
+            "Unknown value for subphone_features: %s" % (subphone_features)
+        )
     assert False
 
 
@@ -98,6 +98,7 @@ def compute_coarse_coding_features(num_states=3, npoints=600):
     sigma = 0.4
 
     from scipy.stats import norm
+
     cc_features[0, :] = norm(mu1, sigma).pdf(x1)
     cc_features[1, :] = norm(mu2, sigma).pdf(x2)
     cc_features[2, :] = norm(mu3, sigma).pdf(x3)
@@ -127,6 +128,9 @@ def pattern_matching_binary(binary_dict, label):
 
     for i in range(dict_size):
         current_question_list = binary_dict[i]
+        # NOTE: newer version returns tuple of (name, question)
+        if isinstance(current_question_list, tuple):
+            current_question_list = current_question_list[1]
         binary_flag = 0
         for iq in range(len(current_question_list)):
             current_compiled = current_question_list[iq]
@@ -145,13 +149,15 @@ def pattern_matching_continous_position(continuous_dict, label):
 
     lab_continuous_vector = np.zeros((1, dict_size), dtype=np.float32)
     for i in range(dict_size):
+        current_compiled = continuous_dict[i]
 
-        if "([-\d]+)" in continuous_dict[i].pattern:
+        # NOTE: newer version returns tuple of (name, question)
+        if isinstance(current_compiled, tuple):
+            current_compiled = current_compiled[1]
+        if "([-\d]+)" in current_compiled.pattern:
             continuous_value = -50.0
         else:
             continuous_value = -1.0
-
-        current_compiled = continuous_dict[i]
 
         ms = current_compiled.search(label)
         if ms is not None:
@@ -169,12 +175,14 @@ def pattern_matching_continous_position(continuous_dict, label):
     return lab_continuous_vector
 
 
-def load_labels_with_phone_alignment(hts_labels,
-                                     binary_dict,
-                                     continuous_dict,
-                                     subphone_features=None,
-                                     add_frame_features=False,
-                                     frame_shift=50000):
+def load_labels_with_phone_alignment(
+    hts_labels,
+    binary_dict,
+    continuous_dict,
+    subphone_features=None,
+    add_frame_features=False,
+    frame_shift=50000,
+):
     dict_size = len(binary_dict) + len(continuous_dict)
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
@@ -193,85 +201,95 @@ def load_labels_with_phone_alignment(hts_labels,
     for idx, (start_time, end_time, full_label) in enumerate(hts_labels):
         frame_number = int(end_time / frame_shift) - int(start_time / frame_shift)
 
-        label_binary_vector = pattern_matching_binary(
-            binary_dict, full_label)
+        label_binary_vector = pattern_matching_binary(binary_dict, full_label)
 
         # if there is no CQS question, the label_continuous_vector will
         # become to empty
         label_continuous_vector = pattern_matching_continous_position(
-            continuous_dict, full_label)
+            continuous_dict, full_label
+        )
         label_vector = np.concatenate(
-            [label_binary_vector, label_continuous_vector], axis=1)
+            [label_binary_vector, label_continuous_vector], axis=1
+        )
 
         if subphone_features == "coarse_coding":
-            cc_feat_matrix = extract_coarse_coding_features_relative(cc_features,
-                                                                     frame_number)
+            cc_feat_matrix = extract_coarse_coding_features_relative(
+                cc_features, frame_number
+            )
 
         if add_frame_features:
             current_block_binary_array = np.zeros(
-                (frame_number, dict_size + frame_feature_size))
+                (frame_number, dict_size + frame_feature_size)
+            )
             for i in range(frame_number):
-                current_block_binary_array[i,
-                                           0:dict_size] = label_vector
+                current_block_binary_array[i, 0:dict_size] = label_vector
 
-                if subphone_features == 'minimal_phoneme':
+                if subphone_features == "minimal_phoneme":
                     # features which distinguish frame position in phoneme
                     # fraction through phone forwards
-                    current_block_binary_array[i, dict_size] = float(
-                        i + 1) / float(frame_number)
+                    current_block_binary_array[i, dict_size] = float(i + 1) / float(
+                        frame_number
+                    )
                     # fraction through phone backwards
                     current_block_binary_array[i, dict_size + 1] = float(
-                        frame_number - i) / float(frame_number)
+                        frame_number - i
+                    ) / float(frame_number)
                     # phone duration
-                    current_block_binary_array[i,
-                                               dict_size + 2] = float(frame_number)
+                    current_block_binary_array[i, dict_size + 2] = float(frame_number)
 
-                elif subphone_features == 'coarse_coding':
+                elif subphone_features == "coarse_coding":
                     # features which distinguish frame position in phoneme
                     # using three continous numerical features
-                    current_block_binary_array[i,
-                                               dict_size + 0] = cc_feat_matrix[i, 0]
-                    current_block_binary_array[i,
-                                               dict_size + 1] = cc_feat_matrix[i, 1]
-                    current_block_binary_array[i,
-                                               dict_size + 2] = cc_feat_matrix[i, 2]
-                    current_block_binary_array[i,
-                                               dict_size + 3] = float(frame_number)
+                    current_block_binary_array[i, dict_size + 0] = cc_feat_matrix[i, 0]
+                    current_block_binary_array[i, dict_size + 1] = cc_feat_matrix[i, 1]
+                    current_block_binary_array[i, dict_size + 2] = cc_feat_matrix[i, 2]
+                    current_block_binary_array[i, dict_size + 3] = float(frame_number)
 
                 elif subphone_features is None:
                     pass
                 else:
                     raise ValueError(
                         "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
-                            subphone_features, add_frame_features))
-            label_feature_matrix[label_feature_index:label_feature_index +
-                                 frame_number, ] = current_block_binary_array
+                            subphone_features, add_frame_features
+                        )
+                    )
+            label_feature_matrix[
+                label_feature_index : label_feature_index + frame_number,
+            ] = current_block_binary_array
             label_feature_index = label_feature_index + frame_number
 
         elif subphone_features is None:
             current_block_binary_array = label_vector
-            label_feature_matrix[label_feature_index:label_feature_index +
-                                 1, ] = current_block_binary_array
+            label_feature_matrix[
+                label_feature_index : label_feature_index + 1,
+            ] = current_block_binary_array
             label_feature_index = label_feature_index + 1
         else:
             pass
 
     # omg
     if label_feature_index == 0:
-        raise ValueError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
-            subphone_features, add_frame_features))
+        raise ValueError(
+            "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+                subphone_features, add_frame_features
+            )
+        )
 
-    label_feature_matrix = label_feature_matrix[0:label_feature_index, ]
+    label_feature_matrix = label_feature_matrix[
+        0:label_feature_index,
+    ]
 
     return label_feature_matrix
 
 
-def load_labels_with_state_alignment(hts_labels,
-                                     binary_dict,
-                                     continuous_dict,
-                                     subphone_features=None,
-                                     add_frame_features=False,
-                                     frame_shift=50000):
+def load_labels_with_state_alignment(
+    hts_labels,
+    binary_dict,
+    continuous_dict,
+    subphone_features=None,
+    add_frame_features=False,
+    frame_shift=50000,
+):
     dict_size = len(binary_dict) + len(continuous_dict)
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
@@ -290,8 +308,7 @@ def load_labels_with_state_alignment(hts_labels,
 
     phone_duration = 0
     state_duration_base = 0
-    for current_index, (start_time, end_time,
-                        full_label) in enumerate(hts_labels):
+    for current_index, (start_time, end_time, full_label) in enumerate(hts_labels):
         # remove state information [k]
         assert full_label[-1] == "]"
         full_label_length = len(full_label) - 3
@@ -308,15 +325,16 @@ def load_labels_with_state_alignment(hts_labels,
             phone_duration = frame_number
             state_duration_base = 0
 
-            label_binary_vector = pattern_matching_binary(
-                binary_dict, full_label)
+            label_binary_vector = pattern_matching_binary(binary_dict, full_label)
 
             # if there is no CQS question, the label_continuous_vector will
             # become to empty
             label_continuous_vector = pattern_matching_continous_position(
-                continuous_dict, full_label)
+                continuous_dict, full_label
+            )
             label_vector = np.concatenate(
-                [label_binary_vector, label_continuous_vector], axis=1)
+                [label_binary_vector, label_continuous_vector], axis=1
+            )
 
             for i in range(state_number - 1):
                 s, e, _ = hts_labels[current_index + i + 1]
@@ -324,115 +342,131 @@ def load_labels_with_state_alignment(hts_labels,
 
             if subphone_features == "coarse_coding":
                 cc_feat_matrix = extract_coarse_coding_features_relative(
-                    cc_features, phone_duration)
+                    cc_features, phone_duration
+                )
 
         if add_frame_features:
             current_block_binary_array = np.zeros(
-                (frame_number, dict_size + frame_feature_size))
+                (frame_number, dict_size + frame_feature_size)
+            )
             for i in range(frame_number):
-                current_block_binary_array[i,
-                                           0: dict_size] = label_vector
+                current_block_binary_array[i, 0:dict_size] = label_vector
 
-                if subphone_features == 'full':
+                if subphone_features == "full":
                     # Zhizheng's original 9 subphone features:
                     # fraction through state (forwards)
-                    current_block_binary_array[i, dict_size] = float(
-                        i + 1) / float(frame_number)
+                    current_block_binary_array[i, dict_size] = float(i + 1) / float(
+                        frame_number
+                    )
                     # fraction through state (backwards)
                     current_block_binary_array[i, dict_size + 1] = float(
-                        frame_number - i) / float(frame_number)
+                        frame_number - i
+                    ) / float(frame_number)
                     # length of state in frames
-                    current_block_binary_array[i,
-                                               dict_size + 2] = float(frame_number)
+                    current_block_binary_array[i, dict_size + 2] = float(frame_number)
                     # state index (counting forwards)
-                    current_block_binary_array[i,
-                                               dict_size + 3] = float(state_index)
+                    current_block_binary_array[i, dict_size + 3] = float(state_index)
                     # state index (counting backwards)
-                    current_block_binary_array[i, dict_size +
-                                               4] = float(state_index_backward)
+                    current_block_binary_array[i, dict_size + 4] = float(
+                        state_index_backward
+                    )
 
                     # length of phone in frames
-                    current_block_binary_array[i,
-                                               dict_size + 5] = float(phone_duration)
+                    current_block_binary_array[i, dict_size + 5] = float(phone_duration)
                     # fraction of the phone made up by current state
-                    current_block_binary_array[i, dict_size +
-                                               6] = float(frame_number) / float(phone_duration)
+                    current_block_binary_array[i, dict_size + 6] = float(
+                        frame_number
+                    ) / float(phone_duration)
                     # fraction through phone (backwards)
                     current_block_binary_array[i, dict_size + 7] = float(
-                        phone_duration - i - state_duration_base) / float(phone_duration)
+                        phone_duration - i - state_duration_base
+                    ) / float(phone_duration)
                     # fraction through phone (forwards)
                     current_block_binary_array[i, dict_size + 8] = float(
-                        state_duration_base + i + 1) / float(phone_duration)
+                        state_duration_base + i + 1
+                    ) / float(phone_duration)
 
-                elif subphone_features == 'state_only':
+                elif subphone_features == "state_only":
                     # features which only distinguish state:
                     current_block_binary_array[i, dict_size] = float(
-                        state_index)  # state index (counting forwards)
+                        state_index
+                    )  # state index (counting forwards)
 
-                elif subphone_features == 'frame_only':
+                elif subphone_features == "frame_only":
                     # features which distinguish frame position in phoneme:
                     current_frame_number += 1
                     # fraction through phone (counting forwards)
                     current_block_binary_array[i, dict_size] = float(
-                        current_frame_number) / float(phone_duration)
+                        current_frame_number
+                    ) / float(phone_duration)
 
-                elif subphone_features == 'uniform_state':
+                elif subphone_features == "uniform_state":
                     # features which distinguish frame position in phoneme:
                     current_frame_number += 1
                     # fraction through phone (counting forwards)
                     current_block_binary_array[i, dict_size] = float(
-                        current_frame_number) / float(phone_duration)
+                        current_frame_number
+                    ) / float(phone_duration)
                     new_state_index = max(
-                        1, round(float(current_frame_number) / float(phone_duration) * 5))
+                        1,
+                        round(float(current_frame_number) / float(phone_duration) * 5),
+                    )
                     # state index (counting forwards)
-                    current_block_binary_array[i,
-                                               dict_size + 1] = float(new_state_index)
+                    current_block_binary_array[i, dict_size + 1] = float(
+                        new_state_index
+                    )
 
                 elif subphone_features == "coarse_coding":
                     # features which distinguish frame position in phoneme
                     # using three continous numerical features
-                    current_block_binary_array[i, dict_size +
-                                               0] = cc_feat_matrix[current_frame_number, 0]
-                    current_block_binary_array[i, dict_size +
-                                               1] = cc_feat_matrix[current_frame_number, 1]
-                    current_block_binary_array[i, dict_size +
-                                               2] = cc_feat_matrix[current_frame_number, 2]
-                    current_block_binary_array[i,
-                                               dict_size + 3] = float(phone_duration)
+                    current_block_binary_array[i, dict_size + 0] = cc_feat_matrix[
+                        current_frame_number, 0
+                    ]
+                    current_block_binary_array[i, dict_size + 1] = cc_feat_matrix[
+                        current_frame_number, 1
+                    ]
+                    current_block_binary_array[i, dict_size + 2] = cc_feat_matrix[
+                        current_frame_number, 2
+                    ]
+                    current_block_binary_array[i, dict_size + 3] = float(phone_duration)
                     current_frame_number += 1
 
-                elif subphone_features == 'minimal_frame':
+                elif subphone_features == "minimal_frame":
                     # features which distinguish state and minimally frame
                     # position in state:
-                    current_block_binary_array[i, dict_size] = float(
-                        i + 1) / float(frame_number)  # fraction through state (forwards)
+                    current_block_binary_array[i, dict_size] = float(i + 1) / float(
+                        frame_number
+                    )  # fraction through state (forwards)
                     # state index (counting forwards)
-                    current_block_binary_array[i,
-                                               dict_size + 1] = float(state_index)
+                    current_block_binary_array[i, dict_size + 1] = float(state_index)
                 elif subphone_features is None:
                     pass
                 else:
                     assert False
 
-            label_feature_matrix[label_feature_index:label_feature_index +
-                                 frame_number] = current_block_binary_array
+            label_feature_matrix[
+                label_feature_index : label_feature_index + frame_number
+            ] = current_block_binary_array
             label_feature_index = label_feature_index + frame_number
-        elif subphone_features == 'state_only' and state_index == state_number:
+        elif subphone_features == "state_only" and state_index == state_number:
             # TODO: this pass seems not working
             current_block_binary_array = np.zeros(
-                (state_number, dict_size + frame_feature_size))
+                (state_number, dict_size + frame_feature_size)
+            )
             for i in range(state_number):
-                current_block_binary_array[i,
-                                           0:dict_size] = label_vector
+                current_block_binary_array[i, 0:dict_size] = label_vector
                 current_block_binary_array[i, dict_size] = float(
-                    i + 1)  # state index (counting forwards)
-            label_feature_matrix[label_feature_index:label_feature_index +
-                                 state_number, ] = current_block_binary_array
+                    i + 1
+                )  # state index (counting forwards)
+            label_feature_matrix[
+                label_feature_index : label_feature_index + state_number,
+            ] = current_block_binary_array
             label_feature_index = label_feature_index + state_number
         elif subphone_features is None and state_index == state_number:
             current_block_binary_array = label_vector
-            label_feature_matrix[label_feature_index:label_feature_index +
-                                 1, ] = current_block_binary_array
+            label_feature_matrix[
+                label_feature_index : label_feature_index + 1,
+            ] = current_block_binary_array
             label_feature_index = label_feature_index + 1
         else:
             pass
@@ -441,10 +475,15 @@ def load_labels_with_state_alignment(hts_labels,
 
     # omg
     if label_feature_index == 0:
-        raise ValueError("Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
-            subphone_features, add_frame_features))
+        raise ValueError(
+            "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+                subphone_features, add_frame_features
+            )
+        )
 
-    label_feature_matrix = label_feature_matrix[0:label_feature_index, ]
+    label_feature_matrix = label_feature_matrix[
+        0:label_feature_index,
+    ]
     return label_feature_matrix
 
 
@@ -518,11 +557,13 @@ def linguistic_features(hts_labels, *args, **kwargs):
         return load_labels_with_phone_alignment(hts_labels, *args, **kwargs)
 
 
-def extract_dur_from_state_alignment_labels(hts_labels,
-                                            feature_type="numerical",
-                                            unit_size="state",
-                                            feature_size="phoneme",
-                                            frame_shift=50000):
+def extract_dur_from_state_alignment_labels(
+    hts_labels,
+    feature_type="numerical",
+    unit_size="state",
+    feature_size="phoneme",
+    frame_shift=50000,
+):
     if feature_type not in ["binary", "numerical"]:
         raise ValueError("Not supported")
     if unit_size not in ["phoneme", "state"]:
@@ -532,26 +573,22 @@ def extract_dur_from_state_alignment_labels(hts_labels,
 
     dur_dim = hts_labels.num_states() if unit_size == "state" else 1
     if feature_size == "phoneme":
-        dur_feature_matrix = np.empty(
-            (hts_labels.num_phones(), dur_dim), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_phones(), dur_dim), dtype=np.int)
     else:
-        dur_feature_matrix = np.empty(
-            (hts_labels.num_frames(), dur_dim), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_frames(), dur_dim), dtype=np.int)
 
     current_dur_array = np.zeros((dur_dim, 1))
     state_number = hts_labels.num_states()
     dur_dim = state_number
 
     dur_feature_index = 0
-    for current_index, (start_time, end_time,
-                        full_label) in enumerate(hts_labels):
+    for current_index, (start_time, end_time, full_label) in enumerate(hts_labels):
         # remove state information [k]
         full_label_length = len(full_label) - 3
         state_index = full_label[full_label_length + 1]
         state_index = int(state_index) - 1
 
-        frame_number = (
-            end_time - start_time) // frame_shift
+        frame_number = (end_time - start_time) // frame_shift
 
         if state_index == 1:
             phone_duration = frame_number
@@ -576,7 +613,8 @@ def extract_dur_from_state_alignment_labels(hts_labels,
                     current_block_array = current_dur_array.transpose()
                 if feature_size == "frame":
                     current_block_array = np.tile(
-                        current_dur_array.transpose(), (frame_number, 1))
+                        current_dur_array.transpose(), (frame_number, 1)
+                    )
             elif unit_size == "phoneme":
                 current_block_array = np.array([phone_duration])
             else:
@@ -584,25 +622,31 @@ def extract_dur_from_state_alignment_labels(hts_labels,
 
         # writing into dur_feature_matrix
         if feature_size == "frame":
-            dur_feature_matrix[dur_feature_index:dur_feature_index +
-                               frame_number, ] = current_block_array
+            dur_feature_matrix[
+                dur_feature_index : dur_feature_index + frame_number,
+            ] = current_block_array
             dur_feature_index = dur_feature_index + frame_number
         elif feature_size == "phoneme" and state_index == state_number:
-            dur_feature_matrix[dur_feature_index:dur_feature_index +
-                               1, ] = current_block_array
+            dur_feature_matrix[
+                dur_feature_index : dur_feature_index + 1,
+            ] = current_block_array
             dur_feature_index = dur_feature_index + 1
         else:
             pass
 
-    dur_feature_matrix = dur_feature_matrix[0:dur_feature_index, ]
+    dur_feature_matrix = dur_feature_matrix[
+        0:dur_feature_index,
+    ]
     return dur_feature_matrix
 
 
-def extract_dur_from_phone_alignment_labels(hts_labels,
-                                            feature_type="numerical",
-                                            unit_size="phoneme",
-                                            feature_size="phoneme",
-                                            frame_shift=50000):
+def extract_dur_from_phone_alignment_labels(
+    hts_labels,
+    feature_type="numerical",
+    unit_size="phoneme",
+    feature_size="phoneme",
+    frame_shift=50000,
+):
     if feature_type not in ["binary", "numerical"]:
         raise ValueError("Not supported")
     if unit_size != "phoneme":
@@ -610,11 +654,9 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
     if feature_size not in ["phoneme", "frame"]:
         raise ValueError("Not supported")
     if feature_size == "phoneme":
-        dur_feature_matrix = np.empty(
-            (hts_labels.num_phones(), 1), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_phones(), 1), dtype=np.int)
     else:
-        dur_feature_matrix = np.empty(
-            (hts_labels.num_frames(), 1), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_frames(), 1), dtype=np.int)
     dur_feature_index = 0
     for current_index, (start_time, end_time, _) in enumerate(hts_labels):
         frame_number = (end_time - start_time) / frame_shift
@@ -631,12 +673,14 @@ def extract_dur_from_phone_alignment_labels(hts_labels,
 
         # writing into dur_feature_matrix
         if feature_size == "frame":
-            dur_feature_matrix[dur_feature_index:dur_feature_index +
-                               frame_number] = current_block_array
+            dur_feature_matrix[
+                dur_feature_index : dur_feature_index + frame_number
+            ] = current_block_array
             dur_feature_index = dur_feature_index + frame_number
         elif feature_size == "phoneme":
-            dur_feature_matrix[dur_feature_index:dur_feature_index +
-                               1] = current_block_array
+            dur_feature_matrix[
+                dur_feature_index : dur_feature_index + 1
+            ] = current_block_array
             dur_feature_index = dur_feature_index + 1
         else:
             assert False
@@ -690,8 +734,7 @@ def duration_features(hts_labels, *args, **kwargs):
 
     """
     if hts_labels.is_state_alignment_label():
-        return extract_dur_from_state_alignment_labels(
-            hts_labels, *args, **kwargs)
+        return extract_dur_from_state_alignment_labels(hts_labels, *args, **kwargs)
     else:
-        return extract_dur_from_phone_alignment_labels(
-            hts_labels, *args, **kwargs)
+        return extract_dur_from_phone_alignment_labels(hts_labels, *args, **kwargs)
+

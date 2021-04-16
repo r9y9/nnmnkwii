@@ -409,6 +409,7 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
         temp_list = line.split()
         if len(line) <= 0 or line.startswith("#"):
             continue
+        name = temp_list[1].replace('"', "").replace("'", "")
         temp_list = line.split("{")
         temp_line = temp_list[1]
         temp_list = temp_line.split("}")
@@ -425,8 +426,9 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
                 convert_number_pattern=True,
                 convert_svs_pattern=convert_svs_pattern,
             )
-            continuous_dict[continuous_qs_index] = re.compile(
-                processed_question
+            continuous_dict[continuous_qs_index] = (
+                name,
+                re.compile(processed_question),
             )  # save pre-compiled regular expression
             continuous_qs_index = continuous_qs_index + 1
         elif temp_list[0] == "QS":
@@ -441,7 +443,7 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
                     processed_question = "^" + processed_question
                 re_list.append(re.compile(processed_question))
 
-            binary_dict[binary_qs_index] = re_list
+            binary_dict[binary_qs_index] = (name, re_list)
             binary_qs_index = binary_qs_index + 1
         else:
             raise RuntimeError("Not supported question format")

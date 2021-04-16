@@ -13,23 +13,23 @@ DATA_DIR = join(dirname(__file__), "data")
 
 def test_labels_number_of_frames():
     # https://github.com/r9y9/nnmnkwii/issues/85
-    binary_dict, continuous_dict = hts.load_question_set(
-        join(DATA_DIR, "jp.hed"))
+    binary_dict, continuous_dict = hts.load_question_set(join(DATA_DIR, "jp.hed"))
     labels = hts.load(join(DATA_DIR, "BASIC5000_0619.lab"))
     linguistic_features = fe.linguistic_features(
-        labels, binary_dict, continuous_dict, add_frame_features=True)
+        labels, binary_dict, continuous_dict, add_frame_features=True
+    )
     assert labels.num_frames() == linguistic_features.shape[0]
 
 
 def test_load_question_set():
-    binary_dict, continuous_dict = hts.load_question_set(
-        example_question_file())
+    binary_dict, continuous_dict = hts.load_question_set(example_question_file())
     assert len(binary_dict) + len(continuous_dict) == 416
 
 
 def test_htk_style_question_basics():
     binary_dict, continuous_dict = hts.load_question_set(
-        join(DATA_DIR, "test_question.hed"))
+        join(DATA_DIR, "test_question.hed")
+    )
     # sil k o n i ch i w a sil
     input_phone_label = join(DATA_DIR, "hts-nit-atr503", "phrase01.lab")
     labels = hts.load(input_phone_label)
@@ -44,12 +44,12 @@ QS "C-Phone_sil"     {*-sil+*}
 QS "R-Phone_o"       {*+o=*}
 QS "RR-Phone_o"      {*=o/A:*}
     """
-    LL_muon1 = binary_dict[0][0]
-    LL_muon2 = binary_dict[1][0]
-    L_muon1 = binary_dict[2][0]
-    C_sil = binary_dict[3][0]
-    R_phone_o = binary_dict[4][0]
-    RR_phone_o = binary_dict[5][0]
+    LL_muon1 = binary_dict[0][1][0]
+    LL_muon2 = binary_dict[1][1][0]
+    L_muon1 = binary_dict[2][1][0]
+    C_sil = binary_dict[3][1][0]
+    R_phone_o = binary_dict[4][1][0]
+    RR_phone_o = binary_dict[5][1][0]
 
     # xx^xx-sil+k=o
     label = labels[0][-1]
@@ -89,24 +89,28 @@ QS "L-Phone_Yuusei_Boin"           {*^a-*,*^i-*,*^u-*,*^e-*,*^o-*}
 CQS "e1" {/E:(\\NOTE)]}
     """
     binary_dict, continuous_dict = hts.load_question_set(
-        join(DATA_DIR, "test_jp_svs.hed"), append_hat_for_LL=False, convert_svs_pattern=True)
+        join(DATA_DIR, "test_jp_svs.hed"),
+        append_hat_for_LL=False,
+        convert_svs_pattern=True,
+    )
     input_phone_label = join(DATA_DIR, "song070_f00001_063.lab")
     labels = hts.load(input_phone_label)
     feats = fe.linguistic_features(labels, binary_dict, continuous_dict)
     assert feats.shape == (74, 3)
 
     # CQS e1: get the current MIDI number
-    C_e1 = continuous_dict[0]
+    C_e1 = continuous_dict[0][1]
     for idx, lab in enumerate(labels):
         context = lab[-1]
         if C_e1.search(context) is not None:
             from nnmnkwii.frontend import NOTE_MAPPING
+
             assert NOTE_MAPPING[C_e1.findall(context)[0]] == feats[idx, 1]
 
     # CQS e57: get pitch diff
     # In contrast to other continous features, the pitch diff has a prefix "m" or "p"
     # to indiecate th sign of numbers.
-    C_e57 = continuous_dict[1]
+    C_e57 = continuous_dict[1][1]
     for idx, lab in enumerate(labels):
         context = lab[-1]
         if "~p2+" in context:
@@ -157,8 +161,9 @@ def test_mono():
     sil_regex = re.compile("sil")
 
     for indices in [
-            labels.silence_label_indices(sil_regex),
-            labels.silence_phone_indices(sil_regex)]:
+        labels.silence_label_indices(sil_regex),
+        labels.silence_phone_indices(sil_regex),
+    ]:
         assert len(indices) == 2
         assert indices[0] == 0
         assert indices[1] == len(labels) - 1
