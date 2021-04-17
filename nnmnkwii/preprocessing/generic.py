@@ -1,20 +1,20 @@
 # coding: utf-8
-from __future__ import division, print_function, absolute_import
+from __future__ import absolute_import, division, print_function
 
 import numpy as np
-from sklearn.utils.extmath import _incremental_mean_and_var
 from scipy import signal
+from sklearn.utils.extmath import _incremental_mean_and_var
 
 
 # from: https://github.com/scikit-learn/scikit-learn/blob/0.22.2/sklearn/preprocessing/_data.py
 def _handle_zeros_in_scale(scale, copy=True):
-    ''' Makes sure that whenever scale is zero, we handle it correctly.
-    This happens in most scalers when we have constant features.'''
+    """Makes sure that whenever scale is zero, we handle it correctly.
+    This happens in most scalers when we have constant features."""
 
     # if we are fitting on 1D arrays, scale might be a scalar
     if np.isscalar(scale):
-        if scale == .0:
-            scale = 1.
+        if scale == 0.0:
+            scale = 1.0
         return scale
     elif isinstance(scale, np.ndarray):
         if copy:
@@ -104,7 +104,7 @@ def inv_mulaw(y, mu=256):
         :func:`nnmnkwii.preprocessing.mulaw_quantize`
         :func:`nnmnkwii.preprocessing.inv_mulaw_quantize`
     """
-    return _sign(y) * (1.0 / mu) * ((1.0 + mu)**_abs(y) - 1.0)
+    return _sign(y) * (1.0 / mu) * ((1.0 + mu) ** _abs(y) - 1.0)
 
 
 def mulaw_quantize(x, mu=256):
@@ -197,8 +197,8 @@ def preemphasis(x, coef=0.97):
         >>> y = P.preemphasis(x, coef=0.97)
         >>> assert x.shape == y.shape
     """
-    b = np.array([1., -coef], x.dtype)
-    a = np.array([1.], x.dtype)
+    b = np.array([1.0, -coef], x.dtype)
+    a = np.array([1.0], x.dtype)
     return signal.lfilter(b, a, x)
 
 
@@ -224,8 +224,8 @@ def inv_preemphasis(x, coef=0.97):
         >>> x_hat = P.inv_preemphasis(P.preemphasis(x, coef=0.97), coef=0.97)
         >>> assert np.allclose(x, x_hat)
     """
-    b = np.array([1.], x.dtype)
-    a = np.array([1., -coef], x.dtype)
+    b = np.array([1.0], x.dtype)
+    a = np.array([1.0, -coef], x.dtype)
     return signal.lfilter(b, a, x)
 
 
@@ -281,13 +281,17 @@ def delta_features(x, windows):
     T, D = x.shape
     assert len(windows) > 0
     combined_features = np.empty((T, D * len(windows)), dtype=x.dtype)
-    for idx, (_, _, window) in enumerate(windows):
-        combined_features[:, D * idx:D * idx +
-                          D] = _apply_delta_window(x, window)
+    # NOTE: bandmat case
+    if isinstance(windows[0], tuple):
+        for idx, (_, _, window) in enumerate(windows):
+            combined_features[:, D * idx : D * idx + D] = _apply_delta_window(x, window)
+    else:
+        for idx, window in enumerate(windows):
+            combined_features[:, D * idx : D * idx + D] = _apply_delta_window(x, window)
     return combined_features
 
 
-def trim_zeros_frames(x, eps=1e-7, trim='b'):
+def trim_zeros_frames(x, eps=1e-7, trim="b"):
     """Remove leading and/or trailing zeros frames.
 
     Similar to :func:`numpy.trim_zeros`, trimming trailing zeros features.
@@ -307,28 +311,28 @@ def trim_zeros_frames(x, eps=1e-7, trim='b'):
         >>> y = trim_zeros_frames(x)
     """
 
-    assert trim in {'f', 'b', 'fb'}
+    assert trim in {"f", "b", "fb"}
 
     T, D = x.shape
     s = np.sum(np.abs(x), axis=1)
-    s[s < eps] = 0.
+    s[s < eps] = 0.0
 
-    if trim == 'f':
-        return x[len(x) - len(np.trim_zeros(s, trim=trim)):]
-    elif trim == 'b':
+    if trim == "f":
+        return x[len(x) - len(np.trim_zeros(s, trim=trim)) :]
+    elif trim == "b":
         end = len(np.trim_zeros(s, trim=trim)) - len(x)
         if end == 0:
             return x
         else:
-            return x[: end]
-    elif trim == 'fb':
-        f = len(np.trim_zeros(s, trim='f'))
-        b = len(np.trim_zeros(s, trim='b'))
+            return x[:end]
+    elif trim == "fb":
+        f = len(np.trim_zeros(s, trim="f"))
+        b = len(np.trim_zeros(s, trim="b"))
         end = b - len(x)
         if end == 0:
-            return x[len(x) - f:]
+            return x[len(x) - f :]
         else:
-            return x[len(x) - f: end]
+            return x[len(x) - f : end]
 
 
 def remove_zeros_frames(x, eps=1e-7):
@@ -351,7 +355,7 @@ def remove_zeros_frames(x, eps=1e-7):
     """
     T, D = x.shape
     s = np.sum(np.abs(x), axis=1)
-    s[s < eps] = 0.
+    s[s < eps] = 0.0
     return x[s > eps]
 
 
@@ -413,8 +417,7 @@ def adjust_frame_length(x, pad=True, divisible_by=1, **kwargs):
     return x
 
 
-def adjust_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1,
-                         **kwargs):
+def adjust_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1, **kwargs):
     """Adjust frame lengths given two feature vectors or matrices.
 
     This ensures that two feature vectors or matrices have same number of
@@ -493,8 +496,14 @@ def adjust_frame_lengths(x, y, pad=True, ensure_even=False, divisible_by=1,
     return x, y
 
 
-def meanvar(dataset, lengths=None, mean_=0., var_=0.,
-            last_sample_count=0, return_last_sample_count=False):
+def meanvar(
+    dataset,
+    lengths=None,
+    mean_=0.0,
+    var_=0.0,
+    last_sample_count=0,
+    return_last_sample_count=False,
+):
     """Mean/variance computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
@@ -532,9 +541,8 @@ def meanvar(dataset, lengths=None, mean_=0., var_=0.,
 
     for idx, x in enumerate(dataset):
         if lengths is not None:
-            x = x[:lengths[idx]]
-        mean_, var_, _ = _incremental_mean_and_var(
-            x, mean_, var_, last_sample_count)
+            x = x[: lengths[idx]]
+        mean_, var_, _ = _incremental_mean_and_var(x, mean_, var_, last_sample_count)
         last_sample_count += len(x)
     mean_, var_ = mean_.astype(dtype), var_.astype(dtype)
 
@@ -544,8 +552,14 @@ def meanvar(dataset, lengths=None, mean_=0., var_=0.,
         return mean_, var_
 
 
-def meanstd(dataset, lengths=None, mean_=0., var_=0.,
-            last_sample_count=0, return_last_sample_count=False):
+def meanstd(
+    dataset,
+    lengths=None,
+    mean_=0.0,
+    var_=0.0,
+    last_sample_count=0,
+    return_last_sample_count=False,
+):
     """Mean/std-deviation computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
@@ -579,8 +593,9 @@ def meanstd(dataset, lengths=None, mean_=0., var_=0.,
         >>> lengths = [len(y) for y in Y]
         >>> data_mean, data_std = meanstd(Y, lengths)
     """
-    ret = meanvar(dataset, lengths, mean_, var_,
-                  last_sample_count, return_last_sample_count)
+    ret = meanvar(
+        dataset, lengths, mean_, var_, last_sample_count, return_last_sample_count
+    )
     m, v = ret[0], ret[1]
     v = _handle_zeros_in_scale(np.sqrt(v))
     if return_last_sample_count:
@@ -617,7 +632,7 @@ def minmax(dataset, lengths=None):
 
     for idx, x in enumerate(dataset):
         if lengths is not None:
-            x = x[:lengths[idx]]
+            x = x[: lengths[idx]]
         min_ = np.minimum(min_, np.min(x, axis=(0,)))
         max_ = np.maximum(max_, np.max(x, axis=(0,)))
 
@@ -674,8 +689,9 @@ def inv_scale(x, data_mean, data_std):
 
 def __minmax_scale_factor(data_min, data_max, feature_range):
     data_range = data_max - data_min
-    scale = (feature_range[1] - feature_range[0]) / \
-        _handle_zeros_in_scale(data_range, copy=False)
+    scale = (feature_range[1] - feature_range[0]) / _handle_zeros_in_scale(
+        data_range, copy=False
+    )
     return scale
 
 
@@ -718,8 +734,9 @@ def minmax_scale_params(data_min, data_max, feature_range=(0, 1)):
     return min_, scale_
 
 
-def minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
-                 scale_=None, min_=None):
+def minmax_scale(
+    x, data_min=None, data_max=None, feature_range=(0, 1), scale_=None, min_=None
+):
     """Min/max scaling for given a single data.
 
     Given data min, max and feature range, apply min/max normalization to data.
@@ -761,8 +778,10 @@ def minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
         >>> scaled_x = minmax_scale(X[0], data_min, data_max)
     """
     if (scale_ is None or min_ is None) and (data_min is None or data_max is None):
-        raise ValueError("""
-`data_min` and `data_max` or `scale_` and `min_` must be specified to perform minmax scale""")
+        raise ValueError(
+            """
+`data_min` and `data_max` or `scale_` and `min_` must be specified to perform minmax scale"""
+        )
     if scale_ is None:
         scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
     if min_ is None:
@@ -770,8 +789,9 @@ def minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
     return x * scale_ + min_
 
 
-def inv_minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
-                     scale_=None, min_=None):
+def inv_minmax_scale(
+    x, data_min=None, data_max=None, feature_range=(0, 1), scale_=None, min_=None
+):
     """Inverse transform of min/max scaling for given a single data.
 
     Given data min, max and feature range, apply min/max denormalization to data.
@@ -800,8 +820,10 @@ def inv_minmax_scale(x, data_min=None, data_max=None, feature_range=(0, 1),
         :func:`nnmnkwii.preprocessing.minmax_scale_params`
     """
     if (scale_ is None or min_ is None) and (data_min is None or data_max is None):
-        raise ValueError("""
-`data_min` and `data_max` or `scale_` and `min_` must be specified to perform inverse of minmax scale""")
+        raise ValueError(
+            """
+`data_min` and `data_max` or `scale_` and `min_` must be specified to perform inverse of minmax scale"""
+        )
     if scale_ is None:
         scale_ = __minmax_scale_factor(data_min, data_max, feature_range)
     if min_ is None:
