@@ -448,3 +448,20 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
         else:
             raise RuntimeError("Not supported question format")
     return binary_dict, continuous_dict
+
+
+def write_audacity_labels(dst_path, labels):
+    """Write audacity labels from HTS-style labels
+
+    Args:
+        dst_path (str): The output file path.
+        labels (HTSLabelFile): HTS style labels
+    """
+    with open(dst_path, "w") as of:
+        for s, e, l in labels:
+            s, e = s * 1e-7, e * 1e-7
+            if "-" in l and "+" in l:
+                ph = l.split("-")[1].split("+")[0]
+            else:
+                ph = l
+            of.write("{:.4f}\t{:.4f}\t{}\n".format(s, e, ph))
