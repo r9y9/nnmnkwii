@@ -465,3 +465,46 @@ def write_audacity_labels(dst_path, labels):
             else:
                 ph = l
             of.write("{:.4f}\t{:.4f}\t{}\n".format(s, e, ph))
+
+
+def write_textgrid(dst_path, labels):
+    """Write TextGrid from HTS-style labels
+
+    Args:
+        dst_path (str): The output file path.
+        labels (HTSLabelFile): HTS style labels
+    """
+    template = """File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0
+xmax = {xmax}
+tiers? <exists>
+size = 1
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "phoneme"
+        xmin = 0
+        xmax = {xmax}
+        intervals: size = {size}"""
+    template = template.format(xmax=labels.end_times[-1] * 1e-7, size=len(labels))
+
+    for idx, (s, e, l) in enumerate(labels):
+        s, e = s * 1e-7, e * 1e-7
+        if "-" in l and "+" in l:
+            ph = l.split("-")[1].split("+")[0]
+        else:
+            ph = l
+
+        template += """
+        intervals [{idx}]:
+            xmin = {s}
+            xmax = {e}
+            text = "{ph}" """.format(
+            idx=idx + 1, s=s, e=e, ph=ph
+        )
+    template += "\n"
+
+    with open(dst_path, "w") as of:
+        of.write(template)
