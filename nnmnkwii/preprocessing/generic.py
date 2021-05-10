@@ -46,7 +46,7 @@ def _asint(x):
     # ugly wrapper to support torch/numpy arrays
     isnumpy = isinstance(x, np.ndarray)
     isscalar = np.isscalar(x)
-    return x.astype(np.int) if isnumpy else int(x) if isscalar else x.long()
+    return x.astype(int) if isnumpy else int(x) if isscalar else x.long()
 
 
 def _asfloat(x):

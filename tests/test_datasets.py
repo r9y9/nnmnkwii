@@ -153,7 +153,7 @@ def test_fixed_length_sequence_wise_iteration():
 def test_frame_wise_iteration():
     X, Y = _get_small_datasets(padded=False)
 
-    lengths = np.array([len(x) for x in X], dtype=np.int)
+    lengths = np.array([len(x) for x in X], dtype=int)
     num_utterances = len(lengths)
 
     # With sufficient cache size
@@ -228,7 +228,7 @@ def test_frame_wise_torch_data_loader():
     # fixed size length, i.e., implements `__len__` method, we need to know
     # number of frames for each utterance.
     # Sum of the number of frames is the dataset size for frame-wise iteration.
-    lengths = np.array([len(x) for x in X], dtype=np.int)
+    lengths = np.array([len(x) for x in X], dtype=int)
 
     # For the above reason, we need to explicitly give the number of frames.
     X = MemoryCacheFramewiseDataset(X, lengths, cache_size=len(X))

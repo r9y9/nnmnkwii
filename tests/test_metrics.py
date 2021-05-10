@@ -110,7 +110,7 @@ def test_real_metrics():
 
     mgc = X[:, :, :source.mgc_dim // 3]
     lf0 = X[:, :, source.lf0_start_idx]
-    vuv = (X[:, :, source.vuv_start_idx] > 0).astype(np.int)
+    vuv = (X[:, :, source.vuv_start_idx] > 0).astype(int)
     bap = X[:, :, source.bap_start_idx]
 
     mgc_tgt = mgc + 0.01

@@ -82,7 +82,7 @@ def test_pack_sequnce():
     """
 
     X, Y = _get_small_datasets(padded=False)
-    lengths = np.array([len(x) for x in X], dtype=np.int)[:, None]
+    lengths = np.array([len(x) for x in X], dtype=int)[:, None]
 
     # We need padded dataset
     X, Y = _get_small_datasets(padded=True)
