@@ -1,6 +1,7 @@
 # coding: utf-8
 # cython: wraparound = False
 # cython: boundscheck = False
+# cython: language_level=3
 
 import numpy as np
 cimport numpy as np
