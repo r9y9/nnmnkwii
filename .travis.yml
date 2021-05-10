@@ -36,7 +36,7 @@ install:
 
 script:
   - nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec';
-  - flake8
+#  - flake8
 
 after_success:
   - codecov
