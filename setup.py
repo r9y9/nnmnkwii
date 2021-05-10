@@ -113,6 +113,29 @@ ext_modules = [
     ),
 ]
 
+### [start] bandmat related code ###
+# https://github.com/MattShannon/bandmat/issues/10
+bandmat_upstream_fixed = False
+if not bandmat_upstream_fixed:
+    cython_locs = [
+        ("nnmnkwii", "paramgen", "_bandmat", "full"),
+        ("nnmnkwii", "paramgen", "_bandmat", "core"),
+        ("nnmnkwii", "paramgen", "_bandmat", "tensor"),
+        ("nnmnkwii", "paramgen", "_bandmat", "linalg"),
+        ("nnmnkwii", "paramgen", "_bandmat", "misc"),
+        ("nnmnkwii", "paramgen", "_bandmat", "overlap"),
+    ]
+    ext_modules.extend(
+        Extension(
+            ".".join(loc),
+            [join(*loc) + ".pyx"],
+            extra_compile_args=["-O3"],
+            include_dirs=include_dirs,
+        )
+        for loc in cython_locs
+    )
+### [end] bandmat related code ###
+
 
 def package_files(directory):
     # https://stackoverflow.com/questions/27664504/
@@ -133,11 +156,6 @@ install_requires = [
     "pysptk >= 0.1.17",
     "tqdm",
 ]
-
-# Workaround for python >= 3.7 and bandmat
-# https://github.com/r9y9/deepvoice3_pytorch/issues/154
-if sys.version_info[:2] < (3, 7):
-    install_requires.append('bandmat >= 0.7')
 
 setup(
     name="nnmnkwii",

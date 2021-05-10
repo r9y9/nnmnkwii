@@ -737,4 +737,3 @@ def duration_features(hts_labels, *args, **kwargs):
         return extract_dur_from_state_alignment_labels(hts_labels, *args, **kwargs)
     else:
         return extract_dur_from_phone_alignment_labels(hts_labels, *args, **kwargs)
-

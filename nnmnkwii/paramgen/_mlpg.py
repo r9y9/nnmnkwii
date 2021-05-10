@@ -3,8 +3,8 @@ from __future__ import with_statement, print_function, absolute_import
 
 import numpy as np
 
-import bandmat as bm
-import bandmat.linalg as bla
+from nnmnkwii.paramgen import _bandmat as bm
+from nnmnkwii.paramgen._bandmat import linalg as bla
 from scipy.linalg import solve_banded
 from nnmnkwii.util.linalg import cholesky_inv_banded
 from .mlpg_helper import full_window_mat as _full_window_mat
