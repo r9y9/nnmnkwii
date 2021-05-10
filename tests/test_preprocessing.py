@@ -460,7 +460,8 @@ def test_dtw_frame_length_adjustment():
 def test_dtw_aligner():
     from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 
-    x, fs = librosa.load(example_audio_file(), sr=None)
+    fs, x = wavfile.read(example_audio_file())
+    x = (x / 32768.0).astype(np.float32)
     assert fs == 16000
     x_fast = librosa.effects.time_stretch(x, 2.0)
 
