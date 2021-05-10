@@ -124,7 +124,7 @@ def extract_coarse_coding_features_relative(cc_features, phone_duration):
 
 def pattern_matching_binary(binary_dict, label):
     dict_size = len(binary_dict)
-    lab_binary_vector = np.zeros((1, dict_size), dtype=np.int)
+    lab_binary_vector = np.zeros((1, dict_size), dtype=int)
 
     for i in range(dict_size):
         current_question_list = binary_dict[i]
@@ -573,9 +573,9 @@ def extract_dur_from_state_alignment_labels(
 
     dur_dim = hts_labels.num_states() if unit_size == "state" else 1
     if feature_size == "phoneme":
-        dur_feature_matrix = np.empty((hts_labels.num_phones(), dur_dim), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_phones(), dur_dim), dtype=int)
     else:
-        dur_feature_matrix = np.empty((hts_labels.num_frames(), dur_dim), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_frames(), dur_dim), dtype=int)
 
     current_dur_array = np.zeros((dur_dim, 1))
     state_number = hts_labels.num_states()
@@ -654,9 +654,9 @@ def extract_dur_from_phone_alignment_labels(
     if feature_size not in ["phoneme", "frame"]:
         raise ValueError("Not supported")
     if feature_size == "phoneme":
-        dur_feature_matrix = np.empty((hts_labels.num_phones(), 1), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_phones(), 1), dtype=int)
     else:
-        dur_feature_matrix = np.empty((hts_labels.num_frames(), 1), dtype=np.int)
+        dur_feature_matrix = np.empty((hts_labels.num_frames(), 1), dtype=int)
     dur_feature_index = 0
     for current_index, (start_time, end_time, _) in enumerate(hts_labels):
         frame_number = (end_time - start_time) / frame_shift
