@@ -1,18 +1,19 @@
 # coding: utf-8
 
-from __future__ import with_statement, print_function, absolute_import
+from __future__ import absolute_import, print_function, with_statement
 
-from setuptools import setup, find_packages, Extension
-import setuptools.command.develop
-import setuptools.command.build_py
-from distutils.version import LooseVersion
-from setuptools.command.build_ext import build_ext as _build_ext
-from os.path import join, exists
-import subprocess
 import os
+import subprocess
 import sys
+from distutils.version import LooseVersion
+from os.path import exists, join
 
-version = "0.0.23"
+import setuptools.command.build_py
+import setuptools.command.develop
+from setuptools import Extension, find_packages, setup
+from setuptools.command.build_ext import build_ext as _build_ext
+
+version = "0.0.24"
 
 # Adapted from https://github.com/pytorch/pytorch
 cwd = os.path.dirname(os.path.abspath(__file__))
