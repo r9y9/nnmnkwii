@@ -1,13 +1,9 @@
-# coding: utf-8
-from __future__ import division, print_function, absolute_import
-
-import pkg_resources
-
-from nnmnkwii.datasets import FileDataSource
-
-import numpy as np
 from glob import glob
 from os.path import join
+
+import numpy as np
+import pkg_resources
+from nnmnkwii.datasets import FileDataSource
 
 
 def example_label_file(phone_level=False):
@@ -71,7 +67,7 @@ def example_question_file():
     Examples:
         >>> from nnmnkwii.util import example_question_file
         >>> from nnmnkwii.io import hts
-        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
+        >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
     """
     return pkg_resources.resource_filename(
         __name__, '_example_data/questions-radio_dnn_416.hed')

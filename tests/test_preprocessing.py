@@ -1,29 +1,32 @@
-from __future__ import division, print_function, absolute_import
+from __future__ import absolute_import, division, print_function
 
-from nnmnkwii.preprocessing.f0 import interp1d
-from nnmnkwii.preprocessing import trim_zeros_frames, remove_zeros_frames
-from nnmnkwii.preprocessing import adjust_frame_lengths, delta_features
-from nnmnkwii.preprocessing import adjust_frame_length
-from nnmnkwii.preprocessing import modspec, modphase
-from nnmnkwii.preprocessing import preemphasis, inv_preemphasis
-from nnmnkwii import preprocessing as P
-from nnmnkwii.util import example_file_data_sources_for_duration_model
-from nnmnkwii.util import example_file_data_sources_for_acoustic_model
-from nnmnkwii.util import example_audio_file
-from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
-
-from nose.tools import raises
-
-from scipy.io import wavfile
-import numpy as np
-import pyworld
 import librosa
+import numpy as np
 import pysptk
-
+import pyworld
+from nnmnkwii import preprocessing as P
+from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
+from nnmnkwii.preprocessing import (
+    adjust_frame_length,
+    adjust_frame_lengths,
+    delta_features,
+    inv_preemphasis,
+    preemphasis,
+    remove_zeros_frames,
+    trim_zeros_frames,
+)
+from nnmnkwii.preprocessing.f0 import interp1d
+from nnmnkwii.util import (
+    example_audio_file,
+    example_file_data_sources_for_acoustic_model,
+    example_file_data_sources_for_duration_model,
+)
 from nose.plugins.attrib import attr
+from nose.tools import raises
+from scipy.io import wavfile
 
 
-def _get_windows_set():
+def _get_windows_set_bandmat():
     windows_set = [
         # Static
         [
@@ -39,6 +42,27 @@ def _get_windows_set():
             (0, 0, np.array([1.0])),
             (1, 1, np.array([-0.5, 0.0, 0.5])),
             (1, 1, np.array([1.0, -2.0, 1.0])),
+        ],
+    ]
+    return windows_set
+
+
+def _get_windows_set():
+    windows_set = [
+        # Static
+        [
+            [1.0],
+        ],
+        # Static + delta
+        [
+            [1.0],
+            [-0.5, 0.0, 0.5],
+        ],
+        # Static + delta + deltadelta
+        [
+            [1.0],
+            [-0.5, 0.0, 0.5],
+            [1.0, -2.0, 1.0],
         ],
     ]
     return windows_set
@@ -84,7 +108,9 @@ def test_mulaw():
 
     # torch array input
     from warnings import warn
+
     import torch
+
     torch.manual_seed(1234)
     for mu in [128, 256, 512]:
         x = torch.rand(10)
@@ -121,24 +147,22 @@ def test_meanvar_incremental():
     assert np.allclose(X_var, X_var_inc)
 
     # Split dataset and compute meanvar incrementaly
-    X_a = X[:N // 2]
-    X_b = X[N // 2:]
-    X_mean_a, X_var_a, last_sample_count = P.meanvar(
-        X_a, return_last_sample_count=True)
-    assert last_sample_count == np.sum(lengths[:N // 2])
+    X_a = X[: N // 2]
+    X_b = X[N // 2 :]
+    X_mean_a, X_var_a, last_sample_count = P.meanvar(X_a, return_last_sample_count=True)
+    assert last_sample_count == np.sum(lengths[: N // 2])
     X_mean_b, X_var_b = P.meanvar(
-        X_b, mean_=X_mean_a, var_=X_var_a,
-        last_sample_count=last_sample_count)
+        X_b, mean_=X_mean_a, var_=X_var_a, last_sample_count=last_sample_count
+    )
     assert np.allclose(X_mean, X_mean_b)
     assert np.allclose(X_var, X_var_b)
 
     # meanstd
-    X_mean_a, X_std_a, last_sample_count = P.meanstd(
-        X_a, return_last_sample_count=True)
-    assert last_sample_count == np.sum(lengths[:N // 2])
+    X_mean_a, X_std_a, last_sample_count = P.meanstd(X_a, return_last_sample_count=True)
+    assert last_sample_count == np.sum(lengths[: N // 2])
     X_mean_b, X_std_b = P.meanstd(
-        X_b, mean_=X_mean_a, var_=X_std_a**2,
-        last_sample_count=last_sample_count)
+        X_b, mean_=X_mean_a, var_=X_std_a ** 2, last_sample_count=last_sample_count
+    )
     assert np.allclose(X_mean, X_mean_b)
     assert np.allclose(X_std, X_std_b)
 
@@ -224,7 +248,8 @@ def test_minmax():
     assert np.allclose(x, x_hat)
 
     x_hat = P.inv_minmax_scale(
-        P.minmax_scale(x, scale_=scale_, min_=min_), scale_=scale_, min_=min_)
+        P.minmax_scale(x, scale_=scale_, min_=min_), scale_=scale_, min_=min_
+    )
     assert np.allclose(x, x_hat)
 
 
@@ -279,29 +304,29 @@ def test_trim_zeros_frames():
     np.testing.assert_array_equal(actual_default, desired_default)
 
     desired_b = np.array(((0, 0), (0, 0), (1, 1), (2, 2)))
-    actual_b = trim_zeros_frames(arr, trim='b')
+    actual_b = trim_zeros_frames(arr, trim="b")
 
     assert desired_b.shape[1] == actual_b.shape[1]
     np.testing.assert_array_equal(actual_b, desired_b)
 
     desired_f = np.array(((1, 1), (2, 2), (0, 0)))
-    actual_f = trim_zeros_frames(arr, trim='f')
+    actual_f = trim_zeros_frames(arr, trim="f")
 
     assert desired_f.shape[1] == actual_f.shape[1]
     np.testing.assert_array_equal(actual_f, desired_f)
 
     desired_fb = np.array(((1, 1), (2, 2)))
-    actual_fb = trim_zeros_frames(arr, trim='fb')
+    actual_fb = trim_zeros_frames(arr, trim="fb")
 
     assert desired_fb.shape[1] == actual_fb.shape[1]
     np.testing.assert_array_equal(actual_fb, desired_fb)
 
     non_zeros = np.array(((1, 1), (2, 2), (3, 3), (4, 4), (5, 5)))
     desired_b_or_fb_non_zeros = np.array(((1, 1), (2, 2), (3, 3), (4, 4), (5, 5)))
-    actual_b = trim_zeros_frames(non_zeros, trim='b')
+    actual_b = trim_zeros_frames(non_zeros, trim="b")
     np.testing.assert_array_equal(actual_b, desired_b_or_fb_non_zeros)
 
-    actual_fb = trim_zeros_frames(non_zeros, trim='fb')
+    actual_fb = trim_zeros_frames(non_zeros, trim="fb")
     np.testing.assert_array_equal(actual_fb, desired_b_or_fb_non_zeros)
 
 
@@ -326,8 +351,12 @@ def test_adjust_frame_length_divisible():
     assert (adjust_frame_length(x, pad=True, divisible_by=3)[-1] == 0).all()
 
     # make sure we passes extra kwargs to np.pad
-    assert (adjust_frame_length(x, pad=True, divisible_by=3,
-                                mode="constant", constant_values=1)[-1] == 1).all()
+    assert (
+        adjust_frame_length(
+            x, pad=True, divisible_by=3, mode="constant", constant_values=1
+        )[-1]
+        == 1
+    ).all()
 
     # Should preserve dtype
     for dtype in [np.float32, np.float64]:
@@ -342,8 +371,10 @@ def test_adjust_frame_lengths():
     D = 5
 
     # 1d and 2d padding
-    for (x, y) in [(np.random.rand(T1), np.random.rand(T2)),
-                   (np.random.rand(T1, D), np.random.rand(T2, D))]:
+    for (x, y) in [
+        (np.random.rand(T1), np.random.rand(T2)),
+        (np.random.rand(T1, D), np.random.rand(T2, D)),
+    ]:
         x_hat, y_hat = adjust_frame_lengths(x, y, pad=True)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 11
@@ -352,24 +383,20 @@ def test_adjust_frame_lengths():
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 10
 
-        x_hat, y_hat = adjust_frame_lengths(x, y, pad=True,
-                                            divisible_by=2)
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=True, divisible_by=2)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 12
 
-        x_hat, y_hat = adjust_frame_lengths(x, y, pad=False,
-                                            divisible_by=2)
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=False, divisible_by=2)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 10
 
         # Divisible
-        x_hat, y_hat = adjust_frame_lengths(x, y, pad=False,
-                                            divisible_by=3)
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=False, divisible_by=3)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 9
 
-        x_hat, y_hat = adjust_frame_lengths(x, y, pad=True,
-                                            divisible_by=3)
+        x_hat, y_hat = adjust_frame_lengths(x, y, pad=True, divisible_by=3)
         assert x_hat.shape == y_hat.shape
         assert x_hat.shape[0] == 12
 
@@ -381,7 +408,8 @@ def test_adjust_frame_lengths():
 
     # make sure we passes extra kwargs to np.pad
     x_hat, y_hat = adjust_frame_lengths(
-        x, y, pad=True, divisible_by=3, mode="constant", constant_values=1)
+        x, y, pad=True, divisible_by=3, mode="constant", constant_values=1
+    )
     assert x_hat[-1] == 1 and y_hat[-1] == 1
 
 
@@ -390,6 +418,9 @@ def test_delta_features():
     static_dim = 2
     x = np.random.rand(T, static_dim)
     for windows in _get_windows_set():
+        y = delta_features(x, windows)
+        assert y.shape == (T, static_dim * len(windows))
+    for windows in _get_windows_set_bandmat():
         y = delta_features(x, windows)
         assert y.shape == (T, static_dim * len(windows))
 
@@ -413,11 +444,14 @@ def test_dtw_frame_length_adjustment():
     X = FileSourceDataset(X)
     X_unaligned = X.asarray()
     # This should trigger frame length adjustment
-    Y_unaligned = np.pad(X_unaligned, [(0, 0), (5, 0), (0, 0)],
-                         mode="constant", constant_values=0)
+    Y_unaligned = np.pad(
+        X_unaligned, [(0, 0), (5, 0), (0, 0)], mode="constant", constant_values=0
+    )
     Y_unaligned = Y_unaligned[:, :-5, :]
-    for aligner in [DTWAligner(), IterativeDTWAligner(
-            n_iter=1, max_iter_gmm=1, n_components_gmm=1)]:
+    for aligner in [
+        DTWAligner(),
+        IterativeDTWAligner(n_iter=1, max_iter_gmm=1, n_components_gmm=1),
+    ]:
         X_aligned, Y_aligned = aligner.transform((X_unaligned, Y_unaligned))
         assert X_aligned.shape == Y_aligned.shape
 
@@ -426,7 +460,8 @@ def test_dtw_frame_length_adjustment():
 def test_dtw_aligner():
     from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 
-    x, fs = librosa.load(example_audio_file(), sr=None)
+    fs, x = wavfile.read(example_audio_file())
+    x = (x / 32768.0).astype(np.float32)
     assert fs == 16000
     x_fast = librosa.effects.time_stretch(x, 2.0)
 
@@ -447,12 +482,14 @@ def test_dtw_aligner():
     assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
 
     X_aligned, Y_aligned = IterativeDTWAligner(
-        n_iter=2, max_iter_gmm=10, n_components_gmm=2).transform((X, Y))
+        n_iter=2, max_iter_gmm=10, n_components_gmm=2
+    ).transform((X, Y))
     assert X_aligned.shape == Y_aligned.shape
     assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
 
     # Custom dist function
     from nnmnkwii.metrics import melcd
+
     X_aligned, Y_aligned = DTWAligner(dist=melcd).transform((X, Y))
     assert np.linalg.norm(X_aligned - Y_aligned) < np.linalg.norm(X - Y)
 
@@ -482,15 +519,15 @@ def test_modspec_smoothing():
         for norm in [None, "ortho"]:
             for n in [1024, 2048]:
                 # Nyquist freq
-                y_hat = P.modspec_smoothing(y, modfs, n=n, norm=norm,
-                                            cutoff=modfs // 2,
-                                            log_domain=log_domain)
+                y_hat = P.modspec_smoothing(
+                    y, modfs, n=n, norm=norm, cutoff=modfs // 2, log_domain=log_domain
+                )
                 assert np.allclose(y, y_hat)
 
                 # Smooth
-                P.modspec_smoothing(y, modfs, n=n, norm=norm,
-                                    cutoff=modfs // 4,
-                                    log_domain=log_domain)
+                P.modspec_smoothing(
+                    y, modfs, n=n, norm=norm, cutoff=modfs // 4, log_domain=log_domain
+                )
 
     # Cutoff frequency larger than modfs//2
     @raises(ValueError)

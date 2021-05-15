@@ -38,11 +38,10 @@
 #  THIS SOFTWARE.
 ##########################################################################
 
-from __future__ import division, print_function, absolute_import
-
-import numpy as np
 import re
 from copy import copy
+
+import numpy as np
 
 
 class HTSLabelFile(object):
@@ -132,8 +131,12 @@ J:13+9-2[2]')
 
     def round_(self):
         s = self.frame_shift
-        self.start_times = list(np.round(np.asarray(self.start_times) / s).astype(np.int64) * s)
-        self.end_times = list(np.round(np.asarray(self.end_times) / s).astype(np.int64) * s)
+        self.start_times = list(
+            np.round(np.asarray(self.start_times) / s).astype(np.int64) * s
+        )
+        self.end_times = list(
+            np.round(np.asarray(self.end_times) / s).astype(np.int64) * s
+        )
         return self
 
     def append(self, label, strict=True):
@@ -158,11 +161,15 @@ J:13+9-2[2]')
             if start_time >= end_time:
                 raise ValueError(
                     "end_time ({}) must be larger than start_time ({}).".format(
-                        end_time, start_time))
+                        end_time, start_time
+                    )
+                )
             if len(self.end_times) > 0 and start_time != self.end_times[-1]:
                 raise ValueError(
                     "start_time ({}) must be equal to the last end_time ({}).".format(
-                        start_time, self.end_times[-1]))
+                        start_time, self.end_times[-1]
+                    )
+                )
 
         self.start_times.append(start_time)
         self.end_times.append(end_time)
@@ -178,8 +185,9 @@ J:13+9-2[2]')
         offset = self.start_times[0]
 
         # Unwrap state-axis
-        end_times = offset + np.cumsum(
-            durations.reshape(-1, 1) * frame_shift).astype(np.int64)
+        end_times = offset + np.cumsum(durations.reshape(-1, 1) * frame_shift).astype(
+            np.int64
+        )
         if len(end_times) != len(self.end_times):
             raise RuntimeError("Unexpected input, maybe")
         start_times = np.hstack((offset, end_times[:-1])).astype(np.int64)
@@ -272,15 +280,15 @@ J:13+9-2[2]')
         end_times = np.array(self.end_times)
         s = start_times[indices] // frame_shift
         e = end_times[indices] // frame_shift
-        return np.unique(np.concatenate(
-            [np.arange(a, b) for (a, b) in zip(s, e)], axis=0)).astype(np.int64)
+        return np.unique(
+            np.concatenate([np.arange(a, b) for (a, b) in zip(s, e)], axis=0)
+        ).astype(np.int64)
 
     def is_state_alignment_label(self):
-        return self.contexts[0][-1] == ']' and self.contexts[0][-3] == '['
+        return self.contexts[0][-1] == "]" and self.contexts[0][-3] == "["
 
     def num_states(self):
-        """Returnes number of states exclusing special begin/end states.
-        """
+        """Returnes number of states exclusing special begin/end states."""
         if not self.is_state_alignment_label():
             return 1
 
@@ -332,32 +340,34 @@ def wildcards2regex(question, convert_number_pattern=False, convert_svs_pattern=
     extracting continuous values):
     (\d+)       -- handles digit without decimal point
     ([\d\.]+)   -- handles digits with and without decimal point
+    ([-\d]+)    -- handles positive and negative numbers
     """
 
     # handle HTK wildcards (and lack of them) at ends of label:
     prefix = ""
     postfix = ""
-    if '*' in question:
-        if not question.startswith('*'):
+    if "*" in question:
+        if not question.startswith("*"):
             prefix = "\A"
-        if not question.endswith('*'):
+        if not question.endswith("*"):
             postfix = "\Z"
-    question = question.strip('*')
+    question = question.strip("*")
     question = re.escape(question)
     # convert remaining HTK wildcards * and ? to equivalent regex:
-    question = question.replace('\\*', '.*')
+    question = question.replace("\\*", ".*")
     question = prefix + question + postfix
 
     if convert_number_pattern:
-        question = question.replace('\\(\\\\d\\+\\)', '(\d+)')
-        question = question.replace(
-            '\\(\\[\\\\d\\\\\\.\\]\\+\\)', '([\d\.]+)')
+        question = question.replace("\\(\\\\d\\+\\)", "(\d+)")
+        question = question.replace("\\(\\[\\-\\\\d\\]\\+\\)", "([-\d]+)")
+        question = question.replace("\\(\\[\\\\d\\\\\\.\\]\\+\\)", "([\d\.]+)")
     # NOTE: singing voice synthesis specific handling
     if convert_svs_pattern:
         question = question.replace(
-            '\\(\\[A\\-Z\\]\\[b\\]\\?\\[0\\-9\\]\\+\\)', '([A-Z][b]?[0-9]+)')
-        question = question.replace('\\(\\\\NOTE\\)', '([A-Z][b]?[0-9]+)')
-        question = question.replace('\\(\\[pm\\]\\\\d\\+\\)', '([pm]\d+)')
+            "\\(\\[A\\-Z\\]\\[b\\]\\?\\[0\\-9\\]\\+\\)", "([A-Z][b]?[0-9]+)"
+        )
+        question = question.replace("\\(\\\\NOTE\\)", "([A-Z][b]?[0-9]+)")
+        question = question.replace("\\(\\[pm\\]\\\\d\\+\\)", "([pm]\d+)")
 
     return question
 
@@ -377,54 +387,124 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
         convert_svs_pattern (bool): Convert SVS specific patterns.
 
     Returns:
-        (binary_dict, continuous_dict): Binary/continuous feature extraction
+        (binary_dict, numeric_dict): Binary/numeric feature extraction
         regexes.
 
     Examples:
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_question_file
-        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
+        >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
     """
     with open(qs_file_name) as f:
         lines = f.readlines()
     binary_qs_index = 0
     continuous_qs_index = 0
     binary_dict = {}
-    continuous_dict = {}
+    numeric_dict = {}
 
-    LL = re.compile(re.escape('LL-'))
+    LL = re.compile(re.escape("LL-"))
 
     for line in lines:
-        line = line.replace('\n', '')
+        line = line.replace("\n", "")
         temp_list = line.split()
         if len(line) <= 0 or line.startswith("#"):
             continue
-        temp_list = line.split('{')
+        name = temp_list[1].replace('"', "").replace("'", "")
+        temp_list = line.split("{")
         temp_line = temp_list[1]
-        temp_list = temp_line.split('}')
+        temp_list = temp_line.split("}")
         temp_line = temp_list[0]
         temp_line = temp_line.strip()
-        question_list = temp_line.split(',')
+        question_list = temp_line.split(",")
 
-        temp_list = line.split(' ')
+        temp_list = line.split(" ")
         question_key = temp_list[1]
-        if temp_list[0] == 'CQS':
+        if temp_list[0] == "CQS":
             assert len(question_list) == 1
             processed_question = wildcards2regex(
-                question_list[0], convert_number_pattern=True)
-            continuous_dict[continuous_qs_index] = re.compile(
-                processed_question)  # save pre-compiled regular expression
+                question_list[0],
+                convert_number_pattern=True,
+                convert_svs_pattern=convert_svs_pattern,
+            )
+            numeric_dict[continuous_qs_index] = (
+                name,
+                re.compile(processed_question),
+            )  # save pre-compiled regular expression
             continuous_qs_index = continuous_qs_index + 1
-        elif temp_list[0] == 'QS':
+        elif temp_list[0] == "QS":
             re_list = []
             for temp_question in question_list:
                 processed_question = wildcards2regex(temp_question)
-                if append_hat_for_LL and LL.search(question_key) and processed_question[0] != '^':
-                    processed_question = '^' + processed_question
+                if (
+                    append_hat_for_LL
+                    and LL.search(question_key)
+                    and processed_question[0] != "^"
+                ):
+                    processed_question = "^" + processed_question
                 re_list.append(re.compile(processed_question))
 
-            binary_dict[binary_qs_index] = re_list
+            binary_dict[binary_qs_index] = (name, re_list)
             binary_qs_index = binary_qs_index + 1
         else:
             raise RuntimeError("Not supported question format")
-    return binary_dict, continuous_dict
+    return binary_dict, numeric_dict
+
+
+def write_audacity_labels(dst_path, labels):
+    """Write audacity labels from HTS-style labels
+
+    Args:
+        dst_path (str): The output file path.
+        labels (HTSLabelFile): HTS style labels
+    """
+    with open(dst_path, "w") as of:
+        for s, e, l in labels:
+            s, e = s * 1e-7, e * 1e-7
+            if "-" in l and "+" in l:
+                ph = l.split("-")[1].split("+")[0]
+            else:
+                ph = l
+            of.write("{:.4f}\t{:.4f}\t{}\n".format(s, e, ph))
+
+
+def write_textgrid(dst_path, labels):
+    """Write TextGrid from HTS-style labels
+
+    Args:
+        dst_path (str): The output file path.
+        labels (HTSLabelFile): HTS style labels
+    """
+    template = """File type = "ooTextFile"
+Object class = "TextGrid"
+
+xmin = 0
+xmax = {xmax}
+tiers? <exists>
+size = 1
+item []:
+    item [1]:
+        class = "IntervalTier"
+        name = "phoneme"
+        xmin = 0
+        xmax = {xmax}
+        intervals: size = {size}"""
+    template = template.format(xmax=labels.end_times[-1] * 1e-7, size=len(labels))
+
+    for idx, (s, e, l) in enumerate(labels):
+        s, e = s * 1e-7, e * 1e-7
+        if "-" in l and "+" in l:
+            ph = l.split("-")[1].split("+")[0]
+        else:
+            ph = l
+
+        template += """
+        intervals [{idx}]:
+            xmin = {s}
+            xmax = {e}
+            text = "{ph}" """.format(
+            idx=idx + 1, s=s, e=e, ph=ph
+        )
+    template += "\n"
+
+    with open(dst_path, "w") as of:
+        of.write(template)

@@ -55,7 +55,7 @@ def test_function_utils():
 
 
 def _get_banded_test_mat(win_mats, T):
-    import bandmat as bm
+    from nnmnkwii.paramgen import _bandmat as bm
 
     sdw = max([win_mat.l + win_mat.u for win_mat in win_mats])
     P = bm.zeros(sdw, sdw, T)

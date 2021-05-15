@@ -173,7 +173,7 @@ You must collect same number of files when you collect multiple pair of files.""
         D = self[0].shape[-1]
         N = len(self)
         X = np.zeros((N, T, D), dtype=dtype)
-        lengths = np.zeros(N, dtype=np.int)
+        lengths = np.zeros(N, dtype=int)
 
         if verbose > 0:
             def custom_range(x):

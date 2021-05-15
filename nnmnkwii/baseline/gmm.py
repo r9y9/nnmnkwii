@@ -1,8 +1,44 @@
 import numpy as np
-from sklearn.mixture import GaussianMixture
-from sklearn.mixture.gaussian_mixture import _compute_precision_cholesky
-
 from nnmnkwii.paramgen import mlpg
+from scipy import linalg
+from sklearn.mixture import GaussianMixture
+
+
+# ref: https://github.com/scikit-learn/scikit-learn/blob/0.24.1/sklearn/mixture/_gaussian_mixture.py
+def _compute_precision_cholesky(covariances, covariance_type):
+    estimate_precision_error_message = (
+        "Fitting the mixture model failed because some components have "
+        "ill-defined empirical covariance (for instance caused by singleton "
+        "or collapsed samples). Try to decrease the number of components, "
+        "or increase reg_covar."
+    )
+
+    if covariance_type == "full":
+        n_components, n_features, _ = covariances.shape
+        precisions_chol = np.empty((n_components, n_features, n_features))
+        for k, covariance in enumerate(covariances):
+            try:
+                cov_chol = linalg.cholesky(covariance, lower=True)
+            except linalg.LinAlgError:
+                raise ValueError(estimate_precision_error_message)
+            precisions_chol[k] = linalg.solve_triangular(
+                cov_chol, np.eye(n_features), lower=True
+            ).T
+    elif covariance_type == "tied":
+        _, n_features = covariances.shape
+        try:
+            cov_chol = linalg.cholesky(covariances, lower=True)
+        except linalg.LinAlgError:
+            raise ValueError(estimate_precision_error_message)
+        precisions_chol = linalg.solve_triangular(
+            cov_chol, np.eye(n_features), lower=True
+        ).T
+    else:
+        if np.any(np.less_equal(covariances, 0.0)):
+            raise ValueError(estimate_precision_error_message)
+        precisions_chol = 1.0 / np.sqrt(covariances)
+    return precisions_chol
+
 
 # TODO: this can be refactored to be more flexible
 # e.g. take `swap` and `diff` out of the class
@@ -39,19 +75,21 @@ class MLPGBase(object):
         # p(x), which is used to compute posterior prob. for a given source
         # spectral feature in mapping stage.
         self.px = GaussianMixture(
-            n_components=self.num_mixtures, covariance_type="full")
+            n_components=self.num_mixtures, covariance_type="full"
+        )
         self.px.means_ = self.src_means
         self.px.covariances_ = self.covarXX
         self.px.weights_ = self.weights
         self.px.precisions_cholesky_ = _compute_precision_cholesky(
-            self.px.covariances_, "full")
+            self.px.covariances_, "full"
+        )
 
     def transform(self, src):
         if src.ndim == 2:
             tgt = np.zeros_like(src)
             for idx, x in enumerate(src):
                 y = self._transform_frame(x)
-                tgt[idx][:len(y)] = y
+                tgt[idx][: len(y)] = y
             return tgt
         else:
             return self._transform_frame(src)
@@ -201,8 +239,9 @@ class MLPG(MLPGBase):
         for t in range(T):
             m = optimum_mix[t]
             # Eq. (23), with approximating covariances as diagonals
-            D[t] = np.diag(self.covarYY[m]) - np.diag(self.covarYX[m]) / \
-                np.diag(self.covarXX[m]) * np.diag(self.covarXY[m])
+            D[t] = np.diag(self.covarYY[m]) - np.diag(self.covarYX[m]) / np.diag(
+                self.covarXX[m]
+            ) * np.diag(self.covarXY[m])
 
         # Once we have mean and variance over frames, then we can do MLPG
         return mlpg(E, D, self.windows)

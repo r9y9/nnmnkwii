@@ -1,8 +1,17 @@
 Change log
 ==========
 
-v0.0.23 <2021-xx-xx>
+v0.0.23 <2021-05-15>
 --------------------
+
+- `#112`_: Renamed continuous_dict to numeric_dict to be more precise.
+- `#112`_: Bandmat is now a part of nnmnkwii's internal package. This is to avoid instllation failusres on python >=3.6. https://github.com/MattShannon/bandmat/issues/10
+- `#112`_: Started testing using github actions (python 3.7, 3.8, 3.9)
+- `#112`_: [hts.io]: :func:`nnmnkwii.io.hts.load_question_set` now keeps question names (e.g. "L-Phone_Boin") in dictionary.
+- `#112`_: [hts.io]: New functionality :func:`nnmnkwii.io.hts.write_audacity_labels`
+- `#112`_: [hts.io]: New functionality :func:`nnmnkwii.io.hts.write_textgrid`
+- `#112`_: Renamed np.int to int
+- `#112`_: Added pyproject.yaml
 
 v0.0.22 <2020-12-25>
 --------------------
@@ -215,3 +224,4 @@ v0.0.1 <2017-08-14>
 .. _#105: https://github.com/r9y9/nnmnkwii/pull/105
 .. _#108: https://github.com/r9y9/nnmnkwii/pull/108
 .. _#109: https://github.com/r9y9/nnmnkwii/pull/109
+.. _#112: https://github.com/r9y9/nnmnkwii/pull/112

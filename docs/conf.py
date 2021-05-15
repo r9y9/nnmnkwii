@@ -22,12 +22,13 @@
 # sys.path.insert(0, os.path.abspath('.'))
 
 
-import pkg_resources
 import os
 
-__version__ = pkg_resources.get_distribution('nnmnkwii').version
+import pkg_resources
 
-ON_RTD = os.environ.get('READTHEDOCS', None) == 'True'
+__version__ = pkg_resources.get_distribution("nnmnkwii").version
+
+ON_RTD = os.environ.get("READTHEDOCS", None) == "True"
 
 # -- General configuration ------------------------------------------------
 
@@ -39,23 +40,23 @@ ON_RTD = os.environ.get('READTHEDOCS', None) == 'True'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.todo',
-    'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.napoleon',
-    'numpydoc',
-    'nbsphinx',
-    'IPython.sphinxext.ipython_console_highlighting',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.doctest",
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.todo",
+    "sphinx.ext.viewcode",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.napoleon",
+    "numpydoc",
+    "nbsphinx",
+    "IPython.sphinxext.ipython_console_highlighting",
 ]
 
 if ON_RTD:
     # Remove extensions not currently supported on RTD
-    extensions.remove('matplotlib.sphinxext.plot_directive')
+    extensions.remove("matplotlib.sphinxext.plot_directive")
 
 autosummary_generate = True
 numpydoc_show_class_members = False
@@ -77,18 +78,18 @@ if not ON_RTD:
     else:
         try:
             print("plot_directive.__version__:", plot_directive.__version__)
-            use_matplotlib_plot_directive = (plot_directive.__version__ >= 2)
+            use_matplotlib_plot_directive = plot_directive.__version__ >= 2
         except AttributeError:
             use_matplotlib_plot_directive = False
 
     if use_matplotlib_plot_directive:
-        extensions.append('matplotlib.sphinxext.plot_directive')
+        extensions.append("matplotlib.sphinxext.plot_directive")
     else:
         raise RuntimeError("You need a recent enough version of matplotlib")
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 # Plot
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 plot_pre_code = """
 import seaborn
 seaborn.set(style='ticks')
@@ -97,46 +98,47 @@ np.random.seed(123)
 np.set_printoptions(precision=3, linewidth=64, edgeitems=2, threshold=200)
 """
 plot_include_source = True
-plot_formats = [('png', 96), 'pdf']
+plot_formats = [("png", 96), "pdf"]
 plot_html_show_formats = False
 
 font_size = 13 * 72 / 96.0  # 13 px
 
 plot_rcparams = {
-    'font.size': font_size,
-    'axes.titlesize': font_size,
-    'axes.labelsize': font_size,
-    'xtick.labelsize': font_size,
-    'ytick.labelsize': font_size,
-    'legend.fontsize': font_size,
-    'figure.subplot.bottom': 0.2,
-    'figure.subplot.left': 0.2,
-    'figure.subplot.right': 0.9,
-    'figure.subplot.top': 0.85,
-    'figure.subplot.wspace': 0.4,
-    'text.usetex': False,
+    "font.size": font_size,
+    "axes.titlesize": font_size,
+    "axes.labelsize": font_size,
+    "xtick.labelsize": font_size,
+    "ytick.labelsize": font_size,
+    "legend.fontsize": font_size,
+    "figure.subplot.bottom": 0.2,
+    "figure.subplot.left": 0.2,
+    "figure.subplot.right": 0.9,
+    "figure.subplot.top": 0.85,
+    "figure.subplot.wspace": 0.4,
+    "text.usetex": False,
 }
 
 if not ON_RTD:
     import matplotlib
+
     matplotlib.rcParams.update(plot_rcparams)
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
 # source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ".rst"
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = "index"
 
 # General information about the project.
-project = 'nnmnkwii'
-copyright = '2017, Ryuichi Yamamoto'
-author = 'Ryuichi Yamamoto'
+project = "nnmnkwii"
+copyright = "2017, Ryuichi Yamamoto"
+author = "Ryuichi Yamamoto"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -157,10 +159,10 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '**.ipynb_checkpoints']
+exclude_patterns = ["_build", "Thumbs.db", ".DS_Store", "**.ipynb_checkpoints"]
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+pygments_style = "sphinx"
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
@@ -171,24 +173,27 @@ todo_include_todos = True
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'sphinx_rtd_theme'
+html_theme = "sphinx_rtd_theme"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
 html_theme_options = {
-    'collapse_navigation': False,
-    'display_version': True,
-    'logo_only': True,
+    "collapse_navigation": False,
+    "display_version": True,
+    "logo_only": True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+html_static_path = ["_static"]
+html_css_files = [
+    "css/custom.css",
+]
 
-html_logo = os.path.join(html_static_path[0], 'img/logo.png')
+html_logo = os.path.join(html_static_path[0], "img/logo.png")
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -196,12 +201,12 @@ html_logo = os.path.join(html_static_path[0], 'img/logo.png')
 # This is required for the alabaster theme
 # refs: http://alabaster.readthedocs.io/en/latest/installation.html#sidebars
 html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',  # needs 'show_related': True theme option to display
-        'searchbox.html',
-        'donate.html',
+    "**": [
+        "about.html",
+        "navigation.html",
+        "relations.html",  # needs 'show_related': True theme option to display
+        "searchbox.html",
+        "donate.html",
     ]
 }
 
@@ -209,7 +214,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'nnmnkwiidoc'
+htmlhelp_basename = "nnmnkwiidoc"
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -218,15 +223,12 @@ latex_elements = {
     # The paper size ('letterpaper' or 'a4paper').
     #
     # 'papersize': 'letterpaper',
-
     # The font size ('10pt', '11pt' or '12pt').
     #
     # 'pointsize': '10pt',
-
     # Additional stuff for the LaTeX preamble.
     #
     # 'preamble': '',
-
     # Latex figure (float) alignment
     #
     # 'figure_align': 'htbp',
@@ -236,8 +238,13 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'nnmnkwii.tex', 'nnmnkwii Documentation',
-     'Ryuichi Yamamoto', 'manual'),
+    (
+        master_doc,
+        "nnmnkwii.tex",
+        "nnmnkwii Documentation",
+        "Ryuichi Yamamoto",
+        "manual",
+    ),
 ]
 
 
@@ -245,10 +252,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    (master_doc, 'nnmnkwii', 'nnmnkwii Documentation',
-     [author], 1)
-]
+man_pages = [(master_doc, "nnmnkwii", "nnmnkwii Documentation", [author], 1)]
 
 
 # -- Options for Texinfo output -------------------------------------------
@@ -257,18 +261,26 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'nnmnkwii', 'nnmnkwii Documentation',
-     author, 'nnmnkwii', 'One line description of project.',
-     'Miscellaneous'),
+    (
+        master_doc,
+        "nnmnkwii",
+        "nnmnkwii Documentation",
+        author,
+        "nnmnkwii",
+        "One line description of project.",
+        "Miscellaneous",
+    ),
 ]
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
-    'python': ('https://docs.python.org/', None),
-    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
-    'pysptk': ('https://pysptk.readthedocs.io/en/latest/', None),
-    'pytorch': ('http://pytorch.org/docs/master/', None),
-    'librosa': ('http://librosa.github.io/librosa/', None),
-    'sklearn': ('http://scikit-learn.org/stable/', None)
+    "python": ("https://docs.python.org/3", None),
+    "numpy": ("https://numpy.org/doc/stable/", None),
+    "np": ("https://numpy.org/doc/stable/", None),
+    "scipy": ("https://docs.scipy.org/doc/scipy/reference/", None),
+    "matplotlib": ("https://matplotlib.org/", None),
+    "sklearn": ("https://scikit-learn.org/stable/", None),
+    "pysptk": ("https://pysptk.readthedocs.io/en/latest/", None),
+    "pytorch": ("http://pytorch.org/docs/stable/", None),
 }

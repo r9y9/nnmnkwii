@@ -1,15 +1,15 @@
-from __future__ import division, print_function, absolute_import
+from __future__ import absolute_import, division, print_function
 
-from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
-from nnmnkwii.datasets import MemoryCacheFramewiseDataset
-from nnmnkwii.datasets import FileDataSource
-from nnmnkwii.util import example_file_data_sources_for_acoustic_model
-from nnmnkwii.util import example_file_data_sources_for_duration_model
+from os.path import dirname, join
 
 import numpy as np
-from nose.tools import raises
+from nnmnkwii.datasets import (FileDataSource, FileSourceDataset,
+                               MemoryCacheFramewiseDataset,
+                               PaddedFileSourceDataset)
+from nnmnkwii.util import (example_file_data_sources_for_acoustic_model,
+                           example_file_data_sources_for_duration_model)
 from nose.plugins.attrib import attr
-from os.path import join, dirname
+from nose.tools import raises
 
 DATA_DIR = join(dirname(__file__), "data")
 
@@ -153,7 +153,7 @@ def test_fixed_length_sequence_wise_iteration():
 def test_frame_wise_iteration():
     X, Y = _get_small_datasets(padded=False)
 
-    lengths = np.array([len(x) for x in X], dtype=np.int)
+    lengths = np.array([len(x) for x in X], dtype=int)
     num_utterances = len(lengths)
 
     # With sufficient cache size
@@ -198,7 +198,7 @@ def test_sequence_wise_torch_data_loader():
     def __test(X, Y, batch_size):
         dataset = TorchDataset(X, Y)
         loader = data_utils.DataLoader(
-            dataset, batch_size=batch_size, num_workers=1, shuffle=True)
+            dataset, batch_size=batch_size, num_workers=0, shuffle=True)
         for idx, (x, y) in enumerate(loader):
             assert len(x.shape) == len(y.shape)
             assert len(x.shape) == 3
@@ -228,7 +228,7 @@ def test_frame_wise_torch_data_loader():
     # fixed size length, i.e., implements `__len__` method, we need to know
     # number of frames for each utterance.
     # Sum of the number of frames is the dataset size for frame-wise iteration.
-    lengths = np.array([len(x) for x in X], dtype=np.int)
+    lengths = np.array([len(x) for x in X], dtype=int)
 
     # For the above reason, we need to explicitly give the number of frames.
     X = MemoryCacheFramewiseDataset(X, lengths, cache_size=len(X))
@@ -248,7 +248,7 @@ def test_frame_wise_torch_data_loader():
     def __test(X, Y, batch_size):
         dataset = TorchDataset(X, Y)
         loader = data_utils.DataLoader(
-            dataset, batch_size=batch_size, num_workers=1, shuffle=True)
+            dataset, batch_size=batch_size, num_workers=0, shuffle=True)
         for idx, (x, y) in enumerate(loader):
             assert len(x.shape) == 2
             assert len(y.shape) == 2

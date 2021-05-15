@@ -2,6 +2,7 @@ README.rst
 nnmnkwii/version.py
 nnmnkwii/paramgen/mlpg_helper.c
 nnmnkwii/util/_linalg.c
+nnmnkwii/paramgen/_bandmat/*.c
 examples
 docs/references/generated
 docs/.doctrees
