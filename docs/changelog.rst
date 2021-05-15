@@ -4,6 +4,7 @@ Change log
 v0.0.23 <2021-xx-xx>
 --------------------
 
+- `#112`_: Renamed continuous_dict to numeric_dict to be more precise.
 - `#112`_: Bandmat is now a part of nnmnkwii's internal package. This is to avoid instllation failusres on python >=3.6. https://github.com/MattShannon/bandmat/issues/10
 - `#112`_: Started testing using github actions (python 3.7, 3.8, 3.9)
 - `#112`_: [hts.io]: :func:`nnmnkwii.io.hts.load_question_set` now keeps question names (e.g. "L-Phone_Boin") in dictionary.
