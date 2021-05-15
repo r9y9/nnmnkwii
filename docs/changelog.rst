@@ -1,7 +1,7 @@
 Change log
 ==========
 
-v0.0.23 <2021-xx-xx>
+v0.0.23 <2021-05-15>
 --------------------
 
 - `#112`_: Renamed continuous_dict to numeric_dict to be more precise.
