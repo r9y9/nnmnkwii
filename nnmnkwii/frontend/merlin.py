@@ -1,5 +1,3 @@
-# coding: utf-8
-
 # Part of code here is adapted from Merlin. Their license follows:
 ##########################################################################
 #           The Neural Network (NN) based Speech Synthesis System
@@ -144,12 +142,12 @@ def pattern_matching_binary(binary_dict, label):
     return lab_binary_vector
 
 
-def pattern_matching_continous_position(continuous_dict, label):
-    dict_size = len(continuous_dict)
+def pattern_matching_continous_position(numeric_dict, label):
+    dict_size = len(numeric_dict)
 
     lab_continuous_vector = np.zeros((1, dict_size), dtype=np.float32)
     for i in range(dict_size):
-        current_compiled = continuous_dict[i]
+        current_compiled = numeric_dict[i]
 
         # NOTE: newer version returns tuple of (name, question)
         if isinstance(current_compiled, tuple):
@@ -178,12 +176,12 @@ def pattern_matching_continous_position(continuous_dict, label):
 def load_labels_with_phone_alignment(
     hts_labels,
     binary_dict,
-    continuous_dict,
+    numeric_dict,
     subphone_features=None,
     add_frame_features=False,
     frame_shift=50000,
 ):
-    dict_size = len(binary_dict) + len(continuous_dict)
+    dict_size = len(binary_dict) + len(numeric_dict)
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
 
@@ -206,7 +204,7 @@ def load_labels_with_phone_alignment(
         # if there is no CQS question, the label_continuous_vector will
         # become to empty
         label_continuous_vector = pattern_matching_continous_position(
-            continuous_dict, full_label
+            numeric_dict, full_label
         )
         label_vector = np.concatenate(
             [label_binary_vector, label_continuous_vector], axis=1
@@ -285,12 +283,12 @@ def load_labels_with_phone_alignment(
 def load_labels_with_state_alignment(
     hts_labels,
     binary_dict,
-    continuous_dict,
+    numeric_dict,
     subphone_features=None,
     add_frame_features=False,
     frame_shift=50000,
 ):
-    dict_size = len(binary_dict) + len(continuous_dict)
+    dict_size = len(binary_dict) + len(numeric_dict)
     frame_feature_size = get_frame_feature_size(subphone_features)
     dimension = frame_feature_size + dict_size
 
@@ -330,7 +328,7 @@ def load_labels_with_state_alignment(
             # if there is no CQS question, the label_continuous_vector will
             # become to empty
             label_continuous_vector = pattern_matching_continous_position(
-                continuous_dict, full_label
+                numeric_dict, full_label
             )
             label_vector = np.concatenate(
                 [label_binary_vector, label_continuous_vector], axis=1
@@ -503,7 +501,7 @@ def linguistic_features(hts_labels, *args, **kwargs):
     Args:
         hts_label (hts.HTSLabelFile): Input full-context label file
         binary_dict (dict): Dictionary used to extract binary features
-        continuous_dict (dict): Dictionary used to extrract continuous features
+        numeric_dict (dict): Dictionary used to extrract continuous features
         subphone_features (dict): Type of sub-phone features. According
           to the Merlin's source code, None, ``full``, ``state_only``,
           ``frame_only``, ``uniform_state``, ``minimal_phoneme`` and
@@ -524,12 +522,12 @@ def linguistic_features(hts_labels, *args, **kwargs):
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_label_file, example_question_file
         >>> labels = hts.load(example_label_file(phone_level=False))
-        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
-        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
+        >>> features = fe.linguistic_features(labels, binary_dict, numeric_dict,
         ...     subphone_features="full", add_frame_features=True)
         >>> features.shape
         (615, 425)
-        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        >>> features = fe.linguistic_features(labels, binary_dict, numeric_dict,
         ...     subphone_features=None, add_frame_features=False)
         >>> features.shape
         (40, 416)
@@ -540,12 +538,12 @@ def linguistic_features(hts_labels, *args, **kwargs):
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_label_file, example_question_file
         >>> labels = hts.load(example_label_file(phone_level=True))
-        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
-        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
+        >>> features = fe.linguistic_features(labels, binary_dict, numeric_dict,
         ...     subphone_features="coarse_coding", add_frame_features=True)
         >>> features.shape
         (615, 420)
-        >>> features = fe.linguistic_features(labels, binary_dict, continuous_dict,
+        >>> features = fe.linguistic_features(labels, binary_dict, numeric_dict,
         ...     subphone_features=None, add_frame_features=False)
         >>> features.shape
         (40, 416)

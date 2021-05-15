@@ -387,20 +387,20 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
         convert_svs_pattern (bool): Convert SVS specific patterns.
 
     Returns:
-        (binary_dict, continuous_dict): Binary/continuous feature extraction
+        (binary_dict, numeric_dict): Binary/numeric feature extraction
         regexes.
 
     Examples:
         >>> from nnmnkwii.io import hts
         >>> from nnmnkwii.util import example_question_file
-        >>> binary_dict, continuous_dict = hts.load_question_set(example_question_file())
+        >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
     """
     with open(qs_file_name) as f:
         lines = f.readlines()
     binary_qs_index = 0
     continuous_qs_index = 0
     binary_dict = {}
-    continuous_dict = {}
+    numeric_dict = {}
 
     LL = re.compile(re.escape("LL-"))
 
@@ -426,7 +426,7 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
                 convert_number_pattern=True,
                 convert_svs_pattern=convert_svs_pattern,
             )
-            continuous_dict[continuous_qs_index] = (
+            numeric_dict[continuous_qs_index] = (
                 name,
                 re.compile(processed_question),
             )  # save pre-compiled regular expression
@@ -447,7 +447,7 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
             binary_qs_index = binary_qs_index + 1
         else:
             raise RuntimeError("Not supported question format")
-    return binary_dict, continuous_dict
+    return binary_dict, numeric_dict
 
 
 def write_audacity_labels(dst_path, labels):
