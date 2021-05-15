@@ -4,13 +4,13 @@ Change log
 v0.0.23 <2021-xx-xx>
 --------------------
 
-- `#112`: Bandmat is now a part of nnmnkwii's internal package. This is to avoid instllation failusres on python >=3.6. https://github.com/MattShannon/bandmat/issues/10
-- `#112`: Started testing using github actions (python 3.7, 3.8, 3.9)
-- `#112`: [hts.io]: :func:`hts.load_question_set` now returns question names as dictionary keys: e.g. "1" -> "L-Phone_Boin"
-- `#112`: [hts.io]: New functionality :func:`hts.write_audacity_labels`
-- `#112`: [hts.io]: New functionality :func:`hts.write_textgrid`
-- `#112`: Renamed np.int to int
-- `#112`: Added pyproject.yaml
+- `#112`_: Bandmat is now a part of nnmnkwii's internal package. This is to avoid instllation failusres on python >=3.6. https://github.com/MattShannon/bandmat/issues/10
+- `#112`_: Started testing using github actions (python 3.7, 3.8, 3.9)
+- `#112`_: [hts.io]: :func:`nnmnkwii.io.hts.load_question_set` now keeps question names (e.g. "L-Phone_Boin") in dictionary.
+- `#112`_: [hts.io]: New functionality :func:`nnmnkwii.io.hts.write_audacity_labels`
+- `#112`_: [hts.io]: New functionality :func:`nnmnkwii.io.hts.write_textgrid`
+- `#112`_: Renamed np.int to int
+- `#112`_: Added pyproject.yaml
 
 v0.0.22 <2020-12-25>
 --------------------
