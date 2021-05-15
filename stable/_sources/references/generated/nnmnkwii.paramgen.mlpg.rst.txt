@@ -1,5 +1,5 @@
-nnmnkwii\.paramgen\.mlpg
-========================
+﻿nnmnkwii.paramgen.mlpg
+======================
 
 .. currentmodule:: nnmnkwii.paramgen
 

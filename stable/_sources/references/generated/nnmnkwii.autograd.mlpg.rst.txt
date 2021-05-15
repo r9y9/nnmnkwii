@@ -1,5 +1,5 @@
-nnmnkwii\.autograd\.mlpg
-========================
+﻿nnmnkwii.autograd.mlpg
+======================
 
 .. currentmodule:: nnmnkwii.autograd
 

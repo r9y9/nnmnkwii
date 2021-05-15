@@ -1,5 +1,5 @@
-nnmnkwii\.metrics\.melcd
-========================
+﻿nnmnkwii.metrics.melcd
+======================
 
 .. currentmodule:: nnmnkwii.metrics
 

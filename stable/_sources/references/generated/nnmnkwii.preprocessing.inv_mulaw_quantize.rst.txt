@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.inv\_mulaw\_quantize
-=============================================
+﻿nnmnkwii.preprocessing.inv\_mulaw\_quantize
+===========================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

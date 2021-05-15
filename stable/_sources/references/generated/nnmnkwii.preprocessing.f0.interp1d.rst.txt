@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.f0\.interp1d
-=====================================
+﻿nnmnkwii.preprocessing.f0.interp1d
+==================================
 
 .. currentmodule:: nnmnkwii.preprocessing.f0
 

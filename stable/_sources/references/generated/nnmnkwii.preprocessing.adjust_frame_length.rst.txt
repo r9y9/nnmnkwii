@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.adjust\_frame\_length
-==============================================
+﻿nnmnkwii.preprocessing.adjust\_frame\_length
+============================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

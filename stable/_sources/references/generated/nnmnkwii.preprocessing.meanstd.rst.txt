@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.meanstd
-================================
+﻿nnmnkwii.preprocessing.meanstd
+==============================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.meanvar
-================================
+﻿nnmnkwii.preprocessing.meanvar
+==============================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

@@ -1,5 +1,5 @@
-nnmnkwii\.paramgen\.build\_win\_mats
-====================================
+﻿nnmnkwii.paramgen.build\_win\_mats
+==================================
 
 .. currentmodule:: nnmnkwii.paramgen
 

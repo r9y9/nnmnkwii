@@ -1,5 +1,5 @@
-nnmnkwii\.autograd\.modspec
-===========================
+﻿nnmnkwii.autograd.modspec
+=========================
 
 .. currentmodule:: nnmnkwii.autograd
 

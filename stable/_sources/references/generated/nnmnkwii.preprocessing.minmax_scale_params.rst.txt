@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.minmax\_scale\_params
-==============================================
+﻿nnmnkwii.preprocessing.minmax\_scale\_params
+============================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

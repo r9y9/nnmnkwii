@@ -1,5 +1,5 @@
-nnmnkwii\.frontend\.merlin\.duration\_features
-==============================================
+﻿nnmnkwii.frontend.merlin.duration\_features
+===========================================
 
 .. currentmodule:: nnmnkwii.frontend.merlin
 

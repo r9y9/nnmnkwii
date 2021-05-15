@@ -1,5 +1,5 @@
-nnmnkwii\.metrics\.mean\_squared\_error
-=======================================
+﻿nnmnkwii.metrics.mean\_squared\_error
+=====================================
 
 .. currentmodule:: nnmnkwii.metrics
 

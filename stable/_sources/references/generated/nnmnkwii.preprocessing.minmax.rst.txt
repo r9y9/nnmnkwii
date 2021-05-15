@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.minmax
-===============================
+﻿nnmnkwii.preprocessing.minmax
+=============================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.inv\_modspec
-=====================================
+﻿nnmnkwii.preprocessing.inv\_modspec
+===================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

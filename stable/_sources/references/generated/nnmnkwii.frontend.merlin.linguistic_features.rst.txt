@@ -1,5 +1,5 @@
-nnmnkwii\.frontend\.merlin\.linguistic\_features
-================================================
+﻿nnmnkwii.frontend.merlin.linguistic\_features
+=============================================
 
 .. currentmodule:: nnmnkwii.frontend.merlin
 

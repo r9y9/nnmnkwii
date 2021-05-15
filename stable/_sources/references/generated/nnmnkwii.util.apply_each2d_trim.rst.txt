@@ -1,5 +1,5 @@
-nnmnkwii\.util\.apply\_each2d\_trim
-===================================
+﻿nnmnkwii.util.apply\_each2d\_trim
+=================================
 
 .. currentmodule:: nnmnkwii.util
 

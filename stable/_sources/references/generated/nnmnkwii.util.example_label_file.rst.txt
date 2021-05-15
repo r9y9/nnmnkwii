@@ -1,5 +1,5 @@
-nnmnkwii\.util\.example\_label\_file
-====================================
+﻿nnmnkwii.util.example\_label\_file
+==================================
 
 .. currentmodule:: nnmnkwii.util
 

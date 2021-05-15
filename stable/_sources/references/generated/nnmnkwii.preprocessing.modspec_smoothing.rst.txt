@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.modspec\_smoothing
-===========================================
+﻿nnmnkwii.preprocessing.modspec\_smoothing
+=========================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

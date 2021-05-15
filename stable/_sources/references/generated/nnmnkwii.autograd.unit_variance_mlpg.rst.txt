@@ -1,5 +1,5 @@
-nnmnkwii\.autograd\.unit\_variance\_mlpg
-========================================
+﻿nnmnkwii.autograd.unit\_variance\_mlpg
+======================================
 
 .. currentmodule:: nnmnkwii.autograd
 

@@ -1,5 +1,5 @@
-nnmnkwii\.metrics\.vuv\_error
-=============================
+﻿nnmnkwii.metrics.vuv\_error
+===========================
 
 .. currentmodule:: nnmnkwii.metrics
 

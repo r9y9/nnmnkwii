@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.remove\_zeros\_frames
-==============================================
+﻿nnmnkwii.preprocessing.remove\_zeros\_frames
+============================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

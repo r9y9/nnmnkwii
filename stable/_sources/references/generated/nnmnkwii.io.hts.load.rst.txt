@@ -1,5 +1,5 @@
-nnmnkwii\.io\.hts\.load
-=======================
+﻿nnmnkwii.io.hts.load
+====================
 
 .. currentmodule:: nnmnkwii.io.hts
 

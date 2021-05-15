@@ -1,5 +1,5 @@
-nnmnkwii\.postfilters\.merlin\_post\_filter
-===========================================
+﻿nnmnkwii.postfilters.merlin\_post\_filter
+=========================================
 
 .. currentmodule:: nnmnkwii.postfilters
 

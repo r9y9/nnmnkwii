@@ -1,5 +1,5 @@
-nnmnkwii\.util\.example\_audio\_file
-====================================
+﻿nnmnkwii.util.example\_audio\_file
+==================================
 
 .. currentmodule:: nnmnkwii.util
 

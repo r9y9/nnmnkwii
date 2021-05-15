@@ -16,6 +16,8 @@ HTS IO
 
     load
     load_question_set
+    write_audacity_labels
+    write_textgrid
 
 .. autoclass:: HTSLabelFile
     :members:

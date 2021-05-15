@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.inv\_preemphasis
-=========================================
+﻿nnmnkwii.preprocessing.inv\_preemphasis
+=======================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

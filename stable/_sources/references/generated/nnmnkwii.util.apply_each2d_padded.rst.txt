@@ -1,5 +1,5 @@
-nnmnkwii\.util\.apply\_each2d\_padded
-=====================================
+﻿nnmnkwii.util.apply\_each2d\_padded
+===================================
 
 .. currentmodule:: nnmnkwii.util
 

@@ -1,0 +1,6 @@
+﻿nnmnkwii.io.hts.write\_textgrid
+===============================
+
+.. currentmodule:: nnmnkwii.io.hts
+
+.. autofunction:: write_textgrid

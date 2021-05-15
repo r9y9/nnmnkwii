@@ -1,5 +1,5 @@
-nnmnkwii\.preprocessing\.delta\_features
-========================================
+﻿nnmnkwii.preprocessing.delta\_features
+======================================
 
 .. currentmodule:: nnmnkwii.preprocessing
 

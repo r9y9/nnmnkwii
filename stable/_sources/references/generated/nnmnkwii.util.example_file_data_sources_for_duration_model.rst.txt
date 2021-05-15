@@ -1,5 +1,5 @@
-nnmnkwii\.util\.example\_file\_data\_sources\_for\_duration\_model
-==================================================================
+﻿nnmnkwii.util.example\_file\_data\_sources\_for\_duration\_model
+================================================================
 
 .. currentmodule:: nnmnkwii.util
 

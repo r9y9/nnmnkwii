@@ -1,5 +1,5 @@
-nnmnkwii\.paramgen\.unit\_variance\_mlpg\_matrix
-================================================
+﻿nnmnkwii.paramgen.unit\_variance\_mlpg\_matrix
+==============================================
 
 .. currentmodule:: nnmnkwii.paramgen
 

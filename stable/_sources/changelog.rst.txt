@@ -1,12 +1,32 @@
 Change log
 ==========
 
+v0.0.23 <2021-05-15>
+--------------------
+
+- `#112`_: Renamed continuous_dict to numeric_dict to be more precise.
+- `#112`_: Bandmat is now a part of nnmnkwii's internal package. This is to avoid instllation failusres on python >=3.6. https://github.com/MattShannon/bandmat/issues/10
+- `#112`_: Started testing using github actions (python 3.7, 3.8, 3.9)
+- `#112`_: [hts.io]: :func:`nnmnkwii.io.hts.load_question_set` now keeps question names (e.g. "L-Phone_Boin") in dictionary.
+- `#112`_: [hts.io]: New functionality :func:`nnmnkwii.io.hts.write_audacity_labels`
+- `#112`_: [hts.io]: New functionality :func:`nnmnkwii.io.hts.write_textgrid`
+- `#112`_: Renamed np.int to int
+- `#112`_: Added pyproject.yaml
+
+v0.0.22 <2020-12-25>
+--------------------
+
+- `#105`_: Change sklearn to scikit-learn
+- `#108`_: Fix label time overflow on environment which size of np.int is 4bytes
+- `#109`_: io: fix bug of handling pitch diff in the SVS full context format
+- io: allow writing comments in hed files
+
 v0.0.21 <2020-08-13>
+--------------------
 
 - `#99`_: Fix future warning from sklearn
 - `#101`_: [hts][frontend] various fixes for singing voice synthesis. Our frontend now supports MIDI number extraction. HTSLabelFile supports list and slice indexing.
 
---------------------
 
 v0.0.20 <2020-03-02>
 --------------------
@@ -201,3 +221,7 @@ v0.0.1 <2017-08-14>
 .. _#98: https://github.com/r9y9/nnmnkwii/pull/98
 .. _#99: https://github.com/r9y9/nnmnkwii/issues/99
 .. _#101: https://github.com/r9y9/nnmnkwii/pull/101
+.. _#105: https://github.com/r9y9/nnmnkwii/pull/105
+.. _#108: https://github.com/r9y9/nnmnkwii/pull/108
+.. _#109: https://github.com/r9y9/nnmnkwii/pull/109
+.. _#112: https://github.com/r9y9/nnmnkwii/pull/112

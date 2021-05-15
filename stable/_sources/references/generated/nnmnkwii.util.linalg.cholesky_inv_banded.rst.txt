@@ -1,5 +1,5 @@
-nnmnkwii\.util\.linalg\.cholesky\_inv\_banded
-=============================================
+﻿nnmnkwii.util.linalg.cholesky\_inv\_banded
+==========================================
 
 .. currentmodule:: nnmnkwii.util.linalg
 

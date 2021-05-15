@@ -1,5 +1,5 @@
-nnmnkwii\.paramgen\.reshape\_means
-==================================
+﻿nnmnkwii.paramgen.reshape\_means
+================================
 
 .. currentmodule:: nnmnkwii.paramgen
 
