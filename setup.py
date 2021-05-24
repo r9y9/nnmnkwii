@@ -11,7 +11,7 @@ from os.path import exists, join
 import setuptools.command.build_py
 import setuptools.command.develop
 from setuptools import Extension, find_packages, setup
-from setuptools.command.build_ext import build_ext as _build_ext
+from setuptools.command.build_ext import build_ext
 
 version = "0.0.24"
 
@@ -31,17 +31,6 @@ else:
         pass
     except IOError:  # FileNotFoundError for python 3
         pass
-
-
-class build_ext(_build_ext):
-    # https://stackoverflow.com/questions/19919905/how-to-bootstrap-numpy-installation-in-setup-py
-    def finalize_options(self):
-        _build_ext.finalize_options(self)
-        # Prevent numpy from thinking it is still in its setup process:
-        __builtins__.__NUMPY_SETUP__ = False
-        import numpy
-
-        self.include_dirs.append(numpy.get_include())
 
 
 class build_py(setuptools.command.build_py.build_py):
