@@ -57,7 +57,7 @@ def _asfloat(x):
 
 
 def mulaw(x, mu=256):
-    """Mu-Law companding
+    r"""Mu-Law companding
 
     Method described in paper [1]_.
 
@@ -85,7 +85,7 @@ def mulaw(x, mu=256):
 
 
 def inv_mulaw(y, mu=256):
-    """Inverse of mu-law companding (mu-law expansion)
+    r"""Inverse of mu-law companding (mu-law expansion)
 
     .. math::
 
@@ -504,7 +504,7 @@ def meanvar(
     last_sample_count=0,
     return_last_sample_count=False,
 ):
-    """Mean/variance computation given a iterable dataset
+    r"""Mean/variance computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
     explicitly specify lengths for all the samples.
@@ -560,7 +560,7 @@ def meanstd(
     last_sample_count=0,
     return_last_sample_count=False,
 ):
-    """Mean/std-deviation computation given a iterable dataset
+    r"""Mean/std-deviation computation given a iterable dataset
 
     Dataset can have variable length samples. In that cases, you need to
     explicitly specify lengths for all the samples.
@@ -737,7 +737,7 @@ def minmax_scale_params(data_min, data_max, feature_range=(0, 1)):
 def minmax_scale(
     x, data_min=None, data_max=None, feature_range=(0, 1), scale_=None, min_=None
 ):
-    """Min/max scaling for given a single data.
+    r"""Min/max scaling for given a single data.
 
     Given data min, max and feature range, apply min/max normalization to data.
     Optionally, you can get a little performance improvement to give scaling
@@ -792,7 +792,7 @@ def minmax_scale(
 def inv_minmax_scale(
     x, data_min=None, data_max=None, feature_range=(0, 1), scale_=None, min_=None
 ):
-    """Inverse transform of min/max scaling for given a single data.
+    r"""Inverse transform of min/max scaling for given a single data.
 
     Given data min, max and feature range, apply min/max denormalization to data.
 
