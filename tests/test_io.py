@@ -212,3 +212,14 @@ def test_hts_labels_contains_multiple_whitespaces():
     lab_path = join(DATA_DIR, "p225_001.lab")
     labels = hts.load(lab_path)
     print(labels)
+
+
+def test_create_from_contexts():
+    lab_path = join(DATA_DIR, "BASIC5000_0001.lab")
+    labels = hts.load(lab_path)
+
+    with open(lab_path) as f:
+        contexts = f.readlines()
+
+    labels2 = hts.HTSLabelFile.create_from_contexts(contexts)
+    assert str(labels), str(labels2)

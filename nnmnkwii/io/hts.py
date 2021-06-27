@@ -96,6 +96,10 @@ J:13+9-2[2]')
         self.contexts = []
         self.frame_shift = frame_shift
 
+    @classmethod
+    def create_from_contexts(cls, contexts):
+        return cls().load(None, contexts)
+
     def __len__(self):
         return len(self.start_times)
 
