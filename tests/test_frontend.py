@@ -129,3 +129,25 @@ def test_phone_alignment_label():
 
     x = fe.duration_features(labels)
     assert np.all(np.isfinite(x))
+
+
+def test_backward_compatibility():
+    qs_file_name = join(DATA_DIR, "questions-radio_dnn_416.hed")
+    binary_dict, numeric_dict = hts.load_question_set(qs_file_name)
+
+    # Linguistic features
+    # To train acoustic model paired with linguistic features,
+    # we need frame-level linguistic feature representation.
+    input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
+    labels = hts.load(input_state_label)
+    assert labels.is_state_alignment_label()
+    x_hat = fe.linguistic_features(labels,
+                               binary_dict,
+                               numeric_dict,
+                               add_frame_features=True,
+                               subphone_features="full"
+                               )
+
+    x = np.load(join(DATA_DIR, "arctic_a0001_frame_features.npy"))
+
+    assert np.allclose(x, x_hat)

@@ -338,7 +338,7 @@ def load(path=None, lines=None):
 
 
 def wildcards2regex(question, convert_number_pattern=False, convert_svs_pattern=True):
-    """subphone_features
+    r"""subphone_features
     Convert HTK-style question into regular expression for searching labels.
     If convert_number_pattern, keep the following sequences unescaped for
     extracting continuous values):
@@ -352,9 +352,9 @@ def wildcards2regex(question, convert_number_pattern=False, convert_svs_pattern=
     postfix = ""
     if "*" in question:
         if not question.startswith("*"):
-            prefix = "\A"
+            prefix = "\\A"
         if not question.endswith("*"):
-            postfix = "\Z"
+            postfix = "\\Z"
     question = question.strip("*")
     question = re.escape(question)
     # convert remaining HTK wildcards * and ? to equivalent regex:
@@ -362,16 +362,16 @@ def wildcards2regex(question, convert_number_pattern=False, convert_svs_pattern=
     question = prefix + question + postfix
 
     if convert_number_pattern:
-        question = question.replace("\\(\\\\d\\+\\)", "(\d+)")
-        question = question.replace("\\(\\[\\-\\\\d\\]\\+\\)", "([-\d]+)")
-        question = question.replace("\\(\\[\\\\d\\\\\\.\\]\\+\\)", "([\d\.]+)")
+        question = question.replace("\\(\\\\d\\+\\)", "(\\d+)")
+        question = question.replace("\\(\\[\\-\\\\d\\]\\+\\)", "([-\\d]+)")
+        question = question.replace("\\(\\[\\\\d\\\\\\.\\]\\+\\)", "([\\d\\.]+)")
     # NOTE: singing voice synthesis specific handling
     if convert_svs_pattern:
         question = question.replace(
             "\\(\\[A\\-Z\\]\\[b\\]\\?\\[0\\-9\\]\\+\\)", "([A-Z][b]?[0-9]+)"
         )
         question = question.replace("\\(\\\\NOTE\\)", "([A-Z][b]?[0-9]+)")
-        question = question.replace("\\(\\[pm\\]\\\\d\\+\\)", "([pm]\d+)")
+        question = question.replace("\\(\\[pm\\]\\\\d\\+\\)", "([pm]\\d+)")
 
     return question
 
