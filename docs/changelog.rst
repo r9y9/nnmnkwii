@@ -6,6 +6,7 @@ v0.1.0 <2021-08-xx>
 
 - Add hts.io.HTSLabelFile.create_from_contexts
 - Fix build time numpy requirement to <v1.20.0
+- Support for loading HTS-style labels with time unit in seconds
 
 v0.0.23 <2021-05-15>
 --------------------

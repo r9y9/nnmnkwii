@@ -210,6 +210,7 @@ J:13+9-2[2]')
             with open(path) as f:
                 lines = f.readlines()
 
+        is_sec_format = False
         start_times = []
         end_times = []
         contexts = []
@@ -219,8 +220,15 @@ J:13+9-2[2]')
             cols = line.strip().split()
             if len(cols) == 3:
                 start_time, end_time, context = cols
-                start_time = int(start_time)
-                end_time = int(end_time)
+                if "." in start_time or "." in end_time:
+                    is_sec_format = True
+                if is_sec_format:
+                    # convert sec to 100ns (HTS format)
+                    start_time = int(1e7 * float(start_time))
+                    end_time = int(1e7 * float(end_time))
+                else:
+                    start_time = int(start_time)
+                    end_time = int(end_time)
             elif len(cols) == 1:
                 start_time = -1
                 end_time = -1

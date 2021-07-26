@@ -223,3 +223,9 @@ def test_create_from_contexts():
 
     labels2 = hts.HTSLabelFile.create_from_contexts(contexts)
     assert str(labels), str(labels2)
+
+def test_lab_in_sec():
+    labels1 = hts.load(join(DATA_DIR, "BASIC5000_0619_head.lab"))
+    labels2 = hts.load(join(DATA_DIR, "BASIC5000_0619_head_sec.lab"))
+
+    assert str(labels1) == str(labels2)
