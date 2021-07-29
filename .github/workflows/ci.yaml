@@ -30,7 +30,10 @@ jobs:
         sudo apt-get install libsndfile1-dev
         python -m pip install --upgrade pip
         pip install torch
-        pip install -e ".[test]"
+        pip install -e ".[test,lint]"
+    - name: Lint with pysen
+      run: |
+        pysen run lint
     - name: Test
       run: |
         nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec'

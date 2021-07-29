@@ -1,17 +1,11 @@
-# coding: utf-8
-
-from __future__ import absolute_import, print_function, with_statement
-
 import os
 import subprocess
-import sys
 from distutils.version import LooseVersion
-from os.path import exists, join
+from os.path import join
 
 import setuptools.command.build_py
 import setuptools.command.develop
 from setuptools import Extension, find_packages, setup
-from setuptools.command.build_ext import build_ext
 
 version = "0.0.24"
 
@@ -71,6 +65,8 @@ try:
 
     cython = True
 except ImportError:
+    from setuptools.command.build_ext import build_ext
+
     cython = False
 
 include_dirs = []
@@ -103,7 +99,7 @@ ext_modules = [
     ),
 ]
 
-### [start] bandmat related code ###
+# [start] bandmat related code
 # https://github.com/MattShannon/bandmat/issues/10
 bandmat_upstream_fixed = False
 if not bandmat_upstream_fixed:
@@ -124,13 +120,13 @@ if not bandmat_upstream_fixed:
         )
         for loc in cython_locs
     )
-### [end] bandmat related code ###
+# [end] bandmat related code
 
 
 def package_files(directory):
     # https://stackoverflow.com/questions/27664504/
     paths = []
-    for (path, directories, filenames) in os.walk(directory):
+    for (path, _, filenames) in os.walk(directory):
         for filename in filenames:
             paths.append(os.path.join("..", path, filename))
     return paths
@@ -150,7 +146,8 @@ install_requires = [
 setup(
     name="nnmnkwii",
     version=version,
-    description="Library to build speech synthesis systems designed for easy and fast prototyping.",
+    description="""
+Library to build speech synthesis systems designed for easy and fast prototyping.""",
     long_description=open("README.md", "rb").read().decode("utf-8"),
     long_description_content_type="text/markdown",
     author="Ryuichi Yamamoto",
@@ -167,6 +164,15 @@ setup(
     extras_require={
         "docs": ["numpydoc", "sphinx_rtd_theme"],
         "test": ["nose", "pyworld", "librosa"],
+        "lint": [
+            "pysen",
+            "types-setuptools",
+            "mypy<=0.910",
+            "black>=19.19b0,<=20.8",
+            "flake8>=3.7,<4",
+            "flake8-bugbear",
+            "isort>=4.3,<5.2.0",
+        ],
     },
     classifiers=[
         "Operating System :: Microsoft :: Windows",
