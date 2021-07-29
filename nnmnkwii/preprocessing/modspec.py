@@ -1,5 +1,3 @@
-from __future__ import with_statement, print_function, absolute_import
-
 import numpy as np
 
 # TODO: this may be removed in future.
@@ -42,16 +40,15 @@ def modspec(x, n=4096, norm=None, return_phase=False):
         >>> ms.shape
         (9, 2)
     """
-    T, D = x.shape
     # DFT against time axis
     s_complex = np.fft.rfft(x, n=n, axis=0, norm=norm)
     assert s_complex.shape[0] == n // 2 + 1
-    R, I = s_complex.real, s_complex.imag
-    ms = R * R + I * I
+    R, im = s_complex.real, s_complex.imag
+    ms = R * R + im * im
 
     # TODO: this is ugly...
     if return_phase:
-        return ms, np.exp(1.j * np.angle(s_complex))
+        return ms, np.exp(1.0j * np.angle(s_complex))
     else:
         return ms
 
@@ -146,10 +143,13 @@ def modspec_smoothing(x, modfs, n=4096, norm=None, cutoff=50, log_domain=True):
     if cutoff > modfs // 2:
         raise ValueError(
             "Cutoff frequency {} hz must be larger than Nyquist freqeuency {}. hz".format(
-                cutoff, modfs // 2))
+                cutoff, modfs // 2
+            )
+        )
     if n < T:
         raise RuntimeError(
-            "DFT length {} must be larger than time length {}".format(n, T))
+            "DFT length {} must be larger than time length {}".format(n, T)
+        )
 
     ms, phase = modspec(x, n=n, norm=norm, return_phase=True)
     if log_domain:

@@ -1,12 +1,9 @@
-# coding: utf-8
-from __future__ import with_statement, print_function, absolute_import
-
-from nnmnkwii.datasets import FileDataSource
+from collections import OrderedDict
+from glob import glob
+from os.path import basename, exists, join, splitext
 
 import numpy as np
-from os.path import join, splitext, isdir, exists, basename
-from glob import glob
-from collections import OrderedDict
+from nnmnkwii.datasets import FileDataSource
 
 # List of available speakers.
 available_speakers = [
@@ -127,10 +124,11 @@ def _parse_speaker_info(data_root):
     speaker_info_path = join(data_root, "speaker-info.txt")
     if not exists(speaker_info_path):
         raise RuntimeError(
-            "speaker-info.txt doesn't exist at \"{}\"".format(speaker_info_path))
+            'speaker-info.txt doesn\'t exist at "{}"'.format(speaker_info_path)
+        )
 
     speaker_info = OrderedDict()
-    filed_names = ["ID", "AGE", "GENDER", "ACCENTS", "REGION"]
+    # filed_names = ["ID", "AGE", "GENDER", "ACCENTS", "REGION"]
     with open(speaker_info_path, "rb") as f:
         for line in f:
             line = line.decode("utf-8")
@@ -163,7 +161,9 @@ class _VCTKBaseDataSource(FileDataSource):
             if speaker not in available_speakers:
                 raise ValueError(
                     "Unknown speaker '{}'. It should be one of {}".format(
-                        speaker, available_speakers))
+                        speaker, available_speakers
+                    )
+                )
         self.speakers = speakers
         if labelmap is None:
             labelmap = {}
@@ -178,14 +178,32 @@ class _VCTKBaseDataSource(FileDataSource):
 
     def _validate(self):
         # should have pair of transcription and wav files
-        for idx, speaker in enumerate(self.speakers):
-            txt_files = sorted(glob(join(self.data_root, "txt", "p" + speaker,
-                                         "p{}_*.txt".format(speaker))))
-            wav_files = sorted(glob(join(self.data_root, "wav48", "p" + speaker,
-                                         "p{}_*.wav".format(speaker))))
+        for _, speaker in enumerate(self.speakers):
+            txt_files = sorted(
+                glob(
+                    join(
+                        self.data_root,
+                        "txt",
+                        "p" + speaker,
+                        "p{}_*.txt".format(speaker),
+                    )
+                )
+            )
+            wav_files = sorted(
+                glob(
+                    join(
+                        self.data_root,
+                        "wav48",
+                        "p" + speaker,
+                        "p{}_*.wav".format(speaker),
+                    )
+                )
+            )
             assert len(txt_files) > 0
             for txt_path, wav_path in zip(txt_files, wav_files):
-                assert splitext(basename(txt_path))[0] == splitext(basename(wav_path))[0]
+                assert (
+                    splitext(basename(txt_path))[0] == splitext(basename(wav_path))[0]
+                )
 
     def collect_files(self, is_wav):
         if is_wav:
@@ -207,7 +225,9 @@ class _VCTKBaseDataSource(FileDataSource):
             files = sorted(glob(join(speaker_dir, "p{}_*{}".format(speaker, ext))))
             files = files[:max_files_per_speaker]
             if not is_wav:
-                files = list(map(lambda s: open(s, "rb").read().decode("utf-8")[:-1], files))
+                files = list(
+                    map(lambda s: open(s, "rb").read().decode("utf-8")[:-1], files)
+                )
             for f in files:
                 paths.append(f)
                 labels.append(self.labelmap[self.speakers[idx]])
@@ -242,9 +262,12 @@ class TranscriptionDataSource(_VCTKBaseDataSource):
           models.
     """
 
-    def __init__(self, data_root, speakers=available_speakers, labelmap=None, max_files=None):
+    def __init__(
+        self, data_root, speakers=available_speakers, labelmap=None, max_files=None
+    ):
         super(TranscriptionDataSource, self).__init__(
-            data_root, speakers, labelmap, max_files)
+            data_root, speakers, labelmap, max_files
+        )
 
     def collect_files(self):
         return super(TranscriptionDataSource, self).collect_files(False)
@@ -276,9 +299,12 @@ class WavFileDataSource(_VCTKBaseDataSource):
           models.
     """
 
-    def __init__(self, data_root, speakers=available_speakers, labelmap=None, max_files=None):
+    def __init__(
+        self, data_root, speakers=available_speakers, labelmap=None, max_files=None
+    ):
         super(WavFileDataSource, self).__init__(
-            data_root, speakers, labelmap, max_files)
+            data_root, speakers, labelmap, max_files
+        )
 
     def collect_files(self):
         return super(WavFileDataSource, self).collect_files(True)

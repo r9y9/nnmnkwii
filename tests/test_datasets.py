@@ -1,13 +1,16 @@
-from __future__ import absolute_import, division, print_function
-
 from os.path import dirname, join
 
 import numpy as np
-from nnmnkwii.datasets import (FileDataSource, FileSourceDataset,
-                               MemoryCacheFramewiseDataset,
-                               PaddedFileSourceDataset)
-from nnmnkwii.util import (example_file_data_sources_for_acoustic_model,
-                           example_file_data_sources_for_duration_model)
+from nnmnkwii.datasets import (
+    FileDataSource,
+    FileSourceDataset,
+    MemoryCacheFramewiseDataset,
+    PaddedFileSourceDataset,
+)
+from nnmnkwii.util import (
+    example_file_data_sources_for_acoustic_model,
+    example_file_data_sources_for_duration_model,
+)
 from nose.plugins.attrib import attr
 from nose.tools import raises
 
@@ -35,6 +38,7 @@ def test_empty_dataset():
 
         def collect_features(self, path):
             pass
+
     X = FileSourceDataset(EmptyDataSource())
 
     def __test_outof_range(X):
@@ -75,7 +79,7 @@ def test_invalid_dataset():
 def test_asarray_tqdm():
     # verbose=1 triggers tqdm progress report
     for padded in [True, False]:
-        X, _ = _get_small_datasets(padded=False, duration=True)
+        X, _ = _get_small_datasets(padded=padded, duration=True)
         X.asarray(verbose=1)
 
 
@@ -84,7 +88,8 @@ def test_asarray():
     X, Y = _get_small_datasets(padded=False, duration=True)
     lengths = [len(x) for x in X]
     X, Y = _get_small_datasets(
-        padded=True, duration=True, padded_length=np.max(lengths))
+        padded=True, duration=True, padded_length=np.max(lengths)
+    )
     X_array = np.asarray(X)
     assert X_array.ndim == 3
     assert np.allclose(X_array, X.asarray())
@@ -98,8 +103,7 @@ def test_asarray():
     assert np.allclose(X_array, X.asarray(padded_length=None))
 
     # Force triggering re-allocations
-    assert np.allclose(X_array, X.asarray(
-        padded_length=None, padded_length_guess=1))
+    assert np.allclose(X_array, X.asarray(padded_length=None, padded_length_guess=1))
 
     def __test_very_small_padded_length():
         X, Y = _get_small_datasets(padded=False, duration=True)
@@ -165,7 +169,7 @@ def test_frame_wise_iteration():
 
     Dx = X[0].shape[-1]
     Dy = Y[0].shape[-1]
-    for idx, (x, y) in enumerate(zip(X, Y)):
+    for _, (x, y) in enumerate(zip(X, Y)):
         assert x.shape[-1] == Dx
         assert y.shape[-1] == Dy
 
@@ -173,7 +177,7 @@ def test_frame_wise_iteration():
     assert len(Y.cached_utterances) == num_utterances
 
     # Should support slice indexing
-    for idx, (x, y) in enumerate(zip(X[:2], Y[:2])):
+    for _, (_, _) in enumerate(zip(X[:2], Y[:2])):
         pass
 
 
@@ -198,7 +202,8 @@ def test_sequence_wise_torch_data_loader():
     def __test(X, Y, batch_size):
         dataset = TorchDataset(X, Y)
         loader = data_utils.DataLoader(
-            dataset, batch_size=batch_size, num_workers=0, shuffle=True)
+            dataset, batch_size=batch_size, num_workers=0, shuffle=True
+        )
         for idx, (x, y) in enumerate(loader):
             assert len(x.shape) == len(y.shape)
             assert len(x.shape) == 3
@@ -248,8 +253,9 @@ def test_frame_wise_torch_data_loader():
     def __test(X, Y, batch_size):
         dataset = TorchDataset(X, Y)
         loader = data_utils.DataLoader(
-            dataset, batch_size=batch_size, num_workers=0, shuffle=True)
-        for idx, (x, y) in enumerate(loader):
+            dataset, batch_size=batch_size, num_workers=0, shuffle=True
+        )
+        for _, (x, y) in enumerate(loader):
             assert len(x.shape) == 2
             assert len(y.shape) == 2
 

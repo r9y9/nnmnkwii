@@ -1,5 +1,3 @@
-from __future__ import with_statement, print_function, absolute_import
-
 import numpy as np
 from scipy import interpolate
 
@@ -57,9 +55,9 @@ def interp1d(f0, kind="slinear"):
 
     # Build interpolation function
     nonzero_indices = np.where(continuous_f0 > 0)[0]
-    interp_func = interpolate.interp1d(nonzero_indices,
-                                       continuous_f0[continuous_f0 > 0],
-                                       kind=kind)
+    interp_func = interpolate.interp1d(
+        nonzero_indices, continuous_f0[continuous_f0 > 0], kind=kind
+    )
 
     # Fill silence segments with interpolated values
     zero_indices = np.where(continuous_f0 <= 0)[0]

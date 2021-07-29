@@ -1,13 +1,14 @@
-from __future__ import division, print_function, absolute_import
+from __future__ import absolute_import, division, print_function
 
-from nnmnkwii import paramgen as G
-from nnmnkwii import autograd as AF
-from torch.autograd import Variable
-import torch
-from torch import nn
-import numpy as np
-import time
 import sys
+import time
+
+import numpy as np
+import torch
+from nnmnkwii import autograd as AF
+from nnmnkwii import paramgen as G
+from torch import nn
+from torch.autograd import Variable
 
 
 def _get_windows_set():
@@ -31,9 +32,9 @@ def _get_windows_set():
     return windows_set
 
 
-OKGREEN = '\033[92m'
-FAIL = '\033[91m'
-ENDC = '\033[0m'
+OKGREEN = "\033[92m"
+FAIL = "\033[91m"
+ENDC = "\033[0m"
 
 
 def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
@@ -52,8 +53,7 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
 
     # Pack into variables
     means = Variable(torch.from_numpy(means), requires_grad=True)
-    reshaped_means = Variable(
-        torch.from_numpy(reshaped_means), requires_grad=True)
+    reshaped_means = Variable(torch.from_numpy(reshaped_means), requires_grad=True)
     y = Variable(torch.from_numpy(y), requires_grad=False)
     criterion = nn.MSELoss()
 
@@ -83,8 +83,7 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
 
         y_hat = AF.unit_variance_mlpg(R, means)
         L = criterion(y_hat, y)
-        assert np.allclose(y_hat.cpu().data.numpy(), y.cpu().data.numpy(),
-                           atol=1e-5)
+        assert np.allclose(y_hat.cpu().data.numpy(), y.cpu().data.numpy(), atol=1e-5)
         L.backward()
     elapsed_unit_variance_mlpg = time.time() - since
 
@@ -92,15 +91,20 @@ def benchmark_mlpg(static_dim=59, T=100, batch_size=10, use_cuda=True):
 
     print(
         "MLPG vs UnitVarianceMLPG (static_dim, T, batch_size, use_cuda) = ({}):".format(
-            (static_dim, T, batch_size, use_cuda)))
+            (static_dim, T, batch_size, use_cuda)
+        )
+    )
     if ratio > 1:
         s = "faster"
         sys.stdout.write(OKGREEN)
     else:
         s = "slower"
         sys.stdout.write(FAIL)
-    print("UnitVarianceMLPG, {:4f} times {}. Elapsed times {:4f} / {:4f}".format(
-        ratio, s, elapsed_mlpg, elapsed_unit_variance_mlpg))
+    print(
+        "UnitVarianceMLPG, {:4f} times {}. Elapsed times {:4f} / {:4f}".format(
+            ratio, s, elapsed_mlpg, elapsed_unit_variance_mlpg
+        )
+    )
 
     print(ENDC)
 
@@ -111,5 +115,8 @@ if __name__ == "__main__":
             for T in [500, 1000]:
                 for batch_size in [1, 5, 10]:
                     benchmark_mlpg(
-                        static_dim=static_dim, T=T,
-                        batch_size=batch_size, use_cuda=use_cuda)
+                        static_dim=static_dim,
+                        T=T,
+                        batch_size=batch_size,
+                        use_cuda=use_cuda,
+                    )

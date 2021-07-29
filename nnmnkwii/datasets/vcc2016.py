@@ -1,15 +1,25 @@
 # coding: utf-8
-from __future__ import with_statement, print_function, absolute_import
+from __future__ import absolute_import, print_function, with_statement
 
-from nnmnkwii.datasets import FileDataSource
+from os import listdir
+from os.path import isdir, join, splitext
 
 import numpy as np
-from os.path import join, splitext, isdir
-from os import listdir
+from nnmnkwii.datasets import FileDataSource
 
 # List of available speakers.
 available_speakers = [
-    "SF1", "SF2", "SF3", "SM1", "SM2", "TF1", "TF2", "TM1", "TM2", "TM3"]
+    "SF1",
+    "SF2",
+    "SF3",
+    "SM1",
+    "SM2",
+    "TF1",
+    "TF2",
+    "TM1",
+    "TM2",
+    "TM3",
+]
 
 
 class WavFileDataSource(FileDataSource):
@@ -78,10 +88,16 @@ class WavFileDataSource(FileDataSource):
           models.
     """
 
-    def __init__(self, data_root, speakers, labelmap=None, max_files=None,
-                 training_data_root=None,
-                 evaluation_data_root=None,
-                 training=True):
+    def __init__(
+        self,
+        data_root,
+        speakers,
+        labelmap=None,
+        max_files=None,
+        training_data_root=None,
+        evaluation_data_root=None,
+        training=True,
+    ):
         if training_data_root is None:
             training_data_root = join(data_root, "vcc2016_training")
         if evaluation_data_root is None:
@@ -91,7 +107,9 @@ class WavFileDataSource(FileDataSource):
             if speaker not in available_speakers:
                 raise ValueError(
                     "Unknown speaker '{}'. It should be one of {}".format(
-                        speaker, available_speakers))
+                        speaker, available_speakers
+                    )
+                )
 
         self.data_root = data_root
         self.training_data_root = training_data_root
@@ -112,8 +130,9 @@ class WavFileDataSource(FileDataSource):
         Returns:
             list: List of collected wav files.
         """
-        data_root = self.training_data_root if self.training else \
-            self.evaluation_data_root
+        data_root = (
+            self.training_data_root if self.training else self.evaluation_data_root
+        )
         speaker_dirs = list(map(lambda x: join(data_root, x), self.speakers))
         paths = []
         labels = []

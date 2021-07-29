@@ -1,9 +1,10 @@
 # coding: utf-8
-from __future__ import division, print_function, absolute_import
+from __future__ import absolute_import, division, print_function
 
-from ._linalg import dpotri_full_L, dpotri_full_U
-from ._linalg import cholesky_inv_banded as _cholesky_inv_banded
 import numpy as np
+
+from ._linalg import cholesky_inv_banded as _cholesky_inv_banded
+from ._linalg import dpotri_full_L, dpotri_full_U
 
 
 def cholesky_inv(L, lower=False):

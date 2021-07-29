@@ -1,11 +1,8 @@
-# coding: utf-8
-from __future__ import with_statement, print_function, absolute_import
-
-from nnmnkwii import paramgen as G
-
-from torch.autograd import Function
-import torch
+# fmt: off
 import numpy as np
+import torch
+from nnmnkwii import paramgen as G
+from torch.autograd import Function
 
 
 class MLPG(Function):
@@ -48,7 +45,6 @@ class MLPG(Function):
         ctx.windows = windows
         ctx.save_for_backward(means, variances)
 
-        T, D = means.size()
         assert means.size() == variances.size()
 
         means_np = means.detach().numpy()
@@ -61,20 +57,18 @@ class MLPG(Function):
     def backward(ctx, grad_output):
         means, variances = ctx.saved_tensors
 
-        T, D = means.size()
-
         grad_output_numpy = grad_output.detach().numpy()
         means_numpy = means.detach().numpy()
         variances_numpy = variances.detach().numpy()
         grads_numpy = G.mlpg_grad(
-            means_numpy, variances_numpy, ctx.windows,
-            grad_output_numpy)
+            means_numpy, variances_numpy, ctx.windows, grad_output_numpy
+        )
 
         return torch.from_numpy(grads_numpy).clone(), None, None
 
 
 class UnitVarianceMLPG(Function):
-    """Special case of MLPG assuming data is normalized to have unit variance.
+    r"""Special case of MLPG assuming data is normalized to have unit variance.
 
     ``f : (T x D) -> (T, static_dim)``. or
     ``f : (T*num_windows, static_dim) -> (T, static_dim)``.
@@ -130,9 +124,13 @@ class UnitVarianceMLPG(Function):
         reshaped = not (T == T_)
         if not reshaped:
             static_dim = means.shape[-1] // ctx.num_windows
-            reshaped_means = means.contiguous().view(
-                B, T, ctx.num_windows, -1).transpose(
-                    1, 2).contiguous().view(B, -1, static_dim)
+            reshaped_means = (
+                means.contiguous()
+                .view(B, T, ctx.num_windows, -1)
+                .transpose(1, 2)
+                .contiguous()
+                .view(B, -1, static_dim)
+            )
         else:
             static_dim = means.shape[-1]
             reshaped_means = means
@@ -161,8 +159,12 @@ class UnitVarianceMLPG(Function):
 
         reshaped = not (T == T_)
         if not reshaped:
-            grad = grad.view(B, ctx.num_windows, T, -1).transpose(
-                1, 2).contiguous().view(B, T, D)
+            grad = (
+                grad.view(B, ctx.num_windows, T, -1)
+                .transpose(1, 2)
+                .contiguous()
+                .view(B, T, D)
+            )
 
         if dim == 2:
             return grad.view(-1, D), None

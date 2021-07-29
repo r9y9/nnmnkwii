@@ -4,7 +4,7 @@ from scipy import linalg
 from sklearn.mixture import GaussianMixture
 
 
-# ref: https://github.com/scikit-learn/scikit-learn/blob/0.24.1/sklearn/mixture/_gaussian_mixture.py
+# ref: https://github.com/scikit-learn/scikit-learn/blob/0.24.1/sklearn/mixture/
 def _compute_precision_cholesky(covariances, covariance_type):
     estimate_precision_error_message = (
         "Fitting the mixture model failed because some components have "

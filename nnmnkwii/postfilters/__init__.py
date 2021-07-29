@@ -1,15 +1,12 @@
-# coding: utf-8
-from __future__ import division, print_function, absolute_import
-
-import pysptk
 import numpy as np
+import pysptk
 
-__all__ = ['merlin_post_filter']
+__all__ = ["merlin_post_filter"]
 
 
-def merlin_post_filter(mgc, alpha,
-                       minimum_phase_order=511, fftlen=1024,
-                       coef=1.4, weight=None):
+def merlin_post_filter(
+    mgc, alpha, minimum_phase_order=511, fftlen=1024, coef=1.4, weight=None
+):
     """Post-filter used in Merlin.
 
     This is a :obj:`pysptk` translation of `Merlin's post filter`_ written with
@@ -50,13 +47,16 @@ def merlin_post_filter(mgc, alpha,
         weight[:2] = 1
     assert len(weight) == D
 
-    mgc_r0 = pysptk.c2acr(pysptk.freqt(
-        mgc, minimum_phase_order, alpha=-alpha), 0, fftlen).flatten()
-    mgc_p_r0 = pysptk.c2acr(pysptk.freqt(
-        mgc * weight, minimum_phase_order, -alpha), 0, fftlen).flatten()
+    mgc_r0 = pysptk.c2acr(
+        pysptk.freqt(mgc, minimum_phase_order, alpha=-alpha), 0, fftlen
+    ).flatten()
+    mgc_p_r0 = pysptk.c2acr(
+        pysptk.freqt(mgc * weight, minimum_phase_order, -alpha), 0, fftlen
+    ).flatten()
     mgc_b0 = pysptk.mc2b(weight * mgc, alpha)[:, 0]
     mgc_p_b0 = np.log(mgc_r0 / mgc_p_r0) / 2 + mgc_b0
     mgc_p_mgc = pysptk.b2mc(
-        np.hstack((mgc_p_b0[:, None], pysptk.mc2b(mgc * weight, alpha)[:, 1:])), alpha)
+        np.hstack((mgc_p_b0[:, None], pysptk.mc2b(mgc * weight, alpha)[:, 1:])), alpha
+    )
 
     return mgc_p_mgc

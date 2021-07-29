@@ -107,8 +107,6 @@ def test_mulaw():
         P.inv_mulaw_quantize(P.mulaw_quantize(x))
 
     # torch array input
-    from warnings import warn
-
     import torch
 
     torch.manual_seed(1234)
@@ -206,7 +204,6 @@ def test_minmax():
     X, _ = example_file_data_sources_for_acoustic_model()
     X = FileSourceDataset(X)
     lengths = [len(x) for x in X]
-    D = X[0].shape[-1]
     X_min, X_max = P.minmax(X)
     assert np.isfinite(X_min).all()
     assert np.isfinite(X_max).all()

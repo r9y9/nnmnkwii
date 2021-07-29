@@ -1,20 +1,14 @@
-from __future__ import division, print_function, absolute_import
-
-
-# Note: Tests in the file tightly depends on MLPG and bandmat
-
+import numpy as np
+import torch
+from nnmnkwii import autograd as AF
+from nnmnkwii import paramgen as G
 from nnmnkwii.autograd._impl.mlpg import MLPG, UnitVarianceMLPG
 from nnmnkwii.autograd._impl.modspec import ModSpec
-from nnmnkwii import paramgen as G
-from nnmnkwii import autograd as AF
-
-from torch.autograd import gradcheck
-from torch import nn
-import torch
-import numpy as np
-from warnings import warn
-
 from nose.plugins.attrib import attr
+from torch import nn
+from torch.autograd import gradcheck
+
+# Note: Tests in the file tightly depends on MLPG and bandmat
 
 
 def _get_windows_set():
@@ -39,7 +33,7 @@ def _get_windows_set():
             (0, 0, np.array([1.0])),
             (2, 2, np.array([1.0, -8.0, 0.0, 8.0, -1.0]) / 12.0),
             (2, 2, np.array([-1.0, 16.0, -30.0, 16.0, -1.0]) / 12.0),
-        ]
+        ],
     ]
     return windows_set
 
@@ -75,8 +69,7 @@ def test_functional_mlpg():
 
         # Test 3D tensor inputs
         y_hat = AF.unit_variance_mlpg(R, means.view(1, -1, means.size(-1)))
-        assert np.allclose(
-            y.data.numpy(), y_hat.data.view(-1, static_dim).numpy())
+        assert np.allclose(y.data.numpy(), y_hat.data.view(-1, static_dim).numpy())
 
         nn.MSELoss()(y_hat.view(-1, static_dim), y).backward()
 
@@ -91,8 +84,7 @@ def test_unit_variance_mlpg_gradcheck():
         means = torch.rand(T, static_dim * len(windows), requires_grad=True)
 
         # Input for UnitVarianceMLPG
-        reshaped_means = G.reshape_means(
-            means.data.clone().numpy(), static_dim)
+        reshaped_means = G.reshape_means(means.data.clone().numpy(), static_dim)
         reshaped_means = torch.from_numpy(reshaped_means)
         reshaped_means.requires_grad = True
 
@@ -105,8 +97,9 @@ def test_unit_variance_mlpg_gradcheck():
         y2 = UnitVarianceMLPG.apply(reshaped_means, R)
 
         # Unit variances
-        variances = torch.ones(static_dim * len(windows)
-                               ).expand(T, static_dim * len(windows))
+        variances = torch.ones(static_dim * len(windows)).expand(
+            T, static_dim * len(windows)
+        )
         y_hat = MLPG.apply(means, variances, windows)
 
         # Make sure UnitVarianceMLPG and MLPG can get same result
@@ -116,12 +109,10 @@ def test_unit_variance_mlpg_gradcheck():
 
         # Grad check
         inputs = (reshaped_means, R)
-        assert gradcheck(UnitVarianceMLPG.apply,
-                         inputs, eps=1e-3, atol=1e-3)
+        assert gradcheck(UnitVarianceMLPG.apply, inputs, eps=1e-3, atol=1e-3)
 
         inputs = (means, R)
-        assert gradcheck(UnitVarianceMLPG.apply,
-                         inputs, eps=1e-3, atol=1e-3)
+        assert gradcheck(UnitVarianceMLPG.apply, inputs, eps=1e-3, atol=1e-3)
 
 
 def test_minibatch_unit_variance_mlpg_gradcheck():
@@ -134,12 +125,11 @@ def test_minibatch_unit_variance_mlpg_gradcheck():
 
         # Prepare inputs
         means = torch.rand(T, static_dim * len(windows))
-        means_expanded = means.expand(
-            batch_size, means.shape[0], means.shape[1])
-        reshaped_means = torch.from_numpy(
-            G.reshape_means(means.numpy(), static_dim))
+        means_expanded = means.expand(batch_size, means.shape[0], means.shape[1])
+        reshaped_means = torch.from_numpy(G.reshape_means(means.numpy(), static_dim))
         reshaped_means_expanded = reshaped_means.expand(
-            batch_size, reshaped_means.shape[0], reshaped_means.shape[1])
+            batch_size, reshaped_means.shape[0], reshaped_means.shape[1]
+        )
 
         # Target
         y = G.mlpg(means.numpy(), np.ones(static_dim * len(windows)), windows)
@@ -200,20 +190,20 @@ def test_mlpg_gradcheck():
         means = torch.rand(T, static_dim * len(windows), requires_grad=True)
 
         # Unit variances case
-        variances = torch.ones(static_dim * len(windows)
-                               ).expand(T, static_dim * len(windows))
+        variances = torch.ones(static_dim * len(windows)).expand(
+            T, static_dim * len(windows)
+        )
         inputs = (means, variances, windows)
 
-        assert gradcheck(MLPG.apply,
-                         inputs, eps=1e-3, atol=1e-3)
+        assert gradcheck(MLPG.apply, inputs, eps=1e-3, atol=1e-3)
 
         # Rand variances case
-        variances = torch.rand(static_dim * len(windows)
-                               ).expand(T, static_dim * len(windows))
+        variances = torch.rand(static_dim * len(windows)).expand(
+            T, static_dim * len(windows)
+        )
         inputs = (means, variances, windows)
 
-        assert gradcheck(MLPG.apply,
-                         inputs, eps=1e-3, atol=1e-3)
+        assert gradcheck(MLPG.apply, inputs, eps=1e-3, atol=1e-3)
 
 
 def test_mlpg_variance_expand():

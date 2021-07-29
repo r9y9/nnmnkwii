@@ -1,12 +1,9 @@
-# coding: utf-8
-from __future__ import with_statement, print_function, absolute_import
-
 import numpy as np
-
 from nnmnkwii.paramgen import _bandmat as bm
 from nnmnkwii.paramgen._bandmat import linalg as bla
-from scipy.linalg import solve_banded
 from nnmnkwii.util.linalg import cholesky_inv_banded
+from scipy.linalg import solve_banded
+
 from .mlpg_helper import full_window_mat as _full_window_mat
 
 # https://github.com/MattShannon/bandmat/blob/master/example_spg.py
@@ -14,7 +11,7 @@ from .mlpg_helper import full_window_mat as _full_window_mat
 
 
 def build_win_mats(windows, T):
-    """Builds a window matrix of a given size for each window in a collection.
+    r"""Builds a window matrix of a given size for each window in a collection.
 
     Args:
         windows(list): specifies the collection of windows as a sequence of
@@ -43,11 +40,11 @@ def build_win_mats(windows, T):
         >>> win_mats = G.build_win_mats(windows, 3)
     """
     win_mats = []
-    for l, u, win_coeff in windows:
-        assert l >= 0 and u >= 0
-        assert len(win_coeff) == l + u + 1
-        win_coeffs = np.tile(np.reshape(win_coeff, (l + u + 1, 1)), T)
-        win_mat = bm.band_c_bm(u, l, win_coeffs).T
+    for ll, u, win_coeff in windows:
+        assert ll >= 0 and u >= 0
+        assert len(win_coeff) == ll + u + 1
+        win_coeffs = np.tile(np.reshape(win_coeff, (ll + u + 1, 1)), T)
+        win_mat = bm.band_c_bm(u, ll, win_coeffs).T
         win_mats.append(win_mat)
 
     return win_mats
@@ -85,14 +82,15 @@ def build_poe(b_frames, tau_frames, win_mats, sdw=None):
 
     for win_index, win_mat in enumerate(win_mats):
         bm.dot_mv_plus_equals(win_mat.T, b_frames[:, win_index], target=b)
-        bm.dot_mm_plus_equals(win_mat.T, win_mat, target_bm=prec,
-                              diag=tau_frames[:, win_index])
+        bm.dot_mm_plus_equals(
+            win_mat.T, win_mat, target_bm=prec, diag=tau_frames[:, win_index]
+        )
 
     return b, prec
 
 
 def mlpg(mean_frames, variance_frames, windows):
-    """Maximum Parameter Likelihood Generation (MLPG)
+    r"""Maximum Parameter Likelihood Generation (MLPG)
 
     Function ``f: (T, D) -> (T, static_dim)``.
 
@@ -187,8 +185,7 @@ def mlpg(mean_frames, variance_frames, windows):
 
         for win_idx in range(num_windows):
             means[:, win_idx] = mean_frames[:, win_idx * static_dim + d]
-            precisions[:, win_idx] = 1 / \
-                variance_frames[:, win_idx * static_dim + d]
+            precisions[:, win_idx] = 1 / variance_frames[:, win_idx * static_dim + d]
 
             # use zero precisions at edge frames for dynamic features
             if win_idx != 0:
@@ -203,7 +200,7 @@ def mlpg(mean_frames, variance_frames, windows):
 
 
 def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
-    """MLPG gradient computation
+    r"""MLPG gradient computation
 
     Parameters are same as :func:`nnmnkwii.paramgen.mlpg` except for
     ``grad_output``. See the function docmenent for what the parameters mean.
@@ -259,16 +256,16 @@ def mlpg_grad(mean_frames, variance_frames, windows, grad_output):
         precisions = np.zeros((len(windows), T), dtype=np.float64)
 
         for win_idx, win_mat in enumerate(win_mats):
-            precisions[win_idx] = 1 / \
-                variance_frames[:, win_idx * static_dim + d]
+            precisions[win_idx] = 1 / variance_frames[:, win_idx * static_dim + d]
 
             # use zero precisions at edge frames for dynamic features
             if win_idx != 0:
                 precisions[win_idx, :max_win_width] = 0
                 precisions[win_idx, -max_win_width:] = 0
 
-            bm.dot_mm_plus_equals(win_mat.T, win_mat,
-                                  target_bm=R, diag=precisions[win_idx])
+            bm.dot_mm_plus_equals(
+                win_mat.T, win_mat, target_bm=R, diag=precisions[win_idx]
+            )
 
         for win_idx, win_mat in enumerate(win_mats):
             # r: W_{l}^{T}P_{d,l}
@@ -298,7 +295,7 @@ def full_window_mat(win_mats, T):
 
 
 def unit_variance_mlpg_matrix(windows, T):
-    """Compute MLPG matrix assuming input is normalized to have unit-variances.
+    r"""Compute MLPG matrix assuming input is normalized to have unit-variances.
 
     Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),
     :math:`W` is a window matrix ``(T x num_windows*T)``, assuming input is
@@ -404,6 +401,5 @@ def reshape_means(means, static_dim):
     if D == static_dim:
         # already reshaped case
         return means
-    means = means.reshape(
-        T, -1, static_dim).transpose(1, 0, 2).reshape(-1, static_dim)
+    means = means.reshape(T, -1, static_dim).transpose(1, 0, 2).reshape(-1, static_dim)
     return means
