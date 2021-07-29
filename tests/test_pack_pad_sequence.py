@@ -1,20 +1,19 @@
-from __future__ import division, print_function, absolute_import
-
-from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
-from nnmnkwii.datasets import MemoryCacheFramewiseDataset
-from nnmnkwii.datasets import MemoryCacheDataset
-from nnmnkwii.util import example_file_data_sources_for_acoustic_model
-from nnmnkwii.util import example_file_data_sources_for_duration_model
-
-import torch
-from torch.utils import data as data_utils
-from torch.autograd import Variable
-from torch import nn
-from torch import optim
+from os.path import dirname, join
 
 import numpy as np
-from nose.tools import raises
-from os.path import join, dirname
+import torch
+from nnmnkwii.datasets import (
+    FileSourceDataset,
+    MemoryCacheDataset,
+    PaddedFileSourceDataset,
+)
+from nnmnkwii.util import (
+    example_file_data_sources_for_acoustic_model,
+    example_file_data_sources_for_duration_model,
+)
+from torch import nn, optim
+from torch.autograd import Variable
+from torch.utils import data as data_utils
 
 DATA_DIR = join(dirname(__file__), "data")
 
@@ -42,8 +41,8 @@ class PyTorchDataset(data_utils.Dataset):
     def __getitem__(self, idx):
         x = torch.from_numpy(self.X[idx])
         y = torch.from_numpy(self.Y[idx])
-        l = torch.from_numpy(self.lengths[idx])
-        return x, y, l
+        length = torch.from_numpy(self.lengths[idx])
+        return x, y, length
 
     def __len__(self):
         return len(self.X)
@@ -55,31 +54,38 @@ class MyRNN(nn.Module):
         self.hidden_dim = H
         self.num_layers = num_layers
         self.num_direction = 2 if bidirectional else 1
-        self.lstm = nn.LSTM(D_in, H, num_layers, bidirectional=bidirectional,
-                            batch_first=True)
-        self.hidden2out = nn.Linear(
-            self.num_direction * self.hidden_dim, D_out)
+        self.lstm = nn.LSTM(
+            D_in, H, num_layers, bidirectional=bidirectional, batch_first=True
+        )
+        self.hidden2out = nn.Linear(self.num_direction * self.hidden_dim, D_out)
 
     def init_hidden(self, batch_size):
-        h, c = (Variable(torch.zeros(self.num_layers * self.num_direction,
-                                     batch_size, self.hidden_dim)),
-                Variable(torch.zeros(self.num_layers * self.num_direction,
-                                     batch_size, self.hidden_dim)))
+        h, c = (
+            Variable(
+                torch.zeros(
+                    self.num_layers * self.num_direction, batch_size, self.hidden_dim
+                )
+            ),
+            Variable(
+                torch.zeros(
+                    self.num_layers * self.num_direction, batch_size, self.hidden_dim
+                )
+            ),
+        )
         return h, c
 
     def forward(self, sequence, lengths, h, c):
-        sequence = nn.utils.rnn.pack_padded_sequence(sequence, lengths,
-                                                     batch_first=True)
+        sequence = nn.utils.rnn.pack_padded_sequence(
+            sequence, lengths, batch_first=True
+        )
         output, (h, c) = self.lstm(sequence, (h, c))
-        output, output_lengths = nn.utils.rnn.pad_packed_sequence(
-            output, batch_first=True)
+        output, _ = nn.utils.rnn.pad_packed_sequence(output, batch_first=True)
         output = self.hidden2out(output)
         return output
 
 
 def test_pack_sequnce():
-    """Test minibatch RNN training using pack_pad_sequence.
-    """
+    """Test minibatch RNN training using pack_pad_sequence."""
 
     X, Y = _get_small_datasets(padded=False)
     lengths = np.array([len(x) for x in X], dtype=int)[:, None]
@@ -94,8 +100,7 @@ def test_pack_sequnce():
     in_dim = X[0].shape[-1]
     out_dim = Y[0].shape[-1]
     hidden_dim = 5
-    model = MyRNN(in_dim, hidden_dim, out_dim, num_layers=2,
-                  bidirectional=True)
+    model = MyRNN(in_dim, hidden_dim, out_dim, num_layers=2, bidirectional=True)
     optimizer = optim.Adam(model.parameters(), lr=0.001)
     criterion = nn.MSELoss()
     model.train()
@@ -103,19 +108,19 @@ def test_pack_sequnce():
 
     dataset = PyTorchDataset(X, Y, lengths)
     loader = data_utils.DataLoader(
-        dataset, batch_size=batch_size, num_workers=1, shuffle=True)
+        dataset, batch_size=batch_size, num_workers=1, shuffle=True
+    )
 
     # Test if trining loop pass with no errors. The following code was adapted
     # from practical RNN training demo.
-    for idx, (x, y, lengths) in enumerate(loader):
+    for _, (x, y, lengths) in enumerate(loader):
         # Sort by lengths indices
-        sorted_lengths, indices = torch.sort(lengths.view(-1), dim=0,
-                                             descending=True)
+        sorted_lengths, indices = torch.sort(lengths.view(-1), dim=0, descending=True)
         sorted_lengths = sorted_lengths.long().numpy()
         # Get sorted batch
         x, y = x[indices], y[indices]
         # Trim outputs with max length
-        y = y[:, :sorted_lengths[0]]
+        y = y[:, : sorted_lengths[0]]
 
         x = Variable(x)
         y = Variable(y)

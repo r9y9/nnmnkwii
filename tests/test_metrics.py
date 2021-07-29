@@ -1,11 +1,8 @@
-# coding: utf-8
-
 import numpy as np
 import torch
-
 from nnmnkwii import metrics
-from nnmnkwii.util import example_file_data_sources_for_acoustic_model
 from nnmnkwii.datasets import FileSourceDataset
+from nnmnkwii.util import example_file_data_sources_for_acoustic_model
 
 
 def test_mse_variants():
@@ -28,8 +25,7 @@ def test_mse_variants():
 
         for x, y in [(x1, y1), (x2, y2)]:
             lengths = [x.shape[1]] * len(x)
-            np.testing.assert_almost_equal(
-                f(x, y, lengths), f(x, y), decimal=5)
+            np.testing.assert_almost_equal(f(x, y, lengths), f(x, y), decimal=5)
             assert f(x, y) > 0
 
     yield __test, metrics.melcd
@@ -60,12 +56,13 @@ def test_f0_mse():
 
     f = metrics.lf0_mean_squared_error
     for linear_domain in [True, False]:
-        for x, x_vuv, y, y_vuv in [(x1, x1_vuv, y1, y1_vuv),
-                                   (x2, x2_vuv, y2, y2_vuv)]:
+        for x, x_vuv, y, y_vuv in [(x1, x1_vuv, y1, y1_vuv), (x2, x2_vuv, y2, y2_vuv)]:
             lengths = [x.shape[1]] * len(x)
             np.testing.assert_almost_equal(
                 f(x, x_vuv, y, y_vuv, lengths, linear_domain=linear_domain),
-                f(x, x_vuv, y, y_vuv, linear_domain=linear_domain), decimal=5)
+                f(x, x_vuv, y, y_vuv, linear_domain=linear_domain),
+                decimal=5,
+            )
             assert f(x, x_vuv, y, y_vuv, linear_domain=linear_domain) > 0
 
 
@@ -97,8 +94,7 @@ def test_vuv_error():
 
     for x, y in [(x1, y1), (x2, y2)]:
         lengths = [x.shape[1]] * len(x)
-        np.testing.assert_almost_equal(
-            f(x, y, lengths), f(x, y), decimal=5)
+        np.testing.assert_almost_equal(f(x, y, lengths), f(x, y), decimal=5)
         assert f(x, y) > 0
 
 
@@ -108,7 +104,7 @@ def test_real_metrics():
     lengths = [len(x) for x in X]
     X = X.asarray()
 
-    mgc = X[:, :, :source.mgc_dim // 3]
+    mgc = X[:, :, : source.mgc_dim // 3]
     lf0 = X[:, :, source.lf0_start_idx]
     vuv = (X[:, :, source.vuv_start_idx] > 0).astype(int)
     bap = X[:, :, source.bap_start_idx]
@@ -120,8 +116,7 @@ def test_real_metrics():
 
     mcd = metrics.melcd(mgc, mgc_tgt, lengths)
     bap_mcd = metrics.melcd(bap, bap_tgt, lengths)
-    lf0_mse = metrics.lf0_mean_squared_error(
-        lf0, vuv, lf0_tgt, vuv_tgt, lengths)
+    lf0_mse = metrics.lf0_mean_squared_error(lf0, vuv, lf0_tgt, vuv_tgt, lengths)
     vuv_err = metrics.vuv_error(vuv, vuv_tgt)
     assert mcd > 0
     assert bap_mcd > 0

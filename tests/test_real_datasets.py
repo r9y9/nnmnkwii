@@ -1,22 +1,25 @@
-# coding: utf-8
-from __future__ import division, print_function, absolute_import
-
-from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
-
-import numpy as np
-from nose.tools import raises
-from nose.plugins.attrib import attr
+from os.path import exists, expanduser, join
 from warnings import warn
 
-from os.path import join, dirname, expanduser, exists
-from scipy.io import wavfile
+import numpy as np
 import pysptk
 import pyworld
-from nnmnkwii.preprocessing import trim_zeros_frames
 
 # Data source implementations
-from nnmnkwii.datasets import cmu_arctic, voice_statistics, ljspeech, vcc2016
-from nnmnkwii.datasets import jsut, vctk, jvs
+from nnmnkwii.datasets import (
+    FileSourceDataset,
+    cmu_arctic,
+    jsut,
+    jvs,
+    ljspeech,
+    vcc2016,
+    vctk,
+    voice_statistics,
+)
+from nnmnkwii.preprocessing import trim_zeros_frames
+from nose.plugins.attrib import attr
+from nose.tools import raises
+from scipy.io import wavfile
 
 # Tests marked with "require_local_data" needs data to be downloaded.
 
@@ -26,7 +29,7 @@ def test_cmu_arctic_dummy():
 
     @raises(ValueError)
     def __test_invalid_speaker():
-        data_source = cmu_arctic.WavFileDataSource("dummy", speakers=["test"])
+        cmu_arctic.WavFileDataSource("dummy", speakers=["test"])
 
     @raises(RuntimeError)
     def __test_nodir(data_source):
@@ -41,12 +44,13 @@ def test_voice_statistics_dummy():
 
     @raises(ValueError)
     def __test_invalid_speaker():
-        data_source = voice_statistics.WavFileDataSource("dummy", speakers=["test"])
+        voice_statistics.WavFileDataSource("dummy", speakers=["test"])
 
     @raises(ValueError)
     def __test_invalid_emotion():
-        data_source = voice_statistics.WavFileDataSource(
-            "dummy", speakers=["fujitou"], emotions="nnmnkwii")
+        voice_statistics.WavFileDataSource(
+            "dummy", speakers=["fujitou"], emotions="nnmnkwii"
+        )
 
     @raises(RuntimeError)
     def __test_nodir(data_source):
@@ -63,11 +67,14 @@ def test_voice_statistics_dummy():
 
 
 def test_ljspeech_dummy():
-    data_sources = [ljspeech.TranscriptionDataSource,
-                    ljspeech.NormalizedTranscriptionDataSource,
-                    ljspeech.WavFileDataSource]
+    data_sources = [
+        ljspeech.TranscriptionDataSource,
+        ljspeech.NormalizedTranscriptionDataSource,
+        ljspeech.WavFileDataSource,
+    ]
 
     for data_source in data_sources:
+
         @raises(RuntimeError)
         def f(source):
             source("dummy")
@@ -80,7 +87,7 @@ def test_vcc2016_dummy():
 
     @raises(ValueError)
     def __test_invalid_speaker():
-        data_source = vcc2016.WavFileDataSource("dummy", speakers=["test"])
+        vcc2016.WavFileDataSource("dummy", speakers=["test"])
 
     @raises(RuntimeError)
     def __test_nodir(data_source):
@@ -91,10 +98,10 @@ def test_vcc2016_dummy():
 
 
 def test_jsut_dummy():
-    data_sources = [jsut.TranscriptionDataSource,
-                    jsut.WavFileDataSource]
+    data_sources = [jsut.TranscriptionDataSource, jsut.WavFileDataSource]
 
     for data_source in data_sources:
+
         @raises(RuntimeError)
         def f(source):
             source("dummy")
@@ -104,10 +111,10 @@ def test_jsut_dummy():
 
 def test_vctk_dummy():
     assert len(vctk.available_speakers) == 108
-    data_sources = [vctk.TranscriptionDataSource,
-                    vctk.WavFileDataSource]
+    data_sources = [vctk.TranscriptionDataSource, vctk.WavFileDataSource]
 
     for data_source in data_sources:
+
         @raises(RuntimeError)
         def f(source):
             source("dummy")
@@ -120,9 +127,10 @@ def test_jvs_dummy():
     data_sources = [jvs.TranscriptionDataSource, jvs.WavFileDataSource]
 
     for data_source in data_sources:
+
         @raises(RuntimeError)
         def f(source):
-            source('dummy', categories=['parallel'])
+            source("dummy", categories=["parallel"])
 
         f(data_source)
 
@@ -138,7 +146,8 @@ def test_cmu_arctic():
     class MyFileDataSource(cmu_arctic.WavFileDataSource):
         def __init__(self, data_root, speakers, labelmap=None, max_files=2):
             super(MyFileDataSource, self).__init__(
-                data_root, speakers, labelmap=labelmap, max_files=max_files)
+                data_root, speakers, labelmap=labelmap, max_files=max_files
+            )
             self.alpha = pysptk.util.mcepalpha(16000)
 
         def collect_features(self, path):
@@ -152,35 +161,37 @@ def test_cmu_arctic():
             return mc.astype(np.float32)
 
     max_files = 10
-    data_source = MyFileDataSource(
-        DATA_DIR, speakers=["clb"], max_files=max_files)
+    data_source = MyFileDataSource(DATA_DIR, speakers=["clb"], max_files=max_files)
     X = FileSourceDataset(data_source)
     assert len(X) == max_files
     print(X[0].shape)  # warmup collect_features path
 
     # Multi speakers
     data_source = MyFileDataSource(
-        DATA_DIR, speakers=["clb", "slt"], max_files=max_files)
+        DATA_DIR, speakers=["clb", "slt"], max_files=max_files
+    )
     X = FileSourceDataset(data_source)
     assert len(X) == max_files
 
     # Speaker labels
     Y = data_source.labels
-    assert np.all(Y[:max_files // 2] == 0)
-    assert np.all(Y[max_files // 2:] == 1)
+    assert np.all(Y[: max_files // 2] == 0)
+    assert np.all(Y[max_files // 2 :] == 1)
 
     # Custum speaker id
     data_source = MyFileDataSource(
-        DATA_DIR, speakers=["clb", "slt"], max_files=max_files,
-        labelmap={"clb": 1, "slt": 0})
+        DATA_DIR,
+        speakers=["clb", "slt"],
+        max_files=max_files,
+        labelmap={"clb": 1, "slt": 0},
+    )
     X = FileSourceDataset(data_source)
     Y = data_source.labels
-    assert np.all(Y[:max_files // 2] == 1)
-    assert np.all(Y[max_files // 2:] == 0)
+    assert np.all(Y[: max_files // 2] == 1)
+    assert np.all(Y[max_files // 2 :] == 0)
 
     # Use all data
-    data_source = MyFileDataSource(
-        DATA_DIR, speakers=["clb", "slt"], max_files=None)
+    data_source = MyFileDataSource(DATA_DIR, speakers=["clb", "slt"], max_files=None)
     X = FileSourceDataset(data_source)
     assert len(X) == 1132 * 2
 
@@ -194,11 +205,16 @@ def test_voice_statistics():
         return
 
     class MyFileDataSource(voice_statistics.WavFileDataSource):
-        def __init__(self, data_root, speakers, emotions=["normal"],
-                     labelmap=None, max_files=2):
+        def __init__(
+            self, data_root, speakers, emotions=None, labelmap=None, max_files=2
+        ):
             super(MyFileDataSource, self).__init__(
-                data_root, speakers, emotions=emotions, labelmap=labelmap,
-                max_files=max_files)
+                data_root,
+                speakers,
+                emotions=emotions,
+                labelmap=labelmap,
+                max_files=max_files,
+            )
             self.alpha = pysptk.util.mcepalpha(48000)
 
         def collect_features(self, path):
@@ -213,8 +229,7 @@ def test_voice_statistics():
             return mc.astype(np.float32)
 
     max_files = 40
-    data_source = MyFileDataSource(
-        DATA_DIR, speakers=["fujitou"], max_files=max_files)
+    data_source = MyFileDataSource(DATA_DIR, speakers=["fujitou"], max_files=max_files)
     X = FileSourceDataset(data_source)
     Y = data_source.labels
     print(len(X), max_files)
@@ -224,27 +239,31 @@ def test_voice_statistics():
 
     # Multi speakers
     data_source = MyFileDataSource(
-        DATA_DIR, speakers=["fujitou", "tsuchiya"],
-        max_files=max_files)
+        DATA_DIR, speakers=["fujitou", "tsuchiya"], max_files=max_files
+    )
     X = FileSourceDataset(data_source)
     Y = data_source.labels
     assert len(X) == max_files
-    assert np.all(Y[:max_files // 2] == 0)
-    assert np.all(Y[max_files // 2:] == 1)
+    assert np.all(Y[: max_files // 2] == 0)
+    assert np.all(Y[max_files // 2 :] == 1)
 
     # Multi speakers + Multi emotions
     data_source = MyFileDataSource(
-        DATA_DIR, speakers=["fujitou", "tsuchiya"], emotions=["normal", "happy"],
-        max_files=max_files)
+        DATA_DIR,
+        speakers=["fujitou", "tsuchiya"],
+        emotions=["normal", "happy"],
+        max_files=max_files,
+    )
     X = FileSourceDataset(data_source)
     Y = data_source.labels
     assert len(X) == max_files
-    assert np.all(Y[:max_files // 2] == 0)
-    assert np.all(Y[max_files // 2:] == 1)
+    assert np.all(Y[: max_files // 2] == 0)
+    assert np.all(Y[max_files // 2 :] == 1)
 
     # Use all data
     data_source = MyFileDataSource(
-        DATA_DIR, speakers=["fujitou", "tsuchiya"], max_files=None)
+        DATA_DIR, speakers=["fujitou", "tsuchiya"], max_files=None
+    )
     X = FileSourceDataset(data_source)
     assert len(X) == 100 * 2
 
@@ -262,7 +281,10 @@ def test_voice_statistics():
     source = voice_statistics.TranscriptionDataSource(DATA_DIR, column="monophone")
     texts = source.collect_files()
     assert len(texts) == 100
-    s = "s/u,m/a:,t/o,f/o,N,k/a,r/a,f/i:,ch/a:,f/o,N,m/a,d/e,m/a,r/u,ch/i,d/e,b/a,i,s/u,n/i,t/a,i,o:"
+    s = (
+        "s/u,m/a:,t/o,f/o,N,k/a,r/a,f/i:,ch/a:,f/o,N,m/a,d/e,m/a,"
+        "r/u,ch/i,d/e,b/a,i,s/u,n/i,t/a,i,o:"
+    )
     assert texts[9] == s
 
     source = voice_statistics.TranscriptionDataSource(DATA_DIR, max_files=10)
@@ -333,7 +355,8 @@ def test_vcc2016():
     class MyFileDataSource(vcc2016.WavFileDataSource):
         def __init__(self, data_root, speakers, labelmap=None, max_files=2):
             super(MyFileDataSource, self).__init__(
-                data_root, speakers, labelmap=labelmap, max_files=max_files)
+                data_root, speakers, labelmap=labelmap, max_files=max_files
+            )
             self.alpha = pysptk.util.mcepalpha(16000)
 
         def collect_features(self, path):
@@ -347,35 +370,37 @@ def test_vcc2016():
             return mc.astype(np.float32)
 
     max_files = 10
-    data_source = MyFileDataSource(
-        DATA_DIR, speakers=["SF1"], max_files=max_files)
+    data_source = MyFileDataSource(DATA_DIR, speakers=["SF1"], max_files=max_files)
     X = FileSourceDataset(data_source)
     assert len(X) == max_files
     print(X[0].shape)  # warmup collect_features path
 
     # Multi speakers
     data_source = MyFileDataSource(
-        DATA_DIR, speakers=["SF1", "SF2"], max_files=max_files)
+        DATA_DIR, speakers=["SF1", "SF2"], max_files=max_files
+    )
     X = FileSourceDataset(data_source)
     assert len(X) == max_files
 
     # Speaker labels
     Y = data_source.labels
-    assert np.all(Y[:max_files // 2] == 0)
-    assert np.all(Y[max_files // 2:] == 1)
+    assert np.all(Y[: max_files // 2] == 0)
+    assert np.all(Y[max_files // 2 :] == 1)
 
     # Custum speaker id
     data_source = MyFileDataSource(
-        DATA_DIR, speakers=["SF1", "SF2"], max_files=max_files,
-        labelmap={"SF1": 1, "SF2": 0})
+        DATA_DIR,
+        speakers=["SF1", "SF2"],
+        max_files=max_files,
+        labelmap={"SF1": 1, "SF2": 0},
+    )
     X = FileSourceDataset(data_source)
     Y = data_source.labels
-    assert np.all(Y[:max_files // 2] == 1)
-    assert np.all(Y[max_files // 2:] == 0)
+    assert np.all(Y[: max_files // 2] == 1)
+    assert np.all(Y[max_files // 2 :] == 0)
 
     # Use all data
-    data_source = MyFileDataSource(
-        DATA_DIR, speakers=["SF1", "SF2"], max_files=None)
+    data_source = MyFileDataSource(DATA_DIR, speakers=["SF1", "SF2"], max_files=None)
     X = FileSourceDataset(data_source)
     assert len(X) == 162 * 2
 
@@ -397,16 +422,16 @@ def test_jsut():
 
     data_source = MyTextDataSource(DATA_DIR, subsets=["basic5000"])
     X1 = FileSourceDataset(data_source)
-    assert X1[0] == u"水をマレーシアから買わなくてはならないのです。"
+    assert X1[0] == "水をマレーシアから買わなくてはならないのです。"
 
     data_source = MyTextDataSource(DATA_DIR, subsets=["travel1000"])
     X2 = FileSourceDataset(data_source)
-    assert X2[0] == u"あなたの荷物は、ロサンゼルスに残っています。"
+    assert X2[0] == "あなたの荷物は、ロサンゼルスに残っています。"
 
     # Multiple subsets
     data_source = MyTextDataSource(DATA_DIR, subsets=["basic5000", "travel1000"])
     X3 = FileSourceDataset(data_source)
-    assert X3[0] == u"水をマレーシアから買わなくてはならないのです。"
+    assert X3[0] == "水をマレーシアから買わなくてはならないのです。"
     assert len(X3) == len(X1) + len(X2)
 
     # All subsets
@@ -447,7 +472,9 @@ def test_vctk():
 
     class MyTextDataSource(vctk.TranscriptionDataSource):
         def __init__(self, data_root, speakers, labelmap=None, max_files=None):
-            super(MyTextDataSource, self).__init__(data_root, speakers, labelmap, max_files)
+            super(MyTextDataSource, self).__init__(
+                data_root, speakers, labelmap, max_files
+            )
 
         def collect_features(self, text):
             return text
@@ -484,16 +511,19 @@ def test_vctk():
 
     # max files
     max_files = 16
-    data_source = MyTextDataSource(DATA_DIR, speakers=["225", "228"], max_files=max_files)
+    data_source = MyTextDataSource(
+        DATA_DIR, speakers=["225", "228"], max_files=max_files
+    )
     X = FileSourceDataset(data_source)
     assert len(X) == max_files
     Y = data_source.labels
-    assert np.all(Y[:max_files // 2] == 0)
-    assert np.all(Y[max_files // 2:] == 1)
+    assert np.all(Y[: max_files // 2] == 0)
+    assert np.all(Y[max_files // 2 :] == 1)
 
     # Custum labelmap
-    data_source = MyTextDataSource(DATA_DIR, speakers=["225", "228"],
-                                   labelmap={"225": 225, "228": 228})
+    data_source = MyTextDataSource(
+        DATA_DIR, speakers=["225", "228"], labelmap={"225": 225, "228": 228}
+    )
     X = FileSourceDataset(data_source)
     labels = data_source.labels
     assert len(X) == len(labels)
@@ -550,12 +580,12 @@ def test_jvs():
     # each speaker has 30 non-para
     assert para_nonpara_len == para_len + 30 * 100
 
-    categories2 = ['nonpara']
+    categories2 = ["nonpara"]
     data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers, categories2)
     X4 = data_source.collect_files()
     assert X4[0] == "テニスにもあるけど、４大大会って何。"
 
-    categories3 = ['whisper']
+    categories3 = ["whisper"]
     data_source = jvs.TranscriptionDataSource(DATA_DIR, speakers, categories3)
     X5 = data_source.collect_files()
     assert X5[0] == "母は私の望むものは、何でも言わなくてもかなえてくれる。"
@@ -567,12 +597,12 @@ def test_jvs():
     assert len(X) == para_nonpara_len + 10 * 100
     wav_source = jvs.WavFileDataSource(DATA_DIR, speakers, categories[:1])
     W1 = wav_source.collect_files()
-    assert 'VOICEACTRESS100_001.wav' in W1[0] and 'jvs001' in W1[0]
+    assert "VOICEACTRESS100_001.wav" in W1[0] and "jvs001" in W1[0]
     assert len(W1) == para_len
 
     wav_source = jvs.WavFileDataSource(DATA_DIR, speakers[30:], categories)
     W2 = wav_source.collect_files()
-    assert 'VOICEACTRESS100_001.wav' in W2[0] and 'jvs031' in W2[0]
+    assert "VOICEACTRESS100_001.wav" in W2[0] and "jvs031" in W2[0]
 
     wav_source = jvs.WavFileDataSource(DATA_DIR, speakers, categories[:2])
     W3 = wav_source.collect_files()

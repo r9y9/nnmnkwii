@@ -1,10 +1,9 @@
-from __future__ import division, print_function, absolute_import
+from os.path import dirname, join
 
 import numpy as np
-from sklearn.mixture import GaussianMixture
-from os.path import join, dirname
-from numpy.linalg import norm
 from nose.plugins.attrib import attr
+from numpy.linalg import norm
+from sklearn.mixture import GaussianMixture
 
 DATA_DIR = join(dirname(__file__), "data")
 

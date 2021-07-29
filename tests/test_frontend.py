@@ -16,9 +16,13 @@ def test_invalid_linguistic_features():
 
     @raises(ValueError)
     def __test(labels, subphone_features, add_frame_features):
-        fe.linguistic_features(labels, binary_dict, numeric_dict,
-                               subphone_features=subphone_features,
-                               add_frame_features=add_frame_features)
+        fe.linguistic_features(
+            labels,
+            binary_dict,
+            numeric_dict,
+            subphone_features=subphone_features,
+            add_frame_features=add_frame_features,
+        )
 
     yield __test, phone_labels, "full", True
     yield __test, phone_labels, "full", False
@@ -41,19 +45,21 @@ def test_silence_frame_removal_given_hts_labels():
 
     input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
-    features = fe.linguistic_features(labels,
-                                      binary_dict,
-                                      numeric_dict,
-                                      add_frame_features=True,
-                                      subphone_features="full"
-                                      )
+    features = fe.linguistic_features(
+        labels,
+        binary_dict,
+        numeric_dict,
+        add_frame_features=True,
+        subphone_features="full",
+    )
 
     # Remove silence frames
     indices = labels.silence_frame_indices()
     features = np.delete(features, indices, axis=0)
 
-    y = np.fromfile(join(DATA_DIR, "nn_no_silence_lab_425", "arctic_a0001.lab"),
-                    dtype=np.float32).reshape(-1, features.shape[-1])
+    y = np.fromfile(
+        join(DATA_DIR, "nn_no_silence_lab_425", "arctic_a0001.lab"), dtype=np.float32
+    ).reshape(-1, features.shape[-1])
     assert features.shape == y.shape
     assert np.allclose(features, y)
 
@@ -68,22 +74,26 @@ def test_linguistic_and_duration_features_for_duration_model():
     input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
     assert labels.is_state_alignment_label()
-    x = fe.linguistic_features(labels,
-                               binary_dict,
-                               numeric_dict,
-                               add_frame_features=False,
-                               subphone_features=None
-                               )
-    y = np.fromfile(join(DATA_DIR, "binary_label_416",
-                         "arctic_a0001.lab"), dtype=np.float32).reshape(-1, x.shape[-1])
+    x = fe.linguistic_features(
+        labels,
+        binary_dict,
+        numeric_dict,
+        add_frame_features=False,
+        subphone_features=None,
+    )
+    y = np.fromfile(
+        join(DATA_DIR, "binary_label_416", "arctic_a0001.lab"), dtype=np.float32
+    ).reshape(-1, x.shape[-1])
     assert np.allclose(x, y)
 
     # Duration features
     labels = hts.load(input_state_label)
-    x = fe.duration_features(labels, feature_type="numerical", unit_size="state",
-                             feature_size="phoneme")
-    y = np.fromfile(join(DATA_DIR, "duration_untrimmed",
-                         "arctic_a0001.dur"), dtype=np.float32).reshape(-1, x.shape[-1])
+    x = fe.duration_features(
+        labels, feature_type="numerical", unit_size="state", feature_size="phoneme"
+    )
+    y = np.fromfile(
+        join(DATA_DIR, "duration_untrimmed", "arctic_a0001.dur"), dtype=np.float32
+    ).reshape(-1, x.shape[-1])
 
     assert np.allclose(x, y)
 
@@ -98,14 +108,16 @@ def test_linguistic_features_for_acoustic_model():
     input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
     assert labels.is_state_alignment_label()
-    x = fe.linguistic_features(labels,
-                               binary_dict,
-                               numeric_dict,
-                               add_frame_features=True,
-                               subphone_features="full"
-                               )
-    y = np.fromfile(join(DATA_DIR, "binary_label_425",
-                         "arctic_a0001.lab"), dtype=np.float32).reshape(-1, x.shape[-1])
+    x = fe.linguistic_features(
+        labels,
+        binary_dict,
+        numeric_dict,
+        add_frame_features=True,
+        subphone_features="full",
+    )
+    y = np.fromfile(
+        join(DATA_DIR, "binary_label_425", "arctic_a0001.lab"), dtype=np.float32
+    ).reshape(-1, x.shape[-1])
     assert np.allclose(x, y)
 
 
@@ -115,16 +127,24 @@ def test_phone_alignment_label():
 
     input_state_label = join(DATA_DIR, "label_phone_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
-    x = fe.linguistic_features(labels, binary_dict, numeric_dict,
-                               add_frame_features=False,
-                               subphone_features=None)
+    x = fe.linguistic_features(
+        labels,
+        binary_dict,
+        numeric_dict,
+        add_frame_features=False,
+        subphone_features=None,
+    )
     assert not labels.is_state_alignment_label()
     assert np.all(np.isfinite(x))
 
     for subphone_features in ["coarse_coding", "minimal_phoneme"]:
-        x = fe.linguistic_features(labels, binary_dict, numeric_dict,
-                                   add_frame_features=True,
-                                   subphone_features=subphone_features)
+        x = fe.linguistic_features(
+            labels,
+            binary_dict,
+            numeric_dict,
+            add_frame_features=True,
+            subphone_features=subphone_features,
+        )
         assert np.all(np.isfinite(x))
 
     x = fe.duration_features(labels)
@@ -141,12 +161,13 @@ def test_backward_compatibility():
     input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
     assert labels.is_state_alignment_label()
-    x_hat = fe.linguistic_features(labels,
-                               binary_dict,
-                               numeric_dict,
-                               add_frame_features=True,
-                               subphone_features="full"
-                               )
+    x_hat = fe.linguistic_features(
+        labels,
+        binary_dict,
+        numeric_dict,
+        add_frame_features=True,
+        subphone_features="full",
+    )
 
     x = np.load(join(DATA_DIR, "arctic_a0001_frame_features.npy"))
 

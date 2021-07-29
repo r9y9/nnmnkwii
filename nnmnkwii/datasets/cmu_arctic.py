@@ -1,16 +1,31 @@
-from __future__ import with_statement, print_function, absolute_import
+from __future__ import absolute_import, print_function, with_statement
 
-from nnmnkwii.datasets import FileDataSource
+from os import listdir
+from os.path import isdir, join, splitext
 
 import numpy as np
-from os.path import join, splitext, isdir
-from os import listdir
+from nnmnkwii.datasets import FileDataSource
 
 # List of available speakers.
 available_speakers = [
-    "aew", "ahw", "aup", "awb", "axb", "bdl",
-    "clb", "eey", "fem", "gka", "jmk", "ksp",
-    "ljm", "lnh", "rms", "rxr", "slp", "slt",
+    "aew",
+    "ahw",
+    "aup",
+    "awb",
+    "axb",
+    "bdl",
+    "clb",
+    "eey",
+    "fem",
+    "gka",
+    "jmk",
+    "ksp",
+    "ljm",
+    "lnh",
+    "rms",
+    "rxr",
+    "slp",
+    "slt",
 ]
 
 
@@ -48,7 +63,9 @@ class WavFileDataSource(FileDataSource):
             if speaker not in available_speakers:
                 raise ValueError(
                     "Unknown speaker '{}'. It should be one of {}".format(
-                        speaker, available_speakers))
+                        speaker, available_speakers
+                    )
+                )
 
         self.data_root = data_root
         self.speakers = speakers
@@ -67,8 +84,8 @@ class WavFileDataSource(FileDataSource):
             list: List of collected wav files.
         """
         speaker_dirs = list(
-            map(lambda x: join(self.data_root, _name_to_dirname(x)),
-                self.speakers))
+            map(lambda x: join(self.data_root, _name_to_dirname(x)), self.speakers)
+        )
         paths = []
         labels = []
 

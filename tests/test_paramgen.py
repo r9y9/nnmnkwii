@@ -1,7 +1,4 @@
-from __future__ import division, print_function, absolute_import
-
 import numpy as np
-
 from nose.plugins.attrib import attr
 
 
@@ -27,7 +24,7 @@ def _get_windows_set():
             (0, 0, np.array([1.0])),
             (2, 2, np.array([1.0, -8.0, 0.0, 8.0, -1.0]) / 12.0),
             (2, 2, np.array([-1.0, 16.0, -30.0, 16.0, -1.0]) / 12.0),
-        ]
+        ],
     ]
     return windows_set
 
@@ -67,7 +64,7 @@ def test_mlpg():
 @attr("requires_bandmat")
 def test_mlpg_window_full():
     from nnmnkwii import paramgen as G
-    static_dim = 2
+
     T = 10
 
     def full_window_mat_native(win_mats, T):
@@ -75,7 +72,7 @@ def test_mlpg_window_full():
         for win_index, win_mat in enumerate(win_mats):
             win = win_mat.full()
             b = win_index * T
-            cocatenated_window[b:b + T, :] = win
+            cocatenated_window[b : b + T, :] = win
         return cocatenated_window
 
     for windows in _get_windows_set():
@@ -88,6 +85,7 @@ def test_mlpg_window_full():
 @attr("requires_bandmat")
 def test_unit_variance_mlpg():
     from nnmnkwii import paramgen as G
+
     static_dim = 2
     T = 10
 
@@ -104,6 +102,7 @@ def test_unit_variance_mlpg():
 @attr("requires_bandmat")
 def test_reshape_means():
     from nnmnkwii import paramgen as G
+
     static_dim = 2
     T = 10
 

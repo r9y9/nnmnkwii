@@ -1,11 +1,9 @@
-from __future__ import division, print_function, absolute_import
-
-from nnmnkwii.util import apply_each2d_padded, apply_each2d_trim
-from nnmnkwii.util.linalg import cholesky_inv, cholesky_inv_banded
+from __future__ import absolute_import, division, print_function
 
 import numpy as np
 import scipy.linalg
-
+from nnmnkwii.util import apply_each2d_padded, apply_each2d_trim
+from nnmnkwii.util.linalg import cholesky_inv, cholesky_inv_banded
 from nose.plugins.attrib import attr
 
 
@@ -59,7 +57,7 @@ def _get_banded_test_mat(win_mats, T):
 
     sdw = max([win_mat.l + win_mat.u for win_mat in win_mats])
     P = bm.zeros(sdw, sdw, T)
-    for win_index, win_mat in enumerate(win_mats):
+    for _, win_mat in enumerate(win_mats):
         bm.dot_mm_plus_equals(win_mat.T, win_mat, target_bm=P)
     return P
 

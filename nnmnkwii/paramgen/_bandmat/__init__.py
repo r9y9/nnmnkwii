@@ -96,5 +96,5 @@ Banded matrix multiplication:
 # This file is part of bandmat.
 # See `License` for details of license and warranty.
 
-from .core import *
-from .tensor import *
+from .core import *  # noqa
+from .tensor import *  # noqa

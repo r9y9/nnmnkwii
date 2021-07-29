@@ -1,13 +1,8 @@
-from __future__ import division, print_function, absolute_import
-
-from nnmnkwii.preprocessing import trim_zeros_frames
-from nnmnkwii.baseline.gmm import MLPG
-
-from fastdtw import fastdtw
-
 import numpy as np
+from fastdtw import fastdtw
+from nnmnkwii.baseline.gmm import MLPG
+from nnmnkwii.preprocessing import trim_zeros_frames
 from numpy.linalg import norm
-
 from sklearn.mixture import GaussianMixture
 
 
@@ -53,22 +48,29 @@ class DTWAligner(object):
         for idx, (x, y) in enumerate(zip(X, Y)):
             x, y = trim_zeros_frames(x), trim_zeros_frames(y)
             dist, path = fastdtw(x, y, radius=self.radius, dist=self.dist)
-            dist /= (len(x) + len(y))
+            dist /= len(x) + len(y)
             pathx = list(map(lambda l: l[0], path))
             pathy = list(map(lambda l: l[1], path))
             x, y = x[pathx], y[pathy]
             max_len = max(len(x), len(y))
             if max_len > X_aligned.shape[1] or max_len > Y_aligned.shape[1]:
-                pad_size = max(max_len - X_aligned.shape[1],
-                               max_len > Y_aligned.shape[1])
+                pad_size = max(
+                    max_len - X_aligned.shape[1], max_len > Y_aligned.shape[1]
+                )
                 X_aligned = np.pad(
-                    X_aligned, [(0, 0), (0, pad_size), (0, 0)],
-                    mode="constant", constant_values=0)
+                    X_aligned,
+                    [(0, 0), (0, pad_size), (0, 0)],
+                    mode="constant",
+                    constant_values=0,
+                )
                 Y_aligned = np.pad(
-                    Y_aligned, [(0, 0), (0, pad_size), (0, 0)],
-                    mode="constant", constant_values=0)
-            X_aligned[idx][:len(x)] = x
-            Y_aligned[idx][:len(y)] = y
+                    Y_aligned,
+                    [(0, 0), (0, pad_size), (0, 0)],
+                    mode="constant",
+                    constant_values=0,
+                )
+            X_aligned[idx][: len(x)] = x
+            Y_aligned[idx][: len(y)] = y
             if self.verbose > 0:
                 print("{}, distance: {}".format(idx, dist))
         return X_aligned, Y_aligned
@@ -103,8 +105,15 @@ class IterativeDTWAligner(object):
         (3, 40, 5)
     """
 
-    def __init__(self, n_iter=3, dist=lambda x, y: norm(x - y),
-                 radius=1, max_iter_gmm=100, n_components_gmm=16, verbose=0):
+    def __init__(
+        self,
+        n_iter=3,
+        dist=lambda x, y: norm(x - y),
+        radius=1,
+        max_iter_gmm=100,
+        n_components_gmm=16,
+        verbose=0,
+    ):
         self.n_iter = n_iter
         self.dist = dist
         self.radius = radius
@@ -127,7 +136,7 @@ class IterativeDTWAligner(object):
             for idx, (x, y) in enumerate(zip(Xc, Y)):
                 x, y = trim_zeros_frames(x), trim_zeros_frames(y)
                 dist, path = fastdtw(x, y, radius=self.radius, dist=self.dist)
-                dist /= (len(x) + len(y))
+                dist /= len(x) + len(y)
                 pathx = list(map(lambda l: l[0], path))
                 pathy = list(map(lambda l: l[1], path))
 
@@ -137,36 +146,45 @@ class IterativeDTWAligner(object):
                 max_len = max(len(x), len(y))
                 if max_len > X_aligned.shape[1] or max_len > Y_aligned.shape[1]:
                     pad_size = max(
-                        max_len - X_aligned.shape[1],
-                        max_len > Y_aligned.shape[1])
+                        max_len - X_aligned.shape[1], max_len > Y_aligned.shape[1]
+                    )
                     X_aligned = np.pad(
-                        X_aligned, [(0, 0), (0, pad_size), (0, 0)],
-                        mode="constant", constant_values=0)
+                        X_aligned,
+                        [(0, 0), (0, pad_size), (0, 0)],
+                        mode="constant",
+                        constant_values=0,
+                    )
                     Y_aligned = np.pad(
-                        Y_aligned, [(0, 0), (0, pad_size), (0, 0)],
-                        mode="constant", constant_values=0)
+                        Y_aligned,
+                        [(0, 0), (0, pad_size), (0, 0)],
+                        mode="constant",
+                        constant_values=0,
+                    )
 
-                X_aligned[idx][:len(x)] = x
-                Y_aligned[idx][:len(y)] = y
+                X_aligned[idx][: len(x)] = x
+                Y_aligned[idx][: len(y)] = y
                 if self.verbose > 0:
                     print("{}, distance: {}".format(idx, dist))
 
             # Fit
             gmm = GaussianMixture(
                 n_components=self.n_components_gmm,
-                covariance_type="full", max_iter=self.max_iter_gmm)
-            XY = np.concatenate((X_aligned, Y_aligned),
-                                axis=-1).reshape(-1, X.shape[-1] * 2)
+                covariance_type="full",
+                max_iter=self.max_iter_gmm,
+            )
+            XY = np.concatenate((X_aligned, Y_aligned), axis=-1).reshape(
+                -1, X.shape[-1] * 2
+            )
             gmm.fit(XY)
             windows = [(0, 0, np.array([1.0]))]  # no delta
             paramgen = MLPG(gmm, windows=windows)
             for idx in range(len(Xc)):
                 x = trim_zeros_frames(Xc[idx])
-                Xc[idx][:len(x)] = paramgen.transform(x)
+                Xc[idx][: len(x)] = paramgen.transform(x)
 
         # Finally we can get aligned X
         for idx in range(len(X_aligned)):
             x = X[idx][refined_paths[idx]]
-            X_aligned[idx][:len(x)] = x
+            X_aligned[idx][: len(x)] = x
 
         return X_aligned, Y_aligned

@@ -1,22 +1,20 @@
-from __future__ import with_statement, print_function, absolute_import
-
-from nnmnkwii.datasets import FileDataSource
-
-import numpy as np
-from os.path import join, splitext, isdir, exists
-from os import listdir
+from os.path import exists, isdir, join
 from warnings import warn
 
-available_subsets = ["basic5000",
-                     "countersuffix26",
-                     "loanword128",
-                     "onomatopee300",
-                     "precedent130",
-                     "repeat500",
-                     "travel1000",
-                     "utparaphrase512",
-                     "voiceactress100",
-                     ]
+import numpy as np
+from nnmnkwii.datasets import FileDataSource
+
+available_subsets = [
+    "basic5000",
+    "countersuffix26",
+    "loanword128",
+    "onomatopee300",
+    "precedent130",
+    "repeat500",
+    "travel1000",
+    "utparaphrase512",
+    "voiceactress100",
+]
 
 
 class BaseDataSource(FileDataSource):
@@ -26,7 +24,8 @@ class BaseDataSource(FileDataSource):
         transcription_path = join(data_root, subset, "transcript_utf8.txt")
         if not exists(transcription_path):
             raise RuntimeError(
-                "transcript_utf8.txt doesn't exists at \"{}\"".format(transcription_path))
+                'transcript_utf8.txt doesn\'t exists at "{}"'.format(transcription_path)
+            )
 
         with open(transcription_path, "rb") as f:
             names, transcriptions = [], []
@@ -59,8 +58,11 @@ class BaseDataSource(FileDataSource):
                 miss_indices.append(idx)
 
         if len(miss_indices) > 0:
-            warn("{}/{} wav files were missing in subset {}.".format(
-                len(miss_indices), len(self.names), self.subset))
+            warn(
+                "{}/{} wav files were missing in subset {}.".format(
+                    len(miss_indices), len(self.names), self.subset
+                )
+            )
 
         self.names = np.delete(self.names, miss_indices)
         self.transcriptions = np.delete(self.transcriptions, miss_indices)
@@ -85,7 +87,9 @@ class _JSUTFileDataSource(FileDataSource):
             if subset not in available_subsets:
                 raise ValueError(
                     "Unknown subset '{}'. It should be one of {}".format(
-                        subset, available_subsets))
+                        subset, available_subsets
+                    )
+                )
 
         self.data_root = data_root
         self.subsets = subsets
@@ -119,9 +123,12 @@ class TranscriptionDataSource(_JSUTFileDataSource):
           and ``voiceactress100``. Default is ["basic5000"].
     """
 
-    def __init__(self, data_root, subsets=["basic5000"], validate=True):
+    def __init__(self, data_root, subsets=None, validate=True):
+        if subsets is None:
+            subsets = ["basic5000"]
         super(TranscriptionDataSource, self).__init__(
-            data_root, subsets, False, validate)
+            data_root, subsets, False, validate
+        )
 
 
 class WavFileDataSource(_JSUTFileDataSource):
@@ -139,5 +146,7 @@ class WavFileDataSource(_JSUTFileDataSource):
           and ``voiceactress100``. Default is ["basic5000"].
     """
 
-    def __init__(self, data_root, subsets=["basic5000"], validate=True):
+    def __init__(self, data_root, subsets=None, validate=True):
+        if subsets is None:
+            subsets = ["basic5000"]
         super(WavFileDataSource, self).__init__(data_root, subsets, True, validate)

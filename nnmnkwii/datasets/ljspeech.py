@@ -1,9 +1,9 @@
-from __future__ import with_statement, print_function, absolute_import
+from __future__ import absolute_import, print_function, with_statement
 
-from nnmnkwii.datasets import FileDataSource
+from os.path import exists, join
 
-from os.path import join, exists
 import numpy as np
+from nnmnkwii.datasets import FileDataSource
 
 
 class LJSpeechDataSource(FileDataSource):
@@ -12,7 +12,8 @@ class LJSpeechDataSource(FileDataSource):
         metadata_path = join(data_root, "metadata.csv")
         if not exists(metadata_path):
             raise RuntimeError(
-                "metadata.csv doesn't exists at \"{}\"".format(metadata_path))
+                'metadata.csv doesn\'t exists at "{}"'.format(metadata_path)
+            )
 
         with open(metadata_path, "rb") as f:
             metadata = []
@@ -73,7 +74,9 @@ class NormalizedTranscriptionDataSource(TranscriptionDataSource):
     """
 
     def __init__(self, data_root):
-        super(NormalizedTranscriptionDataSource, self).__init__(data_root, normalized=True)
+        super(NormalizedTranscriptionDataSource, self).__init__(
+            data_root, normalized=True
+        )
 
 
 class WavFileDataSource(LJSpeechDataSource):
@@ -99,6 +102,10 @@ class WavFileDataSource(LJSpeechDataSource):
         Returns:
             list: List of wav files.
         """
-        files = list(map(lambda x: join(self.data_root, "wavs", x + ".wav"),
-                         list(self.metadata[:, 0])))
+        files = list(
+            map(
+                lambda x: join(self.data_root, "wavs", x + ".wav"),
+                list(self.metadata[:, 0]),
+            )
+        )
         return files

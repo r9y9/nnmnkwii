@@ -1,6 +1,3 @@
-# coding: utf-8
-from __future__ import absolute_import, division, print_function
-
 import numpy as np
 from scipy import signal
 from sklearn.utils.extmath import _incremental_mean_and_var
@@ -821,8 +818,8 @@ def inv_minmax_scale(
     """
     if (scale_ is None or min_ is None) and (data_min is None or data_max is None):
         raise ValueError(
-            """
-`data_min` and `data_max` or `scale_` and `min_` must be specified to perform inverse of minmax scale"""
+            "`data_min` and `data_max` or `scale_` and `min_` must be specified "
+            "to perform inverse of minmax scale"
         )
     if scale_ is None:
         scale_ = __minmax_scale_factor(data_min, data_max, feature_range)

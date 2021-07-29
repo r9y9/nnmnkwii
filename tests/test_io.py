@@ -26,9 +26,7 @@ def test_load_question_set():
 
 
 def test_htk_style_question_basics():
-    binary_dict, numeric_dict = hts.load_question_set(
-        join(DATA_DIR, "test_question.hed")
-    )
+    binary_dict, _ = hts.load_question_set(join(DATA_DIR, "test_question.hed"))
     # sil k o n i ch i w a sil
     input_phone_label = join(DATA_DIR, "hts-nit-atr503", "phrase01.lab")
     labels = hts.load(input_phone_label)
@@ -84,8 +82,8 @@ QS "RR-Phone_o"      {*=o/A:*}
 def test_singing_voice_question():
     # Test SVS case
     """
-QS "L-Phone_Yuusei_Boin"           {*^a-*,*^i-*,*^u-*,*^e-*,*^o-*}
-CQS "e1" {/E:(\\NOTE)]}
+    QS "L-Phone_Yuusei_Boin"           {*^a-*,*^i-*,*^u-*,*^e-*,*^o-*}
+    CQS "e1" {/E:(\\NOTE)]}
     """
     binary_dict, numeric_dict = hts.load_question_set(
         join(DATA_DIR, "test_jp_svs.hed"),
@@ -124,9 +122,9 @@ def test_state_alignment_label_file():
     input_state_label = join(DATA_DIR, "label_state_align", "arctic_a0001.lab")
     labels = hts.load(input_state_label)
     with open(input_state_label) as f:
-        l = f.read()
-        l = l[:-1] if l[-1] == "\n" else l
-        assert l == str(labels)
+        line = f.read()
+        line = line[:-1] if line[-1] == "\n" else line
+        assert line == str(labels)
 
     print(labels.num_states())
     assert labels.num_states() == 5
@@ -182,24 +180,24 @@ def test_hts_append():
 
     @raises(ValueError)
     def test_invalid_start_time():
-        l = hts.HTSLabelFile()
-        l.append((100000, 0, "NG"))
+        labels = hts.HTSLabelFile()
+        labels.append((100000, 0, "NG"))
 
     def test_succeeding_times():
-        l = hts.HTSLabelFile()
-        l.append((0, 1000000, "OK"))
-        l.append((1000000, 2000000, "OK"))
+        labels = hts.HTSLabelFile()
+        labels.append((0, 1000000, "OK"))
+        labels.append((1000000, 2000000, "OK"))
 
     @raises(ValueError)
     def test_non_succeeding_times():
-        l = hts.HTSLabelFile()
-        l.append((0, 1000000, "OK"))
-        l.append((1500000, 2000000, "NG"))
+        labels = hts.HTSLabelFile()
+        labels.append((0, 1000000, "OK"))
+        labels.append((1500000, 2000000, "NG"))
 
     def test_non_succeeding_times_wo_strict():
-        l = hts.HTSLabelFile()
-        l.append((0, 1000000, "OK"), strict=False)
-        l.append((1500000, 2000000, "OK"), strict=False)
+        labels = hts.HTSLabelFile()
+        labels.append((0, 1000000, "OK"), strict=False)
+        labels.append((1500000, 2000000, "OK"), strict=False)
 
     test_invalid_start_time()
     test_succeeding_times()
@@ -223,6 +221,7 @@ def test_create_from_contexts():
 
     labels2 = hts.HTSLabelFile.create_from_contexts(contexts)
     assert str(labels), str(labels2)
+
 
 def test_lab_in_sec():
     labels1 = hts.load(join(DATA_DIR, "BASIC5000_0619_head.lab"))

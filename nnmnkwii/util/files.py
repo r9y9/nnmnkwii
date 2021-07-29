@@ -29,8 +29,9 @@ def example_label_file(phone_level=False):
     """
     name = "arctic_a0009"
     label_path = pkg_resources.resource_filename(
-        __name__, '_example_data/{}_{}.lab'.format(
-            name, "phone" if phone_level else "state"))
+        __name__,
+        "_example_data/{}_{}.lab".format(name, "phone" if phone_level else "state"),
+    )
     return label_path
 
 
@@ -50,7 +51,8 @@ def example_audio_file():
     """
     name = "arctic_a0009"
     wav_path = pkg_resources.resource_filename(
-        __name__, '_example_data/{}.wav'.format(name))
+        __name__, "_example_data/{}.wav".format(name)
+    )
     return wav_path
 
 
@@ -70,7 +72,8 @@ def example_question_file():
         >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
     """
     return pkg_resources.resource_filename(
-        __name__, '_example_data/questions-radio_dnn_416.hed')
+        __name__, "_example_data/questions-radio_dnn_416.hed"
+    )
 
 
 class BinaryFileDataSource(FileDataSource):
@@ -86,7 +89,8 @@ class BinaryFileDataSource(FileDataSource):
 
 class ExampleSLTArcticFileDataSource(BinaryFileDataSource):
     SLT_DEMO_DATA_ROOT = pkg_resources.resource_filename(
-        __name__, '_example_data/slt_arctic_demo_data')
+        __name__, "_example_data/slt_arctic_demo_data"
+    )
 
     mgc_dim = 75
     lf0_dim = 3
@@ -112,7 +116,8 @@ class ExampleSLTArcticFileDataSource(BinaryFileDataSource):
 
     def __init__(self, directory):
         super(ExampleSLTArcticFileDataSource, self).__init__(
-            join(self.SLT_DEMO_DATA_ROOT, directory))
+            join(self.SLT_DEMO_DATA_ROOT, directory)
+        )
 
 
 def example_file_data_sources_for_duration_model():

@@ -37,6 +37,7 @@
 #  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 #  THIS SOFTWARE.
 ##########################################################################
+# fmt: off
 
 import numpy as np
 from nnmnkwii.frontend import NOTE_MAPPING
@@ -77,7 +78,6 @@ def get_frame_feature_size(subphone_features="full"):
         raise ValueError(
             "Unknown value for subphone_features: %s" % (subphone_features)
         )
-    assert False
 
 
 def compute_coarse_coding_features(num_states=3, npoints=600):
@@ -152,7 +152,7 @@ def pattern_matching_continous_position(numeric_dict, label):
         # NOTE: newer version returns tuple of (name, question)
         if isinstance(current_compiled, tuple):
             current_compiled = current_compiled[1]
-        if "([-\d]+)" in current_compiled.pattern:
+        if "([-\\d]+)" in current_compiled.pattern:
             continuous_value = -50.0
         else:
             continuous_value = -1.0
@@ -196,7 +196,7 @@ def load_labels_with_phone_alignment(
     if subphone_features == "coarse_coding":
         cc_features = compute_coarse_coding_features()
 
-    for idx, (start_time, end_time, full_label) in enumerate(hts_labels):
+    for _, (start_time, end_time, full_label) in enumerate(hts_labels):
         frame_number = int(end_time / frame_shift) - int(start_time / frame_shift)
 
         label_binary_vector = pattern_matching_binary(binary_dict, full_label)
@@ -247,7 +247,8 @@ def load_labels_with_phone_alignment(
                     pass
                 else:
                     raise ValueError(
-                        "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
+                        "Combination of subphone_features and add_frame_features "
+                        "is not supported: {}, {}".format(
                             subphone_features, add_frame_features
                         )
                     )
@@ -268,9 +269,8 @@ def load_labels_with_phone_alignment(
     # omg
     if label_feature_index == 0:
         raise ValueError(
-            "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
-                subphone_features, add_frame_features
-            )
+            "Combination of subphone_features and add_frame_features is not supported"
+            " : {}, {}".format(subphone_features, add_frame_features)
         )
 
     label_feature_matrix = label_feature_matrix[
@@ -440,7 +440,7 @@ def load_labels_with_state_alignment(
                 elif subphone_features is None:
                     pass
                 else:
-                    assert False
+                    raise AssertionError()
 
             label_feature_matrix[
                 label_feature_index : label_feature_index + frame_number
@@ -474,9 +474,8 @@ def load_labels_with_state_alignment(
     # omg
     if label_feature_index == 0:
         raise ValueError(
-            "Combination of subphone_features and add_frame_features is not supported: {}, {}".format(
-                subphone_features, add_frame_features
-            )
+            "Combination of subphone_features and add_frame_features"
+            " is not supported: {}, {}".format(subphone_features, add_frame_features)
         )
 
     label_feature_matrix = label_feature_matrix[
@@ -603,7 +602,7 @@ def extract_dur_from_state_alignment_labels(
                 if state_index == state_number:
                     current_block_array[-1] = 1
             else:
-                assert False
+                raise AssertionError()
         elif feature_type == "numerical":
             if unit_size == "state":
                 current_dur_array[current_index % 5] = frame_number
@@ -616,7 +615,7 @@ def extract_dur_from_state_alignment_labels(
             elif unit_size == "phoneme":
                 current_block_array = np.array([phone_duration])
             else:
-                assert False
+                raise AssertionError()
 
         # writing into dur_feature_matrix
         if feature_size == "frame":
@@ -656,7 +655,7 @@ def extract_dur_from_phone_alignment_labels(
     else:
         dur_feature_matrix = np.empty((hts_labels.num_frames(), 1), dtype=int)
     dur_feature_index = 0
-    for current_index, (start_time, end_time, _) in enumerate(hts_labels):
+    for _, (start_time, end_time, _) in enumerate(hts_labels):
         frame_number = (end_time - start_time) / frame_shift
 
         phone_duration = frame_number
@@ -667,7 +666,7 @@ def extract_dur_from_phone_alignment_labels(
         elif feature_type == "numerical":
             current_block_array = np.array([phone_duration])
         else:
-            assert False
+            raise AssertionError()
 
         # writing into dur_feature_matrix
         if feature_size == "frame":
@@ -681,7 +680,7 @@ def extract_dur_from_phone_alignment_labels(
             ] = current_block_array
             dur_feature_index = dur_feature_index + 1
         else:
-            assert False
+            raise AssertionError()
 
     dur_feature_matrix = dur_feature_matrix[0:dur_feature_index]
     return dur_feature_matrix

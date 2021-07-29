@@ -1,9 +1,7 @@
-from __future__ import with_statement, print_function, absolute_import
-
-import numpy as np
-
 from collections import OrderedDict
 from warnings import warn
+
+import numpy as np
 from tqdm import tqdm
 
 
@@ -105,8 +103,7 @@ class FileSourceDataset(Dataset):
 
     """
 
-    def __init__(self,
-                 file_data_source):
+    def __init__(self, file_data_source):
         self.file_data_source = file_data_source
         collected_files = self.file_data_source.collect_files()
 
@@ -118,7 +115,9 @@ class FileSourceDataset(Dataset):
                 raise RuntimeError(
                     """Mismatch of number of collected files {}.
 You must collect same number of files when you collect multiple pair of files.""".format(
-                        tuple(lengths)))
+                        tuple(lengths)
+                    )
+                )
         else:
             collected_files = np.atleast_2d(collected_files).T
         if len(collected_files) == 0:
@@ -130,11 +129,13 @@ You must collect same number of files when you collect multiple pair of files.""
         try:
             return self.file_data_source.collect_features(*paths)
         except TypeError as e:
-            warn("TypeError while iterating dataset.\n" +
-                 "Likely there's mismatch in number of pair of collected files and " +
-                 "expected number of arguments of `collect_features`.\n" +
-                 "Number of argments: {}\n".format(len(paths)) +
-                 "Arguments: {}".format(*paths))
+            warn(
+                "TypeError while iterating dataset.\n"
+                + "Likely there's mismatch in number of pair of collected files and "
+                + "expected number of arguments of `collect_features`.\n"
+                + "Number of argments: {}\n".format(len(paths))
+                + "Arguments: {}".format(*paths)
+            )
             raise e
 
     def __getitem__(self, idx):
@@ -148,8 +149,9 @@ You must collect same number of files when you collect multiple pair of files.""
     def __len__(self):
         return len(self.collected_files)
 
-    def asarray(self, padded_length=None, dtype=np.float32,
-                padded_length_guess=1000, verbose=0):
+    def asarray(
+        self, padded_length=None, dtype=np.float32, padded_length_guess=1000, verbose=0
+    ):
         """Convert dataset to numpy array.
 
         This try to load entire dataset into a single 3d numpy array.
@@ -176,8 +178,10 @@ You must collect same number of files when you collect multiple pair of files.""
         lengths = np.zeros(N, dtype=int)
 
         if verbose > 0:
+
             def custom_range(x):
                 return tqdm(range(x))
+
         else:
             custom_range = range
 
@@ -189,17 +193,23 @@ You must collect same number of files when you collect multiple pair of files.""
                 if padded_length is not None:
                     raise RuntimeError(
                         """Num frames {} exceeded: {}.
-Try larger value for padded_length, or set to None""".format(len(x), T))
-                warn("Reallocating array because num frames {} exceeded current guess {}.\n".format(
-                    len(x), T) +
-                    "To avoid memory re-allocations, try large `padded_length_guess` " +
-                    "or set `padded_length` explicitly.")
+Try larger value for padded_length, or set to None""".format(
+                            len(x), T
+                        )
+                    )
+                warn(
+                    f"Reallocating array because num frames {len(x)}"
+                    " exceededcurrent guess {T}.\n"
+                    "To avoid memory re-allocations, try large `padded_length_guess` "
+                    "or set `padded_length` explicitly."
+                )
                 n = len(x) - T
                 # Padd zeros to end of time axis
-                X = np.pad(X, [(0, 0), (0, n), (0, 0)],
-                           mode="constant", constant_values=0)
+                X = np.pad(
+                    X, [(0, 0), (0, n), (0, 0)], mode="constant", constant_values=0
+                )
                 T = X.shape[1]
-            X[idx][:len(x), :] = x
+            X[idx][: len(x), :] = x
             lengths[idx] = len(x)
 
         if padded_length is None:
@@ -254,24 +264,31 @@ class PaddedFileSourceDataset(FileSourceDataset):
     def _getitem_one_sample(self, idx):
         x = super(PaddedFileSourceDataset, self).__getitem__(idx)
         if len(x) > self.padded_length:
-            raise RuntimeError("""
+            raise RuntimeError(
+                """
 Num frames {} exceeded: {}. Try larger value for padded_length.""".format(
-                len(x), self.padded_length))
-        return np.pad(x, [(0, self.padded_length - len(x)), (0, 0)],
-                      mode="constant", constant_values=0)
+                    len(x), self.padded_length
+                )
+            )
+        return np.pad(
+            x,
+            [(0, self.padded_length - len(x)), (0, 0)],
+            mode="constant",
+            constant_values=0,
+        )
 
     def __getitem__(self, idx):
         if isinstance(idx, slice):
             current, stop, step = idx.indices(len(self))
-            xs = [self._getitem_one_sample(i)
-                  for i in range(current, stop, step)]
+            xs = [self._getitem_one_sample(i) for i in range(current, stop, step)]
             return np.array(xs)
         else:
             return self._getitem_one_sample(idx)
 
     def asarray(self, dtype=np.float32, verbose=0):
         return super(PaddedFileSourceDataset, self).asarray(
-            self.padded_length, dtype=dtype, verbose=verbose)
+            self.padded_length, dtype=dtype, verbose=verbose
+        )
 
 
 class MemoryCacheDataset(Dataset):
@@ -382,15 +399,13 @@ class MemoryCacheFramewiseDataset(MemoryCacheDataset):
         # 0-origin
         utt_idx = np.argmax(self.cumsum_lengths > frame_idx) - 1
         frames = super(MemoryCacheFramewiseDataset, self).__getitem__(utt_idx)
-        frame_idx_in_focused_utterance = frame_idx - \
-            self.cumsum_lengths[utt_idx]
+        frame_idx_in_focused_utterance = frame_idx - self.cumsum_lengths[utt_idx]
         return frames[frame_idx_in_focused_utterance]
 
     def __getitem__(self, frame_idx):
         if isinstance(frame_idx, slice):
             current, stop, step = frame_idx.indices(len(self))
-            xs = [self._getitem_one_sample(i)
-                  for i in range(current, stop, step)]
+            xs = [self._getitem_one_sample(i) for i in range(current, stop, step)]
             return np.array(xs)
         else:
             return self._getitem_one_sample(frame_idx)

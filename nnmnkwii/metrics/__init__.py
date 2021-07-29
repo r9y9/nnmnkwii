@@ -1,7 +1,8 @@
-from __future__ import with_statement, print_function, absolute_import
+from __future__ import absolute_import, print_function, with_statement
+
+import math
 
 import numpy as np
-import math
 
 _logdb_const = 10.0 / np.log(10.0) * np.sqrt(2.0)
 
@@ -107,8 +108,9 @@ def mean_squared_error(X, Y, lengths=None):
     return math.sqrt(float(s) / float(T))
 
 
-def lf0_mean_squared_error(src_f0, src_vuv, tgt_f0, tgt_vuv,
-                           lengths=None, linear_domain=False):
+def lf0_mean_squared_error(
+    src_f0, src_vuv, tgt_f0, tgt_vuv, lengths=None, linear_domain=False
+):
     """Mean squared error (MSE) for log-F0 sequences.
 
     MSE is computed for voiced segments.
@@ -143,8 +145,7 @@ def lf0_mean_squared_error(src_f0, src_vuv, tgt_f0, tgt_vuv,
 
     T = 0
     s = 0.0
-    for x, x_vuv, y, y_vuv, length in zip(
-            src_f0, src_vuv, tgt_f0, tgt_vuv, lengths):
+    for x, x_vuv, y, y_vuv, length in zip(src_f0, src_vuv, tgt_f0, tgt_vuv, lengths):
         x, x_vuv = x[:length], x_vuv[:length]
         y, y_vuv = y[:length], y_vuv[:length]
         voiced_indices = (x_vuv + y_vuv) >= 2

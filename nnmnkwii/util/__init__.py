@@ -1,17 +1,19 @@
-# coding: utf-8
-from __future__ import division, print_function, absolute_import
-
 import numpy as np
 
 # Compat
-from nnmnkwii.preprocessing import (
-    delta_features, trim_zeros_frames, remove_zeros_frames,
-    adjust_frame_length, scale, minmax_scale, meanvar,
-    meanstd, minmax)
+from nnmnkwii.preprocessing import adjust_frame_length  # noqa
+from nnmnkwii.preprocessing import delta_features  # noqa
+from nnmnkwii.preprocessing import meanstd  # noqa
+from nnmnkwii.preprocessing import meanvar  # noqa
+from nnmnkwii.preprocessing import minmax  # noqa
+from nnmnkwii.preprocessing import minmax_scale  # noqa
+from nnmnkwii.preprocessing import remove_zeros_frames  # noqa
+from nnmnkwii.preprocessing import scale  # noqa
+from nnmnkwii.preprocessing import trim_zeros_frames  # noqa
 
 apply_delta_windows = delta_features
 
-from .files import *
+from .files import *  # noqa
 
 
 def apply_each2d_trim(func2d, X, *args, **kwargs):
@@ -35,7 +37,7 @@ def apply_each2d_trim(func2d, X, *args, **kwargs):
     for idx in range(N):
         x = trim_zeros_frames(X[idx])
         y = func2d(x, *args, **kwargs)
-        Y[idx][:len(y)] = y
+        Y[idx][: len(y)] = y
     return Y
 
 
@@ -52,14 +54,13 @@ def apply_each2d_padded(func2d, X, lengths, *args, **kwargs):
     """
     assert X.ndim == 3
     N, T, _ = X.shape
-    y = func2d(X[0][:lengths[0]], *args, **kwargs)
+    y = func2d(X[0][: lengths[0]], *args, **kwargs)
     assert y.ndim == 2
     _, D = y.shape
 
     Y = np.zeros((N, T, D))
-    Y[0][:len(y)] = y
+    Y[0][: len(y)] = y
     for idx in range(1, N):
-        l = lengths[idx]
-        y = func2d(X[idx][:l], *args, **kwargs)
-        Y[idx][:len(y)] = y
+        y = func2d(X[idx][: lengths[idx]], *args, **kwargs)
+        Y[idx][: len(y)] = y
     return Y

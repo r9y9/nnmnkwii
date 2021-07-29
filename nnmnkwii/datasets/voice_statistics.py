@@ -1,10 +1,8 @@
-from __future__ import with_statement, print_function, absolute_import
-
-from nnmnkwii.datasets import FileDataSource
+from os import listdir
+from os.path import exists, isdir, join, splitext
 
 import numpy as np
-from os.path import join, splitext, isdir, exists
-from os import listdir
+from nnmnkwii.datasets import FileDataSource
 
 available_speakers = ["fujitou", "tsuchiya", "uemura", "hiroshiba"]
 available_emotions = ["angry", "happy", "normal"]
@@ -28,25 +26,29 @@ class TranscriptionDataSource(FileDataSource):
     Atributes:
         transcriptions (list): Transcriptions.
     """
+
     column_map = {"sentence_id": 0, "sentence": 1, "yomi": 2, "monophone": 3}
 
     def __init__(self, data_root, column="sentence", max_files=None):
         path = join(data_root, "balance_sentences.txt")
         if not exists(path):
             raise RuntimeError(
-                "balance_sentences.txt doesn't exist at \"{}\"".format(path))
+                'balance_sentences.txt doesn\'t exist at "{}"'.format(path)
+            )
 
         self.transcriptions = []
         self.max_files = max_files
         if column not in self.column_map:
             raise ValueError(
-                "Not supported column {}. It should be one of 'sentense', 'yomi' or 'monophone'.".format(column))
+                "Not supported column {}. It should be one of 'sentense',"
+                " 'yomi' or 'monophone'.".format(column)
+            )
         with open(path) as f:
-            for l in f:
+            for line in f:
                 # header
-                if l.startswith("sentence_id"):
+                if line.startswith("sentence_id"):
                     continue
-                v = l.split("\t")[self.column_map[column]].strip()
+                v = line.split("\t")[self.column_map[column]].strip()
                 self.transcriptions.append(v)
         assert len(self.transcriptions) == 100
 
@@ -63,7 +65,7 @@ class TranscriptionDataSource(FileDataSource):
         if self.max_files is None:
             return self.transcriptions
         else:
-            return self.transcriptions[:self.max_files]
+            return self.transcriptions[: self.max_files]
 
 
 class WavFileDataSource(FileDataSource):
@@ -90,19 +92,26 @@ class WavFileDataSource(FileDataSource):
           labelmap. Stored in ``collect_files``.
     """
 
-    def __init__(self, data_root, speakers, labelmap=None, max_files=None,
-                 emotions=["normal"]):
+    def __init__(
+        self, data_root, speakers, labelmap=None, max_files=None, emotions=None
+    ):
+        if emotions is None:
+            emotions = ["normal"]
         for speaker in speakers:
             if speaker not in available_speakers:
                 raise ValueError(
                     "Unknown speaker '{}'. It should be one of {}".format(
-                        speaker, available_speakers))
+                        speaker, available_speakers
+                    )
+                )
 
         for emotion in emotions:
             if emotion not in available_emotions:
                 raise ValueError(
                     "Unknown emotion '{}'. It should be one of {}".format(
-                        emotion, available_emotions))
+                        emotion, available_emotions
+                    )
+                )
 
         self.data_root = data_root
         self.speakers = speakers
@@ -127,11 +136,13 @@ class WavFileDataSource(FileDataSource):
         if self.max_files is None:
             max_files_per_dir = None
         else:
-            max_files_per_dir = self.max_files // len(self.emotions) \
-                // len(self.speakers)
+            max_files_per_dir = (
+                self.max_files // len(self.emotions) // len(self.speakers)
+            )
         for speaker in self.speakers:
-            dirs = list(map(lambda x: join(self.data_root, _get_dir(speaker, x)),
-                            self.emotions))
+            dirs = list(
+                map(lambda x: join(self.data_root, _get_dir(speaker, x)), self.emotions)
+            )
             files = []
             for d in dirs:
                 if not isdir(d):
