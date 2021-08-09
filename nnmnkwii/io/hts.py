@@ -204,11 +204,19 @@ J:13+9-2[2]')
             path (str): File path
             lines (list): Content of label file. If not None, construct HTSLabelFile
                 directry from it instead of loading a file.
+
+        Raises:
+            ValueError: if the content of labels is empty.
         """
         assert path is not None or lines is not None
         if lines is None:
             with open(path) as f:
                 lines = f.readlines()
+        else:
+            if len(lines) == 0:
+                raise ValueError(
+                    "Empty label is specifid! Please check if input contains a content."
+                )
 
         is_sec_format = False
         start_times = []
