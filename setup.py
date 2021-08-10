@@ -163,7 +163,7 @@ Library to build speech synthesis systems designed for easy and fast prototyping
     tests_require=["nose", "coverage"],
     extras_require={
         "docs": ["numpydoc", "sphinx_rtd_theme"],
-        "test": ["nose", "pyworld", "librosa"],
+        "test": ["nose", "pyworld", "librosa", "pyopenjtalk"],
         "lint": [
             "pysen",
             "types-setuptools",

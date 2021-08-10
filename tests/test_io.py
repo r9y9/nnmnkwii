@@ -2,6 +2,7 @@ import copy
 import re
 from os.path import dirname, join
 
+import pyopenjtalk
 from nnmnkwii.frontend import merlin as fe
 from nnmnkwii.io import hts
 from nnmnkwii.util import example_question_file
@@ -221,6 +222,18 @@ def test_create_from_contexts():
 
     labels2 = hts.HTSLabelFile.create_from_contexts(contexts)
     assert str(labels), str(labels2)
+
+    @raises(ValueError)
+    def test_empty_context():
+        hts.HTSLabelFile.create_from_contexts("")
+
+    @raises(ValueError)
+    def test_empty_context2():
+        contexts = pyopenjtalk.extract_fullcontext("")
+        hts.HTSLabelFile.create_from_contexts(contexts)
+
+    test_empty_context()
+    test_empty_context2()
 
 
 def test_lab_in_sec():
