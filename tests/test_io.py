@@ -2,7 +2,6 @@ import copy
 import re
 from os.path import dirname, join
 
-import pyopenjtalk
 from nnmnkwii.frontend import merlin as fe
 from nnmnkwii.io import hts
 from nnmnkwii.util import example_question_file
@@ -229,6 +228,10 @@ def test_create_from_contexts():
 
     @raises(ValueError)
     def test_empty_context2():
+        try:
+            import pyopenjtalk
+        except ImportError:
+            return
         contexts = pyopenjtalk.extract_fullcontext("")
         hts.HTSLabelFile.create_from_contexts(contexts)
 
