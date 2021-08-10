@@ -228,15 +228,16 @@ def test_create_from_contexts():
 
     @raises(ValueError)
     def test_empty_context2():
-        try:
-            import pyopenjtalk
-        except ImportError:
-            return
+        import pyopenjtalk
         contexts = pyopenjtalk.extract_fullcontext("")
         hts.HTSLabelFile.create_from_contexts(contexts)
 
     test_empty_context()
-    test_empty_context2()
+    try:
+        import pyopenjtalk  # noqa
+        test_empty_context2()
+    except ImportError:
+        return
 
 
 def test_lab_in_sec():
