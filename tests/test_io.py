@@ -7,6 +7,11 @@ from nnmnkwii.io import hts
 from nnmnkwii.util import example_question_file
 from nose.tools import raises
 
+try:
+    import pyopenjtalk  # noqa
+except ImportError:
+    pass
+
 DATA_DIR = join(dirname(__file__), "data")
 
 
@@ -221,6 +226,23 @@ def test_create_from_contexts():
 
     labels2 = hts.HTSLabelFile.create_from_contexts(contexts)
     assert str(labels), str(labels2)
+
+    @raises(ValueError)
+    def test_empty_context():
+        hts.HTSLabelFile.create_from_contexts("")
+
+    @raises(ValueError)
+    def test_empty_context2():
+        contexts = pyopenjtalk.extract_fullcontext("")
+        hts.HTSLabelFile.create_from_contexts(contexts)
+
+    test_empty_context()
+    try:
+        import pyopenjtalk  # noqa
+
+        test_empty_context2()
+    except ImportError:
+        pass
 
 
 def test_lab_in_sec():
