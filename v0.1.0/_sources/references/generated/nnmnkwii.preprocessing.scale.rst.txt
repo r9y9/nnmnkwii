@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.scale
+============================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: scale

@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.preprocessing.generic &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -469,10 +470,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.preprocessing.generic</h1><div class="highlight"><pre>
-<span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">signal</span>
 <span class="kn">from</span> <span class="nn">sklearn.utils.extmath</span> <span class="kn">import</span> <span class="n">_incremental_mean_and_var</span>
 
@@ -528,7 +526,7 @@
 
 
 <div class="viewcode-block" id="mulaw"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.mulaw.html#nnmnkwii.preprocessing.mulaw">[docs]</a><span class="k">def</span> <span class="nf">mulaw</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mu-Law companding</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Mu-Law companding</span>
 
 <span class="sd">    Method described in paper [1]_.</span>
 
@@ -556,7 +554,7 @@
 
 
 <div class="viewcode-block" id="inv_mulaw"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.inv_mulaw.html#nnmnkwii.preprocessing.inv_mulaw">[docs]</a><span class="k">def</span> <span class="nf">inv_mulaw</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Inverse of mu-law companding (mu-law expansion)</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Inverse of mu-law companding (mu-law expansion)</span>
 
 <span class="sd">    .. math::</span>
 
@@ -975,7 +973,7 @@
     <span class="n">last_sample_count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">return_last_sample_count</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mean/variance computation given a iterable dataset</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Mean/variance computation given a iterable dataset</span>
 
 <span class="sd">    Dataset can have variable length samples. In that cases, you need to</span>
 <span class="sd">    explicitly specify lengths for all the samples.</span>
@@ -1031,7 +1029,7 @@
     <span class="n">last_sample_count</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
     <span class="n">return_last_sample_count</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Mean/std-deviation computation given a iterable dataset</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Mean/std-deviation computation given a iterable dataset</span>
 
 <span class="sd">    Dataset can have variable length samples. In that cases, you need to</span>
 <span class="sd">    explicitly specify lengths for all the samples.</span>
@@ -1208,7 +1206,7 @@
 <div class="viewcode-block" id="minmax_scale"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.minmax_scale.html#nnmnkwii.preprocessing.minmax_scale">[docs]</a><span class="k">def</span> <span class="nf">minmax_scale</span><span class="p">(</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">data_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">scale_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Min/max scaling for given a single data.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Min/max scaling for given a single data.</span>
 
 <span class="sd">    Given data min, max and feature range, apply min/max normalization to data.</span>
 <span class="sd">    Optionally, you can get a little performance improvement to give scaling</span>
@@ -1263,7 +1261,7 @@
 <div class="viewcode-block" id="inv_minmax_scale"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.preprocessing.inv_minmax_scale.html#nnmnkwii.preprocessing.inv_minmax_scale">[docs]</a><span class="k">def</span> <span class="nf">inv_minmax_scale</span><span class="p">(</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">data_min</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">feature_range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">scale_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">min_</span><span class="o">=</span><span class="kc">None</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Inverse transform of min/max scaling for given a single data.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Inverse transform of min/max scaling for given a single data.</span>
 
 <span class="sd">    Given data min, max and feature range, apply min/max denormalization to data.</span>
 
@@ -1292,8 +1290,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="p">(</span><span class="n">scale_</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">min_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">data_min</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">data_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">`data_min` and `data_max` or `scale_` and `min_` must be specified to perform inverse of minmax scale&quot;&quot;&quot;</span>
+            <span class="s2">&quot;`data_min` and `data_max` or `scale_` and `min_` must be specified &quot;</span>
+            <span class="s2">&quot;to perform inverse of minmax scale&quot;</span>
         <span class="p">)</span>
     <span class="k">if</span> <span class="n">scale_</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">scale_</span> <span class="o">=</span> <span class="n">__minmax_scale_factor</span><span class="p">(</span><span class="n">data_min</span><span class="p">,</span> <span class="n">data_max</span><span class="p">,</span> <span class="n">feature_range</span><span class="p">)</span>

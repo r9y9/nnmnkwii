@@ -1,0 +1,6 @@
+﻿nnmnkwii.io.hts.write\_audacity\_labels
+=======================================
+
+.. currentmodule:: nnmnkwii.io.hts
+
+.. autofunction:: write_audacity_labels

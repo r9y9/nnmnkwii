@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.datasets.jvs &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.datasets.jvs &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -471,25 +472,21 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.datasets.jvs</h1><div class="highlight"><pre>
-<span></span><span class="c1"># coding: utf-8</span>
-
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-
-<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span>
+<span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">basename</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">isfile</span><span class="p">,</span> <span class="n">join</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">exists</span><span class="p">,</span> <span class="n">basename</span><span class="p">,</span> <span class="n">isfile</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span>
 
 <span class="n">available_speakers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;jvs&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">)]</span>
 <span class="c1"># Three lost wavfiles in this dataset</span>
 <span class="n">lost_wavfiles</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;jvs089&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VOICEACTRESS100_019&quot;</span><span class="p">],</span>
     <span class="s2">&quot;jvs030&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VOICEACTRESS100_045&quot;</span><span class="p">],</span>
-    <span class="s2">&quot;jvs074&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VOICEACTRESS100_094&quot;</span><span class="p">]}</span>
+    <span class="s2">&quot;jvs074&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VOICEACTRESS100_094&quot;</span><span class="p">],</span>
+<span class="p">}</span>
 
 
 <span class="k">def</span> <span class="nf">_parse_speaker_info</span><span class="p">(</span><span class="n">data_root</span><span class="p">):</span>
@@ -521,7 +518,11 @@
             <span class="n">speakers</span> <span class="o">=</span> <span class="n">available_speakers</span>
         <span class="k">for</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="n">speakers</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">speaker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_speakers</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Unknown speaker </span><span class="si">{}</span><span class="s2">. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker</span><span class="p">,</span> <span class="n">available_speakers</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Unknown speaker </span><span class="si">{}</span><span class="s2">. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">speaker</span><span class="p">,</span> <span class="n">available_speakers</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">categories</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;You should set at least one category&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonpara</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">whisper</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span>
@@ -533,8 +534,10 @@
             <span class="k">elif</span> <span class="n">cate</span> <span class="o">==</span> <span class="s2">&quot;whisper&quot;</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">whisper</span> <span class="o">=</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid category </span><span class="si">{}</span><span class="s1">, &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cate</span><span class="p">)</span> <span class="o">+</span>
-                                 <span class="s1">&#39;it should be one of &quot;parallel&quot;, &quot;nonpara&quot; or &quot;whisper&quot;&#39;</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Invalid category </span><span class="si">{}</span><span class="s2">, &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cate</span><span class="p">)</span>
+                    <span class="o">+</span> <span class="s1">&#39;it should be one of &quot;parallel&quot;, &quot;nonpara&quot; or &quot;whisper&quot;&#39;</span>
+                <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speakers</span> <span class="o">=</span> <span class="n">speakers</span>
         <span class="k">if</span> <span class="n">labelmap</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">labelmap</span> <span class="o">=</span> <span class="p">{</span><span class="n">s</span><span class="p">:</span> <span class="n">idx</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">speakers</span><span class="p">)}</span>
@@ -546,7 +549,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_textfilename</span> <span class="o">=</span> <span class="s2">&quot;transcripts_utf8.txt&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_wavfoldername</span> <span class="o">=</span> <span class="s2">&quot;wav24kHz16bit&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speaker_info</span> <span class="o">=</span> <span class="n">_parse_speaker_info</span><span class="p">(</span><span class="n">data_root</span><span class="p">)</span>
-        <span class="c1"># some of the text in nonpara data have no corresponding wav file, so we need to record it</span>
+        <span class="c1"># some of the text in nonpara data have no corresponding wav file,</span>
+        <span class="c1"># so we need to record it</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nonpara_without_wav</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -559,15 +563,21 @@
             <span class="n">folders</span> <span class="o">=</span> <span class="n">listdir</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">)</span>
             <span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span><span class="p">,</span>\
-                    <span class="s2">&quot;Can not find </span><span class="si">{}</span><span class="s2"> for </span><span class="si">{}</span><span class="s2"> in its directory </span><span class="si">{}</span><span class="s2">&quot;</span>\
-                    <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">speaker_folder</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="p">(</span>
+                    <span class="n">folder</span> <span class="ow">in</span> <span class="n">folders</span>
+                <span class="p">),</span> <span class="s2">&quot;Can not find </span><span class="si">{}</span><span class="s2"> for </span><span class="si">{}</span><span class="s2"> in its directory </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">folder</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">speaker_folder</span>
+                <span class="p">)</span>
             <span class="c1"># 2. check wav and txt file,</span>
             <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">:</span>
                 <span class="n">speaker_textfile</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textfilename</span><span class="p">)</span>
-                <span class="k">assert</span> <span class="n">isfile</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">),</span> <span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="n">isfile</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">),</span> <span class="s2">&quot;File </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">speaker_textfile</span>
+                <span class="p">)</span>
                 <span class="n">speaker_wavfolder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">,</span> <span class="n">folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wavfoldername</span><span class="p">)</span>
-                <span class="k">assert</span> <span class="n">isdir</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">),</span> <span class="s2">&quot;Directory </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">)</span>
+                <span class="k">assert</span> <span class="n">isdir</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">),</span> <span class="s2">&quot;Directory </span><span class="si">{}</span><span class="s2"> doesn&#39;t exist&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">speaker_wavfolder</span>
+                <span class="p">)</span>
                 <span class="c1"># nonpara</span>
                 <span class="k">if</span> <span class="n">folder</span> <span class="o">==</span> <span class="s2">&quot;nonpara30&quot;</span><span class="p">:</span>
                     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
@@ -575,23 +585,31 @@
                     <span class="n">wavfiles</span> <span class="o">=</span> <span class="n">listdir</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">)</span>
                     <span class="k">for</span> <span class="n">file_</span> <span class="ow">in</span> <span class="n">txtfiles</span><span class="p">:</span>
                         <span class="k">if</span> <span class="n">file_</span> <span class="o">+</span> <span class="s2">&quot;.wav&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">wavfiles</span><span class="p">:</span>
-                            <span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">][</span><span class="n">file_</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;_&#39;</span>
-                    <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">txtfiles</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">wavfiles</span><span class="p">)</span>
-                <span class="c1"># strict mode, check whether each text has a corresponding wavfile, if not, report it.</span>
+                            <span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">][</span><span class="n">file_</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span>
+                    <span class="k">assert</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">txtfiles</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]))</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+                        <span class="n">wavfiles</span>
+                    <span class="p">)</span>
+                <span class="c1"># strict mode, check whether each text has a corresponding wavfile,</span>
+                <span class="c1"># if not, report it.</span>
                 <span class="k">if</span> <span class="n">strict</span><span class="p">:</span>
-                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
-                        <span class="n">txtlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_</span><span class="p">]</span>
+                    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">speaker_textfile</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
+                        <span class="n">txtlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_</span><span class="p">]</span>
                     <span class="n">wavlines</span> <span class="o">=</span> <span class="p">[</span><span class="n">basename</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">speaker_wavfolder</span><span class="p">)]</span>
                     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">txtlines</span><span class="p">:</span>
-                        <span class="k">if</span> <span class="n">line</span> <span class="o">+</span> <span class="s1">&#39;.wav&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">wavlines</span><span class="p">:</span>
-                            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wavfile </span><span class="si">{}</span><span class="s2"> of speaker </span><span class="si">{}</span><span class="s2"> in </span><span class="si">{}</span><span class="s2"> doesn&#39;t exists.&quot;</span>
-                                  <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">speaker_wavfolder</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;.wav&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">wavlines</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span>
+                                <span class="s2">&quot;Wavfile </span><span class="si">{}</span><span class="s2"> of speaker </span><span class="si">{}</span><span class="s2"> in </span><span class="si">{}</span><span class="s2"> doesn&#39;t exists.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                    <span class="n">line</span><span class="p">,</span> <span class="n">speaker</span><span class="p">,</span> <span class="n">speaker_wavfolder</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
         <span class="k">return</span> <span class="n">nonpara_without_wav</span>
 
     <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">is_wav</span><span class="p">):</span>
         <span class="n">paths</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
         <span class="k">global</span> <span class="n">lost_wavfiles</span>
-        <span class="n">max_files_per_speaker</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="n">max_files_per_speaker</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_files</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
         <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">):</span>
             <span class="n">speaker_folder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speaker</span><span class="p">)</span>
 
@@ -599,17 +617,27 @@
                 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_</span><span class="p">:</span>
                     <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
                 <span class="k">if</span> <span class="n">nonpara</span><span class="p">:</span>
-                    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]]</span>
+                    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">line</span>
+                        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span>
+                        <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nonpara_without_wav</span><span class="p">[</span><span class="n">speaker</span><span class="p">]</span>
+                    <span class="p">]</span>
                 <span class="k">if</span> <span class="n">para</span> <span class="ow">and</span> <span class="n">speaker</span> <span class="ow">in</span> <span class="n">lost_wavfiles</span><span class="p">:</span>
-                    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lost_wavfiles</span><span class="p">[</span><span class="n">speaker</span><span class="p">]]</span>
+                    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span> <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">lost_wavfiles</span><span class="p">[</span><span class="n">speaker</span><span class="p">]</span>
+                    <span class="p">]</span>
                 <span class="n">lines</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
                 <span class="k">return</span> <span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">]</span>
 
             <span class="k">def</span> <span class="nf">read_wavs</span><span class="p">(</span><span class="n">folderpath</span><span class="p">):</span>
-                <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">folderpath</span><span class="p">,</span> <span class="s2">&quot;*.wav&quot;</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+                <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span>
+                    <span class="n">glob</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">folderpath</span><span class="p">,</span> <span class="s2">&quot;*.wav&quot;</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">basename</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="p">)</span>
 
             <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">isset</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonpara</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">whisper</span><span class="p">]):</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">isset</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_folders</span><span class="p">,</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">parallel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nonpara</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">whisper</span><span class="p">]</span>
+            <span class="p">):</span>
                 <span class="k">if</span> <span class="n">isset</span><span class="p">:</span>
                     <span class="n">folder</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">speaker_folder</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
                     <span class="k">if</span> <span class="n">is_wav</span><span class="p">:</span>
@@ -618,7 +646,10 @@
                         <span class="n">files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
                             <span class="n">read_text</span><span class="p">(</span>
                                 <span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_textfilename</span><span class="p">),</span>
-                                <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nonpara30&quot;</span><span class="p">,</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;parallel100&quot;</span><span class="p">))</span>
+                                <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;nonpara30&quot;</span><span class="p">,</span>
+                                <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;parallel100&quot;</span><span class="p">,</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
             <span class="n">files</span> <span class="o">=</span> <span class="n">files</span><span class="p">[:</span><span class="n">max_files_per_speaker</span><span class="p">]</span>
             <span class="n">paths</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
             <span class="n">labels</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">labelmap</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">[</span><span class="n">idx</span><span class="p">]]]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">))</span>
@@ -652,8 +683,18 @@
 <span class="sd">          models.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data_root</span><span class="p">,</span>
+        <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span>
+        <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="TranscriptionDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.TranscriptionDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">TranscriptionDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">collect_files</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div></div>
@@ -686,8 +727,18 @@
 <span class="sd">          Stored in ``collect_files``. This is useful to build multi-speaker</span>
 <span class="sd">          models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span> <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data_root</span><span class="p">,</span>
+        <span class="n">speakers</span><span class="o">=</span><span class="n">available_speakers</span><span class="p">,</span>
+        <span class="n">categories</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">categories</span><span class="p">,</span> <span class="n">labelmap</span><span class="p">,</span> <span class="n">max_files</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="WavFileDataSource.collect_files"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.jvs.WavFileDataSource.collect_files">[docs]</a>    <span class="k">def</span> <span class="nf">collect_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">WavFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">collect_files</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span></div></div>

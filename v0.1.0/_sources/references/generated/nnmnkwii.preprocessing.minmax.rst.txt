@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.minmax
+=============================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: minmax

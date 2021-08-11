@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.util.files &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -502,8 +503,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;arctic_a0009&quot;</span>
     <span class="n">label_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">.lab&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">name</span><span class="p">,</span> <span class="s2">&quot;phone&quot;</span> <span class="k">if</span> <span class="n">phone_level</span> <span class="k">else</span> <span class="s2">&quot;state&quot;</span><span class="p">))</span>
+        <span class="vm">__name__</span><span class="p">,</span>
+        <span class="s2">&quot;_example_data/</span><span class="si">{}</span><span class="s2">_</span><span class="si">{}</span><span class="s2">.lab&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;phone&quot;</span> <span class="k">if</span> <span class="n">phone_level</span> <span class="k">else</span> <span class="s2">&quot;state&quot;</span><span class="p">),</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">label_path</span></div>
 
 
@@ -523,7 +525,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;arctic_a0009&quot;</span>
     <span class="n">wav_path</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/</span><span class="si">{}</span><span class="s1">.wav&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;_example_data/</span><span class="si">{}</span><span class="s2">.wav&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="k">return</span> <span class="n">wav_path</span></div>
 
 
@@ -543,7 +546,8 @@
 <span class="sd">        &gt;&gt;&gt; binary_dict, numeric_dict = hts.load_question_set(example_question_file())</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/questions-radio_dnn_416.hed&#39;</span><span class="p">)</span></div>
+        <span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;_example_data/questions-radio_dnn_416.hed&quot;</span>
+    <span class="p">)</span></div>
 
 
 <span class="k">class</span> <span class="nc">BinaryFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
@@ -559,7 +563,8 @@
 
 <span class="k">class</span> <span class="nc">ExampleSLTArcticFileDataSource</span><span class="p">(</span><span class="n">BinaryFileDataSource</span><span class="p">):</span>
     <span class="n">SLT_DEMO_DATA_ROOT</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
-        <span class="vm">__name__</span><span class="p">,</span> <span class="s1">&#39;_example_data/slt_arctic_demo_data&#39;</span><span class="p">)</span>
+        <span class="vm">__name__</span><span class="p">,</span> <span class="s2">&quot;_example_data/slt_arctic_demo_data&quot;</span>
+    <span class="p">)</span>
 
     <span class="n">mgc_dim</span> <span class="o">=</span> <span class="mi">75</span>
     <span class="n">lf0_dim</span> <span class="o">=</span> <span class="mi">3</span>
@@ -585,7 +590,8 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ExampleSLTArcticFileDataSource</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
-            <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SLT_DEMO_DATA_ROOT</span><span class="p">,</span> <span class="n">directory</span><span class="p">))</span>
+            <span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">SLT_DEMO_DATA_ROOT</span><span class="p">,</span> <span class="n">directory</span><span class="p">)</span>
+        <span class="p">)</span>
 
 
 <div class="viewcode-block" id="example_file_data_sources_for_duration_model"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.util.example_file_data_sources_for_duration_model.html#nnmnkwii.util.example_file_data_sources_for_duration_model">[docs]</a><span class="k">def</span> <span class="nf">example_file_data_sources_for_duration_model</span><span class="p">():</span>

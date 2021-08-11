@@ -1,0 +1,6 @@
+﻿nnmnkwii.autograd.mlpg
+======================
+
+.. currentmodule:: nnmnkwii.autograd
+
+.. autofunction:: mlpg

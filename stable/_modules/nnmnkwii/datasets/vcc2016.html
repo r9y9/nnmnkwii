@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.datasets.vcc2016 &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.datasets.vcc2016 &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -472,17 +473,27 @@
             
   <h1>Source code for nnmnkwii.datasets.vcc2016</h1><div class="highlight"><pre>
 <span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">with_statement</span>
 
-<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isdir</span><span class="p">,</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">splitext</span><span class="p">,</span> <span class="n">isdir</span>
-<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii.datasets</span> <span class="kn">import</span> <span class="n">FileDataSource</span>
 
 <span class="c1"># List of available speakers.</span>
 <span class="n">available_speakers</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;SF1&quot;</span><span class="p">,</span> <span class="s2">&quot;SF2&quot;</span><span class="p">,</span> <span class="s2">&quot;SF3&quot;</span><span class="p">,</span> <span class="s2">&quot;SM1&quot;</span><span class="p">,</span> <span class="s2">&quot;SM2&quot;</span><span class="p">,</span> <span class="s2">&quot;TF1&quot;</span><span class="p">,</span> <span class="s2">&quot;TF2&quot;</span><span class="p">,</span> <span class="s2">&quot;TM1&quot;</span><span class="p">,</span> <span class="s2">&quot;TM2&quot;</span><span class="p">,</span> <span class="s2">&quot;TM3&quot;</span><span class="p">]</span>
+    <span class="s2">&quot;SF1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SF2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SF3&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SM1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;SM2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TF1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TF2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TM1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TM2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;TM3&quot;</span><span class="p">,</span>
+<span class="p">]</span>
 
 
 <div class="viewcode-block" id="WavFileDataSource"><a class="viewcode-back" href="../../../references/datasets.html#nnmnkwii.datasets.vcc2016.WavFileDataSource">[docs]</a><span class="k">class</span> <span class="nc">WavFileDataSource</span><span class="p">(</span><span class="n">FileDataSource</span><span class="p">):</span>
@@ -551,10 +562,16 @@
 <span class="sd">          models.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_root</span><span class="p">,</span> <span class="n">speakers</span><span class="p">,</span> <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">training_data_root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">evaluation_data_root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                 <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">data_root</span><span class="p">,</span>
+        <span class="n">speakers</span><span class="p">,</span>
+        <span class="n">labelmap</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">max_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">training_data_root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">evaluation_data_root</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">training</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">):</span>
         <span class="k">if</span> <span class="n">training_data_root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">training_data_root</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="s2">&quot;vcc2016_training&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">evaluation_data_root</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -564,7 +581,9 @@
             <span class="k">if</span> <span class="n">speaker</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">available_speakers</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                     <span class="s2">&quot;Unknown speaker &#39;</span><span class="si">{}</span><span class="s2">&#39;. It should be one of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="n">speaker</span><span class="p">,</span> <span class="n">available_speakers</span><span class="p">))</span>
+                        <span class="n">speaker</span><span class="p">,</span> <span class="n">available_speakers</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">data_root</span> <span class="o">=</span> <span class="n">data_root</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">training_data_root</span> <span class="o">=</span> <span class="n">training_data_root</span>
@@ -585,8 +604,9 @@
 <span class="sd">        Returns:</span>
 <span class="sd">            list: List of collected wav files.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">data_root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">training_data_root</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span> <span class="k">else</span> \
-            <span class="bp">self</span><span class="o">.</span><span class="n">evaluation_data_root</span>
+        <span class="n">data_root</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">training_data_root</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">training</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluation_data_root</span>
+        <span class="p">)</span>
         <span class="n">speaker_dirs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">join</span><span class="p">(</span><span class="n">data_root</span><span class="p">,</span> <span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">speakers</span><span class="p">))</span>
         <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>

@@ -1,0 +1,6 @@
+﻿nnmnkwii.autograd.unit\_variance\_mlpg
+======================================
+
+.. currentmodule:: nnmnkwii.autograd
+
+.. autofunction:: unit_variance_mlpg

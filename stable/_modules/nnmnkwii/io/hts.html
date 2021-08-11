@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.io.hts &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -567,6 +568,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">frame_shift</span> <span class="o">=</span> <span class="n">frame_shift</span>
 
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">create_from_contexts</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">contexts</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">contexts</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">start_times</span><span class="p">)</span>
 
@@ -671,12 +676,21 @@
 <span class="sd">            path (str): File path</span>
 <span class="sd">            lines (list): Content of label file. If not None, construct HTSLabelFile</span>
 <span class="sd">                directry from it instead of loading a file.</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: if the content of labels is empty.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">lines</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
         <span class="k">if</span> <span class="n">lines</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Empty label is specifid! Please check if input contains a content.&quot;</span>
+                <span class="p">)</span>
 
+        <span class="n">is_sec_format</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">start_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">end_times</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">contexts</span> <span class="o">=</span> <span class="p">[]</span>
@@ -686,8 +700,15 @@
             <span class="n">cols</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
                 <span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">context</span> <span class="o">=</span> <span class="n">cols</span>
-                <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
-                <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
+                <span class="k">if</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">start_time</span> <span class="ow">or</span> <span class="s2">&quot;.&quot;</span> <span class="ow">in</span> <span class="n">end_time</span><span class="p">:</span>
+                    <span class="n">is_sec_format</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">if</span> <span class="n">is_sec_format</span><span class="p">:</span>
+                    <span class="c1"># convert sec to 100ns (HTS format)</span>
+                    <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e7</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">start_time</span><span class="p">))</span>
+                    <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">1e7</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">end_time</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span><span class="p">)</span>
+                    <span class="n">end_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span><span class="p">)</span>
             <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="n">start_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
                 <span class="n">end_time</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
@@ -805,7 +826,7 @@
 
 
 <span class="k">def</span> <span class="nf">wildcards2regex</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">convert_number_pattern</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">convert_svs_pattern</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;subphone_features</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;subphone_features</span>
 <span class="sd">    Convert HTK-style question into regular expression for searching labels.</span>
 <span class="sd">    If convert_number_pattern, keep the following sequences unescaped for</span>
 <span class="sd">    extracting continuous values):</span>
@@ -819,9 +840,9 @@
     <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="n">question</span><span class="p">:</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">question</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
-            <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;\A&quot;</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">A&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">question</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">):</span>
-            <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;\Z&quot;</span>
+            <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">Z&quot;</span>
     <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;*&quot;</span><span class="p">)</span>
     <span class="n">question</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
     <span class="c1"># convert remaining HTK wildcards * and ? to equivalent regex:</span>
@@ -829,16 +850,16 @@
     <span class="n">question</span> <span class="o">=</span> <span class="n">prefix</span> <span class="o">+</span> <span class="n">question</span> <span class="o">+</span> <span class="n">postfix</span>
 
     <span class="k">if</span> <span class="n">convert_number_pattern</span><span class="p">:</span>
-        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;(\d+)&quot;</span><span class="p">)</span>
-        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\</span><span class="s2">[</span><span class="se">\\</span><span class="s2">-</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([-\d]+)&quot;</span><span class="p">)</span>
-        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\</span><span class="s2">[</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\\\\\</span><span class="s2">.</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([\d\.]+)&quot;</span><span class="p">)</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;(</span><span class="se">\\</span><span class="s2">d+)&quot;</span><span class="p">)</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\</span><span class="s2">[</span><span class="se">\\</span><span class="s2">-</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([-</span><span class="se">\\</span><span class="s2">d]+)&quot;</span><span class="p">)</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\</span><span class="s2">[</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\\\\\</span><span class="s2">.</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([</span><span class="se">\\</span><span class="s2">d</span><span class="se">\\</span><span class="s2">.]+)&quot;</span><span class="p">)</span>
     <span class="c1"># NOTE: singing voice synthesis specific handling</span>
     <span class="k">if</span> <span class="n">convert_svs_pattern</span><span class="p">:</span>
         <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
             <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\</span><span class="s2">[A</span><span class="se">\\</span><span class="s2">-Z</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\</span><span class="s2">[b</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\</span><span class="s2">?</span><span class="se">\\</span><span class="s2">[0</span><span class="se">\\</span><span class="s2">-9</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([A-Z][b]?[0-9]+)&quot;</span>
         <span class="p">)</span>
         <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\\\</span><span class="s2">NOTE</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([A-Z][b]?[0-9]+)&quot;</span><span class="p">)</span>
-        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\</span><span class="s2">[pm</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([pm]\d+)&quot;</span><span class="p">)</span>
+        <span class="n">question</span> <span class="o">=</span> <span class="n">question</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">(</span><span class="se">\\</span><span class="s2">[pm</span><span class="se">\\</span><span class="s2">]</span><span class="se">\\\\</span><span class="s2">d</span><span class="se">\\</span><span class="s2">+</span><span class="se">\\</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="s2">&quot;([pm]</span><span class="se">\\</span><span class="s2">d+)&quot;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">question</span>
 

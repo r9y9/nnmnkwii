@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.autograd._impl.mlpg &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -469,14 +470,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.autograd._impl.mlpg</h1><div class="highlight"><pre>
-<span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-
-<span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="kn">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
-
-<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Function</span>
-<span class="kn">import</span> <span class="nn">torch</span>
+<span></span><span class="c1"># fmt: off</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">nnmnkwii</span> <span class="kn">import</span> <span class="n">paramgen</span> <span class="k">as</span> <span class="n">G</span>
+<span class="kn">from</span> <span class="nn">torch.autograd</span> <span class="kn">import</span> <span class="n">Function</span>
 
 
 <div class="viewcode-block" id="MLPG"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.MLPG">[docs]</a><span class="k">class</span> <span class="nc">MLPG</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
@@ -519,7 +517,6 @@
         <span class="n">ctx</span><span class="o">.</span><span class="n">windows</span> <span class="o">=</span> <span class="n">windows</span>
         <span class="n">ctx</span><span class="o">.</span><span class="n">save_for_backward</span><span class="p">(</span><span class="n">means</span><span class="p">,</span> <span class="n">variances</span><span class="p">)</span>
 
-        <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
         <span class="k">assert</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="n">variances</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
 
         <span class="n">means_np</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
@@ -532,20 +529,18 @@
     <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
         <span class="n">means</span><span class="p">,</span> <span class="n">variances</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">saved_tensors</span>
 
-        <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
-
         <span class="n">grad_output_numpy</span> <span class="o">=</span> <span class="n">grad_output</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">means_numpy</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">variances_numpy</span> <span class="o">=</span> <span class="n">variances</span><span class="o">.</span><span class="n">detach</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span>
         <span class="n">grads_numpy</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">mlpg_grad</span><span class="p">(</span>
-            <span class="n">means_numpy</span><span class="p">,</span> <span class="n">variances_numpy</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">windows</span><span class="p">,</span>
-            <span class="n">grad_output_numpy</span><span class="p">)</span>
+            <span class="n">means_numpy</span><span class="p">,</span> <span class="n">variances_numpy</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">windows</span><span class="p">,</span> <span class="n">grad_output_numpy</span>
+        <span class="p">)</span>
 
         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grads_numpy</span><span class="p">)</span><span class="o">.</span><span class="n">clone</span><span class="p">(),</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div></div>
 
 
 <div class="viewcode-block" id="UnitVarianceMLPG"><a class="viewcode-back" href="../../../../references/autograd.html#nnmnkwii.autograd.UnitVarianceMLPG">[docs]</a><span class="k">class</span> <span class="nc">UnitVarianceMLPG</span><span class="p">(</span><span class="n">Function</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Special case of MLPG assuming data is normalized to have unit variance.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Special case of MLPG assuming data is normalized to have unit variance.</span>
 
 <span class="sd">    ``f : (T x D) -&gt; (T, static_dim)``. or</span>
 <span class="sd">    ``f : (T*num_windows, static_dim) -&gt; (T, static_dim)``.</span>
@@ -601,9 +596,13 @@
         <span class="n">reshaped</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">T</span> <span class="o">==</span> <span class="n">T_</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">reshaped</span><span class="p">:</span>
             <span class="n">static_dim</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_windows</span>
-            <span class="n">reshaped_means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
-                <span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_windows</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
-                    <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+            <span class="n">reshaped_means</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">means</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_windows</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+            <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">static_dim</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="n">reshaped_means</span> <span class="o">=</span> <span class="n">means</span>
@@ -632,8 +631,12 @@
 
         <span class="n">reshaped</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span><span class="n">T</span> <span class="o">==</span> <span class="n">T_</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">reshaped</span><span class="p">:</span>
-            <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_windows</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span>
-                <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">contiguous</span><span class="p">()</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+            <span class="n">grad</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">grad</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">num_windows</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">contiguous</span><span class="p">()</span>
+                <span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+            <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">grad</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">D</span><span class="p">),</span> <span class="kc">None</span>

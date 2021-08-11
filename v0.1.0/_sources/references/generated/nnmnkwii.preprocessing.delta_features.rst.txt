@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.delta\_features
+======================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: delta_features

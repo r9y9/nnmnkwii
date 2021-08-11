@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.meanvar
+==============================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: meanvar

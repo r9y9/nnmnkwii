@@ -1,6 +1,16 @@
 Change log
 ==========
 
+v0.1.0 <2021-08-11>
+--------------------
+
+- `#114`_: Use pysen for linting/formatting
+- Removed display package
+- Fix hts.load when the input label is empty
+- Add hts.io.HTSLabelFile.create_from_contexts
+- Fix build time numpy requirement to <v1.20.0
+- Support for loading HTS-style labels with time unit in seconds
+
 v0.0.23 <2021-05-15>
 --------------------
 
@@ -225,3 +235,4 @@ v0.0.1 <2017-08-14>
 .. _#108: https://github.com/r9y9/nnmnkwii/pull/108
 .. _#109: https://github.com/r9y9/nnmnkwii/pull/109
 .. _#112: https://github.com/r9y9/nnmnkwii/pull/112
+.. _#114: https://github.com/r9y9/nnmnkwii/pull/114

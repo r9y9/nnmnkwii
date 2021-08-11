@@ -1,0 +1,6 @@
+﻿nnmnkwii.paramgen.mlpg\_grad
+============================
+
+.. currentmodule:: nnmnkwii.paramgen
+
+.. autofunction:: mlpg_grad

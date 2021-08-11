@@ -1,0 +1,6 @@
+﻿nnmnkwii.io.hts.load
+====================
+
+.. currentmodule:: nnmnkwii.io.hts
+
+.. autofunction:: load

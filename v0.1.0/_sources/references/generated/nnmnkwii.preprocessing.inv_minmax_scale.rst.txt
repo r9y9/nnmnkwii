@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.inv\_minmax\_scale
+=========================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: inv_minmax_scale

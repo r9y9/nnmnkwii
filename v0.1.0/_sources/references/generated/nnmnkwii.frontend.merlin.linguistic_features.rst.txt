@@ -1,0 +1,6 @@
+﻿nnmnkwii.frontend.merlin.linguistic\_features
+=============================================
+
+.. currentmodule:: nnmnkwii.frontend.merlin
+
+.. autofunction:: linguistic_features

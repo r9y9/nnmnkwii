@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.inv\_scale
+=================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: inv_scale

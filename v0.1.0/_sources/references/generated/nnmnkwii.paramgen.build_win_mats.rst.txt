@@ -1,0 +1,6 @@
+﻿nnmnkwii.paramgen.build\_win\_mats
+==================================
+
+.. currentmodule:: nnmnkwii.paramgen
+
+.. autofunction:: build_win_mats

@@ -1,0 +1,6 @@
+﻿nnmnkwii.postfilters.merlin\_post\_filter
+=========================================
+
+.. currentmodule:: nnmnkwii.postfilters
+
+.. autofunction:: merlin_post_filter

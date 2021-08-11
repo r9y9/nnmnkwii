@@ -1,0 +1,6 @@
+﻿nnmnkwii.paramgen.mlpg
+======================
+
+.. currentmodule:: nnmnkwii.paramgen
+
+.. autofunction:: mlpg

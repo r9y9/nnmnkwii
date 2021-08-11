@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.adjust\_frame\_lengths
+=============================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: adjust_frame_lengths

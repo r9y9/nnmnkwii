@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.preprocessing.modspec &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.preprocessing.modspec &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -469,9 +470,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.preprocessing.modspec</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># TODO: this may be removed in future.</span>
 
@@ -513,16 +512,15 @@
 <span class="sd">        &gt;&gt;&gt; ms.shape</span>
 <span class="sd">        (9, 2)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">T</span><span class="p">,</span> <span class="n">D</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
     <span class="c1"># DFT against time axis</span>
     <span class="n">s_complex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">)</span>
     <span class="k">assert</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="n">R</span><span class="p">,</span> <span class="n">I</span> <span class="o">=</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">imag</span>
-    <span class="n">ms</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">R</span> <span class="o">+</span> <span class="n">I</span> <span class="o">*</span> <span class="n">I</span>
+    <span class="n">R</span><span class="p">,</span> <span class="n">im</span> <span class="o">=</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">s_complex</span><span class="o">.</span><span class="n">imag</span>
+    <span class="n">ms</span> <span class="o">=</span> <span class="n">R</span> <span class="o">*</span> <span class="n">R</span> <span class="o">+</span> <span class="n">im</span> <span class="o">*</span> <span class="n">im</span>
 
     <span class="c1"># TODO: this is ugly...</span>
     <span class="k">if</span> <span class="n">return_phase</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">ms</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">s_complex</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ms</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mf">1.0</span><span class="n">j</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">s_complex</span><span class="p">))</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">ms</span></div>
 
@@ -617,10 +615,13 @@
     <span class="k">if</span> <span class="n">cutoff</span> <span class="o">&gt;</span> <span class="n">modfs</span> <span class="o">//</span> <span class="mi">2</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;Cutoff frequency </span><span class="si">{}</span><span class="s2"> hz must be larger than Nyquist freqeuency </span><span class="si">{}</span><span class="s2">. hz&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">cutoff</span><span class="p">,</span> <span class="n">modfs</span> <span class="o">//</span> <span class="mi">2</span><span class="p">))</span>
+                <span class="n">cutoff</span><span class="p">,</span> <span class="n">modfs</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
     <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">T</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-            <span class="s2">&quot;DFT length </span><span class="si">{}</span><span class="s2"> must be larger than time length </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">))</span>
+            <span class="s2">&quot;DFT length </span><span class="si">{}</span><span class="s2"> must be larger than time length </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+        <span class="p">)</span>
 
     <span class="n">ms</span><span class="p">,</span> <span class="n">phase</span> <span class="o">=</span> <span class="n">modspec</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span> <span class="n">return_phase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">log_domain</span><span class="p">:</span>

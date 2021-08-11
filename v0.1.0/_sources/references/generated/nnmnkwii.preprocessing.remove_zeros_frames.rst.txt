@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.remove\_zeros\_frames
+============================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: remove_zeros_frames

@@ -1,0 +1,6 @@
+﻿nnmnkwii.util.apply\_each2d\_padded
+===================================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: apply_each2d_padded

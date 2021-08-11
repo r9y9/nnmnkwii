@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.frontend.merlin &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -508,6 +509,7 @@
 <span class="c1">#  ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF</span>
 <span class="c1">#  THIS SOFTWARE.</span>
 <span class="c1">##########################################################################</span>
+<span class="c1"># fmt: off</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.frontend</span> <span class="kn">import</span> <span class="n">NOTE_MAPPING</span>
@@ -548,7 +550,6 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
             <span class="s2">&quot;Unknown value for subphone_features: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">subphone_features</span><span class="p">)</span>
         <span class="p">)</span>
-    <span class="k">assert</span> <span class="kc">False</span>
 
 
 <span class="k">def</span> <span class="nf">compute_coarse_coding_features</span><span class="p">(</span><span class="n">num_states</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">600</span><span class="p">):</span>
@@ -623,7 +624,7 @@
         <span class="c1"># NOTE: newer version returns tuple of (name, question)</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">current_compiled</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
             <span class="n">current_compiled</span> <span class="o">=</span> <span class="n">current_compiled</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="k">if</span> <span class="s2">&quot;([-\d]+)&quot;</span> <span class="ow">in</span> <span class="n">current_compiled</span><span class="o">.</span><span class="n">pattern</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s2">&quot;([-</span><span class="se">\\</span><span class="s2">d]+)&quot;</span> <span class="ow">in</span> <span class="n">current_compiled</span><span class="o">.</span><span class="n">pattern</span><span class="p">:</span>
             <span class="n">continuous_value</span> <span class="o">=</span> <span class="o">-</span><span class="mf">50.0</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">continuous_value</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.0</span>
@@ -667,7 +668,7 @@
     <span class="k">if</span> <span class="n">subphone_features</span> <span class="o">==</span> <span class="s2">&quot;coarse_coding&quot;</span><span class="p">:</span>
         <span class="n">cc_features</span> <span class="o">=</span> <span class="n">compute_coarse_coding_features</span><span class="p">()</span>
 
-    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
         <span class="n">frame_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_time</span> <span class="o">/</span> <span class="n">frame_shift</span><span class="p">)</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_time</span> <span class="o">/</span> <span class="n">frame_shift</span><span class="p">)</span>
 
         <span class="n">label_binary_vector</span> <span class="o">=</span> <span class="n">pattern_matching_binary</span><span class="p">(</span><span class="n">binary_dict</span><span class="p">,</span> <span class="n">full_label</span><span class="p">)</span>
@@ -718,7 +719,8 @@
                     <span class="k">pass</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                        <span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="s2">&quot;Combination of subphone_features and add_frame_features &quot;</span>
+                        <span class="s2">&quot;is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                             <span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span>
                         <span class="p">)</span>
                     <span class="p">)</span>
@@ -739,9 +741,8 @@
     <span class="c1"># omg</span>
     <span class="k">if</span> <span class="n">label_feature_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span>
-            <span class="p">)</span>
+            <span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported&quot;</span>
+            <span class="s2">&quot; : </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span><span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">label_feature_matrix</span><span class="p">[</span>
@@ -911,7 +912,7 @@
                 <span class="k">elif</span> <span class="n">subphone_features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                     <span class="k">pass</span>
                 <span class="k">else</span><span class="p">:</span>
-                    <span class="k">assert</span> <span class="kc">False</span>
+                    <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">()</span>
 
             <span class="n">label_feature_matrix</span><span class="p">[</span>
                 <span class="n">label_feature_index</span> <span class="p">:</span> <span class="n">label_feature_index</span> <span class="o">+</span> <span class="n">frame_number</span>
@@ -945,9 +946,8 @@
     <span class="c1"># omg</span>
     <span class="k">if</span> <span class="n">label_feature_index</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="s2">&quot;Combination of subphone_features and add_frame_features is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                <span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span>
-            <span class="p">)</span>
+            <span class="s2">&quot;Combination of subphone_features and add_frame_features&quot;</span>
+            <span class="s2">&quot; is not supported: </span><span class="si">{}</span><span class="s2">, </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">subphone_features</span><span class="p">,</span> <span class="n">add_frame_features</span><span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">label_feature_matrix</span> <span class="o">=</span> <span class="n">label_feature_matrix</span><span class="p">[</span>
@@ -1074,7 +1074,7 @@
                 <span class="k">if</span> <span class="n">state_index</span> <span class="o">==</span> <span class="n">state_number</span><span class="p">:</span>
                     <span class="n">current_block_array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="kc">False</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">()</span>
         <span class="k">elif</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;numerical&quot;</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;state&quot;</span><span class="p">:</span>
                 <span class="n">current_dur_array</span><span class="p">[</span><span class="n">current_index</span> <span class="o">%</span> <span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame_number</span>
@@ -1087,7 +1087,7 @@
             <span class="k">elif</span> <span class="n">unit_size</span> <span class="o">==</span> <span class="s2">&quot;phoneme&quot;</span><span class="p">:</span>
                 <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">phone_duration</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">assert</span> <span class="kc">False</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">()</span>
 
         <span class="c1"># writing into dur_feature_matrix</span>
         <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
@@ -1127,7 +1127,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">hts_labels</span><span class="o">.</span><span class="n">num_frames</span><span class="p">(),</span> <span class="mi">1</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
     <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">current_index</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">start_time</span><span class="p">,</span> <span class="n">end_time</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">hts_labels</span><span class="p">):</span>
         <span class="n">frame_number</span> <span class="o">=</span> <span class="p">(</span><span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">/</span> <span class="n">frame_shift</span>
 
         <span class="n">phone_duration</span> <span class="o">=</span> <span class="n">frame_number</span>
@@ -1138,7 +1138,7 @@
         <span class="k">elif</span> <span class="n">feature_type</span> <span class="o">==</span> <span class="s2">&quot;numerical&quot;</span><span class="p">:</span>
             <span class="n">current_block_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">phone_duration</span><span class="p">])</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="kc">False</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">()</span>
 
         <span class="c1"># writing into dur_feature_matrix</span>
         <span class="k">if</span> <span class="n">feature_size</span> <span class="o">==</span> <span class="s2">&quot;frame&quot;</span><span class="p">:</span>
@@ -1152,7 +1152,7 @@
             <span class="p">]</span> <span class="o">=</span> <span class="n">current_block_array</span>
             <span class="n">dur_feature_index</span> <span class="o">=</span> <span class="n">dur_feature_index</span> <span class="o">+</span> <span class="mi">1</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">assert</span> <span class="kc">False</span>
+            <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">()</span>
 
     <span class="n">dur_feature_matrix</span> <span class="o">=</span> <span class="n">dur_feature_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">dur_feature_index</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">dur_feature_matrix</span>

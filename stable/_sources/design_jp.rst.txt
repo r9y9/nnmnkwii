@@ -48,7 +48,7 @@ chainer等に代表されるように、CUDAを活用した多次元配列上の
 -  音声に特化した汎用的な関数 :obj:`nnmnkwii.autograd`
 -  パラメータ生成、前処理/後処理アルゴリズム :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.paramgen`, :obj:`nnmnkwii.postfilters`
 
-に注目し、機能を提供すればよいと考える。また、可視化が重要であるという信念のもと、言語特徴量、音響特徴量の可視化ツール (:obj:`nnmnkwii.display`) も提供する（予定）。
+に注目し、機能を提供すればよいと考える。
 
 Design decisions
 ----------------

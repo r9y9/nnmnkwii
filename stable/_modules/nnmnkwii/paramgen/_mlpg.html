@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.paramgen._mlpg &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -469,15 +470,12 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.paramgen._mlpg</h1><div class="highlight"><pre>
-<span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.paramgen</span> <span class="kn">import</span> <span class="n">_bandmat</span> <span class="k">as</span> <span class="n">bm</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.paramgen._bandmat</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">bla</span>
-<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">solve_banded</span>
 <span class="kn">from</span> <span class="nn">nnmnkwii.util.linalg</span> <span class="kn">import</span> <span class="n">cholesky_inv_banded</span>
+<span class="kn">from</span> <span class="nn">scipy.linalg</span> <span class="kn">import</span> <span class="n">solve_banded</span>
+
 <span class="kn">from</span> <span class="nn">.mlpg_helper</span> <span class="kn">import</span> <span class="n">full_window_mat</span> <span class="k">as</span> <span class="n">_full_window_mat</span>
 
 <span class="c1"># https://github.com/MattShannon/bandmat/blob/master/example_spg.py</span>
@@ -485,7 +483,7 @@
 
 
 <div class="viewcode-block" id="build_win_mats"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.build_win_mats.html#nnmnkwii.paramgen.build_win_mats">[docs]</a><span class="k">def</span> <span class="nf">build_win_mats</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Builds a window matrix of a given size for each window in a collection.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Builds a window matrix of a given size for each window in a collection.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        windows(list): specifies the collection of windows as a sequence of</span>
@@ -514,11 +512,11 @@
 <span class="sd">        &gt;&gt;&gt; win_mats = G.build_win_mats(windows, 3)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">win_mats</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">l</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">win_coeff</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
-        <span class="k">assert</span> <span class="n">l</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">u</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">)</span> <span class="o">==</span> <span class="n">l</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="n">win_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">,</span> <span class="p">(</span><span class="n">l</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">T</span><span class="p">)</span>
-        <span class="n">win_mat</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">band_c_bm</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">win_coeffs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">for</span> <span class="n">ll</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">win_coeff</span> <span class="ow">in</span> <span class="n">windows</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">ll</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">u</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">)</span> <span class="o">==</span> <span class="n">ll</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">win_coeffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">win_coeff</span><span class="p">,</span> <span class="p">(</span><span class="n">ll</span> <span class="o">+</span> <span class="n">u</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">T</span><span class="p">)</span>
+        <span class="n">win_mat</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">band_c_bm</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">ll</span><span class="p">,</span> <span class="n">win_coeffs</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
         <span class="n">win_mats</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">win_mat</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">win_mats</span></div>
@@ -556,14 +554,15 @@
 
     <span class="k">for</span> <span class="n">win_index</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
         <span class="n">bm</span><span class="o">.</span><span class="n">dot_mv_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">b_frames</span><span class="p">[:,</span> <span class="n">win_index</span><span class="p">],</span> <span class="n">target</span><span class="o">=</span><span class="n">b</span><span class="p">)</span>
-        <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span> <span class="n">target_bm</span><span class="o">=</span><span class="n">prec</span><span class="p">,</span>
-                              <span class="n">diag</span><span class="o">=</span><span class="n">tau_frames</span><span class="p">[:,</span> <span class="n">win_index</span><span class="p">])</span>
+        <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span>
+            <span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span> <span class="n">target_bm</span><span class="o">=</span><span class="n">prec</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="n">tau_frames</span><span class="p">[:,</span> <span class="n">win_index</span><span class="p">]</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">b</span><span class="p">,</span> <span class="n">prec</span>
 
 
 <div class="viewcode-block" id="mlpg"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg.html#nnmnkwii.paramgen.mlpg">[docs]</a><span class="k">def</span> <span class="nf">mlpg</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Maximum Parameter Likelihood Generation (MLPG)</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Maximum Parameter Likelihood Generation (MLPG)</span>
 
 <span class="sd">    Function ``f: (T, D) -&gt; (T, static_dim)``.</span>
 
@@ -658,8 +657,7 @@
 
         <span class="k">for</span> <span class="n">win_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_windows</span><span class="p">):</span>
             <span class="n">means</span><span class="p">[:,</span> <span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">mean_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
-            <span class="n">precisions</span><span class="p">[:,</span> <span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> \
-                <span class="n">variance_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
+            <span class="n">precisions</span><span class="p">[:,</span> <span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">variance_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
 
             <span class="c1"># use zero precisions at edge frames for dynamic features</span>
             <span class="k">if</span> <span class="n">win_idx</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
@@ -674,7 +672,7 @@
 
 
 <div class="viewcode-block" id="mlpg_grad"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.mlpg_grad.html#nnmnkwii.paramgen.mlpg_grad">[docs]</a><span class="k">def</span> <span class="nf">mlpg_grad</span><span class="p">(</span><span class="n">mean_frames</span><span class="p">,</span> <span class="n">variance_frames</span><span class="p">,</span> <span class="n">windows</span><span class="p">,</span> <span class="n">grad_output</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;MLPG gradient computation</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;MLPG gradient computation</span>
 
 <span class="sd">    Parameters are same as :func:`nnmnkwii.paramgen.mlpg` except for</span>
 <span class="sd">    ``grad_output``. See the function docmenent for what the parameters mean.</span>
@@ -730,16 +728,16 @@
         <span class="n">precisions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">windows</span><span class="p">),</span> <span class="n">T</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
-            <span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> \
-                <span class="n">variance_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
+            <span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">variance_frames</span><span class="p">[:,</span> <span class="n">win_idx</span> <span class="o">*</span> <span class="n">static_dim</span> <span class="o">+</span> <span class="n">d</span><span class="p">]</span>
 
             <span class="c1"># use zero precisions at edge frames for dynamic features</span>
             <span class="k">if</span> <span class="n">win_idx</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">,</span> <span class="p">:</span><span class="n">max_win_width</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">,</span> <span class="o">-</span><span class="n">max_win_width</span><span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
 
-            <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span><span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span>
-                                  <span class="n">target_bm</span><span class="o">=</span><span class="n">R</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">])</span>
+            <span class="n">bm</span><span class="o">.</span><span class="n">dot_mm_plus_equals</span><span class="p">(</span>
+                <span class="n">win_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">win_mat</span><span class="p">,</span> <span class="n">target_bm</span><span class="o">=</span><span class="n">R</span><span class="p">,</span> <span class="n">diag</span><span class="o">=</span><span class="n">precisions</span><span class="p">[</span><span class="n">win_idx</span><span class="p">]</span>
+            <span class="p">)</span>
 
         <span class="k">for</span> <span class="n">win_idx</span><span class="p">,</span> <span class="n">win_mat</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">win_mats</span><span class="p">):</span>
             <span class="c1"># r: W_{l}^{T}P_{d,l}</span>
@@ -769,7 +767,7 @@
 
 
 <div class="viewcode-block" id="unit_variance_mlpg_matrix"><a class="viewcode-back" href="../../../references/generated/nnmnkwii.paramgen.unit_variance_mlpg_matrix.html#nnmnkwii.paramgen.unit_variance_mlpg_matrix">[docs]</a><span class="k">def</span> <span class="nf">unit_variance_mlpg_matrix</span><span class="p">(</span><span class="n">windows</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Compute MLPG matrix assuming input is normalized to have unit-variances.</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Compute MLPG matrix assuming input is normalized to have unit-variances.</span>
 
 <span class="sd">    Let :math:`\mu` is the input mean sequence (``num_windows*T x static_dim``),</span>
 <span class="sd">    :math:`W` is a window matrix ``(T x num_windows*T)``, assuming input is</span>
@@ -875,8 +873,7 @@
     <span class="k">if</span> <span class="n">D</span> <span class="o">==</span> <span class="n">static_dim</span><span class="p">:</span>
         <span class="c1"># already reshaped case</span>
         <span class="k">return</span> <span class="n">means</span>
-    <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span>
-        <span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="n">means</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">static_dim</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">means</span></div>
 </pre></div>
 

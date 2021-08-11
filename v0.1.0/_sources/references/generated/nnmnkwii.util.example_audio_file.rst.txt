@@ -1,0 +1,6 @@
+﻿nnmnkwii.util.example\_audio\_file
+==================================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: example_audio_file

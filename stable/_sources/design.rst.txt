@@ -45,8 +45,6 @@ I think we should provide a library which bridges generic computational backends
 - Generic functions for speech synthesis. :obj:`nnmnkwii.autograd`
 - Pre-processsing, parameter generation and post-processsing utilities. :obj:`nnmnkwii.preprocessing`, :obj:`nnmnkwii.paramgen`, :obj:`nnmnkwii.postfilters`
 
-As I believe visualization is important to understand what happens, I plan to provide visualization package (:obj:`nnmnkwii.display`) in the near future.
-
 
 Design decisions
 ----------------

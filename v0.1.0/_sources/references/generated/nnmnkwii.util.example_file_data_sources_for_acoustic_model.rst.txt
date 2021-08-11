@@ -1,0 +1,6 @@
+﻿nnmnkwii.util.example\_file\_data\_sources\_for\_acoustic\_model
+================================================================
+
+.. currentmodule:: nnmnkwii.util
+
+.. autofunction:: example_file_data_sources_for_acoustic_model

@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.inv\_modspec
+===================================
+
+.. currentmodule:: nnmnkwii.preprocessing
+
+.. autofunction:: inv_modspec

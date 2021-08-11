@@ -1,0 +1,6 @@
+﻿nnmnkwii.paramgen.reshape\_means
+================================
+
+.. currentmodule:: nnmnkwii.paramgen
+
+.. autofunction:: reshape_means

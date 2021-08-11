@@ -7,12 +7,13 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>nnmnkwii.postfilters &mdash; nnmnkwii 0.0.23 documentation</title>
+  <title>nnmnkwii.postfilters &mdash; nnmnkwii 0.1.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/plot_directive.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
 
   
@@ -66,7 +67,7 @@
             
             
               <div class="version">
-                0.0.23
+                0.1.0
               </div>
             
           
@@ -275,7 +276,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../references/datasets.html#jvs-ja">JVS (ja)</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../references/display.html">Display</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../references/frontend.html">Frontend</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../references/frontend.html#merlin-frontend">Merlin frontend</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../references/generated/nnmnkwii.frontend.merlin.linguistic_features.html">nnmnkwii.frontend.merlin.linguistic_features</a></li>
@@ -378,6 +378,7 @@
 <p class="caption"><span class="caption-text">Meta information</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-1-0-2021-08-11">v0.1.0 &lt;2021-08-11&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-23-2021-05-15">v0.0.23 &lt;2021-05-15&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-22-2020-12-25">v0.0.22 &lt;2020-12-25&gt;</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../changelog.html#v0-0-21-2020-08-13">v0.0.21 &lt;2020-08-13&gt;</a></li>
@@ -469,18 +470,15 @@
            <div itemprop="articleBody">
             
   <h1>Source code for nnmnkwii.postfilters</h1><div class="highlight"><pre>
-<span></span><span class="c1"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
-
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pysptk</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;merlin_post_filter&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;merlin_post_filter&quot;</span><span class="p">]</span>
 
 
-<div class="viewcode-block" id="merlin_post_filter"><a class="viewcode-back" href="../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html#nnmnkwii.postfilters.merlin_post_filter">[docs]</a><span class="k">def</span> <span class="nf">merlin_post_filter</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span>
-                       <span class="n">minimum_phase_order</span><span class="o">=</span><span class="mi">511</span><span class="p">,</span> <span class="n">fftlen</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
-                       <span class="n">coef</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="merlin_post_filter"><a class="viewcode-back" href="../../references/generated/nnmnkwii.postfilters.merlin_post_filter.html#nnmnkwii.postfilters.merlin_post_filter">[docs]</a><span class="k">def</span> <span class="nf">merlin_post_filter</span><span class="p">(</span>
+    <span class="n">mgc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">minimum_phase_order</span><span class="o">=</span><span class="mi">511</span><span class="p">,</span> <span class="n">fftlen</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span> <span class="n">coef</span><span class="o">=</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Post-filter used in Merlin.</span>
 
 <span class="sd">    This is a :obj:`pysptk` translation of `Merlin&#39;s post filter`_ written with</span>
@@ -521,14 +519,17 @@
         <span class="n">weight</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">weight</span><span class="p">)</span> <span class="o">==</span> <span class="n">D</span>
 
-    <span class="n">mgc_r0</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">c2acr</span><span class="p">(</span><span class="n">pysptk</span><span class="o">.</span><span class="n">freqt</span><span class="p">(</span>
-        <span class="n">mgc</span><span class="p">,</span> <span class="n">minimum_phase_order</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=-</span><span class="n">alpha</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fftlen</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-    <span class="n">mgc_p_r0</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">c2acr</span><span class="p">(</span><span class="n">pysptk</span><span class="o">.</span><span class="n">freqt</span><span class="p">(</span>
-        <span class="n">mgc</span> <span class="o">*</span> <span class="n">weight</span><span class="p">,</span> <span class="n">minimum_phase_order</span><span class="p">,</span> <span class="o">-</span><span class="n">alpha</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fftlen</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">mgc_r0</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">c2acr</span><span class="p">(</span>
+        <span class="n">pysptk</span><span class="o">.</span><span class="n">freqt</span><span class="p">(</span><span class="n">mgc</span><span class="p">,</span> <span class="n">minimum_phase_order</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=-</span><span class="n">alpha</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fftlen</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="n">mgc_p_r0</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">c2acr</span><span class="p">(</span>
+        <span class="n">pysptk</span><span class="o">.</span><span class="n">freqt</span><span class="p">(</span><span class="n">mgc</span> <span class="o">*</span> <span class="n">weight</span><span class="p">,</span> <span class="n">minimum_phase_order</span><span class="p">,</span> <span class="o">-</span><span class="n">alpha</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="n">fftlen</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
     <span class="n">mgc_b0</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">mc2b</span><span class="p">(</span><span class="n">weight</span> <span class="o">*</span> <span class="n">mgc</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
     <span class="n">mgc_p_b0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mgc_r0</span> <span class="o">/</span> <span class="n">mgc_p_r0</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">mgc_b0</span>
     <span class="n">mgc_p_mgc</span> <span class="o">=</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">b2mc</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">mgc_p_b0</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">mc2b</span><span class="p">(</span><span class="n">mgc</span> <span class="o">*</span> <span class="n">weight</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:])),</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">mgc_p_b0</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">pysptk</span><span class="o">.</span><span class="n">mc2b</span><span class="p">(</span><span class="n">mgc</span> <span class="o">*</span> <span class="n">weight</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:])),</span> <span class="n">alpha</span>
+    <span class="p">)</span>
 
     <span class="k">return</span> <span class="n">mgc_p_mgc</span></div>
 </pre></div>

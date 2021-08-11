@@ -1,0 +1,6 @@
+﻿nnmnkwii.preprocessing.f0.interp1d
+==================================
+
+.. currentmodule:: nnmnkwii.preprocessing.f0
+
+.. autofunction:: interp1d
