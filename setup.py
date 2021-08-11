@@ -7,7 +7,7 @@ import setuptools.command.build_py
 import setuptools.command.develop
 from setuptools import Extension, find_packages, setup
 
-version = "0.0.24"
+version = "0.1.0"
 
 # Adapted from https://github.com/pytorch/pytorch
 cwd = os.path.dirname(os.path.abspath(__file__))
