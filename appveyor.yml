@@ -1,6 +1,6 @@
 environment:
   matrix:
-    - PYTHON_VERSION: "3.6"
+    - PYTHON_VERSION: "3.7"
       PYTHON_ARCH: "64"
       MINICONDA: C:\Miniconda36-x64
 
@@ -26,9 +26,9 @@ install:
   - conda config --set always_yes yes  --set changeps1 no
   - conda update -q conda
   - conda info -a
-  - "conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy cython nose pytorch=1.4 -c pytorch"
+  - "conda create -q -n test-environment python=%PYTHON_VERSION% numpy scipy cython nose pytorch -c pytorch"
   - activate test-environment
-  - pip install scikit-learn==0.20.0
+  - pip install scikit-learn
 
 build_script:
   - pip install -e ".[test]"
