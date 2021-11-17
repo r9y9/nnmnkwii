@@ -146,8 +146,7 @@ install_requires = [
 setup(
     name="nnmnkwii",
     version=version,
-    description="""
-Library to build speech synthesis systems designed for easy and fast prototyping.""",
+    description="Library to build speech synthesis systems for fast prototyping",
     long_description=open("README.md", "rb").read().decode("utf-8"),
     long_description_content_type="text/markdown",
     author="Ryuichi Yamamoto",
