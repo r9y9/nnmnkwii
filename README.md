@@ -5,8 +5,7 @@
 [![][docs-latest-img]][docs-latest-url]
 [![PyPI](https://img.shields.io/pypi/v/nnmnkwii.svg)](https://pypi.python.org/pypi/nnmnkwii)
 [![Python package](https://github.com/r9y9/nnmnkwii/actions/workflows/ci.yaml/badge.svg)](https://github.com/r9y9/nnmnkwii/actions/workflows/ci.yaml)
-[![Build Status](https://travis-ci.org/r9y9/nnmnkwii.svg?branch=master)](https://travis-ci.org/r9y9/nnmnkwii)
-[![Build status](https://ci.appveyor.com/api/projects/status/ch8cmtpw8ic1sd86?svg=true)](https://ci.appveyor.com/project/r9y9/nnmnkwii)
+[![Build Status](https://app.travis-ci.com/r9y9/nnmnkwii.svg?branch=master)](https://app.travis-ci.com/r9y9/nnmnkwii)
 [![codecov](https://codecov.io/gh/r9y9/nnmnkwii/branch/master/graph/badge.svg)](https://codecov.io/gh/r9y9/nnmnkwii)
 [![DOI](https://zenodo.org/badge/96328821.svg)](https://zenodo.org/badge/latestdoi/96328821)
 
