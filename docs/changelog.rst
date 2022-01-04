@@ -1,6 +1,13 @@
 Change log
 ==========
 
+v0.1.1 <2021-01-04>
+--------------------
+
+- `#120`_: Revise CI: Enable windows and mac osx CI with Github actions. AppVeyor is removed instead.
+- `#118`_: Fixes ValueError("Newlines are not allowed") at installation time
+
+
 v0.1.0 <2021-08-11>
 --------------------
 
@@ -236,3 +243,5 @@ v0.0.1 <2017-08-14>
 .. _#109: https://github.com/r9y9/nnmnkwii/pull/109
 .. _#112: https://github.com/r9y9/nnmnkwii/pull/112
 .. _#114: https://github.com/r9y9/nnmnkwii/pull/114
+.. _#118: https://github.com/r9y9/nnmnkwii/pull/118
+.. _#120: https://github.com/r9y9/nnmnkwii/pull/120
