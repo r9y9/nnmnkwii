@@ -1,22 +1,19 @@
-sudo: false
-dist: xenial
 language: python
 
 python:
-  - "3.6"
-  - "3.7"
   - "3.8"
 
 notifications:
   email: false
 
+os:
+  - linux
+
 before_install:
-  - sudo apt-get update
-  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
-      wget http://repo.continuum.io/miniconda/Miniconda-3.8.3-Linux-x86_64.sh -O miniconda.sh;
-    else
-      wget http://repo.continuum.io/miniconda/Miniconda3-3.8.3-Linux-x86_64.sh -O miniconda.sh;
-    fi
+  - sed -i 's/git@github.com:/https:\/\/github.com\//' .gitmodules
+  - git submodule update --init --recursive
+  # anaconda
+  - wget http://repo.continuum.io/miniconda/Miniconda3-3.8.3-Linux-x86_64.sh -O miniconda.sh
   - bash miniconda.sh -b -p $HOME/miniconda
   - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
@@ -36,7 +33,6 @@ install:
 
 script:
   - nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec';
-#  - flake8
 
 after_success:
   - codecov
