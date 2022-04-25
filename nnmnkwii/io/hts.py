@@ -210,7 +210,7 @@ J:13+9-2[2]')
         """
         assert path is not None or lines is not None
         if lines is None:
-            with open(path) as f:
+            with open(path, encoding='utf-8') as f:
                 lines = f.readlines()
         else:
             if len(lines) == 0:
@@ -415,7 +415,7 @@ def load_question_set(qs_file_name, append_hat_for_LL=True, convert_svs_pattern=
         >>> from nnmnkwii.util import example_question_file
         >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
     """
-    with open(qs_file_name) as f:
+    with open(qs_file_name, encoding='utf-8') as f:
         lines = f.readlines()
     binary_qs_index = 0
     continuous_qs_index = 0
