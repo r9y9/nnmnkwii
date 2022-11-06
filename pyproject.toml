@@ -8,7 +8,7 @@ requires = [
 ]
 
 [tool.pysen]
-version = "0.9"
+version = "0.10"
 
 [tool.pysen.lint]
 enable_black = true
@@ -17,7 +17,7 @@ enable_isort = true
 enable_mypy = false
 mypy_preset = "entry"
 line_length = 88
-py_version = "py37"
+py_version = "py38"
 
 mypy_ignore_packages=["nnmnkwii.paramgen._bandmat.*", "nnmnkwii.frontend.*"]
 
