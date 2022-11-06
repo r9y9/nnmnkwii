@@ -143,15 +143,11 @@ class _JVSBaseDataSource(FileDataSource):
                 with open(filepath, "r", encoding="utf8") as file_:
                     lines = [line.strip().split(":") for line in file_ if line.strip()]
                 if nonpara:
-                    lines = [
-                        line
-                        for line in lines
-                        if line[0] not in self._nonpara_without_wav[speaker]
-                    ]
+                    spk = self._nonpara_without_wav[speaker]
+                    lines = [line for line in lines if line[0] not in spk]
                 if para and speaker in lost_wavfiles:
-                    lines = [
-                        line for line in lines if line[0] not in lost_wavfiles[speaker]
-                    ]
+                    spk = self.lost_wavfiles[speaker]
+                    lines = [line for line in lines if line[0] not in spk]
                 lines.sort(key=lambda x: x[0])
                 return [line[1] for line in lines]
 
