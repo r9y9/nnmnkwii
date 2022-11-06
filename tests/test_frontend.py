@@ -151,6 +151,24 @@ def test_phone_alignment_label():
     assert np.all(np.isfinite(x))
 
 
+def test_frame_shift():
+    qs_file_name = join(DATA_DIR, "questions-radio_dnn_416.hed")
+    binary_dict, numeric_dict = hts.load_question_set(qs_file_name)
+
+    input_state_label = join(DATA_DIR, "label_phone_align", "arctic_a0001.lab")
+    labels = hts.load(input_state_label)
+
+    for frame_shift in [45000, 50000, 55000]:
+        x = fe.linguistic_features(
+            labels,
+            binary_dict,
+            numeric_dict,
+            add_frame_features=True,
+            frame_shift=frame_shift,
+        )
+        assert x.shape[0] == labels.num_frames(frame_shift=frame_shift)
+
+
 def test_backward_compatibility():
     qs_file_name = join(DATA_DIR, "questions-radio_dnn_416.hed")
     binary_dict, numeric_dict = hts.load_question_set(qs_file_name)
