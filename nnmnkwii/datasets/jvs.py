@@ -139,7 +139,7 @@ class _JVSBaseDataSource(FileDataSource):
         for idx, speaker in enumerate(self.speakers):
             speaker_folder = join(self.data_root, speaker)
 
-            def read_text(filepath, nonpara, para):
+            def read_text(filepath, nonpara, para, speaker):
                 with open(filepath, "r", encoding="utf8") as file_:
                     lines = [line.strip().split(":") for line in file_ if line.strip()]
                 if nonpara:
@@ -170,6 +170,7 @@ class _JVSBaseDataSource(FileDataSource):
                                 join(folder, self._textfilename),
                                 name == "nonpara30",
                                 name == "parallel100",
+                                speaker,
                             )
                         )
             files = files[:max_files_per_speaker]
