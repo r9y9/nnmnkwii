@@ -139,19 +139,15 @@ class _JVSBaseDataSource(FileDataSource):
         for idx, speaker in enumerate(self.speakers):
             speaker_folder = join(self.data_root, speaker)
 
-            def read_text(filepath, nonpara, para):
+            def read_text(filepath, nonpara, para, speaker):
                 with open(filepath, "r", encoding="utf8") as file_:
                     lines = [line.strip().split(":") for line in file_ if line.strip()]
                 if nonpara:
-                    lines = [
-                        line
-                        for line in lines
-                        if line[0] not in self._nonpara_without_wav[speaker]
-                    ]
+                    spk = self._nonpara_without_wav[speaker]
+                    lines = [line for line in lines if line[0] not in spk]
                 if para and speaker in lost_wavfiles:
-                    lines = [
-                        line for line in lines if line[0] not in lost_wavfiles[speaker]
-                    ]
+                    spk = self.lost_wavfiles[speaker]
+                    lines = [line for line in lines if line[0] not in spk]
                 lines.sort(key=lambda x: x[0])
                 return [line[1] for line in lines]
 
@@ -174,6 +170,7 @@ class _JVSBaseDataSource(FileDataSource):
                                 join(folder, self._textfilename),
                                 name == "nonpara30",
                                 name == "parallel100",
+                                speaker,
                             )
                         )
             files = files[:max_files_per_speaker]

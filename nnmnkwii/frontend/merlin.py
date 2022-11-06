@@ -187,7 +187,8 @@ def load_labels_with_phone_alignment(
 
     assert isinstance(hts_labels, hts.HTSLabelFile)
     if add_frame_features:
-        label_feature_matrix = np.empty((hts_labels.num_frames(frame_shift=frame_shift), dimension))
+        label_feature_matrix = np.empty(
+            (hts_labels.num_frames(frame_shift=frame_shift), dimension))
     else:
         label_feature_matrix = np.empty((hts_labels.num_phones(), dimension))
 
