@@ -172,6 +172,7 @@ setup(
             "flake8>=3.7,<4",
             "flake8-bugbear",
             "isort>=4.3,<5.2.0",
+            "importlib-metadata<5.0",
         ],
     },
     classifiers=[
