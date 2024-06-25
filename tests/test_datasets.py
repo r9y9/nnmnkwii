@@ -72,7 +72,7 @@ def test_invalid_dataset():
         X[0]
 
     yield raises(TypeError)(__test_wrong_num_args)
-    yield raises(RuntimeError)(__test_wrong_num_collected_files)
+    yield raises(ValueError)(__test_wrong_num_collected_files)
 
 
 @attr("pickle")
