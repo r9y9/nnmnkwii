@@ -124,7 +124,7 @@ def test_mulaw_real():
     mu = 256
     y = P.mulaw_quantize(x, mu)
     assert y.min() >= 0 and y.max() < mu
-    assert y.dtype == np
+    assert y.dtype == int
     x = P.inv_mulaw_quantize(y, mu) * 32768
     assert x.dtype == np.float32
     x = x.astype(np.int16)
