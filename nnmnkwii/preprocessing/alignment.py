@@ -130,7 +130,7 @@ class IterativeDTWAligner(object):
         Xc = X.copy()  # this will be updated iteratively
         X_aligned = np.zeros_like(longer_features)
         Y_aligned = np.zeros_like(longer_features)
-        refined_paths = np.empty(len(X), dtype=np.object)
+        refined_paths = np.empty(len(X), dtype=object)
 
         for idx in range(self.n_iter):
             for idx, (x, y) in enumerate(zip(Xc, Y)):
