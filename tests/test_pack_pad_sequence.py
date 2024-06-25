@@ -108,7 +108,7 @@ def test_pack_sequnce():
 
     dataset = PyTorchDataset(X, Y, lengths)
     loader = data_utils.DataLoader(
-        dataset, batch_size=batch_size, num_workers=1, shuffle=True
+        dataset, batch_size=batch_size, num_workers=0, shuffle=True
     )
 
     # Test if trining loop pass with no errors. The following code was adapted
