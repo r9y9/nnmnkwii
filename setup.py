@@ -141,6 +141,7 @@ install_requires = [
     "scikit-learn",
     "pysptk >= 0.1.17",
     "tqdm",
+    "numpy >= 1.20.0, <2",
 ]
 
 setup(
@@ -157,7 +158,6 @@ setup(
     package_data={"": package_data},
     ext_modules=ext_modules,
     cmdclass=cmdclass,
-    setup_requires=["numpy >= 1.20.0"],
     install_requires=install_requires,
     tests_require=["nose", "coverage"],
     extras_require={

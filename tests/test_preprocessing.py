@@ -124,7 +124,7 @@ def test_mulaw_real():
     mu = 256
     y = P.mulaw_quantize(x, mu)
     assert y.min() >= 0 and y.max() < mu
-    assert y.dtype == np.int
+    assert y.dtype == int
     x = P.inv_mulaw_quantize(y, mu) * 32768
     assert x.dtype == np.float32
     x = x.astype(np.int16)
@@ -460,7 +460,7 @@ def test_dtw_aligner():
     fs, x = wavfile.read(example_audio_file())
     x = (x / 32768.0).astype(np.float32)
     assert fs == 16000
-    x_fast = librosa.effects.time_stretch(x, 2.0)
+    x_fast = librosa.effects.time_stretch(x, rate=2.0)
 
     X = _get_mcep(x, fs)
     Y = _get_mcep(x_fast, fs)
