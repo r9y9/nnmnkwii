@@ -1,6 +1,3 @@
-# coding: utf-8
-from __future__ import absolute_import, division, print_function
-
 import numpy as np
 
 from ._linalg import cholesky_inv_banded as _cholesky_inv_banded

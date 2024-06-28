@@ -1,5 +1,3 @@
-from __future__ import absolute_import, division, print_function
-
 NOTE_MAPPING = {
     "A0": 21,
     "Bb0": 22,
