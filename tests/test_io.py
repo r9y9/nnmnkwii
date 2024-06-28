@@ -2,10 +2,10 @@ import copy
 import re
 from os.path import dirname, join
 
+import pytest
 from nnmnkwii.frontend import merlin as fe
 from nnmnkwii.io import hts
 from nnmnkwii.util import example_question_file
-from nose.tools import raises
 
 try:
     import pyopenjtalk  # noqa
@@ -183,7 +183,6 @@ def test_hts_append():
         labels.append(label)
     assert str(test_labels) == str(labels)
 
-    @raises(ValueError)
     def test_invalid_start_time():
         labels = hts.HTSLabelFile()
         labels.append((100000, 0, "NG"))
@@ -193,7 +192,6 @@ def test_hts_append():
         labels.append((0, 1000000, "OK"))
         labels.append((1000000, 2000000, "OK"))
 
-    @raises(ValueError)
     def test_non_succeeding_times():
         labels = hts.HTSLabelFile()
         labels.append((0, 1000000, "OK"))
@@ -204,9 +202,11 @@ def test_hts_append():
         labels.append((0, 1000000, "OK"), strict=False)
         labels.append((1500000, 2000000, "OK"), strict=False)
 
-    test_invalid_start_time()
+    with pytest.raises(ValueError):
+        test_invalid_start_time()
     test_succeeding_times()
-    test_non_succeeding_times()
+    with pytest.raises(ValueError):
+        test_non_succeeding_times()
     test_non_succeeding_times_wo_strict()
 
 
@@ -227,20 +227,20 @@ def test_create_from_contexts():
     labels2 = hts.HTSLabelFile.create_from_contexts(contexts)
     assert str(labels), str(labels2)
 
-    @raises(ValueError)
     def test_empty_context():
         hts.HTSLabelFile.create_from_contexts("")
 
-    @raises(ValueError)
     def test_empty_context2():
         contexts = pyopenjtalk.extract_fullcontext("")
         hts.HTSLabelFile.create_from_contexts(contexts)
 
-    test_empty_context()
+    with pytest.raises(ValueError):
+        test_empty_context()
     try:
         import pyopenjtalk  # noqa
 
-        test_empty_context2()
+        with pytest.raises(ValueError):
+            test_empty_context2()
     except ImportError:
         pass
 

@@ -1,8 +1,7 @@
-from __future__ import absolute_import, division, print_function
-
 import librosa
 import numpy as np
 import pysptk
+import pytest
 import pyworld
 from nnmnkwii import preprocessing as P
 from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
@@ -21,8 +20,6 @@ from nnmnkwii.util import (
     example_file_data_sources_for_acoustic_model,
     example_file_data_sources_for_duration_model,
 )
-from nose.plugins.attrib import attr
-from nose.tools import raises
 from scipy.io import wavfile
 
 
@@ -215,16 +212,16 @@ def test_minmax():
     assert np.isfinite(x_scaled).all()
 
     # Need to specify (min, max) or (scale_, min_)
-    @raises(ValueError)
     def __test_raise1(x, X_min, X_max):
         P.minmax_scale(x)
 
-    @raises(ValueError)
     def __test_raise2(x, X_min, X_max):
         P.inv_minmax_scale(x)
 
-    __test_raise1(x, X_min, X_max)
-    __test_raise2(x, X_min, X_max)
+    with pytest.raises(ValueError):
+        __test_raise1(x, X_min, X_max)
+    with pytest.raises(ValueError):
+        __test_raise2(x, X_min, X_max)
 
     # Explicit scale_ and min_
     min_, scale_ = P.minmax_scale_params(X_min, X_max, feature_range=(0, 0.99))
@@ -433,7 +430,6 @@ def _get_mcep(x, fs, frame_period=5, order=24):
     return mc
 
 
-@attr("requires_bandmat")
 def test_dtw_frame_length_adjustment():
     from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 
@@ -453,7 +449,6 @@ def test_dtw_frame_length_adjustment():
         assert X_aligned.shape == Y_aligned.shape
 
 
-@attr("requires_bandmat")
 def test_dtw_aligner():
     from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 
@@ -527,14 +522,14 @@ def test_modspec_smoothing():
                 )
 
     # Cutoff frequency larger than modfs//2
-    @raises(ValueError)
     def __test_invalid_param(y, modfs):
         P.modspec_smoothing(y, modfs, n=2048, cutoff=modfs // 2 + 1)
 
     # FFT size should larger than time length
-    @raises(RuntimeError)
     def __test_invalid_time_length(y, modfs):
         P.modspec_smoothing(y, modfs, n=32, cutoff=modfs // 2)
 
-    __test_invalid_time_length(y, modfs)
-    __test_invalid_param(y, modfs)
+    with pytest.raises(ValueError):
+        __test_invalid_param(y, modfs)
+    with pytest.raises(RuntimeError):
+        __test_invalid_time_length(y, modfs)

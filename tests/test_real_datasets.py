@@ -1,8 +1,10 @@
 from os.path import exists, expanduser, join
+from pathlib import Path
 from warnings import warn
 
 import numpy as np
 import pysptk
+import pytest
 import pyworld
 
 # Data source implementations
@@ -17,8 +19,6 @@ from nnmnkwii.datasets import (
     voice_statistics,
 )
 from nnmnkwii.preprocessing import trim_zeros_frames
-from nose.plugins.attrib import attr
-from nose.tools import raises
 from scipy.io import wavfile
 
 # Tests marked with "require_local_data" needs data to be downloaded.
@@ -27,43 +27,47 @@ from scipy.io import wavfile
 def test_cmu_arctic_dummy():
     data_source = cmu_arctic.WavFileDataSource("dummy", speakers=["clb"])
 
-    @raises(ValueError)
     def __test_invalid_speaker():
         cmu_arctic.WavFileDataSource("dummy", speakers=["test"])
 
-    @raises(RuntimeError)
     def __test_nodir(data_source):
         data_source.collect_files()
 
-    __test_invalid_speaker()
-    __test_nodir(data_source)
+    with pytest.raises(ValueError):
+        __test_invalid_speaker()
+    with pytest.raises(RuntimeError):
+        __test_nodir(data_source)
 
 
 def test_voice_statistics_dummy():
     data_source = voice_statistics.WavFileDataSource("dummy", speakers=["fujitou"])
 
-    @raises(ValueError)
+    # @raises(ValueError)
     def __test_invalid_speaker():
         voice_statistics.WavFileDataSource("dummy", speakers=["test"])
 
-    @raises(ValueError)
+    # @raises(ValueError)
     def __test_invalid_emotion():
         voice_statistics.WavFileDataSource(
             "dummy", speakers=["fujitou"], emotions="nnmnkwii"
         )
 
-    @raises(RuntimeError)
+    # @raises(RuntimeError)
     def __test_nodir(data_source):
         data_source.collect_files()
 
-    @raises(RuntimeError)
+    # @raises(RuntimeError)
     def __test_no_trans():
         voice_statistics.TranscriptionDataSource("dummy")
 
-    __test_invalid_speaker()
-    __test_invalid_emotion()
-    __test_nodir(data_source)
-    __test_no_trans()
+    with pytest.raises(ValueError):
+        __test_invalid_speaker()
+    with pytest.raises(ValueError):
+        __test_invalid_emotion()
+    with pytest.raises(RuntimeError):
+        __test_nodir(data_source)
+    with pytest.raises(RuntimeError):
+        __test_no_trans()
 
 
 def test_ljspeech_dummy():
@@ -75,26 +79,26 @@ def test_ljspeech_dummy():
 
     for data_source in data_sources:
 
-        @raises(RuntimeError)
         def f(source):
             source("dummy")
 
-        f(data_source)
+        with pytest.raises(RuntimeError):
+            f(data_source)
 
 
 def test_vcc2016_dummy():
     data_source = vcc2016.WavFileDataSource("dummy", speakers=["SF1"])
 
-    @raises(ValueError)
     def __test_invalid_speaker():
         vcc2016.WavFileDataSource("dummy", speakers=["test"])
 
-    @raises(RuntimeError)
     def __test_nodir(data_source):
         data_source.collect_files()
 
-    __test_invalid_speaker()
-    __test_nodir(data_source)
+    with pytest.raises(ValueError):
+        __test_invalid_speaker()
+    with pytest.raises(RuntimeError):
+        __test_nodir(data_source)
 
 
 def test_jsut_dummy():
@@ -102,11 +106,11 @@ def test_jsut_dummy():
 
     for data_source in data_sources:
 
-        @raises(RuntimeError)
         def f(source):
             source("dummy")
 
-        f(data_source)
+        with pytest.raises(RuntimeError):
+            f(data_source)
 
 
 def test_vctk_dummy():
@@ -115,11 +119,11 @@ def test_vctk_dummy():
 
     for data_source in data_sources:
 
-        @raises(RuntimeError)
         def f(source):
             source("dummy")
 
-        f(data_source)
+        with pytest.raises(RuntimeError):
+            f(data_source)
 
 
 def test_jvs_dummy():
@@ -128,15 +132,16 @@ def test_jvs_dummy():
 
     for data_source in data_sources:
 
-        @raises(RuntimeError)
         def f(source):
             source("dummy", categories=["parallel"])
 
-        f(data_source)
+        with pytest.raises(RuntimeError):
+            f(data_source)
 
 
-@attr("require_local_data")
-@attr("require_cmu_arctic")
+@pytest.mark.skipif(
+    not (Path.home() / "data" / "cmu_arctic").exists(), reason="Data doesn't exist"
+)
 def test_cmu_arctic():
     DATA_DIR = join(expanduser("~"), "data", "cmu_arctic")
     if not exists(DATA_DIR):
@@ -196,8 +201,10 @@ def test_cmu_arctic():
     assert len(X) == 1132 * 2
 
 
-@attr("require_local_data")
-@attr("require_voice_statistics")
+@pytest.mark.skipif(
+    not (Path.home() / "data" / "voice-statistics").exists(),
+    reason="Data doesn't exist",
+)
 def test_voice_statistics():
     DATA_DIR = join(expanduser("~"), "data", "voice-statistics")
     if not exists(DATA_DIR):
@@ -293,10 +300,11 @@ def test_voice_statistics():
     assert texts[0] == "また東寺のように五大明王と呼ばれる主要な明王の中央に配されることも多い"
 
 
-@attr("require_local_data")
-@attr("require_ljspeech")
+@pytest.mark.skipif(
+    not (Path.home() / "data" / "LJSpeech-1.1").exists(), reason="Data doesn't exist"
+)
 def test_ljspeech():
-    DATA_DIR = join(expanduser("~"), "data", "LJSpeech-1.0")
+    DATA_DIR = join(expanduser("~"), "data", "LJSpeech-1.1")
     if not exists(DATA_DIR):
         warn("Data doesn't exist at {}".format(DATA_DIR))
         return
@@ -344,8 +352,9 @@ def test_ljspeech():
     print(X[0].shape)
 
 
-@attr("require_local_data")
-@attr("require_vcc2016")
+@pytest.mark.skipif(
+    not (Path.home() / "data" / "vcc2016").exists(), reason="Data doesn't exist"
+)
 def test_vcc2016():
     DATA_DIR = join(expanduser("~"), "data", "vcc2016")
     if not exists(DATA_DIR):
@@ -405,8 +414,9 @@ def test_vcc2016():
     assert len(X) == 162 * 2
 
 
-@attr("require_local_data")
-@attr("require_jsut")
+@pytest.mark.skipif(
+    not (Path.home() / "data" / "jsut_ver1.1").exists(), reason="Data doesn't exist"
+)
 def test_jsut():
     DATA_DIR = join(expanduser("~"), "data", "jsut_ver1.1")
     if not exists(DATA_DIR):
@@ -462,8 +472,9 @@ def test_jsut():
     print(X[0].shape)
 
 
-@attr("require_local_data")
-@attr("require_vctk")
+@pytest.mark.skipif(
+    not (Path.home() / "data" / "VCTK-Corpus").exists(), reason="Data doesn't exist"
+)
 def test_vctk():
     DATA_DIR = join(expanduser("~"), "data", "VCTK-Corpus")
     if not exists(DATA_DIR):
@@ -551,8 +562,9 @@ def test_vctk():
     print(X[0].shape)
 
 
-@attr("require_local_data")
-@attr("require_jvs")
+@pytest.mark.skipif(
+    not (Path.home() / "data" / "jvs_ver1").exists(), reason="Data doesn't exist"
+)
 def test_jvs():
     DATA_DIR = join(expanduser("~"), "Downloads", "jvs_ver1")
     if not exists(DATA_DIR):

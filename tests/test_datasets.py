@@ -1,6 +1,7 @@
 from os.path import dirname, join
 
 import numpy as np
+import pytest
 from nnmnkwii.datasets import (
     FileDataSource,
     FileSourceDataset,
@@ -11,8 +12,6 @@ from nnmnkwii.util import (
     example_file_data_sources_for_acoustic_model,
     example_file_data_sources_for_duration_model,
 )
-from nose.plugins.attrib import attr
-from nose.tools import raises
 
 DATA_DIR = join(dirname(__file__), "data")
 
@@ -45,7 +44,8 @@ def test_empty_dataset():
         print(X[0])
 
     # Should raise IndexError
-    yield raises(IndexError)(__test_outof_range), X
+    with pytest.raises(IndexError):
+        __test_outof_range(X)
 
 
 def test_invalid_dataset():
@@ -71,11 +71,12 @@ def test_invalid_dataset():
         X = FileSourceDataset(WrongNumberOfCollectedFilesDataSource())
         X[0]
 
-    yield raises(TypeError)(__test_wrong_num_args)
-    yield raises(ValueError)(__test_wrong_num_collected_files)
+    with pytest.raises(TypeError):
+        __test_wrong_num_args()
+    with pytest.raises(ValueError):
+        __test_wrong_num_collected_files()
 
 
-@attr("pickle")
 def test_asarray_tqdm():
     # verbose=1 triggers tqdm progress report
     for padded in [True, False]:
@@ -83,7 +84,6 @@ def test_asarray_tqdm():
         X.asarray(verbose=1)
 
 
-@attr("pickle")
 def test_asarray():
     X, Y = _get_small_datasets(padded=False, duration=True)
     lengths = [len(x) for x in X]
@@ -110,17 +110,16 @@ def test_asarray():
         X.asarray(padded_length=1)
 
     # Should raise `num frames exceeded`
-    yield raises(RuntimeError)(__test_very_small_padded_length)
+    with pytest.raises(RuntimeError):
+        __test_very_small_padded_length()
 
 
-@attr("pickle")
 def test_duration_sources():
     X, Y = _get_small_datasets(padded=False, duration=True)
     for idx, (x, y) in enumerate(zip(X, Y)):
         print(idx, x.shape, y.shape)
 
 
-@attr("pickle")
 def test_slice():
     X, _ = _get_small_datasets(padded=False)
     x = X[:2]
@@ -133,14 +132,12 @@ def test_slice():
     assert len(x.shape) == 3 and x.shape[0] == 2
 
 
-@attr("pickle")
 def test_variable_length_sequence_wise_iteration():
     X, Y = _get_small_datasets(padded=False)
     for idx, (x, y) in enumerate(zip(X, Y)):
         print(idx, x.shape, y.shape)
 
 
-@attr("pickle")
 def test_fixed_length_sequence_wise_iteration():
     X, Y = _get_small_datasets(padded=True)
 
@@ -153,7 +150,6 @@ def test_fixed_length_sequence_wise_iteration():
         assert y.shape[0] == Ty
 
 
-@attr("pickle")
 def test_frame_wise_iteration():
     X, Y = _get_small_datasets(padded=False)
 
@@ -181,7 +177,6 @@ def test_frame_wise_iteration():
         pass
 
 
-@attr("pickle")
 def test_sequence_wise_torch_data_loader():
     import torch
     from torch.utils import data as data_utils
@@ -210,19 +205,20 @@ def test_sequence_wise_torch_data_loader():
             print(idx, x.shape, y.shape)
 
     # Test with batch_size = 1
-    yield __test, X, Y, 1
+    __test(X, Y, 1)
     # Since we have variable length frames, batch size larger than 1 causes
     # runtime error.
-    yield raises(RuntimeError)(__test), X, Y, 2
+    with pytest.raises(RuntimeError):
+        __test(X, Y, 2)
 
     # For padded dataset, which can be reprensented by (N, T^max, D), batchsize
     # can be any number.
     X, Y = _get_small_datasets(padded=True)
-    yield __test, X, Y, 1
-    yield __test, X, Y, 2
+    __test(X, Y, 1)
+    __test(X, Y, 2)
 
 
-@attr("pickle")
+# @attr("pickle")
 def test_frame_wise_torch_data_loader():
     import torch
     from torch.utils import data as data_utils
@@ -259,5 +255,5 @@ def test_frame_wise_torch_data_loader():
             assert len(x.shape) == 2
             assert len(y.shape) == 2
 
-    yield __test, X, Y, 128
-    yield __test, X, Y, 256
+    __test(X, Y, 128)
+    __test(X, Y, 256)

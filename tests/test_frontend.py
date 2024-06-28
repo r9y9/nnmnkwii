@@ -1,10 +1,10 @@
 from os.path import dirname, join
 
 import numpy as np
+import pytest
 from nnmnkwii.frontend import merlin as fe
 from nnmnkwii.io import hts
 from nnmnkwii.util import example_label_file, example_question_file
-from nose.tools import raises
 
 DATA_DIR = join(dirname(__file__), "data")
 
@@ -14,7 +14,7 @@ def test_invalid_linguistic_features():
     phone_labels = hts.load(example_label_file(phone_level=True))
     state_labels = hts.load(example_label_file(phone_level=False))
 
-    @raises(ValueError)
+    # @raises(ValueError)
     def __test(labels, subphone_features, add_frame_features):
         fe.linguistic_features(
             labels,
@@ -24,19 +24,22 @@ def test_invalid_linguistic_features():
             add_frame_features=add_frame_features,
         )
 
-    yield __test, phone_labels, "full", True
-    yield __test, phone_labels, "full", False
-    yield __test, state_labels, "full", False
+    with pytest.raises(ValueError):
+        __test(phone_labels, "full", True)
+    with pytest.raises(ValueError):
+        __test(phone_labels, "full", False)
+    with pytest.raises(ValueError):
+        __test(state_labels, "full", False)
 
 
 def test_invalid_duration_features():
     phone_labels = hts.load(example_label_file(phone_level=True))
 
-    @raises(ValueError)
     def __test(labels, unit_size, feature_size):
         fe.duration_features(labels, unit_size=unit_size, feature_size=feature_size)
 
-    yield __test, phone_labels, None, "frame"
+    with pytest.raises(ValueError):
+        __test(phone_labels, None, "frame")
 
 
 def test_silence_frame_removal_given_hts_labels():

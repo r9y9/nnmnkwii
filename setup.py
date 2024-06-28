@@ -159,10 +159,10 @@ setup(
     ext_modules=ext_modules,
     cmdclass=cmdclass,
     install_requires=install_requires,
-    tests_require=["nose", "coverage"],
+    tests_require=["pytest", "pytest-cov", "coverage"],
     extras_require={
         "docs": ["numpydoc", "sphinx_rtd_theme"],
-        "test": ["nose", "pyworld", "librosa"],
+        "test": ["pytest", "pytest-cov", "pyworld", "librosa"],
         "lint": [
             "pysen",
             "types-setuptools",

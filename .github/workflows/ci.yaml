@@ -58,4 +58,4 @@ jobs:
         pysen run lint
     - name: Test
       run: |
-        nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec'
+        pytest --cov=nnmnkwii --cov-report xml -v tests/
