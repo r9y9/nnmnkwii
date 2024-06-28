@@ -28,8 +28,8 @@ def test_mse_variants():
             np.testing.assert_almost_equal(f(x, y, lengths), f(x, y), decimal=5)
             assert f(x, y) > 0
 
-    yield __test, metrics.melcd
-    yield __test, metrics.mean_squared_error
+    __test(metrics.melcd)
+    __test(metrics.mean_squared_error)
 
 
 def test_f0_mse():

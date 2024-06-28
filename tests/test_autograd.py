@@ -3,8 +3,6 @@ import torch
 from nnmnkwii import autograd as AF
 from nnmnkwii import paramgen as G
 from nnmnkwii.autograd._impl.mlpg import MLPG, UnitVarianceMLPG
-from nnmnkwii.autograd._impl.modspec import ModSpec
-from nose.plugins.attrib import attr
 from torch import nn
 from torch.autograd import gradcheck
 
@@ -220,23 +218,21 @@ def test_mlpg_variance_expand():
         assert np.allclose(y.data.numpy(), y_hat.data.numpy())
 
 
-@attr("modspec")
-def test_modspec_gradcheck():
-    static_dim = 12
-    T = 16
-    torch.manual_seed(1234)
-    n = 16
-    for norm in [None, "ortho"]:
-        inputs = (torch.rand(T, static_dim, requires_grad=True), n, norm)
-        assert gradcheck(ModSpec.apply, inputs, eps=1e-4, atol=1e-4)
+# def test_modspec_gradcheck():
+#     static_dim = 12
+#     T = 16
+#     torch.manual_seed(1234)
+#     n = 16
+#     for norm in [None, "ortho"]:
+#         inputs = (torch.rand(T, static_dim, requires_grad=True), n, norm)
+#         assert gradcheck(ModSpec.apply, inputs, eps=1e-4, atol=1e-4)
 
 
-@attr("modspec")
-def test_modspec_gradcheck_large_n():
-    static_dim = 12
-    T = 16
-    torch.manual_seed(1234)
-    for n in [16, 32]:
-        for norm in [None, "ortho"]:
-            inputs = (torch.rand(T, static_dim, requires_grad=True), n, norm)
-            assert gradcheck(ModSpec.apply, inputs, eps=1e-4, atol=1e-4)
+# def test_modspec_gradcheck_large_n():
+#     static_dim = 12
+#     T = 16
+#     torch.manual_seed(1234)
+#     for n in [16, 32]:
+#         for norm in [None, "ortho"]:
+#             inputs = (torch.rand(T, static_dim, requires_grad=True), n, norm)
+#             assert gradcheck(ModSpec.apply, inputs, eps=1e-4, atol=1e-4)

@@ -1,5 +1,3 @@
-from __future__ import absolute_import, print_function, with_statement
-
 from os.path import exists, join
 
 import numpy as np

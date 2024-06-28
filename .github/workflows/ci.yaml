@@ -22,9 +22,10 @@ jobs:
             python-version: 3.8
           - os: ubuntu-latest
             python-version: 3.9
-          # TODO: https://github.com/r9y9/nnmnkwii/issues/124
-          # - os: ubuntu-latest
-          #   python-version: '3.10'
+          - os: ubuntu-latest
+            python-version: '3.10'
+          - os: ubuntu-latest
+            python-version: '3.11'
           - os: macos-latest
             python-version: 3.9
           - os: windows-latest
@@ -59,4 +60,4 @@ jobs:
         pysen run lint
     - name: Test
       run: |
-        nosetests --with-coverage --cover-package=nnmnkwii -v -w tests/ -a '!require_local_data,!modspec'
+        pytest --cov=nnmnkwii --cov-report xml -v tests/

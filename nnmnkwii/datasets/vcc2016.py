@@ -1,6 +1,3 @@
-# coding: utf-8
-from __future__ import absolute_import, print_function, with_statement
-
 from os import listdir
 from os.path import isdir, join, splitext
 

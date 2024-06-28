@@ -1,10 +1,7 @@
-from __future__ import absolute_import, division, print_function
-
 import numpy as np
 import scipy.linalg
 from nnmnkwii.util import apply_each2d_padded, apply_each2d_trim
 from nnmnkwii.util.linalg import cholesky_inv, cholesky_inv_banded
-from nose.plugins.attrib import attr
 
 
 def _get_windows_set():
@@ -62,7 +59,6 @@ def _get_banded_test_mat(win_mats, T):
     return P
 
 
-@attr("requires_bandmat")
 def test_linalg_choleskey_inv():
     from nnmnkwii.paramgen import build_win_mats
 

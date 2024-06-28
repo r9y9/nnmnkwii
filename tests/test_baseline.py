@@ -1,7 +1,6 @@
 from os.path import dirname, join
 
 import numpy as np
-from nose.plugins.attrib import attr
 from numpy.linalg import norm
 from sklearn.mixture import GaussianMixture
 
@@ -29,7 +28,6 @@ def _get_windows_set():
     return windows_set
 
 
-@attr("requires_bandmat")
 def test_diffvc():
     from nnmnkwii.baseline.gmm import MLPG
 
@@ -62,7 +60,6 @@ def test_diffvc():
         assert norm(tgt_mc - mc_converted1) < norm(src_mc - mc_converted1)
 
 
-@attr("requires_bandmat")
 def test_gmmmap_swap():
     from nnmnkwii.baseline.gmm import MLPG
 
