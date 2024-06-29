@@ -1,7 +1,6 @@
 import numpy as np
 import pysptk
 import pytest
-import pyworld
 from nnmnkwii import preprocessing as P
 from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
 from nnmnkwii.preprocessing import (
@@ -21,6 +20,14 @@ from nnmnkwii.util import (
 )
 from packaging.version import Version
 from scipy.io import wavfile
+
+try:
+    import pyworld
+
+    pyworld_available = True
+except ValueError:
+    # ValueError: numpy.dtype size changed, may indicate binary incompatibility.
+    pyworld_available = False
 
 
 def _get_windows_set_bandmat():
@@ -271,6 +278,7 @@ def test_interp1d():
     assert np.all(if0 != 0)
 
 
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_trim_remove_zeros_frames():
     fs, x = wavfile.read(example_audio_file())
     frame_period = 5
@@ -452,6 +460,7 @@ def test_dtw_frame_length_adjustment():
 @pytest.mark.skipif(
     Version(np.__version__) >= Version("2.0.0"), reason="numpy >= 2.0.0"
 )
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_dtw_aligner():
     from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 
