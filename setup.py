@@ -108,7 +108,6 @@ if not bandmat_upstream_fixed:
         ("nnmnkwii", "paramgen", "_bandmat", "core"),
         ("nnmnkwii", "paramgen", "_bandmat", "tensor"),
         ("nnmnkwii", "paramgen", "_bandmat", "linalg"),
-        ("nnmnkwii", "paramgen", "_bandmat", "misc"),
         ("nnmnkwii", "paramgen", "_bandmat", "overlap"),
     ]
     ext_modules.extend(
