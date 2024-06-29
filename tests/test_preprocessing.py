@@ -1,8 +1,6 @@
-import librosa
 import numpy as np
 import pysptk
 import pytest
-import pyworld
 from nnmnkwii import preprocessing as P
 from nnmnkwii.datasets import FileSourceDataset, PaddedFileSourceDataset
 from nnmnkwii.preprocessing import (
@@ -20,7 +18,16 @@ from nnmnkwii.util import (
     example_file_data_sources_for_acoustic_model,
     example_file_data_sources_for_duration_model,
 )
+from packaging.version import Version
 from scipy.io import wavfile
+
+try:
+    import pyworld
+
+    pyworld_available = True
+except ValueError:
+    # ValueError: numpy.dtype size changed, may indicate binary incompatibility.
+    pyworld_available = False
 
 
 def _get_windows_set_bandmat():
@@ -271,6 +278,7 @@ def test_interp1d():
     assert np.all(if0 != 0)
 
 
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_trim_remove_zeros_frames():
     fs, x = wavfile.read(example_audio_file())
     frame_period = 5
@@ -449,12 +457,19 @@ def test_dtw_frame_length_adjustment():
         assert X_aligned.shape == Y_aligned.shape
 
 
+@pytest.mark.skipif(
+    Version(np.__version__) >= Version("2.0.0"), reason="numpy >= 2.0.0"
+)
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_dtw_aligner():
     from nnmnkwii.preprocessing.alignment import DTWAligner, IterativeDTWAligner
 
     fs, x = wavfile.read(example_audio_file())
     x = (x / 32768.0).astype(np.float32)
     assert fs == 16000
+    # NOTE: librosa deps need to be updated for numpy 2.0.0
+    import librosa
+
     x_fast = librosa.effects.time_stretch(x, rate=2.0)
 
     X = _get_mcep(x, fs)

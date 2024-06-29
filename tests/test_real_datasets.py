@@ -5,7 +5,6 @@ from warnings import warn
 import numpy as np
 import pysptk
 import pytest
-import pyworld
 
 # Data source implementations
 from nnmnkwii.datasets import (
@@ -21,7 +20,13 @@ from nnmnkwii.datasets import (
 from nnmnkwii.preprocessing import trim_zeros_frames
 from scipy.io import wavfile
 
-# Tests marked with "require_local_data" needs data to be downloaded.
+try:
+    import pyworld
+
+    pyworld_available = True
+except ValueError:
+    # ValueError: numpy.dtype size changed, may indicate binary incompatibility.
+    pyworld_available = False
 
 
 def test_cmu_arctic_dummy():
@@ -142,6 +147,7 @@ def test_jvs_dummy():
 @pytest.mark.skipif(
     not (Path.home() / "data" / "cmu_arctic").exists(), reason="Data doesn't exist"
 )
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_cmu_arctic():
     DATA_DIR = join(expanduser("~"), "data", "cmu_arctic")
     if not exists(DATA_DIR):
@@ -205,6 +211,7 @@ def test_cmu_arctic():
     not (Path.home() / "data" / "voice-statistics").exists(),
     reason="Data doesn't exist",
 )
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_voice_statistics():
     DATA_DIR = join(expanduser("~"), "data", "voice-statistics")
     if not exists(DATA_DIR):
@@ -303,6 +310,7 @@ def test_voice_statistics():
 @pytest.mark.skipif(
     not (Path.home() / "data" / "LJSpeech-1.1").exists(), reason="Data doesn't exist"
 )
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_ljspeech():
     DATA_DIR = join(expanduser("~"), "data", "LJSpeech-1.1")
     if not exists(DATA_DIR):
@@ -355,6 +363,7 @@ def test_ljspeech():
 @pytest.mark.skipif(
     not (Path.home() / "data" / "vcc2016").exists(), reason="Data doesn't exist"
 )
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_vcc2016():
     DATA_DIR = join(expanduser("~"), "data", "vcc2016")
     if not exists(DATA_DIR):
@@ -417,6 +426,7 @@ def test_vcc2016():
 @pytest.mark.skipif(
     not (Path.home() / "data" / "jsut_ver1.1").exists(), reason="Data doesn't exist"
 )
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_jsut():
     DATA_DIR = join(expanduser("~"), "data", "jsut_ver1.1")
     if not exists(DATA_DIR):
@@ -475,6 +485,7 @@ def test_jsut():
 @pytest.mark.skipif(
     not (Path.home() / "data" / "VCTK-Corpus").exists(), reason="Data doesn't exist"
 )
+@pytest.mark.skipif(not pyworld_available, reason="pyworld is not available")
 def test_vctk():
     DATA_DIR = join(expanduser("~"), "data", "VCTK-Corpus")
     if not exists(DATA_DIR):
