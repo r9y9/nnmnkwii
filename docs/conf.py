@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 # nnmnkwii documentation build configuration file, created by
 # sphinx-quickstart on Sat Jul 29 16:55:09 2017.
@@ -23,10 +22,9 @@
 
 
 import os
+from importlib.metadata import version  # Python 3.8+
 
-import pkg_resources
-
-__version__ = pkg_resources.get_distribution("nnmnkwii").version
+__version__ = version("nnmnkwii")
 
 ON_RTD = os.environ.get("READTHEDOCS", None) == "True"
 
@@ -85,7 +83,8 @@ if not ON_RTD:
     if use_matplotlib_plot_directive:
         extensions.append("matplotlib.sphinxext.plot_directive")
     else:
-        raise RuntimeError("You need a recent enough version of matplotlib")
+        msg = "You need a recent enough version of matplotlib"
+        raise RuntimeError(msg)
 
 # ------------------------------------------------------------------------------
 # Plot

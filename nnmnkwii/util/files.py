@@ -1,12 +1,12 @@
 from glob import glob
+from importlib import resources
 from os.path import join
 
 import numpy as np
-import pkg_resources
 from nnmnkwii.datasets import FileDataSource
 
 
-def example_label_file(phone_level=False):
+def example_label_file(*, phone_level: bool = False) -> str:
     """Get path of example HTS-style full-context lable file.
 
     Corresponding audio file can be accessed by
@@ -28,14 +28,14 @@ def example_label_file(phone_level=False):
         >>> labels = hts.load(example_label_file())
     """
     name = "arctic_a0009"
-    label_path = pkg_resources.resource_filename(
-        __name__,
-        "_example_data/{}_{}.lab".format(name, "phone" if phone_level else "state"),
+    suffix = "phone" if phone_level else "state"
+    label_path = (
+        resources.files("nnmnkwii.util") / "_example_data" / f"{name}_{suffix}.lab"
     )
-    return label_path
+    return str(label_path)
 
 
-def example_audio_file():
+def example_audio_file() -> str:
     """Get path of audio file.
 
     Returns:
@@ -50,13 +50,11 @@ def example_audio_file():
         >>> fs, x = wavfile.read(example_audio_file())
     """
     name = "arctic_a0009"
-    wav_path = pkg_resources.resource_filename(
-        __name__, "_example_data/{}.wav".format(name)
-    )
-    return wav_path
+    wav_path = resources.files("nnmnkwii.util") / "_example_data" / f"{name}.wav"
+    return str(wav_path)
 
 
-def example_question_file():
+def example_question_file() -> str:
     """Get path of example question file.
 
     The question file was taken from Merlin_.
@@ -71,9 +69,9 @@ def example_question_file():
         >>> from nnmnkwii.io import hts
         >>> binary_dict, numeric_dict = hts.load_question_set(example_question_file())
     """
-    return pkg_resources.resource_filename(
-        __name__, "_example_data/questions-radio_dnn_416.hed"
-    )
+    name = "questions-radio_dnn_416"
+    hed_path = resources.files("nnmnkwii.util") / "_example_data" / f"{name}.hed"
+    return str(hed_path)
 
 
 class BinaryFileDataSource(FileDataSource):
@@ -88,8 +86,8 @@ class BinaryFileDataSource(FileDataSource):
 
 
 class ExampleSLTArcticFileDataSource(BinaryFileDataSource):
-    SLT_DEMO_DATA_ROOT = pkg_resources.resource_filename(
-        __name__, "_example_data/slt_arctic_demo_data"
+    SLT_DEMO_DATA_ROOT = (
+        resources.files("nnmnkwii.util") / "_example_data" / "slt_arctic_demo_data"
     )
 
     mgc_dim = 75
@@ -115,9 +113,7 @@ class ExampleSLTArcticFileDataSource(BinaryFileDataSource):
     ]
 
     def __init__(self, directory):
-        super(ExampleSLTArcticFileDataSource, self).__init__(
-            join(self.SLT_DEMO_DATA_ROOT, directory)
-        )
+        super().__init__(self.SLT_DEMO_DATA_ROOT / directory)
 
 
 def example_file_data_sources_for_duration_model():
